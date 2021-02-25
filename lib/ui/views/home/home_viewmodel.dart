@@ -1,0 +1,126 @@
+import 'package:distributor/app/locator.dart';
+import 'package:distributor/app/router.gr.dart';
+import 'package:distributor/core/enums.dart';
+import 'package:distributor/services/access_controller_service.dart';
+import 'package:distributor/services/activity_service.dart';
+import 'package:distributor/services/init_service.dart';
+import 'package:distributor/services/journey_service.dart';
+
+import 'package:distributor/services/logistics_service.dart';
+import 'package:distributor/services/permission_service.dart';
+import 'package:distributor/services/user_service.dart';
+
+import 'package:distributor/ui/views/customers/customer_view.dart';
+import 'package:distributor/ui/views/dashboard/dashboard_view.dart';
+import 'package:distributor/ui/views/routes/route_listing_view.dart';
+import 'package:distributor/ui/views/stock/stock_view.dart';
+
+import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+import 'package:tripletriocore/tripletriocore.dart';
+
+class HomeViewModel extends ReactiveViewModel {
+  PermissionService _permissionService = locator<PermissionService>();
+  LogisticsService _logisticsService = locator<LogisticsService>();
+  ActivityService _activityService = locator<ActivityService>();
+  JourneyService _journeyService = locator<JourneyService>();
+
+  UserService _userService = locator<UserService>();
+  NavigationService _navigationService = locator<NavigationService>();
+  InitService _initService = locator<InitService>();
+  AccessControlService _accessControlService = locator<AccessControlService>();
+
+  String get noOfUpdates => _activityService.noOfUpdates.toString();
+
+  refresh() async {
+    setBusy(true);
+    await _logisticsService.fetchJourneys();
+    setBusy(false);
+  }
+
+  bool get hasActivityUpdate => _activityService.hasUpdate;
+
+  DeliveryJourney get currentJourney => _logisticsService.currentJourney;
+
+  bool get onTrip {
+    if (hasJourney) {
+      if (_logisticsService.currentJourney.journeyId != null) {
+        return true;
+      } else
+        return false;
+    } else {
+      return false;
+    }
+  }
+
+  AppEnv get appEnv => _initService.appEnv;
+
+  User get user => _userService.user;
+
+  logout() async {
+    await _navigationService.pushNamedAndRemoveUntil(Routes.loginViewRoute);
+  }
+
+  bool get hasJourney => _logisticsService.hasJourney;
+
+  String _title = "Home";
+  String get title => _title;
+
+  Pages _pageToDisplay;
+  Pages get pageToDisplay => _pageToDisplay;
+
+  Widget _pageContent = DashboardView();
+  Widget get pageContent => _pageContent;
+
+  updatePageToDisplay(Pages page, String title) {
+    _pageToDisplay = page;
+    _title = title;
+    _pageContent = buildPage();
+    notifyListeners();
+  }
+
+  buildPage() {
+    switch (_pageToDisplay) {
+      case Pages.home:
+        _pageContent = DashboardView();
+        break;
+      case Pages.customers:
+        _pageContent = CustomerView();
+        break;
+      case Pages.routes:
+        _pageContent = RoutesListingView();
+        break;
+      case Pages.products:
+        _pageContent = StockView();
+        break;
+      default:
+        _pageContent = DashboardView();
+        break;
+    }
+    return _pageContent;
+  }
+
+  bool get enableRouteTab => _accessControlService.enableJourneyTab;
+  bool get enableProductTab => _accessControlService.enableStockTab;
+  bool get enableCustomerTab => _accessControlService.enableCustomerTab;
+
+  init() async {
+    await _logisticsService.fetchJourneys();
+    await _permissionService.init();
+  }
+
+  void navigateToJourneyMapView() async {
+    _navigationService.navigateTo(Routes.deliveryJourneyMapView,
+        arguments:
+            DeliveryJourneyMapViewArguments(deliveryJourney: currentJourney));
+  }
+
+  navigateToNotificationsView() async {
+    _navigationService.navigateTo(Routes.notificationViewRoute);
+  }
+
+  @override
+  List<ReactiveServiceMixin> get reactiveServices =>
+      [_logisticsService, _journeyService, _activityService];
+}

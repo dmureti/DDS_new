@@ -1,0 +1,56 @@
+import 'package:distributor/ui/shared/brand_colors.dart';
+import 'package:distributor/ui/widgets/smart_widgets/control/select_control/select_control_widget_viewmodel.dart';
+import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
+import 'package:tripletriocore/tripletriocore.dart';
+
+/// This widget is used to control the [JourneyState] of a [DeliveryJourney]
+class SelectControlWidget extends StatelessWidget {
+  final DeliveryJourney deliveryJourney;
+  const SelectControlWidget({Key key, this.deliveryJourney})
+      : assert(deliveryJourney != null),
+        super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<SelectControlWidgetViewModel>.reactive(
+        builder: (context, model, child) => SizedBox(
+              width: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: model.isBusy
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : RaisedButton(
+                        color: model.isCurrentSelection
+                            ? kStopControl
+                            : kSelectControl,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25)),
+                        onPressed: () {
+                          model.toggleSelectedJourney(deliveryJourney);
+                        },
+                        child: model.isCurrentSelection
+                            ? Text(
+                                'DESELECT',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                    fontSize: 20),
+                              )
+                            : Text(
+                                'SELECT',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                    fontSize: 20),
+                              ),
+                      ),
+              ),
+            ),
+        viewModelBuilder: () =>
+            SelectControlWidgetViewModel(deliveryJourney: deliveryJourney));
+  }
+}

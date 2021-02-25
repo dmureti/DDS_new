@@ -1,0 +1,87 @@
+name: distributor
+description: Digital Distribution System
+version: 5.15.3+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  #badges
+  badges: ^1.1.1
+  url_launcher: ^5.4.11
+
+  #http
+  http: ^0.12.0+2
+  #preferences
+  shared_preferences: ^0.5.7+3
+
+  stacked: ^1.5.5+1
+  stacked_services: ^0.4.4+2
+  auto_route: ^0.5.0
+  injectable: ^0.4.0
+  get_it: ^4.0.2
+  stacked_hooks:
+  flutter_hooks: 0.9.0
+  observable_ish:
+  permission_handler: ^5.0.1+1
+  flutter_vector_icons: ^0.2.1
+  timeago: ^2.0.26
+  email_validator: '^1.0.5'
+  #date management
+  intl: ^0.16.0
+  font_awesome_flutter: ^8.5.0
+  enum_to_string: ^1.0.8
+  get: ^2.13.1
+#  support for translations
+  i18n_extension: ^1.4.1
+  google_maps_flutter: ^0.5.26+4
+  flutter_polyline_points: ^0.2.2
+  geolocator: ^5.3.1
+  flutter_localizations:
+    sdk: flutter
+  tripletriocore:
+     path: '../tripletrio_core'
+#    git: 'https://github.com/AlbertKamau/tripletrio_core'
+    
+
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^0.1.3
+
+dev_dependencies:
+  test: ^1.15.7
+  auto_route_generator: ^0.5.0
+  build_runner: ^1.10.0
+  injectable_generator: ^0.4.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/docs/changelog.txt
+    - assets/images/minibakeries-logo.jpg
+    - assets/images/aromatic-board-bread-breakfast.jpg
+    - assets/images/no_journey.png
+  fonts:
+    - family: Proxima Nova Condensed
+      fonts:
+        - asset: assets/fonts/proxima_nova/condensed/ProximaNovaAltCondensedRegular.otf
+          weight: 400
+        - asset: assets/fonts/proxima_nova/condensed/ProximaNovaAltCondensedSemiBold.otf
+          weight: 600
+        - asset: assets/fonts/proxima_nova/condensed/ProximaNovaAltExtraCondensedBold.otf
+          weight: 700
+    - family: Proxima Nova
+      fonts:
+        - asset: assets/fonts/proxima_nova/normal/ProximaNovaAltRegular.otf
+        - asset: assets/fonts/proxima_nova/normal/ProximaNovaAltSemibold.otf
+          weight: 500
+        - asset: assets/fonts/proxima_nova/normal/ProximaNovaAltExtrabold.otf
+          weight: 700
+    - family: Simpel
+      fonts:
+        - asset: assets/fonts/simpel/Simpel-Medium.otf
+
+  #
+
