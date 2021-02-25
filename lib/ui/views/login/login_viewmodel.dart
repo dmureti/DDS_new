@@ -62,9 +62,9 @@ class LoginViewModel extends BaseViewModel {
           activityTitle: 'Login in', activityDesc: 'Logged In successfully'));
       //Navigate to the home page
       _navigationService.pushNamedAndRemoveUntil(Routes.homeViewRoute);
-    } else if (result is String) {
+    } else if (result is CustomException) {
       await _dialogService.showDialog(
-          title: 'Login Failure', description: result);
+          title: 'Login Failure', description: result.description);
     } else {
       await _dialogService.showDialog(
           title: 'Login Failure', description: 'Unknown Error.');

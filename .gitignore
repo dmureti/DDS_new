@@ -187,3 +187,12 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/flutter,androidstudio
+/internal.bat
+/internal_testers.txt
+/pubspec.lock
+/README.md
+/release_notes.txt
+/codemagic.yaml
+/buildres
+/.packages
+/.metadata
