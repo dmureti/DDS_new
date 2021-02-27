@@ -101,6 +101,7 @@ class DashboardView extends StatelessWidget {
                                   /// If the user does not have any deliveries
                                   /// Show the no deliveries widget
                                   ///
+
                                   DashboardViewControllerView(),
                                 ],
                               ),

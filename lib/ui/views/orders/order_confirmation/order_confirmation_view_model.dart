@@ -30,23 +30,19 @@ class OrderConfirmationViewModel extends BaseViewModel {
 
   createSalesOrder(SalesOrderRequest salesOrder) async {
     setBusy(true);
-    var status = await _orderService.createSalesOrder(salesOrder);
+    var result = await _orderService.createSalesOrder(salesOrder);
     setBusy(false);
-    if (status is bool) {
-      if (status) {
+    if (result is bool) {
+      if (result) {
         _activityService.addActivity(Activity(
             activityTitle: 'Sales Order submitted',
             activityDesc:
                 'Sales Order for ${customer.name} of ${customer.route} created and submitted.'));
         _navigationService.back(result: true);
-      } else {
-        await _dialogService.showDialog(
-            title: 'Could not add Sales Order', description: 'Unknown error');
-        _navigationService.back(result: true);
       }
-    } else {
+    } else if (result is CustomException) {
       await _dialogService.showDialog(
-          title: 'Could not add Sales Order', description: status.toString());
+          title: result.title, description: result.description);
     }
   }
 

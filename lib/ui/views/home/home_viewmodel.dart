@@ -9,6 +9,7 @@ import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/permission_service.dart';
 import 'package:distributor/services/user_service.dart';
+import 'package:distributor/ui/views/adhoc_sales/adhoc_sales_view.dart';
 
 import 'package:distributor/ui/views/customers/customer_view.dart';
 import 'package:distributor/ui/views/dashboard/dashboard_view.dart';
@@ -84,6 +85,9 @@ class HomeViewModel extends ReactiveViewModel {
     switch (_pageToDisplay) {
       case Pages.home:
         _pageContent = DashboardView();
+        break;
+      case Pages.adhoc:
+        _pageContent = AdhocSalesView();
         break;
       case Pages.customers:
         _pageContent = CustomerView();

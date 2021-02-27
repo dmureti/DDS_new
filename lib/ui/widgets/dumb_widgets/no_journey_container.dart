@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 class NoJourneyContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Flexible(
       child: Column(
-        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Image.asset(

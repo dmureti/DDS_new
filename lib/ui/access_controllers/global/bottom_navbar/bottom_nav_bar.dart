@@ -23,7 +23,8 @@ class BottomNavBar extends StatelessWidget {
           currentIndex: model.index,
           selectedIconTheme: IconThemeData(color: Colors.pink),
           unselectedIconTheme: (IconThemeData(color: Colors.white)),
-          showUnselectedLabels: true,
+          showUnselectedLabels: false,
+          showSelectedLabels: false,
           selectedLabelStyle:
               TextStyle(color: Colors.pink, fontWeight: FontWeight.w900),
           unselectedLabelStyle: TextStyle(color: Colors.indigo),
@@ -58,10 +59,24 @@ class BottomNavBar extends StatelessWidget {
               backgroundColor: Color(0xFF182848),
               icon: IconButton(
                 splashColor: Colors.pink,
-                icon: Icon(Icons.apps),
+                icon: Icon(Icons.add_shopping_cart),
                 onPressed: model.onStockBalanceTap()
                     ? () {
                         model.updateIndex(2);
+                        onTap(Pages.adhoc, "Adhoc Sales");
+                      }
+                    : null,
+              ),
+              label: 'Adhoc Sales'.toUpperCase(),
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: Color(0xFF182848),
+              icon: IconButton(
+                splashColor: Colors.pink,
+                icon: Icon(Icons.apps),
+                onPressed: model.onStockBalanceTap()
+                    ? () {
+                        model.updateIndex(3);
                         onTap(Pages.products, "Stock Balance");
                       }
                     : null,
@@ -74,7 +89,7 @@ class BottomNavBar extends StatelessWidget {
                 splashColor: Colors.pink,
                 onPressed: model.onCustomerTabTap()
                     ? () {
-                        model.updateIndex(3);
+                        model.updateIndex(4);
                         onTap(Pages.customers, "Customers");
                       }
                     : null,

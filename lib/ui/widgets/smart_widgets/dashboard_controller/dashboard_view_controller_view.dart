@@ -10,14 +10,7 @@ class DashboardViewControllerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<DashboardViewControllerViewModel>.reactive(
         builder: (context, model, child) => model.userHasJourneys == false
-            ? Center(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    NoJourneyContainer(),
-                  ],
-                ),
-              )
+            ? NoJourneyContainer()
             : DashboardJourneyContainer(),
         viewModelBuilder: () => DashboardViewControllerViewModel());
   }
