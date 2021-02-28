@@ -73,14 +73,14 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
             },
             iconData: Icons.people,
           ),
-          ListTile(
-            trailing: Icon(Icons.notifications),
-            title: Text('Notifications'),
-            onTap: () {
-              Navigator.pop(context);
-              model.navigateToHome(5);
-            },
-          ),
+          // ListTile(
+          //   trailing: Icon(Icons.notifications),
+          //   title: Text('Notifications'),
+          //   onTap: () {
+          //     Navigator.pop(context);
+          //     model.navigateToHome(5);
+          //   },
+          // ),
           ListTile(
             title: Text('Log out'),
             onTap: () async {

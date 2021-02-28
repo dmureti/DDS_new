@@ -1,3 +1,4 @@
+import 'package:distributor/core/helper.dart';
 import 'package:distributor/ui/shared/ui_helpers.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/app_bar_column_title.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
@@ -30,8 +31,10 @@ class AddPaymentView extends StatelessWidget {
               subTitle: customer.name,
             ),
           ),
+          resizeToAvoidBottomPadding: true,
+          resizeToAvoidBottomInset: true,
           body: Container(
-            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: ListView(
               children: [
                 DropdownButton(
@@ -79,7 +82,7 @@ class AddPaymentView extends StatelessWidget {
                           children: [
                             Text(model.transactionDate == null
                                 ? 'Transaction date'
-                                : model.transactionDate.toString()),
+                                : Helper.formatDate(model.transactionDate)),
                             Icon(Icons.arrow_drop_down),
                           ],
                         )),

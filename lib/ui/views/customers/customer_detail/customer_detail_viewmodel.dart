@@ -136,7 +136,7 @@ class CustomerDetailViewModel extends BaseViewModel {
   navigateTOAddPayment() async {
     var result = await _navigationService.navigateTo(Routes.addPaymentView,
         arguments: AddPaymentViewArguments(customer: customer));
-    if (result) {
+    if (result is bool) {
       _snackbarService.showSnackbar(
           message: 'The payment was added successfully.');
     }

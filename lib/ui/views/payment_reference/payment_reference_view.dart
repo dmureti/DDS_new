@@ -53,11 +53,14 @@ class PaymentReferenceView extends StatelessWidget {
                       onChanged: (val) => model.updatePaymentMode),
                   model.isBusy
                       ? CircularProgressIndicator()
-                      : RaisedButton(
-                          onPressed: () {
-                            model.retrievePendingPayment();
-                          },
-                          child: Text('Get Details'),
+                      : Container(
+                          width: double.infinity,
+                          child: RaisedButton(
+                            onPressed: () {
+                              model.retrievePendingPayment();
+                            },
+                            child: Text('Get Details'),
+                          ),
                         ),
                 ],
               ),

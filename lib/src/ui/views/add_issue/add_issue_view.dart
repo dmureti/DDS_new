@@ -26,9 +26,11 @@ class AddIssueView extends StatelessWidget {
               subTitle: customer.name,
             ),
           ),
+          resizeToAvoidBottomInset: true,
+          resizeToAvoidBottomPadding: true,
           body: Container(
-            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-            child: Column(
+            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: ListView(
               children: [
                 TextField(
                   onChanged: model.updateSubject,
@@ -52,6 +54,7 @@ class AddIssueView extends StatelessWidget {
                   height: 8,
                 ),
                 DropdownButton(
+                    dropdownColor: Colors.white,
                     isExpanded: true,
                     hint: Text('Select an Issue Type'),
                     value: model.issueType,

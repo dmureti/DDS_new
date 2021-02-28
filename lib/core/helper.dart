@@ -7,6 +7,12 @@ class Helper {
     return formatted;
   }
 
+  static formatDate(DateTime dateTime) {
+    var formatter = DateFormat('dd MMM yyyy');
+    String formatted = formatter.format(dateTime);
+    return formatted;
+  }
+
   static String formatDateForAccounts(var valToFormat) {
     var formatter = DateFormat('dd MMM yyyy');
     String formatted = formatter.format(DateTime.parse(valToFormat));
