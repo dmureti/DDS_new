@@ -51,9 +51,10 @@ class StockControllerService {
     return result;
   }
 
-  Future getStockBalance() async {
+  getStockBalance() async {
     var result = await _api.getStockBalance(
         token: _user.token, branchId: currentJourney.route);
+
     return result;
   }
 }

@@ -7,19 +7,20 @@ class StockListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<StockListWidgetViewModel>.reactive(
-        builder: (context, model, child) => model.isBusy
+        onModelReady: (model) => model.fetchStockBalance(),
+        builder: (context, model, child) => model.productList == null
             ? CircularProgressIndicator()
             : Expanded(
                 child: ListView.builder(
                   itemBuilder: (context, index) {
-                    Product product = model.data[index];
+                    Product product = model.productList[index];
                     return ListTile(
                       title: Text(product.itemName),
                       subtitle: Text(product.itemCode),
                       trailing: Text(product.quantity.toStringAsFixed(0)),
                     );
                   },
-                  itemCount: model.data.length,
+                  itemCount: model.productList.length,
                 ),
               ),
         viewModelBuilder: () => StockListWidgetViewModel());
