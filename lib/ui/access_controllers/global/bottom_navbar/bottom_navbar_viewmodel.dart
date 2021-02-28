@@ -13,7 +13,7 @@ class BottomNavBarViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  BottomNavBarViewModel(this.onTap);
+  BottomNavBarViewModel(this.onTap, int index) : _index = index ?? 0;
 
   StockControllerService _stockControllerService = StockControllerService();
   CustomerService _customerService = CustomerService();

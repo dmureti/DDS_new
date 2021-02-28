@@ -24,7 +24,7 @@ class ButtonBarIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<BottomNavBarViewModel>.reactive(
-      viewModelBuilder: () => BottomNavBarViewModel(onTap),
+      viewModelBuilder: () => BottomNavBarViewModel(onTap, index),
       builder: (context, model, child) => IconButton(
         splashColor: Colors.pink,
         icon: Icon(

@@ -6,10 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class BottomNavBar extends StatelessWidget {
+  final int index;
   final Function onTap;
   final HomeViewModel homeViewModel;
   const BottomNavBar(
-      {@required this.onTap, @required this.homeViewModel, Key key})
+      {@required this.onTap, @required this.homeViewModel, this.index, Key key})
       : super(key: key);
 
   @override
@@ -105,7 +106,7 @@ class BottomNavBar extends StatelessWidget {
               label: 'Customers'.toUpperCase(),
             ),
           ]),
-      viewModelBuilder: () => BottomNavBarViewModel(onTap),
+      viewModelBuilder: () => BottomNavBarViewModel(onTap, index),
     );
   }
 }

@@ -68,6 +68,7 @@ class HomeView extends StatelessWidget {
           child: BottomNavBar(
             homeViewModel: model,
             onTap: model.updateCurrentIndex,
+            index: index,
           ),
         ),
         drawer: Drawer(
