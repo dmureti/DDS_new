@@ -94,8 +94,13 @@ class Router extends RouterBase {
           settings: settings,
         );
       case Routes.homeViewRoute:
+        if (hasInvalidArgs<HomeViewArguments>(args)) {
+          return misTypedArgsRoute<HomeViewArguments>(args);
+        }
+        final typedArgs = args as HomeViewArguments ?? HomeViewArguments();
         return MaterialPageRoute<dynamic>(
-          builder: (context) => HomeView(),
+          builder: (context) =>
+              HomeView(key: typedArgs.key, index: typedArgs.index),
           settings: settings,
         );
       case Routes.forgotPasswordRoute:
@@ -252,6 +257,13 @@ class Router extends RouterBase {
 class StartupViewArguments {
   final Key key;
   StartupViewArguments({this.key});
+}
+
+//HomeView arguments holder class
+class HomeViewArguments {
+  final Key key;
+  final int index;
+  HomeViewArguments({this.key, this.index});
 }
 
 //CustomerDetailView arguments holder class

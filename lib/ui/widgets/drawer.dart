@@ -37,7 +37,7 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
             label: 'Home',
             onTap: () {
               Navigator.pop(context);
-              model.navigateToHome();
+              model.navigateToHome(0);
             },
             iconData: Icons.home,
           ),
@@ -45,7 +45,7 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
             label: 'Journey',
             onTap: () {
               Navigator.pop(context);
-              model.navigateToHome();
+              model.navigateToHome(1);
             },
             iconData: Icons.swap_calls,
           ),
@@ -53,7 +53,7 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
             label: 'Stock Controller',
             onTap: () {
               Navigator.pop(context);
-              model.navigateToHome();
+              model.navigateToHome(2);
             },
             iconData: Icons.apps,
           ),
@@ -61,7 +61,7 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
             label: 'Sales',
             onTap: () {
               Navigator.pop(context);
-              model.navigateToHome();
+              model.navigateToHome(3);
             },
             iconData: Icons.add_shopping_cart,
           ),
@@ -69,7 +69,7 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
             label: 'Customers',
             onTap: () {
               Navigator.pop(context);
-              model.navigateToHome();
+              model.navigateToHome(4);
             },
             iconData: Icons.people,
           ),
@@ -78,7 +78,7 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
             title: Text('Notifications'),
             onTap: () {
               Navigator.pop(context);
-              model.navigateToHome();
+              model.navigateToHome(5);
             },
           ),
           ListTile(

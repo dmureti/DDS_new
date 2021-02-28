@@ -1,7 +1,12 @@
 import 'package:badges/badges.dart';
 import 'package:distributor/ui/access_controllers/global/bottom_navbar/bottom_nav_bar.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
+import 'package:distributor/ui/views/adhoc_sales/adhoc_sales_view.dart';
+import 'package:distributor/ui/views/customers/customer_view.dart';
+import 'package:distributor/ui/views/dashboard/dashboard_view.dart';
 import 'package:distributor/ui/views/home/home_viewmodel.dart';
+import 'package:distributor/ui/views/routes/route_listing_view.dart';
+import 'package:distributor/ui/views/stock/stock_view.dart';
 import 'package:distributor/ui/widgets/drawer.dart';
 import 'package:distributor/ui/widgets/reactive/map_icon_button/map_iconbutton.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +25,7 @@ class HomeView extends StatelessWidget {
         appBar: AppBar(
           actionsIconTheme: IconThemeData(color: Colors.white),
           elevation: 0,
-          title: Text(
-            model.title,
-            style: TextStyle(color: Colors.white),
-          ),
+          title: _buildTitle(model.currentIndex),
           actions: <Widget>[
             IconButton(
               onPressed: () => model.refresh(),
@@ -65,7 +67,7 @@ class HomeView extends StatelessWidget {
           ),
           child: BottomNavBar(
             homeViewModel: model,
-            onTap: model.updatePageToDisplay,
+            onTap: model.updateCurrentIndex,
           ),
         ),
         drawer: Drawer(
@@ -76,9 +78,73 @@ class HomeView extends StatelessWidget {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : model.pageContent,
+            : _buildContent(model.currentIndex),
       ),
       viewModelBuilder: () => HomeViewModel(index),
     );
+  }
+
+  _buildContent(int index) {
+    switch (index) {
+      case 0:
+        return DashboardView();
+        break;
+      case 1:
+        return RoutesListingView();
+        break;
+      case 2:
+        return AdhocSalesView();
+        break;
+      case 3:
+        return StockView();
+        break;
+      case 4:
+        return CustomerView();
+        break;
+      default:
+        return DashboardView();
+        break;
+    }
+  }
+
+  _buildTitle(int index) {
+    switch (index) {
+      case 0:
+        return Text(
+          'Home',
+          style: TextStyle(color: Colors.white),
+        );
+        break;
+      case 1:
+        return Text(
+          'Journey',
+          style: TextStyle(color: Colors.white),
+        );
+        break;
+      case 2:
+        return Text(
+          'Adhoc Sales',
+          style: TextStyle(color: Colors.white),
+        );
+        break;
+      case 3:
+        return Text(
+          'Stock Balance',
+          style: TextStyle(color: Colors.white),
+        );
+        break;
+      case 4:
+        return Text(
+          'Customers',
+          style: TextStyle(color: Colors.white),
+        );
+        break;
+      default:
+        return Text(
+          'Home',
+          style: TextStyle(color: Colors.white),
+        );
+        break;
+    }
   }
 }

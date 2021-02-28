@@ -31,14 +31,17 @@ class BottomNavBar extends StatelessWidget {
           items: [
             BottomNavigationBarItem(
               backgroundColor: Color(0xFF182848),
-              icon: ButtonBarIconButton(
-                  onTap: onTap,
-                  title: 'Home',
-                  index: 0,
-                  isEnabled: model.enableHomeTab,
-                  page: Pages.home,
-                  iconData: Icons.home,
-                  updateIndex: model.updateIndex),
+              icon: IconButton(
+                splashColor: Colors.pink,
+                icon: Icon(Icons.home),
+                onPressed: model.onJourneyTabTap()
+                    ? () {
+                        model.updateIndex(0);
+                        onTap(model.index);
+                        // onTap(Pages.routes, "Routes");
+                      }
+                    : null,
+              ),
               label: 'Home'.toUpperCase(),
             ),
             BottomNavigationBarItem(
@@ -49,7 +52,8 @@ class BottomNavBar extends StatelessWidget {
                 onPressed: model.onJourneyTabTap()
                     ? () {
                         model.updateIndex(1);
-                        onTap(Pages.routes, "Routes");
+                        onTap(model.index);
+                        // onTap(Pages.routes, "Routes");
                       }
                     : null,
               ),
@@ -63,7 +67,8 @@ class BottomNavBar extends StatelessWidget {
                 onPressed: model.onStockBalanceTap()
                     ? () {
                         model.updateIndex(2);
-                        onTap(Pages.adhoc, "Adhoc Sales");
+                        onTap(model.index);
+                        // onTap(Pages.adhoc, "Adhoc Sales");
                       }
                     : null,
               ),
@@ -77,7 +82,8 @@ class BottomNavBar extends StatelessWidget {
                 onPressed: model.onStockBalanceTap()
                     ? () {
                         model.updateIndex(3);
-                        onTap(Pages.products, "Stock Balance");
+                        // onTap(Pages.products, "Stock Balance");
+                        onTap(model.index);
                       }
                     : null,
               ),
@@ -90,7 +96,8 @@ class BottomNavBar extends StatelessWidget {
                 onPressed: model.onCustomerTabTap()
                     ? () {
                         model.updateIndex(4);
-                        onTap(Pages.customers, "Customers");
+                        onTap(model.index);
+                        // onTap(Pages.customers, "Customers");
                       }
                     : null,
                 icon: Icon(Icons.people),

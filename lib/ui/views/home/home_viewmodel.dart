@@ -32,7 +32,7 @@ class HomeViewModel extends ReactiveViewModel {
   InitService _initService = locator<InitService>();
   AccessControlService _accessControlService = locator<AccessControlService>();
 
-  HomeViewModel(this.index);
+  HomeViewModel(int index) : _currentIndex = index;
 
   String get noOfUpdates => _activityService.noOfUpdates.toString();
 
@@ -83,6 +83,11 @@ class HomeViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
+  updateCurrentPage(int index) {
+    _currentIndex = index;
+    notifyListeners();
+  }
+
   buildPage() {
     switch (_pageToDisplay) {
       case Pages.home:
@@ -130,9 +135,15 @@ class HomeViewModel extends ReactiveViewModel {
   List<ReactiveServiceMixin> get reactiveServices =>
       [_logisticsService, _journeyService, _activityService];
 
-  navigateToHome() {
-    _navigationService.navigateTo(Routes.homeViewRoute);
+  navigateToHome(int index) {
+    _navigationService.clearStackAndShow(Routes.homeViewRoute,
+        arguments: HomeViewArguments(index: index));
   }
 
-  final int index;
+  int _currentIndex;
+  int get currentIndex => _currentIndex;
+  updateCurrentIndex(int val) {
+    _currentIndex = val;
+    notifyListeners();
+  }
 }
