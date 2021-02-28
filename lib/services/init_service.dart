@@ -14,10 +14,10 @@ class InitService {
   bool _rememberMe;
   bool get rememberMe => _rememberMe;
 
-  String _email = "";
+  String _email;
   String get email => _email;
 
-  String _password = "";
+  String _password;
   String get password => _password;
 
   AppEnv _appEnv;
@@ -40,6 +40,7 @@ class InitService {
     prefs = await _prefs;
     if (prefs.containsKey('rememberMe')) {
       _rememberMe = await prefs.getBool('rememberMe');
+      await fetchUserCredentials();
       return true;
     } else {
       _rememberMe = false;
@@ -51,7 +52,7 @@ class InitService {
     if (value) {
       return await prefs.setBool('rememberMe', value);
     } else {
-      return await prefs.remove('rememberMe');
+      return await prefs.setBool('rememberMe', value);
     }
   }
 

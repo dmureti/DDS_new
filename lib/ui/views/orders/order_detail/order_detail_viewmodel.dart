@@ -129,6 +129,12 @@ class OrderDetailViewModel extends ReactiveViewModel {
         }
         break;
       case 'partial_delivery':
+        var result = await _navigationService.navigateTo(
+            Routes.partialDeliveryView,
+            arguments: PartialDeliveryViewArguments(
+                salesOrder: salesOrder,
+                deliveryJourney: deliveryJourney,
+                stopId: stopId));
         break;
       case 'add_payment':
         var result = await _navigationService.navigateTo(Routes.addPaymentView,

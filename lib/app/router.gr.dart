@@ -24,6 +24,7 @@ import 'package:distributor/ui/views/link_payment/link_payment_view.dart';
 import 'package:distributor/core/models/payment_link.dart';
 import 'package:distributor/ui/views/payment_reference/payment_reference_view.dart';
 import 'package:distributor/src/ui/views/add_payment/add_payment_view.dart';
+import 'package:distributor/src/ui/views/partial_delivery/partial_delivery_view.dart';
 import 'package:distributor/src/ui/views/add_issue/add_issue_view.dart';
 import 'package:distributor/src/ui/views/add_adhoc_sale/add_adhoc_sale_view.dart';
 
@@ -43,6 +44,7 @@ abstract class Routes {
   static const linkPaymentView = '/link-payment-view';
   static const paymentReferenceView = '/payment-reference-view';
   static const addPaymentView = '/add-payment-view';
+  static const partialDeliveryView = '/partial-delivery-view';
   static const addIssueView = '/add-issue-view';
   static const adhocSaleView = '/adhoc-sale-view';
   static const all = {
@@ -61,6 +63,7 @@ abstract class Routes {
     linkPaymentView,
     paymentReferenceView,
     addPaymentView,
+    partialDeliveryView,
     addIssueView,
     adhocSaleView,
   };
@@ -89,8 +92,15 @@ class Router extends RouterBase {
           settings: settings,
         );
       case Routes.loginViewRoute:
+        if (hasInvalidArgs<LoginViewArguments>(args)) {
+          return misTypedArgsRoute<LoginViewArguments>(args);
+        }
+        final typedArgs = args as LoginViewArguments ?? LoginViewArguments();
         return MaterialPageRoute<dynamic>(
-          builder: (context) => LoginView(),
+          builder: (context) => LoginView(
+              key: typedArgs.key,
+              email: typedArgs.email,
+              password: typedArgs.password),
           settings: settings,
         );
       case Routes.homeViewRoute:
@@ -221,6 +231,20 @@ class Router extends RouterBase {
               AddPaymentView(key: typedArgs.key, customer: typedArgs.customer),
           settings: settings,
         );
+      case Routes.partialDeliveryView:
+        if (hasInvalidArgs<PartialDeliveryViewArguments>(args)) {
+          return misTypedArgsRoute<PartialDeliveryViewArguments>(args);
+        }
+        final typedArgs = args as PartialDeliveryViewArguments ??
+            PartialDeliveryViewArguments();
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => PartialDeliveryView(
+              key: typedArgs.key,
+              salesOrder: typedArgs.salesOrder,
+              deliveryJourney: typedArgs.deliveryJourney,
+              stopId: typedArgs.stopId),
+          settings: settings,
+        );
       case Routes.addIssueView:
         if (hasInvalidArgs<AddIssueViewArguments>(args)) {
           return misTypedArgsRoute<AddIssueViewArguments>(args);
@@ -257,6 +281,14 @@ class Router extends RouterBase {
 class StartupViewArguments {
   final Key key;
   StartupViewArguments({this.key});
+}
+
+//LoginView arguments holder class
+class LoginViewArguments {
+  final Key key;
+  final String email;
+  final String password;
+  LoginViewArguments({this.key, this.email, this.password});
 }
 
 //HomeView arguments holder class
@@ -336,6 +368,16 @@ class AddPaymentViewArguments {
   final Key key;
   final Customer customer;
   AddPaymentViewArguments({this.key, this.customer});
+}
+
+//PartialDeliveryView arguments holder class
+class PartialDeliveryViewArguments {
+  final Key key;
+  final dynamic salesOrder;
+  final DeliveryJourney deliveryJourney;
+  final String stopId;
+  PartialDeliveryViewArguments(
+      {this.key, this.salesOrder, this.deliveryJourney, this.stopId});
 }
 
 //AddIssueView arguments holder class

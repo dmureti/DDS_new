@@ -10,12 +10,32 @@ import 'package:tripletriocore/tripletriocore.dart';
 import 'login.i18n.dart';
 
 class LoginView extends StatefulWidget {
+  final String email;
+  final String password;
+
+  const LoginView({Key key, this.email, this.password}) : super(key: key);
   @override
   _LoginViewState createState() => _LoginViewState();
 }
 
 class _LoginViewState extends State<LoginView> {
   final _formKey = GlobalKey<FormState>();
+
+  TextEditingController _emailController;
+  TextEditingController _passwordController;
+  @override
+  void initState() {
+    _emailController = TextEditingController(text: widget.email);
+    _passwordController = TextEditingController(text: widget.password);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _emailController?.dispose();
+    _passwordController?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +54,7 @@ class _LoginViewState extends State<LoginView> {
                   children: [
                     Expanded(
                       child: DropdownButton(
+                        dropdownColor: Colors.white,
                         isExpanded: true,
                         onChanged: (AppEnv val) {
                           model.updateEnv(val);
@@ -43,7 +64,7 @@ class _LoginViewState extends State<LoginView> {
                             .map((e) => DropdownMenuItem(
                                   child: Text(
                                     e.name,
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(color: Colors.black),
                                   ),
                                   value: e,
                                 ))
@@ -90,130 +111,121 @@ class _LoginViewState extends State<LoginView> {
                           ],
                         ),
                       ),
-                      model.rememberMe == null
-                          ? Container()
-                          : Expanded(
-                              flex: 4,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  TextFormFieldPadding(
-                                    child: TextFormField(
-                                      initialValue: model.email,
-                                      autofocus: true,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 20),
-                                      onChanged: (String val) {
-                                        model.updateEmail(val);
-                                      },
-                                      validator: (String value) {
-                                        if (value != null &&
-                                            !EmailValidator.validate(value)) {
-                                          return 'Please enter a valid email address';
-                                        }
-                                        return null;
-                                      },
-                                      keyboardType: TextInputType.emailAddress,
-                                      decoration: InputDecoration(
-                                        hintText: 'Your email address',
-                                        hintStyle: TextStyle(
-                                            fontWeight: FontWeight.w600),
-                                        prefixIcon: Icon(Icons.email),
-                                      ),
-                                    ),
-                                  ),
-                                  model.emailValidationMessage == null
-                                      ? Container()
-                                      : FormErrorContainer(
-                                          errorMsg:
-                                              model.emailValidationMessage,
-                                        ),
-                                  TextFormFieldPadding(
-                                    child: TextFormField(
-                                      validator: (value) {
-                                        if (value.isEmpty) {
-                                          return "Please enter a password";
-                                        }
-                                        return null;
-                                      },
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 20),
-                                      onChanged: (String val) =>
-                                          model.updatePassword(val),
-                                      keyboardType: TextInputType.text,
-                                      obscureText: model.obscurePassword,
-                                      decoration: InputDecoration(
-                                        hintText: '*****',
-                                        hintStyle: TextStyle(
-                                            fontWeight: FontWeight.w600),
-                                        prefixIcon: Icon(Icons.lock),
-                                        suffixIcon: IconButton(
-                                          onPressed:
-                                              model.toggleObscurePassword,
-                                          icon: model.obscurePassword
-                                              ? Icon(
-                                                  FontAwesomeIcons.eye,
-                                                  size: 15,
-                                                  color: Colors.white,
-                                                )
-                                              : Icon(
-                                                  FontAwesomeIcons.eyeSlash,
-                                                  size: 15,
-                                                  color: Colors.white,
-                                                ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  model.passwordValidationMessage == null
-                                      ? Container()
-                                      : FormErrorContainer(
-                                          errorMsg:
-                                              model.passwordValidationMessage,
-                                        ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 8.0, top: 10),
-                                        child: RememberMeCheckbox(),
-                                      ),
-//                      _buildPasswordForgetButton(context, model)
-                                    ],
-                                  ),
-                                  UIHelper.verticalSpace(30),
-                                  model.isBusy
-                                      ? Center(
-                                          child: CircularProgressIndicator(),
-                                        )
-                                      : RaisedButton(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 20, vertical: 14),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(18)),
-                                          child: Container(
-                                            width: 250,
-                                            child: Center(
-                                              child: Text(
-                                                'Sign in'.i18n.toUpperCase(),
-                                                style: kLoginButtonTextStyle,
-                                              ),
-                                            ),
-                                          ),
-                                          onPressed: () {
-                                            if (_formKey.currentState
-                                                .validate()) {
-                                              model.login();
-                                            }
-                                          })
-                                ],
+                      Expanded(
+                        flex: 4,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            TextFormFieldPadding(
+                              child: TextFormField(
+                                controller: _emailController,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 20),
+                                onChanged: (String val) {
+                                  model.updateEmail(val);
+                                },
+                                validator: (String value) {
+                                  if (value != null &&
+                                      !EmailValidator.validate(value)) {
+                                    return 'Please enter a valid email address';
+                                  }
+                                  return null;
+                                },
+                                keyboardType: TextInputType.emailAddress,
+                                decoration: InputDecoration(
+                                  hintText: 'Your email address',
+                                  hintStyle:
+                                      TextStyle(fontWeight: FontWeight.w600),
+                                  prefixIcon: Icon(Icons.email),
+                                ),
                               ),
                             ),
+                            model.emailValidationMessage == null
+                                ? Container()
+                                : FormErrorContainer(
+                                    errorMsg: model.emailValidationMessage,
+                                  ),
+                            TextFormFieldPadding(
+                              child: TextFormField(
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return "Please enter a password";
+                                  }
+                                  return null;
+                                },
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 20),
+                                onChanged: (String val) =>
+                                    model.updatePassword(val),
+                                keyboardType: TextInputType.text,
+                                controller: _passwordController,
+                                obscureText: model.obscurePassword,
+                                decoration: InputDecoration(
+                                  hintText: '*****',
+                                  hintStyle:
+                                      TextStyle(fontWeight: FontWeight.w600),
+                                  prefixIcon: Icon(Icons.lock),
+                                  suffixIcon: IconButton(
+                                    onPressed: model.toggleObscurePassword,
+                                    icon: model.obscurePassword
+                                        ? Icon(
+                                            FontAwesomeIcons.eye,
+                                            size: 15,
+                                            color: Colors.white,
+                                          )
+                                        : Icon(
+                                            FontAwesomeIcons.eyeSlash,
+                                            size: 15,
+                                            color: Colors.white,
+                                          ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            model.passwordValidationMessage == null
+                                ? Container()
+                                : FormErrorContainer(
+                                    errorMsg: model.passwordValidationMessage,
+                                  ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 8.0, top: 10),
+                                  child: RememberMeCheckbox(),
+                                ),
+//                      _buildPasswordForgetButton(context, model)
+                              ],
+                            ),
+                            UIHelper.verticalSpace(30),
+                            model.isBusy
+                                ? Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : RaisedButton(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 14),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(18)),
+                                    child: Container(
+                                      width: 250,
+                                      child: Center(
+                                        child: Text(
+                                          'Sign in'.i18n.toUpperCase(),
+                                          style: kLoginButtonTextStyle,
+                                        ),
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      if (_formKey.currentState.validate()) {
+                                        model.login();
+                                      }
+                                    })
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -222,7 +234,7 @@ class _LoginViewState extends State<LoginView> {
           ),
         ),
       ),
-      viewModelBuilder: () => LoginViewModel(),
+      viewModelBuilder: () => LoginViewModel(widget.email, widget.password),
     );
   }
 }

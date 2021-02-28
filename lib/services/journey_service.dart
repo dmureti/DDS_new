@@ -7,6 +7,7 @@ import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/user_service.dart';
 
 import 'package:distributor/ui/widgets/smart_widgets/info_bar/info_bar_widget_viewmodel.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:observable_ish/observable_ish.dart';
 import 'package:stacked/stacked.dart';
 
@@ -138,6 +139,15 @@ class JourneyService with ReactiveServiceMixin {
       _noOfCompletedStops.value++;
     }
 
+    return result;
+  }
+
+  Future makePartialDelivery(
+      {@required String journeyId, @required Map<String, dynamic> data}) async {
+    var result = await _api.makeCustomDelivery(journeyId, _user.token, data);
+    if (result is! CustomException) {
+      _noOfCompletedStops.value++;
+    }
     return result;
   }
 

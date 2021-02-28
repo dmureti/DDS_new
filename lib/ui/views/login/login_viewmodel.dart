@@ -15,16 +15,20 @@ class LoginViewModel extends BaseViewModel {
 
   List<AppEnv> get environments => _initService.availableEnvList;
 
+  LoginViewModel(String email, String password)
+      : _email = email,
+        _password = password;
+
   init() async {
     _rememberMe = _initService.rememberMe;
-    if (rememberMe) {
-      await _initService.fetchUserCredentials();
-      _email = _initService.email;
-      _password = _initService.password;
-      print(_email);
-      notifyListeners();
-      // login();
-    }
+    // if (rememberMe) {
+    //   await _initService.fetchUserCredentials();
+    //   _email = _initService.email;
+    //   _password = _initService.password;
+    //   print(_email);
+    //   notifyListeners();
+    //   // login();
+    // }
   }
 
   bool _rememberMe;
@@ -70,10 +74,10 @@ class LoginViewModel extends BaseViewModel {
   String _password;
   String get password => _password;
 
-  login() async {
+  login({String email, String password}) async {
     setBusy(true);
     if (rememberMe) {
-      _initService.saveUserCredentials(email: email, password: password);
+      await _initService.saveUserCredentials(email: email, password: password);
     }
     var result = await authenticationService.loginWithEmailAndPassword(
         email: _email.trim(), password: _password.trim());

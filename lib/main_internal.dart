@@ -30,5 +30,6 @@ void main() async {
     ),
   ];
   _initService.setAvailableEnvList(_appEnv);
+
   runApp(MainApp());
 }

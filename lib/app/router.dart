@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route_annotations.dart';
 import 'package:distributor/src/ui/views/add_adhoc_sale/add_adhoc_sale_view.dart';
 import 'package:distributor/src/ui/views/add_issue/add_issue_view.dart';
 import 'package:distributor/src/ui/views/add_payment/add_payment_view.dart';
+import 'package:distributor/src/ui/views/partial_delivery/partial_delivery_view.dart';
 import 'package:distributor/ui/views/customer_location.dart';
 import 'package:distributor/ui/views/customers/customer_detail/customer_detail_view.dart';
 import 'package:distributor/ui/views/forgot_password/forgot_password_route.dart';
@@ -36,6 +37,7 @@ class $Router {
   LinkPaymentView linkPaymentView;
   PaymentReferenceView paymentReferenceView;
   AddPaymentView addPaymentView;
+  PartialDeliveryView partialDeliveryView;
   AddIssueView addIssueView;
   AddAdhocSaleView adhocSaleView;
 }
