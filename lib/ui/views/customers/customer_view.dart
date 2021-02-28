@@ -43,53 +43,55 @@ class CustomerView extends StatelessWidget {
                                 builder: (BuildContext ctx) {
                                   return StatefulBuilder(
                                     builder: (ctx, state) {
-                                      return Container(
-                                          margin: EdgeInsets.only(top: 20),
-                                          child: Column(
-                                            children: <Widget>[
-                                              Container(
-                                                height: 50,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: <Widget>[
-                                                    Text(
-                                                      'Filter',
-                                                      style: TextStyle(
-                                                          fontSize: 18),
-                                                    ),
-                                                    IconButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(
-                                                              context),
-                                                      icon: Icon(Icons.close),
-                                                    ),
-                                                  ],
+                                      return SafeArea(
+                                        child: Container(
+                                            margin: EdgeInsets.only(top: 20),
+                                            child: Column(
+                                              children: <Widget>[
+                                                Container(
+                                                  height: 50,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: <Widget>[
+                                                      Text(
+                                                        'Filter',
+                                                        style: TextStyle(
+                                                            fontSize: 18),
+                                                      ),
+                                                      IconButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                context),
+                                                        icon: Icon(Icons.close),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                              Expanded(
-                                                child: ListView.builder(
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    String branch =
-                                                        model.branches[index];
-                                                    return CheckboxListTile(
-                                                      value:
-                                                          model.route[branch],
-                                                      onChanged: (value) {
-                                                        model.updateFilters(
-                                                            value, branch);
-                                                      },
-                                                      title: Text(branch),
-                                                    );
-                                                  },
-                                                  itemCount:
-                                                      model.branches.length,
+                                                Expanded(
+                                                  child: ListView.builder(
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      String branch =
+                                                          model.branches[index];
+                                                      return CheckboxListTile(
+                                                        value:
+                                                            model.route[branch],
+                                                        onChanged: (value) {
+                                                          model.updateFilters(
+                                                              value, branch);
+                                                        },
+                                                        title: Text(branch),
+                                                      );
+                                                    },
+                                                    itemCount:
+                                                        model.branches.length,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          ));
+                                              ],
+                                            )),
+                                      );
                                     },
                                   );
                                 });
