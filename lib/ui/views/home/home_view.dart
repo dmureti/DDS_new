@@ -9,6 +9,9 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeView extends StatelessWidget {
+  final int index;
+
+  const HomeView({Key key, this.index}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
@@ -75,7 +78,7 @@ class HomeView extends StatelessWidget {
               )
             : model.pageContent,
       ),
-      viewModelBuilder: () => HomeViewModel(),
+      viewModelBuilder: () => HomeViewModel(index),
     );
   }
 }

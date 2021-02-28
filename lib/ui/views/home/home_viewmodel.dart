@@ -32,6 +32,8 @@ class HomeViewModel extends ReactiveViewModel {
   InitService _initService = locator<InitService>();
   AccessControlService _accessControlService = locator<AccessControlService>();
 
+  HomeViewModel(this.index);
+
   String get noOfUpdates => _activityService.noOfUpdates.toString();
 
   refresh() async {
@@ -127,4 +129,10 @@ class HomeViewModel extends ReactiveViewModel {
   @override
   List<ReactiveServiceMixin> get reactiveServices =>
       [_logisticsService, _journeyService, _activityService];
+
+  navigateToHome() {
+    _navigationService.navigateTo(Routes.homeViewRoute);
+  }
+
+  final int index;
 }

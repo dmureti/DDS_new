@@ -35,33 +35,51 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
           )),
           DrawerListTile(
             label: 'Home',
-            onTap: null,
+            onTap: () {
+              Navigator.pop(context);
+              model.navigateToHome();
+            },
             iconData: Icons.home,
           ),
           DrawerListTile(
             label: 'Journey',
-            onTap: null,
+            onTap: () {
+              Navigator.pop(context);
+              model.navigateToHome();
+            },
             iconData: Icons.swap_calls,
           ),
           DrawerListTile(
             label: 'Stock Controller',
-            onTap: null,
+            onTap: () {
+              Navigator.pop(context);
+              model.navigateToHome();
+            },
             iconData: Icons.apps,
           ),
           DrawerListTile(
             label: 'Sales',
-            onTap: null,
+            onTap: () {
+              Navigator.pop(context);
+              model.navigateToHome();
+            },
             iconData: Icons.add_shopping_cart,
           ),
           DrawerListTile(
             label: 'Customers',
-            onTap: null,
+            onTap: () {
+              Navigator.pop(context);
+              model.navigateToHome();
+            },
             iconData: Icons.people,
           ),
           ListTile(
             trailing: Icon(Icons.notifications),
             title: Text('Notifications'),
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context);
+              model.navigateToHome();
+            },
           ),
           ListTile(
             title: Text('Log out'),
