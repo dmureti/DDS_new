@@ -14,14 +14,16 @@ class StopsListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<StopsListWidgetViewModel>.reactive(
-        builder: (context, model, child) => model.isBusy
+        onModelReady: (model) => model.getJourneyDetails(),
+        builder: (context, model, child) => model.deliveryJourney == null
             ? Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CircularProgressIndicator(),
               )
             : Column(
                 mainAxisSize: MainAxisSize.min,
-                children: model.data.stops.map((DeliveryStop deliveryStop) {
+                children: model.deliveryJourney.stops
+                    .map((DeliveryStop deliveryStop) {
                   if (deliveryStop.orderId.length != 0) {
                     return StopListTile(
                       salesOrderId: deliveryStop.orderId,

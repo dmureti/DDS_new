@@ -158,7 +158,7 @@ class _JourneyOrder extends HookViewModelWidget<DeliveryJourneyMapViewModel> {
               )
             : Container(
                 child: Column(
-                  children: model.data.stops
+                  children: model.deliveryJourney.stops
                       .where((deliveryStop) => deliveryStop.orderId.isNotEmpty)
                       .map<Widget>((deliveryStop) => Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),

@@ -373,7 +373,7 @@ class AddPaymentViewArguments {
 //PartialDeliveryView arguments holder class
 class PartialDeliveryViewArguments {
   final Key key;
-  final dynamic salesOrder;
+  final SalesOrder salesOrder;
   final DeliveryJourney deliveryJourney;
   final String stopId;
   PartialDeliveryViewArguments(

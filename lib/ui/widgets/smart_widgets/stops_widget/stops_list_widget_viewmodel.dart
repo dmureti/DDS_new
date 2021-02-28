@@ -6,7 +6,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
-class StopsListWidgetViewModel extends FutureViewModel<DeliveryJourney> {
+class StopsListWidgetViewModel extends BaseViewModel {
   ApiService _apiService = locator<ApiService>();
   UserService _userService = locator<UserService>();
   DialogService _dialogService = locator<DialogService>();
@@ -21,28 +21,20 @@ class StopsListWidgetViewModel extends FutureViewModel<DeliveryJourney> {
       : _journeyId = journeyId,
         assert(journeyId != null);
 
-  Future<DeliveryJourney> getJourneyDetails() async {
-    DeliveryJourney deliveryJourney = await _apiService.api.getJourneyDetails(
-        token: _userService.user.token, journeyId: _journeyId);
-    return deliveryJourney;
-  }
-
-  @override
-  Future<DeliveryJourney> futureToRun() async {
+  getJourneyDetails() async {
     var result = await _apiService.api.getJourneyDetails(
         token: _userService.user.token, journeyId: _journeyId);
-    return result;
+    if (result is DeliveryJourney) {
+      _deliveryJourney = result;
+      notifyListeners();
+    } else if (result is CustomException) {
+      return await _dialogService.showDialog(
+          title: result.title, description: result.description);
+    }
   }
 
   getAddress() {
     try {} catch (e) {}
-  }
-
-  @override
-  void onError(error) {
-    _dialogService.showDialog(
-        title: 'Error fetching stops', description: error);
-    super.onError(error);
   }
 
   Future fetchCustomerDetails(String customerId) async {
