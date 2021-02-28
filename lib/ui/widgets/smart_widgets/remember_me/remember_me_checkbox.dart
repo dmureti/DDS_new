@@ -1,27 +1,24 @@
-import 'package:distributor/ui/widgets/smart_widgets/remember_me/remember_me_viewmodel.dart';
+import 'package:distributor/ui/views/login/login_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:stacked/stacked.dart';
+import 'package:stacked_hooks/stacked_hooks.dart';
 
-class RememberMeCheckbox extends StatelessWidget {
+class RememberMeCheckbox extends HookViewModelWidget<LoginViewModel> {
   @override
-  Widget build(BuildContext context) {
-    return ViewModelBuilder<RememberMeViewModel>.reactive(
-      viewModelBuilder: () => RememberMeViewModel(),
-      builder: (context, model, child) => Row(
-        children: [
-          Checkbox(
-            checkColor: Colors.white,
-            onChanged: (val) async {
-              await model.toggleSavePassword(val);
-            },
-            value: model.rememberMe,
-          ),
-          Text(
-            'Remember me',
-            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 19),
-          ),
-        ],
-      ),
+  Widget buildViewModelWidget(BuildContext context, LoginViewModel model) {
+    return Row(
+      children: [
+        Checkbox(
+          checkColor: Colors.white,
+          onChanged: (val) async {
+            model.toggleSavePassword(val);
+          },
+          value: model.rememberMe,
+        ),
+        Text(
+          'Remember me',
+          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 19),
+        ),
+      ],
     );
   }
 }

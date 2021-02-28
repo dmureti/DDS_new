@@ -48,8 +48,11 @@ class InitService {
   }
 
   Future<bool> toggleSavePassword(bool value) async {
-    _rememberMe = await prefs.setBool('rememberMe', value);
-    return true;
+    if (value) {
+      return await prefs.setBool('rememberMe', value);
+    } else {
+      return await prefs.remove('rememberMe');
+    }
   }
 
   saveUserCredentials({String email, String password}) async {

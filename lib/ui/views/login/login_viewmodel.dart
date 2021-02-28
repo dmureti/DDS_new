@@ -15,6 +15,27 @@ class LoginViewModel extends BaseViewModel {
 
   List<AppEnv> get environments => _initService.availableEnvList;
 
+  init() async {
+    _rememberMe = _initService.rememberMe;
+    if (rememberMe) {
+      await _initService.fetchUserCredentials();
+      _email = _initService.email;
+      _password = _initService.password;
+      print(_email);
+      notifyListeners();
+      // login();
+    }
+  }
+
+  bool _rememberMe;
+  bool get rememberMe => _rememberMe;
+
+  toggleSavePassword(bool val) async {
+    _rememberMe = !rememberMe;
+    await _initService.toggleSavePassword(val);
+    notifyListeners();
+  }
+
   updateEnv(AppEnv val) {
     _initService.updateAppEnv(val);
     notifyListeners();
@@ -51,6 +72,9 @@ class LoginViewModel extends BaseViewModel {
 
   login() async {
     setBusy(true);
+    if (rememberMe) {
+      _initService.saveUserCredentials(email: email, password: password);
+    }
     var result = await authenticationService.loginWithEmailAndPassword(
         email: _email.trim(), password: _password.trim());
     setBusy(false);
