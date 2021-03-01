@@ -39,6 +39,7 @@ class AdhocSalesView extends StatelessWidget {
                                     ? StepState.editing
                                     : StepState.complete,
                             content: DropdownButton(
+                              key: Key('selectCustomerTypeKey'),
                               dropdownColor: Colors.white,
                               isExpanded: true,
                               hint: Text('Select a customer type'),
@@ -68,6 +69,7 @@ class AdhocSalesView extends StatelessWidget {
                                           )
                                         : model.customerList.length > 0
                                             ? DropdownButton(
+                                                key: Key('selectCustomerKey'),
                                                 dropdownColor: Colors.white,
                                                 isExpanded: true,
                                                 hint: Text('Select customer'),
@@ -86,20 +88,57 @@ class AdhocSalesView extends StatelessWidget {
                                 : Text('Select a customer type'),
                           ),
                           Step(
-                              title: Text('Cart Items'),
+                            title: Text('Cart Items'),
+                            state: model.customerType == null
+                                ? StepState.disabled
+                                : model.currentIndex == 2
+                                    ? StepState.editing
+                                    : StepState.complete,
+                            isActive: model.currentIndex == 2 ? true : false,
+                            content: model.productList == null
+                                ? Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : model.productList.length > 0
+                                    ? Text('')
+                                    : Text('No products found'),
+                          ),
+                          Step(
                               state: model.customerType == null
                                   ? StepState.disabled
-                                  : model.currentIndex == 2
+                                  : model.currentIndex == 3
                                       ? StepState.editing
                                       : StepState.complete,
-                              isActive: model.currentIndex == 2 ? true : false,
-                              content: model.productList == null
-                                  ? Center(
-                                      child: CircularProgressIndicator(),
-                                    )
-                                  : model.productList.length > 0
-                                      ? Text('')
-                                      : Text('No products found')),
+                              isActive: model.currentIndex == 3 ? true : false,
+                              title: Text('Payment'),
+                              content: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  DropdownButton(
+                                      key: Key('paymentmodes'),
+                                      items: model.paymentModes
+                                          .map((e) => DropdownMenuItem(
+                                                child: Text(e),
+                                                value: e,
+                                              ))
+                                          .toList(),
+                                      value: model.paymentMode,
+                                      isExpanded: true,
+                                      dropdownColor: Colors.white,
+                                      hint: Text('Select payment mode'),
+                                      onChanged: (val) {
+                                        model.setPaymentType(val);
+                                      }),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text('Amount : Kshs'),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  _RemarksTextField(),
+                                ],
+                              ))
                         ],
                       ),
                     ],
@@ -110,8 +149,12 @@ class AdhocSalesView extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: RaisedButton(
-                      onPressed: model.isCompleted ? () {} : null,
-                      child: Text('PROCEED TO PAYMENT'),
+                      onPressed: model.isCompleted
+                          ? () {
+                              model.createPayment();
+                            }
+                          : null,
+                      child: Text('COMPLETE'),
                     ),
                   ),
                 )
@@ -133,6 +176,23 @@ class _CustomerNameTextField extends HookViewModelWidget<AdhocSalesViewModel> {
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
         hintText: 'Name of customer',
+      ),
+    );
+  }
+}
+
+class _RemarksTextField extends HookViewModelWidget<AdhocSalesViewModel> {
+  @override
+  Widget buildViewModelWidget(BuildContext context, AdhocSalesViewModel model) {
+    var remarksController = useTextEditingController();
+    return TextFormField(
+      controller: remarksController,
+      minLines: 1,
+      maxLines: 3,
+      onChanged: model.updateRemarks,
+      keyboardType: TextInputType.name,
+      decoration: InputDecoration(
+        hintText: 'Remarks',
       ),
     );
   }

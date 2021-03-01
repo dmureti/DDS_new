@@ -28,7 +28,7 @@ class StopsListWidgetViewModel extends BaseViewModel {
       _deliveryJourney = result;
       notifyListeners();
     } else if (result is CustomException) {
-      return await _dialogService.showDialog(
+      await _dialogService.showDialog(
           title: result.title, description: result.description);
     }
   }
