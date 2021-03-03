@@ -10,6 +10,20 @@ class AccessControlService {
 
   List<Authority> get authList => user.authorities;
 
+  enableSignIn() {}
+  bool get enableHomeTab {
+    bool result = false;
+    Authority authManageState = Authority(auth: 'DJ.CTRL');
+    Authority authViewJourneyInfo = Authority(auth: 'DJ.VU');
+
+    bool res1 = checkIfAuthExists(authList, authManageState);
+    bool res2 = checkIfAuthExists(authList, authViewJourneyInfo);
+    if (res1 || res2) {
+      result = true;
+    }
+    return result;
+  }
+
   bool checkIfAuthExists(List<Authority> authList, Authority authority) {
     bool result = false;
     authList.forEach((auth) {
@@ -25,11 +39,12 @@ class AccessControlService {
   // Success : Return list of journeys
   // Default : View Display No journey assigned screen
   bool get enableJourneyTab {
-    Authority authManageState = Authority(auth: 'delivery_journey.control');
-    Authority authViewJourneyInfo = Authority(auth: 'delivery_journey.view');
+    bool result = false;
+    Authority authManageState = Authority(auth: 'DJ.CTRL');
+    Authority authViewJourneyInfo = Authority(auth: 'DJ.VU');
+
     bool res1 = checkIfAuthExists(authList, authManageState);
     bool res2 = checkIfAuthExists(authList, authViewJourneyInfo);
-    bool result = false;
     if (res1 || res2) {
       result = true;
     }
@@ -60,9 +75,10 @@ class AccessControlService {
   /// Success : Enable controls
   /// Default : Disable controls
   bool get enableJourneyControls {
-    Authority _authDeliveryJourneyControl =
-        Authority(auth: 'delivery_journey.control');
-    bool result = checkIfAuthExists(authList, _authDeliveryJourneyControl);
+    Authority _authDeliveryJourneyControl = Authority(auth: 'DN.INP');
+    Authority _authDeliveryJourneyControl1 = Authority(auth: 'DN.AUTH');
+    bool result = checkIfAuthExists(authList, _authDeliveryJourneyControl) ||
+        checkIfAuthExists(authList, _authDeliveryJourneyControl1);
     return result;
   }
 
@@ -71,8 +87,7 @@ class AccessControlService {
   /// Success : View the journey info.
   /// Default : Display no journey screen
   bool get viewJourneyInfo {
-    bool result =
-        checkIfAuthExists(authList, Authority(auth: 'delivery_journey.view'));
+    bool result = checkIfAuthExists(authList, Authority(auth: 'SO.VU'));
     return result;
   }
 
@@ -81,7 +96,7 @@ class AccessControlService {
   /// Success : Enable Tab, Navigate to stock balance, Fetch Stock balance
   /// Default : Disable stock balance tab
   bool get enableStockTab {
-    Authority authViewStock = Authority(auth: 'virtual_stock_balance.view');
+    Authority authViewStock = Authority(auth: 'VSB.VU');
     bool result = checkIfAuthExists(authList, authViewStock);
     return result;
   }
@@ -101,13 +116,18 @@ class AccessControlService {
   /// Success : Enable Tab, Navigate to Customers tab, Fetch customer data
   /// Default : Disable customers tab
   bool get enableCustomerTab {
-    Authority authCustomerFinancial =
-        Authority(auth: 'customer_financial.view');
-    Authority authCustomerStaticView = Authority(auth: 'customer_static.view');
+    Authority authCustomerFinancial = Authority(auth: 'CUS.VU');
+    Authority authCustomerStaticView = Authority(auth: 'CUF.VU');
+    Authority authCustomerCUAVU = Authority(auth: 'CUA.VU');
+    Authority authCustomerCUIVU = Authority(auth: 'CUI.VU');
+    Authority authCustomerSOVU = Authority(auth: 'SO.VU');
     bool result = false;
     bool res1 = checkIfAuthExists(authList, authCustomerFinancial);
     bool res2 = checkIfAuthExists(authList, authCustomerStaticView);
-    if (res1 || res2) {
+    bool res3 = checkIfAuthExists(authList, authCustomerCUAVU);
+    bool res4 = checkIfAuthExists(authList, authCustomerCUIVU);
+    bool res5 = checkIfAuthExists(authList, authCustomerSOVU);
+    if (res1 || res2 || res3 || res4 || res5) {
       result = true;
     }
     return result;
@@ -118,8 +138,7 @@ class AccessControlService {
   /// Success : Enable Tab, Navigate to tab, Fetch Orders
   /// Default : Disable tab
   bool get enableOrdersTab {
-    bool result =
-        checkIfAuthExists(authList, Authority(auth: 'sales_order.view'));
+    bool result = checkIfAuthExists(authList, Authority(auth: 'SO.VU'));
     return result;
   }
 
@@ -128,12 +147,12 @@ class AccessControlService {
   /// Success : Navigate to place sales order
   /// Default : Disable button
   bool enablePlaceOrderButton() {
-    Authority authSalesOrderInput = Authority(auth: 'sales_order.input');
-    Authority authSalesOrderCreate = Authority(auth: 'sales_order.create');
+    Authority authSalesOrderInput = Authority(auth: 'SO.INP');
+    // Authority authSalesOrderCreate = Authority(auth: 'sales_order.create');
     bool result = false;
     bool res1 = checkIfAuthExists(authList, authSalesOrderInput);
-    bool res2 = checkIfAuthExists(authList, authSalesOrderCreate);
-    if (res1 || res2) {
+    // bool res2 = checkIfAuthExists(authList, authSalesOrderCreate);
+    if (res1) {
       result = true;
     }
     return result;
@@ -144,9 +163,33 @@ class AccessControlService {
   /// Success : Enable Tab, Navigate to Tab, Fetch Accounts
   /// Default : Disable button
   bool enableAccountsTab() {
-    Authority authCustomerAccountView =
-        Authority(auth: 'customer_account.view');
+    Authority authCustomerAccountView = Authority(auth: 'CUA.VU');
     bool result = checkIfAuthExists(authList, authCustomerAccountView);
+    return result;
+  }
+
+  bool enableIssuesTab() {
+    Authority authCustomerAccountView = Authority(auth: ' CUI.VU');
+    bool result = checkIfAuthExists(authList, authCustomerAccountView);
+    return result;
+  }
+
+  bool enableInfoTab() {
+    Authority authCustomerAccountView = Authority(auth: 'CUS.VU');
+    Authority authCustomerAccountView1 = Authority(auth: 'CUF.VU');
+    bool result1 = checkIfAuthExists(authList, authCustomerAccountView);
+    bool result2 = checkIfAuthExists(authList, authCustomerAccountView1);
+    if (result2 || result1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool get enableAdhocView {
+    bool result = false;
+    Authority adhocSale = Authority(auth: 'SIAS.INP');
+    result = checkIfAuthExists(authList, adhocSale);
     return result;
   }
 }

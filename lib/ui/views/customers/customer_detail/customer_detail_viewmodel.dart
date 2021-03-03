@@ -71,6 +71,8 @@ class CustomerDetailViewModel extends BaseViewModel {
   bool get enableCreateOrderTab => _customerService.enablePlaceOrderButton();
   bool get enableAccountsTab => _customerService.enableAccountsTab;
   bool get enableOrdersTab => _customerService.enableOrdersTab;
+  bool get enableIssuesTab => _customerService.enableIssuesTab;
+  get enableInfoTab => _customerService.enableInfoTab;
 
   Future<bool> checkAuthority(int index) async {
     if (index == 2 && !enableAccountsTab) {

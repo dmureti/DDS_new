@@ -204,9 +204,11 @@ class _CustomerDetailViewState extends State<CustomerDetailView>
             controller: _tabController,
             physics: NeverScrollableScrollPhysics(),
             children: <Widget>[
-              ContactsTabView(
-                customer: widget.customer,
-              ),
+              model.enableInfoTab
+                  ? ContactsTabView(
+                      customer: widget.customer,
+                    )
+                  : Container(),
               model.enableOrdersTab
                   ? OrderHistoryTab(
                       customer: widget.customer,

@@ -36,6 +36,11 @@ class HomeViewModel extends ReactiveViewModel {
 
   String get noOfUpdates => _activityService.noOfUpdates.toString();
 
+  get enableJourneyTab => _accessControlService.enableJourneyTab;
+  get enableHomeTab => _accessControlService.enableHomeTab;
+
+  get enableAdhocTab => _accessControlService.enableAdhocView;
+
   refresh() async {
     setBusy(true);
     await _logisticsService.fetchJourneys();
@@ -143,7 +148,39 @@ class HomeViewModel extends ReactiveViewModel {
   int _currentIndex;
   int get currentIndex => _currentIndex;
   updateCurrentIndex(int val) {
-    _currentIndex = val;
-    notifyListeners();
+    switch (val) {
+      case 0: //Home
+        // if(_accessControlService.enableJourneyTab){
+        //   _currentIndex = val;
+        //   notifyListeners();
+        // }
+        _currentIndex = val;
+        notifyListeners();
+        break;
+      case 1: //Journey
+        if (_accessControlService.enableJourneyTab) {
+          _currentIndex = val;
+          notifyListeners();
+        }
+        break;
+      case 2: //Adhoc
+        if (_accessControlService.enableAdhocView) {
+          _currentIndex = val;
+          notifyListeners();
+        }
+        break;
+      case 3: // Stock Balance
+        if (_accessControlService.enableStockTab) {
+          _currentIndex = val;
+          notifyListeners();
+        }
+        break;
+      case 4: // Customers
+        if (_accessControlService.enableCustomerTab) {
+          _currentIndex = val;
+          notifyListeners();
+        }
+        break;
+    }
   }
 }

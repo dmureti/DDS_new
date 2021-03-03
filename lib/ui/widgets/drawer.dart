@@ -34,6 +34,7 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
             ],
           )),
           DrawerListTile(
+            isEnabled: model.enableHomeTab,
             label: 'Home',
             onTap: () {
               Navigator.pop(context);
@@ -48,8 +49,11 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
               model.navigateToHome(1);
             },
             iconData: Icons.swap_calls,
+            isEnabled: model.enableJourneyTab,
           ),
+
           DrawerListTile(
+            isEnabled: model.enableProductTab,
             label: 'Stock Controller',
             onTap: () {
               Navigator.pop(context);
@@ -58,6 +62,7 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
             iconData: Icons.apps,
           ),
           DrawerListTile(
+            isEnabled: model.enableAdhocTab,
             label: 'Sales',
             onTap: () {
               Navigator.pop(context);
@@ -66,6 +71,7 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
             iconData: Icons.add_shopping_cart,
           ),
           DrawerListTile(
+            isEnabled: model.enableCustomerTab,
             label: 'Customers',
             onTap: () {
               Navigator.pop(context);

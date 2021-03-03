@@ -39,6 +39,14 @@ class CustomerService {
     return _accessControlService.enableAccountsTab();
   }
 
+  get enableIssuesTab {
+    return _accessControlService.enableIssuesTab();
+  }
+
+  bool get enableInfoTab {
+    return _accessControlService.enableInfoTab();
+  }
+
   bool enablePlaceOrderButton() {
     bool result = false;
     if (_accessControlService.enablePlaceOrderButton()) {

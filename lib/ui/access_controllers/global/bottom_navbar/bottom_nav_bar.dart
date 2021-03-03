@@ -16,7 +16,7 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<BottomNavBarViewModel>.reactive(
-      onModelReady: (model) => model.init,
+      onModelReady: (model) => model.init(),
       builder: (context, model, child) => BottomNavigationBar(
           fixedColor: Colors.pink,
           iconSize: 70,
@@ -50,12 +50,14 @@ class BottomNavBar extends StatelessWidget {
               icon: IconButton(
                 splashColor: Colors.pink,
                 icon: Icon(Icons.swap_calls),
-                onPressed: model.onJourneyTabTap()
-                    ? () {
-                        model.updateIndex(1);
-                        onTap(model.index);
-                        // onTap(Pages.routes, "Routes");
-                      }
+                onPressed: model.isEnabled(1)
+                    ? model.onJourneyTabTap()
+                        ? () {
+                            model.updateIndex(1);
+                            onTap(model.index);
+                            // onTap(Pages.routes, "Routes");
+                          }
+                        : null
                     : null,
               ),
               label: 'Journey'.toUpperCase(),
@@ -65,12 +67,14 @@ class BottomNavBar extends StatelessWidget {
               icon: IconButton(
                 splashColor: Colors.pink,
                 icon: Icon(Icons.add_shopping_cart),
-                onPressed: model.onStockBalanceTap()
-                    ? () {
-                        model.updateIndex(2);
-                        onTap(model.index);
-                        // onTap(Pages.adhoc, "Adhoc Sales");
-                      }
+                onPressed: model.isEnabled(2)
+                    ? model.onStockBalanceTap()
+                        ? () {
+                            model.updateIndex(2);
+                            onTap(model.index);
+                            // onTap(Pages.adhoc, "Adhoc Sales");
+                          }
+                        : null
                     : null,
               ),
               label: 'Adhoc Sales'.toUpperCase(),
@@ -80,12 +84,14 @@ class BottomNavBar extends StatelessWidget {
               icon: IconButton(
                 splashColor: Colors.pink,
                 icon: Icon(Icons.apps),
-                onPressed: model.onStockBalanceTap()
-                    ? () {
-                        model.updateIndex(3);
-                        // onTap(Pages.products, "Stock Balance");
-                        onTap(model.index);
-                      }
+                onPressed: model.isEnabled(3)
+                    ? model.onStockBalanceTap()
+                        ? () {
+                            model.updateIndex(3);
+                            // onTap(Pages.products, "Stock Balance");
+                            onTap(model.index);
+                          }
+                        : null
                     : null,
               ),
               label: 'Stock Balance'.toUpperCase(),
@@ -94,12 +100,14 @@ class BottomNavBar extends StatelessWidget {
               backgroundColor: Color(0xFF182848),
               icon: IconButton(
                 splashColor: Colors.pink,
-                onPressed: model.onCustomerTabTap()
-                    ? () {
-                        model.updateIndex(4);
-                        onTap(model.index);
-                        // onTap(Pages.customers, "Customers");
-                      }
+                onPressed: model.isEnabled(4)
+                    ? model.onCustomerTabTap()
+                        ? () {
+                            model.updateIndex(4);
+                            onTap(model.index);
+                            // onTap(Pages.customers, "Customers");
+                          }
+                        : null
                     : null,
                 icon: Icon(Icons.people),
               ),
