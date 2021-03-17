@@ -1,8 +1,10 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
+import 'package:distributor/services/access_controller_service.dart';
 
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/customer_service.dart';
+import 'package:distributor/services/permission_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:distributor/src/ui/views/add_issue/add_issue_view.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,8 @@ class CustomerDetailViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
   final CustomerService _customerService = locator<CustomerService>();
   final DialogService _dialogService = locator<DialogService>();
+  final AccessControlService _accessControlService =
+      locator<AccessControlService>();
   SnackbarService _snackbarService = locator<SnackbarService>();
 
   User get user => _userService.user;
@@ -43,10 +47,14 @@ class CustomerDetailViewModel extends BaseViewModel {
     return _coordinates;
   }
 
+  bool get enableLinkPayment => _accessControlService.enableLinkPaymentMenu;
+  bool get enablePlaceOrder => _accessControlService.enablePlaceOrderButton;
+  bool get enableAdhocSale => _accessControlService.enableMakeAdhocSale;
+  bool get enableAddPayment => _accessControlService.enableAddPaymentMenu;
+  bool get enableAddIssue => _accessControlService.enableAddIssueMenu;
+
   Future navigateToCreateSalesOrderView(Customer customer) async {
-    //Check if the user has permissions
-    bool enableCreateOrder = _customerService.enablePlaceOrderButton();
-    if (enableCreateOrder) {
+    if (enablePlaceOrder) {
       var result = await _navigationService.navigateTo(
           Routes.createSalesOrderView,
           arguments: CreateSalesOrderViewArguments(customer: customer));
@@ -72,7 +80,7 @@ class CustomerDetailViewModel extends BaseViewModel {
   bool get enableAccountsTab => _customerService.enableAccountsTab;
   bool get enableOrdersTab => _customerService.enableOrdersTab;
   bool get enableIssuesTab => _customerService.enableIssuesTab;
-  get enableInfoTab => _customerService.enableInfoTab;
+  bool get enableInfoTab => _customerService.enableInfoTab;
 
   Future<bool> checkAuthority(int index) async {
     if (index == 2 && !enableAccountsTab) {
@@ -103,23 +111,27 @@ class CustomerDetailViewModel extends BaseViewModel {
         arguments: PaymentReferenceViewArguments(customer: customer));
   }
 
+  navigateToPaymentReference() async {
+    await await _navigationService.navigateTo(Routes.paymentReferenceView,
+        arguments: PaymentReferenceViewArguments(customer: customer));
+  }
+
   void navigateToPage(String x) async {
     switch (x) {
       case 'link_payment':
-        await _navigationService.navigateTo(Routes.paymentReferenceView,
-            arguments: PaymentReferenceViewArguments(customer: customer));
+        enableLinkPayment ? await navigateToPaymentReference() : null;
         break;
       case 'place_order':
-        await navigateToPlaceOrder();
+        enablePlaceOrder ? await navigateToPlaceOrder() : null;
         break;
       case 'add_payment':
-        navigateTOAddPayment();
+        enableAddPayment ? await navigateTOAddPayment() : null;
         break;
       case 'make_adhoc_sale':
-        navigateToMakeAdhocSale();
+        !enableAdhocSale ? navigateToMakeAdhocSale() : null;
         break;
       case 'add_issue':
-        navigateToAddIssue();
+        enableAddIssue ? navigateToAddIssue() : null;
         break;
     }
   }

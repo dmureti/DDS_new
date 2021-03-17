@@ -52,27 +52,33 @@ class _CustomerDetailViewState extends State<CustomerDetailView>
       case 1:
         toDisplay = IconButton(
           icon: Icon(Icons.add_circle_outline_sharp),
-          onPressed: () {
-            model.navigateToPlaceOrder();
-          },
+          onPressed: model.enablePlaceOrder
+              ? () {
+                  model.navigateToPlaceOrder();
+                }
+              : null,
         );
 
         break;
       case 2:
         toDisplay = IconButton(
           icon: Icon(Icons.add_circle_outline_sharp),
-          onPressed: () {
-            model.navigateTOAddPayment();
-          },
+          onPressed: model.enableAddPayment
+              ? () {
+                  model.navigateTOAddPayment();
+                }
+              : null,
         );
 
         break;
       case 3:
         toDisplay = IconButton(
           icon: Icon(Icons.add_circle_outline_sharp),
-          onPressed: () {
-            model.navigateToAddIssue();
-          },
+          onPressed: !model.enableAddIssue
+              ? () {
+                  model.navigateToAddIssue();
+                }
+              : null,
         );
         break;
       default:
@@ -119,25 +125,55 @@ class _CustomerDetailViewState extends State<CustomerDetailView>
                 },
                 itemBuilder: (context) => <PopupMenuEntry<Object>>[
                       PopupMenuItem(
-                        child: Text('Place Order'),
+                        child: Text(
+                          'Place Order',
+                          style: TextStyle(
+                              color: model.enablePlaceOrder
+                                  ? Colors.black
+                                  : Colors.black.withOpacity(0.3)),
+                        ),
                         value: 'place_order',
                       ),
                       PopupMenuItem(
-                        child: Text('Make Adhoc sale'),
+                        child: Text(
+                          'Make Adhoc sale',
+                          style: TextStyle(
+                              color: model.enableAdhocSale
+                                  ? Colors.black
+                                  : Colors.black.withOpacity(0.3)),
+                        ),
                         value: 'make_adhoc_sale',
                       ),
                       PopupMenuDivider(),
                       PopupMenuItem(
-                        child: Text('Add Payment'),
+                        child: Text(
+                          'Add Payment',
+                          style: TextStyle(
+                              color: model.enableAddPayment
+                                  ? Colors.black
+                                  : Colors.black.withOpacity(0.3)),
+                        ),
                         value: 'add_payment',
                       ),
                       PopupMenuItem(
-                        child: Text('Link Payment'),
+                        child: Text(
+                          'Link Payment',
+                          style: TextStyle(
+                              color: model.enableLinkPayment
+                                  ? Colors.black
+                                  : Colors.black.withOpacity(0.3)),
+                        ),
                         value: 'link_payment',
                       ),
                       PopupMenuDivider(),
                       PopupMenuItem(
-                        child: Text('Add Issue'),
+                        child: Text(
+                          'Add Issue',
+                          style: TextStyle(
+                              color: model.enableAddIssue
+                                  ? Colors.black
+                                  : Colors.black.withOpacity(0.3)),
+                        ),
                         value: 'add_issue',
                       ),
                     ]),
@@ -219,9 +255,11 @@ class _CustomerDetailViewState extends State<CustomerDetailView>
                       customer: widget.customer,
                     )
                   : Container(),
-              NotificationsTab(
-                customer: widget.customer,
-              )
+              model.enableIssuesTab
+                  ? NotificationsTab(
+                      customer: widget.customer,
+                    )
+                  : Container()
             ],
           ),
         ),

@@ -116,21 +116,14 @@ class AccessControlService {
   /// Success : Enable Tab, Navigate to Customers tab, Fetch customer data
   /// Default : Disable customers tab
   bool get enableCustomerTab {
-    Authority authCustomerFinancial = Authority(auth: 'CUS.VU');
-    Authority authCustomerStaticView = Authority(auth: 'CUF.VU');
-    Authority authCustomerCUAVU = Authority(auth: 'CUA.VU');
-    Authority authCustomerCUIVU = Authority(auth: 'CUI.VU');
-    Authority authCustomerSOVU = Authority(auth: 'SO.VU');
-    bool result = false;
-    bool res1 = checkIfAuthExists(authList, authCustomerFinancial);
-    bool res2 = checkIfAuthExists(authList, authCustomerStaticView);
-    bool res3 = checkIfAuthExists(authList, authCustomerCUAVU);
-    bool res4 = checkIfAuthExists(authList, authCustomerCUIVU);
-    bool res5 = checkIfAuthExists(authList, authCustomerSOVU);
-    if (res1 || res2 || res3 || res4 || res5) {
-      result = true;
+    if (checkIfAuthExists(authList, Authority(auth: 'CUS.VU')) ||
+        checkIfAuthExists(authList, Authority(auth: 'CUF.VU')) ||
+        checkIfAuthExists(authList, Authority(auth: 'CUA.VU')) ||
+        checkIfAuthExists(authList, Authority(auth: 'CUI.VU')) ||
+        checkIfAuthExists(authList, Authority(auth: 'SO.VU'))) {
+      return true;
     }
-    return result;
+    return false;
   }
 
   /// Enable orders tab
@@ -138,24 +131,19 @@ class AccessControlService {
   /// Success : Enable Tab, Navigate to tab, Fetch Orders
   /// Default : Disable tab
   bool get enableOrdersTab {
-    bool result = checkIfAuthExists(authList, Authority(auth: 'SO.VU'));
-    return result;
+    return checkIfAuthExists(authList, Authority(auth: 'SO.VU'));
+  }
+
+  bool get enableMakeAdhocSale {
+    return checkIfAuthExists(authList, Authority(auth: 'SIAS.INP'));
   }
 
   /// Enable place order button
   /// Requires sales_order.input || sales_order.create
   /// Success : Navigate to place sales order
   /// Default : Disable button
-  bool enablePlaceOrderButton() {
-    Authority authSalesOrderInput = Authority(auth: 'SO.INP');
-    // Authority authSalesOrderCreate = Authority(auth: 'sales_order.create');
-    bool result = false;
-    bool res1 = checkIfAuthExists(authList, authSalesOrderInput);
-    // bool res2 = checkIfAuthExists(authList, authSalesOrderCreate);
-    if (res1) {
-      result = true;
-    }
-    return result;
+  bool get enablePlaceOrderButton {
+    return checkIfAuthExists(authList, Authority(auth: 'SO.INP'));
   }
 
   /// Enable Accounts tab
@@ -163,23 +151,16 @@ class AccessControlService {
   /// Success : Enable Tab, Navigate to Tab, Fetch Accounts
   /// Default : Disable button
   bool enableAccountsTab() {
-    Authority authCustomerAccountView = Authority(auth: 'CUA.VU');
-    bool result = checkIfAuthExists(authList, authCustomerAccountView);
-    return result;
+    return checkIfAuthExists(authList, Authority(auth: 'CUA.VU'));
   }
 
   bool enableIssuesTab() {
-    Authority authCustomerAccountView = Authority(auth: ' CUI.VU');
-    bool result = checkIfAuthExists(authList, authCustomerAccountView);
-    return result;
+    return checkIfAuthExists(authList, Authority(auth: ' CUI.VU'));
   }
 
   bool enableInfoTab() {
-    Authority authCustomerAccountView = Authority(auth: 'CUS.VU');
-    Authority authCustomerAccountView1 = Authority(auth: 'CUF.VU');
-    bool result1 = checkIfAuthExists(authList, authCustomerAccountView);
-    bool result2 = checkIfAuthExists(authList, authCustomerAccountView1);
-    if (result2 || result1) {
+    if (checkIfAuthExists(authList, Authority(auth: 'CUS.VU')) ||
+        checkIfAuthExists(authList, Authority(auth: 'CUF.VU'))) {
       return true;
     } else {
       return false;
@@ -187,9 +168,30 @@ class AccessControlService {
   }
 
   bool get enableAdhocView {
-    bool result = false;
-    Authority adhocSale = Authority(auth: 'SIAS.INP');
-    result = checkIfAuthExists(authList, adhocSale);
-    return result;
+    return checkIfAuthExists(authList, Authority(auth: 'SIAS.INP'));
+  }
+
+  bool get enableAddPaymentMenu {
+    return checkIfAuthExists(authList, Authority(auth: 'PY.INP'));
+  }
+
+  bool get enableLinkPaymentMenu {
+    return checkIfAuthExists(authList, Authority(auth: 'PY.LINK'));
+  }
+
+  bool get enableAddIssueMenu {
+    return checkIfAuthExists(authList, Authority(auth: 'CUI.INP'));
+  }
+
+  bool get showCashOption {
+    return checkIfAuthExists(authList, Authority(auth: 'PYI.CASH'));
+  }
+
+  bool get showMpesaOption {
+    return checkIfAuthExists(authList, Authority(auth: 'PYI.MPESA'));
+  }
+
+  bool get showEquitelOption {
+    return checkIfAuthExists(authList, Authority(auth: 'PYI.EQUITEL'));
   }
 }

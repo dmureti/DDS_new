@@ -49,7 +49,7 @@ class CustomerService {
 
   bool enablePlaceOrderButton() {
     bool result = false;
-    if (_accessControlService.enablePlaceOrderButton()) {
+    if (_accessControlService.enablePlaceOrderButton) {
       result = true;
     }
     return result;
