@@ -115,7 +115,7 @@ class CustomerViewModel extends FutureViewModel<List<Customer>> {
   Map get route => _route;
 
   void navigateToCustomer(Customer customer) async {
-    await _navigationService.navigateTo(Routes.customerDetailViewRoute,
+    await _navigationService.navigateTo(Routes.customerDetailView,
         arguments: CustomerDetailViewArguments(customer: customer));
   }
 

@@ -9,7 +9,7 @@ class ContactsTabViewViewModel extends BaseViewModel {
 
   navigateToLocation(Customer customer) async {
     await _navigationService.navigateTo(
-      Routes.customerLocationViewRoute,
+      Routes.customerLocation,
       arguments: CustomerLocationArguments(customer: customer),
     );
   }

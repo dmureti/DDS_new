@@ -19,25 +19,53 @@ import 'package:distributor/ui/views/payment_reference/payment_reference_view.da
 import 'package:distributor/ui/views/startup/startup_view.dart';
 import 'package:distributor/ui/widgets/smart_widgets/map_view/delivery_journey_map_view.dart';
 
-@MaterialAutoRouter()
-class $Router {
-  @initial
-  StartupView startupViewRoute;
-  LoginView loginViewRoute;
-  HomeView homeViewRoute;
-  ForgotPasswordRoute forgotPasswordRoute;
-  JourneyView journeyViewRoute;
-  CustomerDetailView customerDetailViewRoute;
-  CreateSalesOrderView createSalesOrderViewRoute;
-  CustomerLocation customerLocationViewRoute;
-  OrderDetailView orderDetailViewRoute;
-  OrderConfirmation orderConfirmationRoute;
-  DeliveryJourneyMapView deliveryJourneyMapView;
-  NotificationView notificationViewRoute;
-  LinkPaymentView linkPaymentView;
-  PaymentReferenceView paymentReferenceView;
-  AddPaymentView addPaymentView;
-  PartialDeliveryView partialDeliveryView;
-  AddIssueView addIssueView;
-  AddAdhocSaleView adhocSaleView;
-}
+import '../ui/views/forgot_password/forgot_password_route.dart';
+import '../ui/views/link_payment/link_payment_view.dart';
+import '../ui/views/login/login_view.dart';
+
+@AdaptiveAutoRouter(
+  routes: <AutoRoute>[
+    MaterialRoute(page: HomeView),
+    MaterialRoute(page: StartupView, initial: true),
+    MaterialRoute(page: LoginView),
+    MaterialRoute(page: ForgotPasswordRoute),
+    MaterialRoute(page: JourneyView),
+    MaterialRoute(page: CustomerDetailView),
+    MaterialRoute(page: CreateSalesOrderView),
+    MaterialRoute(page: CustomerLocation),
+    MaterialRoute(page: OrderDetailView),
+    MaterialRoute(page: OrderConfirmation),
+    MaterialRoute(page: DeliveryJourneyMapView),
+    MaterialRoute(page: NotificationView),
+    MaterialRoute(page: LinkPaymentView),
+    MaterialRoute(page: PaymentReferenceView),
+    MaterialRoute(page: AddPaymentView),
+    MaterialRoute(page: PartialDeliveryView),
+    MaterialRoute(page: AddIssueView),
+    MaterialRoute(page: AddAdhocSaleView),
+  ],
+)
+class $Router {}
+
+// @MaterialAutoRouter()
+// class $Router {
+//   @initial
+//   StartupView startupViewRoute;
+//   LoginView loginViewRoute;
+//   HomeView homeViewRoute;
+//   ForgotPasswordRoute forgotPasswordRoute;
+//   JourneyView journeyViewRoute;
+//   CustomerDetailView customerDetailViewRoute;
+//   CreateSalesOrderView createSalesOrderViewRoute;
+//   CustomerLocation customerLocationViewRoute;
+//   OrderDetailView orderDetailViewRoute;
+//   OrderConfirmation orderConfirmationRoute;
+//   DeliveryJourneyMapView deliveryJourneyMapView;
+//   NotificationView notificationViewRoute;
+//   LinkPaymentView linkPaymentView;
+//   PaymentReferenceView paymentReferenceView;
+//   AddPaymentView addPaymentView;
+//   PartialDeliveryView partialDeliveryView;
+//   AddIssueView addIssueView;
+//   AddAdhocSaleView adhocSaleView;
+// }

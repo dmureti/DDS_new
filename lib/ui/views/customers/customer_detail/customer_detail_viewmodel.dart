@@ -48,7 +48,7 @@ class CustomerDetailViewModel extends BaseViewModel {
     bool enableCreateOrder = _customerService.enablePlaceOrderButton();
     if (enableCreateOrder) {
       var result = await _navigationService.navigateTo(
-          Routes.createSalesOrderViewRoute,
+          Routes.createSalesOrderView,
           arguments: CreateSalesOrderViewArguments(customer: customer));
       await fetchCustomerOrders();
       return result;
@@ -95,7 +95,7 @@ class CustomerDetailViewModel extends BaseViewModel {
   }
 
   navigateToCustomers() async {
-    await _navigationService.navigateTo(Routes.homeViewRoute);
+    await _navigationService.navigateTo(Routes.homeView);
   }
 
   void navigateToPaymentReferenceView(Customer customer) async {
@@ -126,7 +126,7 @@ class CustomerDetailViewModel extends BaseViewModel {
 
   navigateToPlaceOrder() async {
     var result = await _navigationService.navigateTo(
-        Routes.createSalesOrderViewRoute,
+        Routes.createSalesOrderView,
         arguments: CreateSalesOrderViewArguments(customer: customer));
 
     if (result) {
@@ -145,7 +145,7 @@ class CustomerDetailViewModel extends BaseViewModel {
   }
 
   navigateToMakeAdhocSale() async {
-    var result = await _navigationService.navigateTo(Routes.adhocSaleView,
+    var result = await _navigationService.navigateTo(Routes.addAdhocSaleView,
         arguments: AddAdhocSaleViewArguments(customer: customer));
   }
 

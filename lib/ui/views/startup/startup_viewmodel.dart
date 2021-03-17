@@ -23,9 +23,9 @@ class StartupViewModel extends BaseViewModel {
         email: email.trim(), password: password);
     if (result is User) {
       _userService.updateUser(result);
-      _navigationService.pushNamedAndRemoveUntil(Routes.homeViewRoute);
+      _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
     } else {
-      _navigationService.navigateTo(Routes.loginViewRoute,
+      _navigationService.navigateTo(Routes.loginView,
           arguments: LoginViewArguments(email: email, password: password));
     }
   }
@@ -37,14 +37,14 @@ class StartupViewModel extends BaseViewModel {
     if (!result) {
       email = "";
       password = "";
-      _navigationService.navigateTo(Routes.loginViewRoute,
+      _navigationService.navigateTo(Routes.loginView,
           arguments: LoginViewArguments(email: email, password: password));
     } else {
       if (result) {
         email = _initService.email ?? "";
         password = _initService.password ?? "";
         // login(email, password);a
-        _navigationService.navigateTo(Routes.loginViewRoute,
+        _navigationService.navigateTo(Routes.loginView,
             arguments: LoginViewArguments(email: email, password: password));
       }
     }

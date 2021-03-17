@@ -27,7 +27,6 @@ class AddIssueView extends StatelessWidget {
             ),
           ),
           resizeToAvoidBottomInset: true,
-          resizeToAvoidBottomPadding: true,
           body: Container(
             margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: ListView(

@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 import 'package:flutter/material.dart';
-import '../../translations/order_summary.i18n.dart';
+
 import 'order_confirmation_view_model.dart';
 
 class OrderConfirmation extends StatelessWidget {
@@ -29,7 +29,7 @@ class OrderConfirmation extends StatelessWidget {
               model.navigateToProductSelection();
             },
           ),
-          title: Text('Order Summary'.i18n.toUpperCase()),
+          title: Text('Order Summary'.toUpperCase()),
         ),
         body: Container(
           height: MediaQuery.of(context).size.height - 80,
@@ -246,7 +246,7 @@ class OrderConfirmation extends StatelessWidget {
                                 await model.createSalesOrder(salesOrderRequest);
                               },
                               child: Text(
-                                'place order'.i18n.toUpperCase(),
+                                'place order'.toUpperCase(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     color: Colors.white,

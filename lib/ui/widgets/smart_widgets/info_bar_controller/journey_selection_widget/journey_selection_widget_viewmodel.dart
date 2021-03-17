@@ -14,7 +14,7 @@ class JourneySelectionWidgetViewModel extends ReactiveViewModel {
       .length;
 
   navigateToJourneyInfoRoute() async {
-    _navigationService.navigateTo(Routes.journeyViewRoute);
+    _navigationService.navigateTo(Routes.journeyView);
   }
 
   @override

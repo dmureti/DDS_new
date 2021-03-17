@@ -3,7 +3,7 @@ import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_localizations/flutter_localizations.dart';
+// import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 import 'package:distributor/app/router.gr.dart' as app_router;
@@ -20,14 +20,14 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       supportedLocales: const [Locale('en'), Locale('en_us')],
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate
-      ],
+      // localizationsDelegates: [
+      //   GlobalMaterialLocalizations.delegate,
+      //   GlobalWidgetsLocalizations.delegate
+      // ],
       title: Globals.appName,
       debugShowCheckedModeBanner: false,
       theme: _kAppTheme,
-      initialRoute: Routes.startupViewRoute,
+      initialRoute: Routes.startupView,
       onGenerateRoute: app_router.Router().onGenerateRoute,
       navigatorKey: locator<NavigationService>().navigatorKey,
     );

@@ -4,286 +4,296 @@
 // AutoRouteGenerator
 // **************************************************************************
 
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:auto_route/auto_route.dart';
-import 'package:distributor/ui/views/startup/startup_view.dart';
-import 'package:distributor/ui/views/login/login_view.dart';
-import 'package:distributor/ui/views/home/home_view.dart';
-import 'package:distributor/ui/views/forgot_password/forgot_password_route.dart';
-import 'package:distributor/ui/views/journey/journey_view.dart';
-import 'package:distributor/ui/views/customers/customer_detail/customer_detail_view.dart';
-import 'package:tripletriocore/tripletriocore.dart';
-import 'package:distributor/ui/views/orders/create_order/create_sales_order_view.dart';
-import 'package:distributor/ui/views/customer_location.dart';
-import 'package:distributor/ui/views/orders/order_detail/order_detail_view.dart';
-import 'package:distributor/ui/views/orders/order_confirmation/order_confirmation.dart';
-import 'package:distributor/ui/widgets/smart_widgets/map_view/delivery_journey_map_view.dart';
-import 'package:distributor/ui/views/notifications/notification_view.dart';
-import 'package:distributor/ui/views/link_payment/link_payment_view.dart';
-import 'package:distributor/core/models/payment_link.dart';
-import 'package:distributor/ui/views/payment_reference/payment_reference_view.dart';
-import 'package:distributor/src/ui/views/add_payment/add_payment_view.dart';
-import 'package:distributor/src/ui/views/partial_delivery/partial_delivery_view.dart';
-import 'package:distributor/src/ui/views/add_issue/add_issue_view.dart';
-import 'package:distributor/src/ui/views/add_adhoc_sale/add_adhoc_sale_view.dart';
+// ignore_for_file: public_member_api_docs
 
-abstract class Routes {
-  static const startupViewRoute = '/';
-  static const loginViewRoute = '/login-view-route';
-  static const homeViewRoute = '/home-view-route';
-  static const forgotPasswordRoute = '/forgot-password-route';
-  static const journeyViewRoute = '/journey-view-route';
-  static const customerDetailViewRoute = '/customer-detail-view-route';
-  static const createSalesOrderViewRoute = '/create-sales-order-view-route';
-  static const customerLocationViewRoute = '/customer-location-view-route';
-  static const orderDetailViewRoute = '/order-detail-view-route';
-  static const orderConfirmationRoute = '/order-confirmation-route';
-  static const deliveryJourneyMapView = '/delivery-journey-map-view';
-  static const notificationViewRoute = '/notification-view-route';
-  static const linkPaymentView = '/link-payment-view';
-  static const paymentReferenceView = '/payment-reference-view';
-  static const addPaymentView = '/add-payment-view';
-  static const partialDeliveryView = '/partial-delivery-view';
-  static const addIssueView = '/add-issue-view';
-  static const adhocSaleView = '/adhoc-sale-view';
-  static const all = {
-    startupViewRoute,
-    loginViewRoute,
-    homeViewRoute,
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:tripletriocore/tripletriocore.dart';
+
+import '../core/models/payment_link.dart';
+import '../src/ui/views/add_adhoc_sale/add_adhoc_sale_view.dart';
+import '../src/ui/views/add_issue/add_issue_view.dart';
+import '../src/ui/views/add_payment/add_payment_view.dart';
+import '../src/ui/views/partial_delivery/partial_delivery_view.dart';
+import '../ui/views/customer_location.dart';
+import '../ui/views/customers/customer_detail/customer_detail_view.dart';
+import '../ui/views/forgot_password/forgot_password_route.dart';
+import '../ui/views/home/home_view.dart';
+import '../ui/views/journey/journey_view.dart';
+import '../ui/views/link_payment/link_payment_view.dart';
+import '../ui/views/login/login_view.dart';
+import '../ui/views/notifications/notification_view.dart';
+import '../ui/views/orders/create_order/create_sales_order_view.dart';
+import '../ui/views/orders/order_confirmation/order_confirmation.dart';
+import '../ui/views/orders/order_detail/order_detail_view.dart';
+import '../ui/views/payment_reference/payment_reference_view.dart';
+import '../ui/views/startup/startup_view.dart';
+import '../ui/widgets/smart_widgets/map_view/delivery_journey_map_view.dart';
+
+class Routes {
+  static const String homeView = '/home-view';
+  static const String startupView = '/';
+  static const String loginView = '/login-view';
+  static const String forgotPasswordRoute = '/forgot-password-route';
+  static const String journeyView = '/journey-view';
+  static const String customerDetailView = '/customer-detail-view';
+  static const String createSalesOrderView = '/create-sales-order-view';
+  static const String customerLocation = '/customer-location';
+  static const String orderDetailView = '/order-detail-view';
+  static const String orderConfirmation = '/order-confirmation';
+  static const String deliveryJourneyMapView = '/delivery-journey-map-view';
+  static const String notificationView = '/notification-view';
+  static const String linkPaymentView = '/link-payment-view';
+  static const String paymentReferenceView = '/payment-reference-view';
+  static const String addPaymentView = '/add-payment-view';
+  static const String partialDeliveryView = '/partial-delivery-view';
+  static const String addIssueView = '/add-issue-view';
+  static const String addAdhocSaleView = '/add-adhoc-sale-view';
+  static const all = <String>{
+    homeView,
+    startupView,
+    loginView,
     forgotPasswordRoute,
-    journeyViewRoute,
-    customerDetailViewRoute,
-    createSalesOrderViewRoute,
-    customerLocationViewRoute,
-    orderDetailViewRoute,
-    orderConfirmationRoute,
+    journeyView,
+    customerDetailView,
+    createSalesOrderView,
+    customerLocation,
+    orderDetailView,
+    orderConfirmation,
     deliveryJourneyMapView,
-    notificationViewRoute,
+    notificationView,
     linkPaymentView,
     paymentReferenceView,
     addPaymentView,
     partialDeliveryView,
     addIssueView,
-    adhocSaleView,
+    addAdhocSaleView,
   };
 }
 
 class Router extends RouterBase {
   @override
-  Set<String> get allRoutes => Routes.all;
-
-  @Deprecated('call ExtendedNavigator.ofRouter<Router>() directly')
-  static ExtendedNavigatorState get navigator =>
-      ExtendedNavigator.ofRouter<Router>();
-
+  List<RouteDef> get routes => _routes;
+  final _routes = <RouteDef>[
+    RouteDef(Routes.homeView, page: HomeView),
+    RouteDef(Routes.startupView, page: StartupView),
+    RouteDef(Routes.loginView, page: LoginView),
+    RouteDef(Routes.forgotPasswordRoute, page: ForgotPasswordRoute),
+    RouteDef(Routes.journeyView, page: JourneyView),
+    RouteDef(Routes.customerDetailView, page: CustomerDetailView),
+    RouteDef(Routes.createSalesOrderView, page: CreateSalesOrderView),
+    RouteDef(Routes.customerLocation, page: CustomerLocation),
+    RouteDef(Routes.orderDetailView, page: OrderDetailView),
+    RouteDef(Routes.orderConfirmation, page: OrderConfirmation),
+    RouteDef(Routes.deliveryJourneyMapView, page: DeliveryJourneyMapView),
+    RouteDef(Routes.notificationView, page: NotificationView),
+    RouteDef(Routes.linkPaymentView, page: LinkPaymentView),
+    RouteDef(Routes.paymentReferenceView, page: PaymentReferenceView),
+    RouteDef(Routes.addPaymentView, page: AddPaymentView),
+    RouteDef(Routes.partialDeliveryView, page: PartialDeliveryView),
+    RouteDef(Routes.addIssueView, page: AddIssueView),
+    RouteDef(Routes.addAdhocSaleView, page: AddAdhocSaleView),
+  ];
   @override
-  Route<dynamic> onGenerateRoute(RouteSettings settings) {
-    final args = settings.arguments;
-    switch (settings.name) {
-      case Routes.startupViewRoute:
-        if (hasInvalidArgs<StartupViewArguments>(args)) {
-          return misTypedArgsRoute<StartupViewArguments>(args);
-        }
-        final typedArgs =
-            args as StartupViewArguments ?? StartupViewArguments();
-        return MaterialPageRoute<dynamic>(
-          builder: (context) => StartupView(key: typedArgs.key),
-          settings: settings,
-        );
-      case Routes.loginViewRoute:
-        if (hasInvalidArgs<LoginViewArguments>(args)) {
-          return misTypedArgsRoute<LoginViewArguments>(args);
-        }
-        final typedArgs = args as LoginViewArguments ?? LoginViewArguments();
-        return MaterialPageRoute<dynamic>(
-          builder: (context) => LoginView(
-              key: typedArgs.key,
-              email: typedArgs.email,
-              password: typedArgs.password),
-          settings: settings,
-        );
-      case Routes.homeViewRoute:
-        if (hasInvalidArgs<HomeViewArguments>(args)) {
-          return misTypedArgsRoute<HomeViewArguments>(args);
-        }
-        final typedArgs = args as HomeViewArguments ?? HomeViewArguments();
-        return MaterialPageRoute<dynamic>(
-          builder: (context) =>
-              HomeView(key: typedArgs.key, index: typedArgs.index),
-          settings: settings,
-        );
-      case Routes.forgotPasswordRoute:
-        return MaterialPageRoute<dynamic>(
-          builder: (context) => ForgotPasswordRoute(),
-          settings: settings,
-        );
-      case Routes.journeyViewRoute:
-        return MaterialPageRoute<dynamic>(
-          builder: (context) => JourneyView(),
-          settings: settings,
-        );
-      case Routes.customerDetailViewRoute:
-        if (hasInvalidArgs<CustomerDetailViewArguments>(args,
-            isRequired: true)) {
-          return misTypedArgsRoute<CustomerDetailViewArguments>(args);
-        }
-        final typedArgs = args as CustomerDetailViewArguments;
-        return MaterialPageRoute<dynamic>(
-          builder: (context) => CustomerDetailView(
-              customer: typedArgs.customer, key: typedArgs.key),
-          settings: settings,
-        );
-      case Routes.createSalesOrderViewRoute:
-        if (hasInvalidArgs<CreateSalesOrderViewArguments>(args,
-            isRequired: true)) {
-          return misTypedArgsRoute<CreateSalesOrderViewArguments>(args);
-        }
-        final typedArgs = args as CreateSalesOrderViewArguments;
-        return MaterialPageRoute<dynamic>(
-          builder: (context) => CreateSalesOrderView(
-              customer: typedArgs.customer, key: typedArgs.key),
-          settings: settings,
-        );
-      case Routes.customerLocationViewRoute:
-        if (hasInvalidArgs<CustomerLocationArguments>(args)) {
-          return misTypedArgsRoute<CustomerLocationArguments>(args);
-        }
-        final typedArgs =
-            args as CustomerLocationArguments ?? CustomerLocationArguments();
-        return MaterialPageRoute<dynamic>(
-          builder: (context) => CustomerLocation(customer: typedArgs.customer),
-          settings: settings,
-        );
-      case Routes.orderDetailViewRoute:
-        if (hasInvalidArgs<OrderDetailViewArguments>(args, isRequired: true)) {
-          return misTypedArgsRoute<OrderDetailViewArguments>(args);
-        }
-        final typedArgs = args as OrderDetailViewArguments;
-        return MaterialPageRoute<dynamic>(
-          builder: (context) => OrderDetailView(
-              salesOrder: typedArgs.salesOrder,
-              deliveryJourney: typedArgs.deliveryJourney,
-              stopId: typedArgs.stopId,
-              key: typedArgs.key),
-          settings: settings,
-        );
-      case Routes.orderConfirmationRoute:
-        if (hasInvalidArgs<OrderConfirmationArguments>(args,
-            isRequired: true)) {
-          return misTypedArgsRoute<OrderConfirmationArguments>(args);
-        }
-        final typedArgs = args as OrderConfirmationArguments;
-        return MaterialPageRoute<dynamic>(
-          builder: (context) => OrderConfirmation(
-              salesOrderRequest: typedArgs.salesOrderRequest,
-              customer: typedArgs.customer,
-              key: typedArgs.key),
-          settings: settings,
-        );
-      case Routes.deliveryJourneyMapView:
-        if (hasInvalidArgs<DeliveryJourneyMapViewArguments>(args,
-            isRequired: true)) {
-          return misTypedArgsRoute<DeliveryJourneyMapViewArguments>(args);
-        }
-        final typedArgs = args as DeliveryJourneyMapViewArguments;
-        return MaterialPageRoute<dynamic>(
-          builder: (context) => DeliveryJourneyMapView(
-              deliveryJourney: typedArgs.deliveryJourney, key: typedArgs.key),
-          settings: settings,
-        );
-      case Routes.notificationViewRoute:
-        return MaterialPageRoute<dynamic>(
-          builder: (context) => NotificationView(),
-          settings: settings,
-        );
-      case Routes.linkPaymentView:
-        if (hasInvalidArgs<LinkPaymentViewArguments>(args, isRequired: true)) {
-          return misTypedArgsRoute<LinkPaymentViewArguments>(args);
-        }
-        final typedArgs = args as LinkPaymentViewArguments;
-        return MaterialPageRoute<dynamic>(
-          builder: (context) => LinkPaymentView(
-              customer: typedArgs.customer,
-              paymentLink: typedArgs.paymentLink,
-              key: typedArgs.key),
-          settings: settings,
-        );
-      case Routes.paymentReferenceView:
-        if (hasInvalidArgs<PaymentReferenceViewArguments>(args,
-            isRequired: true)) {
-          return misTypedArgsRoute<PaymentReferenceViewArguments>(args);
-        }
-        final typedArgs = args as PaymentReferenceViewArguments;
-        return MaterialPageRoute<dynamic>(
-          builder: (context) => PaymentReferenceView(
-              customer: typedArgs.customer, key: typedArgs.key),
-          settings: settings,
-        );
-      case Routes.addPaymentView:
-        if (hasInvalidArgs<AddPaymentViewArguments>(args)) {
-          return misTypedArgsRoute<AddPaymentViewArguments>(args);
-        }
-        final typedArgs =
-            args as AddPaymentViewArguments ?? AddPaymentViewArguments();
-        return MaterialPageRoute<dynamic>(
-          builder: (context) =>
-              AddPaymentView(key: typedArgs.key, customer: typedArgs.customer),
-          settings: settings,
-        );
-      case Routes.partialDeliveryView:
-        if (hasInvalidArgs<PartialDeliveryViewArguments>(args)) {
-          return misTypedArgsRoute<PartialDeliveryViewArguments>(args);
-        }
-        final typedArgs = args as PartialDeliveryViewArguments ??
-            PartialDeliveryViewArguments();
-        return MaterialPageRoute<dynamic>(
-          builder: (context) => PartialDeliveryView(
-              key: typedArgs.key,
-              salesOrder: typedArgs.salesOrder,
-              deliveryJourney: typedArgs.deliveryJourney,
-              stopId: typedArgs.stopId),
-          settings: settings,
-        );
-      case Routes.addIssueView:
-        if (hasInvalidArgs<AddIssueViewArguments>(args)) {
-          return misTypedArgsRoute<AddIssueViewArguments>(args);
-        }
-        final typedArgs =
-            args as AddIssueViewArguments ?? AddIssueViewArguments();
-        return MaterialPageRoute<dynamic>(
-          builder: (context) =>
-              AddIssueView(key: typedArgs.key, customer: typedArgs.customer),
-          settings: settings,
-        );
-      case Routes.adhocSaleView:
-        if (hasInvalidArgs<AddAdhocSaleViewArguments>(args)) {
-          return misTypedArgsRoute<AddAdhocSaleViewArguments>(args);
-        }
-        final typedArgs =
-            args as AddAdhocSaleViewArguments ?? AddAdhocSaleViewArguments();
-        return MaterialPageRoute<dynamic>(
-          builder: (context) => AddAdhocSaleView(
-              key: typedArgs.key, customer: typedArgs.customer),
-          settings: settings,
-        );
-      default:
-        return unknownRoutePage(settings.name);
-    }
-  }
+  Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
+  final _pagesMap = <Type, AutoRouteFactory>{
+    HomeView: (data) {
+      final args = data.getArgs<HomeViewArguments>(
+        orElse: () => HomeViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => HomeView(
+          key: args.key,
+          index: args.index,
+        ),
+        settings: data,
+      );
+    },
+    StartupView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const StartupView(),
+        settings: data,
+      );
+    },
+    LoginView: (data) {
+      final args = data.getArgs<LoginViewArguments>(
+        orElse: () => LoginViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => LoginView(
+          key: args.key,
+          email: args.email,
+          password: args.password,
+        ),
+        settings: data,
+      );
+    },
+    ForgotPasswordRoute: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ForgotPasswordRoute(),
+        settings: data,
+      );
+    },
+    JourneyView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => JourneyView(),
+        settings: data,
+      );
+    },
+    CustomerDetailView: (data) {
+      final args = data.getArgs<CustomerDetailViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => CustomerDetailView(
+          customer: args.customer,
+          key: args.key,
+        ),
+        settings: data,
+      );
+    },
+    CreateSalesOrderView: (data) {
+      final args = data.getArgs<CreateSalesOrderViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => CreateSalesOrderView(
+          customer: args.customer,
+          key: args.key,
+        ),
+        settings: data,
+      );
+    },
+    CustomerLocation: (data) {
+      final args = data.getArgs<CustomerLocationArguments>(
+        orElse: () => CustomerLocationArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => CustomerLocation(customer: args.customer),
+        settings: data,
+      );
+    },
+    OrderDetailView: (data) {
+      final args = data.getArgs<OrderDetailViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => OrderDetailView(
+          salesOrder: args.salesOrder,
+          deliveryJourney: args.deliveryJourney,
+          stopId: args.stopId,
+          key: args.key,
+        ),
+        settings: data,
+      );
+    },
+    OrderConfirmation: (data) {
+      final args = data.getArgs<OrderConfirmationArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => OrderConfirmation(
+          salesOrderRequest: args.salesOrderRequest,
+          customer: args.customer,
+          key: args.key,
+        ),
+        settings: data,
+      );
+    },
+    DeliveryJourneyMapView: (data) {
+      final args = data.getArgs<DeliveryJourneyMapViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => DeliveryJourneyMapView(
+          deliveryJourney: args.deliveryJourney,
+          key: args.key,
+        ),
+        settings: data,
+      );
+    },
+    NotificationView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => NotificationView(),
+        settings: data,
+      );
+    },
+    LinkPaymentView: (data) {
+      final args = data.getArgs<LinkPaymentViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => LinkPaymentView(
+          customer: args.customer,
+          paymentLink: args.paymentLink,
+          key: args.key,
+        ),
+        settings: data,
+      );
+    },
+    PaymentReferenceView: (data) {
+      final args = data.getArgs<PaymentReferenceViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => PaymentReferenceView(
+          customer: args.customer,
+          key: args.key,
+        ),
+        settings: data,
+      );
+    },
+    AddPaymentView: (data) {
+      final args = data.getArgs<AddPaymentViewArguments>(
+        orElse: () => AddPaymentViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => AddPaymentView(
+          key: args.key,
+          customer: args.customer,
+        ),
+        settings: data,
+      );
+    },
+    PartialDeliveryView: (data) {
+      final args = data.getArgs<PartialDeliveryViewArguments>(
+        orElse: () => PartialDeliveryViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => PartialDeliveryView(
+          key: args.key,
+          salesOrder: args.salesOrder,
+          deliveryJourney: args.deliveryJourney,
+          stopId: args.stopId,
+        ),
+        settings: data,
+      );
+    },
+    AddIssueView: (data) {
+      final args = data.getArgs<AddIssueViewArguments>(
+        orElse: () => AddIssueViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => AddIssueView(
+          key: args.key,
+          customer: args.customer,
+        ),
+        settings: data,
+      );
+    },
+    AddAdhocSaleView: (data) {
+      final args = data.getArgs<AddAdhocSaleViewArguments>(
+        orElse: () => AddAdhocSaleViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => AddAdhocSaleView(
+          key: args.key,
+          customer: args.customer,
+        ),
+        settings: data,
+      );
+    },
+  };
 }
 
-// *************************************************************************
-// Arguments holder classes
-// **************************************************************************
+/// ************************************************************************
+/// Arguments holder classes
+/// *************************************************************************
 
-//StartupView arguments holder class
-class StartupViewArguments {
+/// HomeView arguments holder class
+class HomeViewArguments {
   final Key key;
-  StartupViewArguments({this.key});
+  final int index;
+  HomeViewArguments({this.key, this.index});
 }
 
-//LoginView arguments holder class
+/// LoginView arguments holder class
 class LoginViewArguments {
   final Key key;
   final String email;
@@ -291,34 +301,27 @@ class LoginViewArguments {
   LoginViewArguments({this.key, this.email, this.password});
 }
 
-//HomeView arguments holder class
-class HomeViewArguments {
-  final Key key;
-  final int index;
-  HomeViewArguments({this.key, this.index});
-}
-
-//CustomerDetailView arguments holder class
+/// CustomerDetailView arguments holder class
 class CustomerDetailViewArguments {
   final Customer customer;
   final Key key;
   CustomerDetailViewArguments({@required this.customer, this.key});
 }
 
-//CreateSalesOrderView arguments holder class
+/// CreateSalesOrderView arguments holder class
 class CreateSalesOrderViewArguments {
   final Customer customer;
   final Key key;
   CreateSalesOrderViewArguments({@required this.customer, this.key});
 }
 
-//CustomerLocation arguments holder class
+/// CustomerLocation arguments holder class
 class CustomerLocationArguments {
   final Customer customer;
   CustomerLocationArguments({this.customer});
 }
 
-//OrderDetailView arguments holder class
+/// OrderDetailView arguments holder class
 class OrderDetailViewArguments {
   final SalesOrder salesOrder;
   final DeliveryJourney deliveryJourney;
@@ -331,7 +334,7 @@ class OrderDetailViewArguments {
       this.key});
 }
 
-//OrderConfirmation arguments holder class
+/// OrderConfirmation arguments holder class
 class OrderConfirmationArguments {
   final SalesOrderRequest salesOrderRequest;
   final Customer customer;
@@ -340,14 +343,14 @@ class OrderConfirmationArguments {
       {@required this.salesOrderRequest, @required this.customer, this.key});
 }
 
-//DeliveryJourneyMapView arguments holder class
+/// DeliveryJourneyMapView arguments holder class
 class DeliveryJourneyMapViewArguments {
   final DeliveryJourney deliveryJourney;
   final Key key;
   DeliveryJourneyMapViewArguments({@required this.deliveryJourney, this.key});
 }
 
-//LinkPaymentView arguments holder class
+/// LinkPaymentView arguments holder class
 class LinkPaymentViewArguments {
   final Customer customer;
   final PaymentLink paymentLink;
@@ -356,21 +359,21 @@ class LinkPaymentViewArguments {
       {@required this.customer, @required this.paymentLink, this.key});
 }
 
-//PaymentReferenceView arguments holder class
+/// PaymentReferenceView arguments holder class
 class PaymentReferenceViewArguments {
   final Customer customer;
   final Key key;
   PaymentReferenceViewArguments({@required this.customer, this.key});
 }
 
-//AddPaymentView arguments holder class
+/// AddPaymentView arguments holder class
 class AddPaymentViewArguments {
   final Key key;
   final Customer customer;
   AddPaymentViewArguments({this.key, this.customer});
 }
 
-//PartialDeliveryView arguments holder class
+/// PartialDeliveryView arguments holder class
 class PartialDeliveryViewArguments {
   final Key key;
   final SalesOrder salesOrder;
@@ -380,14 +383,14 @@ class PartialDeliveryViewArguments {
       {this.key, this.salesOrder, this.deliveryJourney, this.stopId});
 }
 
-//AddIssueView arguments holder class
+/// AddIssueView arguments holder class
 class AddIssueViewArguments {
   final Key key;
   final Customer customer;
   AddIssueViewArguments({this.key, this.customer});
 }
 
-//AddAdhocSaleView arguments holder class
+/// AddAdhocSaleView arguments holder class
 class AddAdhocSaleViewArguments {
   final Key key;
   final Customer customer;

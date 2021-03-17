@@ -22,7 +22,7 @@ class JourneyViewModel extends ReactiveViewModel {
   DeliveryJourney get selectedJourney => _journeyService.currentJourney;
 
   navigateToCustomerLocation(Customer customer) async {
-    await _navigationService.navigateTo(Routes.customerLocationViewRoute,
+    await _navigationService.navigateTo(Routes.customerLocation,
         arguments: CustomerLocationArguments(customer: customer));
   }
 

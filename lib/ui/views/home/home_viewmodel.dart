@@ -67,7 +67,7 @@ class HomeViewModel extends ReactiveViewModel {
   User get user => _userService.user;
 
   logout() async {
-    await _navigationService.pushNamedAndRemoveUntil(Routes.loginViewRoute);
+    await _navigationService.pushNamedAndRemoveUntil(Routes.loginView);
   }
 
   bool get hasJourney => _logisticsService.hasJourney;
@@ -133,7 +133,7 @@ class HomeViewModel extends ReactiveViewModel {
   }
 
   navigateToNotificationsView() async {
-    _navigationService.navigateTo(Routes.notificationViewRoute);
+    _navigationService.navigateTo(Routes.notificationView);
   }
 
   @override
@@ -141,7 +141,7 @@ class HomeViewModel extends ReactiveViewModel {
       [_logisticsService, _journeyService, _activityService];
 
   navigateToHome(int index) {
-    _navigationService.clearStackAndShow(Routes.homeViewRoute,
+    _navigationService.clearStackAndShow(Routes.homeView,
         arguments: HomeViewArguments(index: index));
   }
 

@@ -31,7 +31,7 @@ class AddPaymentView extends StatelessWidget {
               subTitle: customer.name,
             ),
           ),
-          resizeToAvoidBottomPadding: true,
+          // resizeToAvoidBottomPadding: true,
           resizeToAvoidBottomInset: true,
           body: Container(
             margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),

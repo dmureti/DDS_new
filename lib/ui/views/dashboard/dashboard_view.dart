@@ -5,7 +5,6 @@ import 'package:distributor/ui/widgets/smart_widgets/dashboard_controller/dashbo
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
-import '../translations/dashboard.i18n.dart';
 
 class DashboardView extends StatelessWidget {
   @override
@@ -70,9 +69,7 @@ class DashboardView extends StatelessWidget {
                                       children: <Widget>[
                                         Container(
                                           child: Text(
-                                            "Today\'s Summary"
-                                                .i18n
-                                                .toUpperCase(),
+                                            "Today\'s Summary".toUpperCase(),
                                             style: TextStyle(
                                                 fontSize: 20.0,
                                                 fontWeight: FontWeight.w900,
@@ -118,7 +115,7 @@ class DashboardView extends StatelessWidget {
 
   _buildUserDetail(DashboardViewModel model) {
     return Text(
-      'Welcome back'.i18n + ', ${model.user.full_name}',
+      'Welcome back' + ', ${model.user.full_name}',
       style: TextStyle(
           color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w500),
     );

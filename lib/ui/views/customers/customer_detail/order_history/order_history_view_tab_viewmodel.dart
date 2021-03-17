@@ -30,7 +30,7 @@ class OrderHistoryTabViewModel extends FutureViewModel {
 
   navigateToOrder(SalesOrder salesOrder, DeliveryJourney deliveryJourney,
       String stopId) async {
-    await _navigationService.navigateTo(Routes.orderDetailViewRoute,
+    await _navigationService.navigateTo(Routes.orderDetailView,
         arguments: OrderDetailViewArguments(
             salesOrder: salesOrder,
             deliveryJourney: deliveryJourney,

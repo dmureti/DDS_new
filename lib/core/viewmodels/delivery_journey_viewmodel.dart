@@ -19,7 +19,7 @@ class DeliveryJourneyViewmodel extends BaseViewModel {
     var result = await _apiService.api
         .getSalesOrderDetail(token: _user.token, orderId: salesOrder);
     if (result is SalesOrder) {
-      await _navigationService.navigateTo(Routes.orderDetailViewRoute,
+      await _navigationService.navigateTo(Routes.orderDetailView,
           arguments: OrderDetailViewArguments(
               stopId: stopId,
               salesOrder: result,

@@ -89,7 +89,7 @@ class LoginViewModel extends BaseViewModel {
       _activityService.addActivity(Activity(
           activityTitle: 'Login in', activityDesc: 'Logged In successfully'));
       //Navigate to the home page
-      _navigationService.pushNamedAndRemoveUntil(Routes.homeViewRoute);
+      _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
     } else if (result is CustomException) {
       await _dialogService.showDialog(
           title: 'Login Failure', description: result.description);
@@ -112,6 +112,6 @@ class LoginViewModel extends BaseViewModel {
   }
 
   void navigateToForgotPassword() async {
-    await _navigationService.navigateTo(Routes.homeViewRoute);
+    await _navigationService.navigateTo(Routes.homeView);
   }
 }

@@ -10,7 +10,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../translations/new_order.i18n.dart';
+
 import 'sales_order_view_model.dart';
 
 class CreateSalesOrderView extends StatelessWidget {
@@ -257,7 +257,7 @@ class _SummaryDraggableSheetState extends State<SummaryDraggableSheet> {
                             SizedBox(
                               width: 5,
                             ),
-                            Text('Set due date'.i18n),
+                            Text('Set due date'),
                           ],
                         )
                       : Row(
@@ -314,7 +314,7 @@ class _SummaryDraggableSheetState extends State<SummaryDraggableSheet> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
                 child: Text(
-                  'Checkout'.i18n.toUpperCase(),
+                  'Checkout'.toUpperCase(),
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
@@ -386,8 +386,7 @@ class SummaryDraggableSheetViewModel extends BaseViewModel {
 
   Future placeOrder(
       {Customer customer, SalesOrderRequest salesOrderRequest}) async {
-    var result = await _navigationService.navigateTo(
-        Routes.orderConfirmationRoute,
+    var result = await _navigationService.navigateTo(Routes.orderConfirmation,
         arguments: OrderConfirmationArguments(
             customer: customer, salesOrderRequest: salesOrderRequest));
     _navigationService.back(result: result);

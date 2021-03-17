@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
-import 'login.i18n.dart';
+// import 'login.i18n.dart';
 
 class LoginView extends StatefulWidget {
   final String email;
@@ -75,7 +75,7 @@ class _LoginViewState extends State<LoginView> {
                 )
               : Container(),
         ),
-        resizeToAvoidBottomPadding: true,
+        // resizeToAvoidBottomPadding: true,
         extendBodyBehindAppBar: true,
         body: Container(
           height: MediaQuery.of(context).size.height,
@@ -213,7 +213,7 @@ class _LoginViewState extends State<LoginView> {
                                       width: 250,
                                       child: Center(
                                         child: Text(
-                                          'Sign in'.i18n.toUpperCase(),
+                                          'Sign in'.toUpperCase(),
                                           style: kLoginButtonTextStyle,
                                         ),
                                       ),

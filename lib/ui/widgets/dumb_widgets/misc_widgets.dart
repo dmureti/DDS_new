@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../translations/misc.i18n.dart';
 
 Widget BusyWidget() {
   return Column(
@@ -15,7 +14,7 @@ Widget NoInfoFound({String text}) {
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Container(
-        child: Text(text.i18n),
+        child: Text(text),
       ),
     ],
   );

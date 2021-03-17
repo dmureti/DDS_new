@@ -8,6 +8,6 @@ class SwitchControlViewModel extends BaseViewModel {
   NavigationService _navigationService = locator<NavigationService>();
 
   navigateToJourneyInfoRoute() async {
-    await _navigationService.navigateTo(Routes.journeyViewRoute);
+    await _navigationService.navigateTo(Routes.journeyView);
   }
 }

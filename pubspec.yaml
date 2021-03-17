@@ -1,6 +1,6 @@
 name: distributor
 description: Digital Distribution System
-version: 6.1.0+1
+version: 7.0.0+1
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -15,30 +15,30 @@ dependencies:
   #preferences
   shared_preferences: ^0.5.7+3
 
-  stacked: ^1.5.5+1
-  stacked_services: ^0.4.4+2
-  auto_route: ^0.5.0
-  injectable: ^0.4.0
-  get_it: ^4.0.2
-  stacked_hooks:
-  flutter_hooks: 0.9.0
-  observable_ish:
+  stacked: ^1.9.5
+  stacked_services: ^0.7.3
+  auto_route: ^0.6.7
+  injectable: ^1.0.4
+  get_it: ^5.0.6
+  stacked_hooks: ^0.1.3+2
+  flutter_hooks: ^0.15.0
+  observable_ish: ^2.1.5
   permission_handler: ^5.0.1+1
   flutter_vector_icons: ^0.2.1
-  timeago: ^2.0.26
+  timeago: ^3.0.2
   email_validator: '^1.0.5'
   #date management
-  intl: ^0.16.0
+  intl: ^0.17.0
   font_awesome_flutter: ^8.5.0
   enum_to_string: ^1.0.8
-  get: ^2.13.1
+  get:
 #  support for translations
-  i18n_extension: ^1.4.1
+#  i18n_extension:
   google_maps_flutter: ^0.5.26+4
   flutter_polyline_points: ^0.2.2
   geolocator: ^5.3.1
-  flutter_localizations:
-    sdk: flutter
+#  flutter_localizations:
+#    sdk: flutter
   tripletriocore:
      path: '../tripletrio_core'
 #    git: 'https://github.com/AlbertKamau/tripletrio_core'
@@ -50,9 +50,10 @@ dependencies:
 
 dev_dependencies:
   test: ^1.15.7
-  auto_route_generator: ^0.5.0
-  build_runner: ^1.10.0
-  injectable_generator: ^0.4.0
+  build_runner: ^1.10.1
+  auto_route_generator: ^0.6.8
+  injectable_generator: ^1.0.4
+  json_serializable: ^3.0.0
   flutter_test:
     sdk: flutter
 

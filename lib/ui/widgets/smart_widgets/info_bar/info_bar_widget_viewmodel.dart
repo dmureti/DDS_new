@@ -27,7 +27,7 @@ class InfoBarWidgetViewModel extends BaseViewModel {
   LogisticsService get logisticsService => _logisticsService;
 
   navigateToJourneyInfoRoute() async {
-    _navigationService.navigateTo(Routes.journeyViewRoute);
+    _navigationService.navigateTo(Routes.journeyView);
   }
 
   toggleJourneyState() {}

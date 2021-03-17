@@ -18,7 +18,7 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
   }
 
   navigateToJourneyInfoRoute() async {
-    await _navigationService.navigateTo(Routes.journeyViewRoute);
+    await _navigationService.navigateTo(Routes.journeyView);
   }
 
   DeliveryJourney get currentJourney => _journeyService.currentJourney;
@@ -81,6 +81,6 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
   List<ReactiveServiceMixin> get reactiveServices => [_journeyService];
 
   navigateToMakeAdhoc() async {
-    var result = await _navigationService.navigateTo(Routes.adhocSaleView);
+    var result = await _navigationService.navigateTo(Routes.addAdhocSaleView);
   }
 }
