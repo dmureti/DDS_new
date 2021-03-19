@@ -14,6 +14,7 @@ class ViewMapButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ViewMapButtonViewModel>.reactive(
+        onModelReady: (model) => model.getJourneyDetails(),
         builder: (context, model, child) => ClipOval(
               child: Material(
                 color: kLightestBlue,
@@ -21,7 +22,9 @@ class ViewMapButton extends StatelessWidget {
                 shadowColor: Colors.black12,
                 child: InkWell(
                   splashColor: Colors.pink,
-                  onTap: model.navigateToViewMap,
+                  onTap: model.deliveryJourney != null
+                      ? model.navigateToViewMap
+                      : null,
                   child: SizedBox(
                     width: 45,
                     height: 45,

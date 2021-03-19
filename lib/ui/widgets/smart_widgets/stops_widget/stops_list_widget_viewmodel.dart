@@ -46,4 +46,8 @@ class StopsListWidgetViewModel extends BaseViewModel {
           title: 'Could not fetch $customerId', description: result.toString());
     }
   }
+
+  init() async {
+    await getJourneyDetails();
+  }
 }

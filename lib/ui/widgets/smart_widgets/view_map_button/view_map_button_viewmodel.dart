@@ -15,9 +15,12 @@ class ViewMapButtonViewModel extends FutureViewModel {
   User get _user => _userService.user;
 
   DeliveryJourney _deliveryJourney;
+
+  DeliveryJourney get deliveryJourney => _deliveryJourney;
   final String _journeyId;
 
   navigateToViewMap() {
+    //If the deliveru journey is null
     _navigationService.navigateTo(Routes.deliveryJourneyMapView,
         arguments:
             DeliveryJourneyMapViewArguments(deliveryJourney: _deliveryJourney));
@@ -26,8 +29,13 @@ class ViewMapButtonViewModel extends FutureViewModel {
   ViewMapButtonViewModel(this._journeyId);
 
   Future getJourneyDetails() async {
-    _deliveryJourney =
+    var result =
         await _api.getJourneyDetails(token: _user.token, journeyId: _journeyId);
+    if (result is DeliveryJourney) {
+      _deliveryJourney = result;
+      notifyListeners();
+    }
+    print(result);
     return _deliveryJourney;
   }
 

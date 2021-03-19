@@ -7,10 +7,13 @@ import 'package:tripletriocore/tripletriocore.dart';
 class DeliveryJourneyMapViewModel extends FutureViewModel<UserLocation> {
   LocationService _locationService = locator<LocationService>();
 
+  init() async {}
+
   final DeliveryJourney _deliveryJourney;
   DeliveryJourney get deliveryJourney => _deliveryJourney;
 
-  DeliveryJourneyMapViewModel(this._deliveryJourney);
+  DeliveryJourneyMapViewModel(DeliveryJourney deliveryJourney)
+      : _deliveryJourney = deliveryJourney;
 
   /// The current position of the user
   UserLocation _currentPosition;
@@ -110,14 +113,14 @@ class DeliveryJourneyMapViewModel extends FutureViewModel<UserLocation> {
 
   /// Get the current position of the user
   Future<UserLocation> getCurrentPosition() async {
-    setBusy(true);
-    _currentPosition = await _locationService.getLocation();
-    if (_currentAddress != null) {
+    var result = await _locationService.getLocation();
+    if (result is UserLocation) {
+      _currentPosition = result;
+      print(currentPosition.latitude);
       await getAddress(_currentPosition.latitude, _currentPosition.longitude);
+      notifyListeners();
     }
-    setBusy(false);
-    notifyListeners();
-    return _currentPosition;
+    return result;
   }
 
   /// Initial location of the map view

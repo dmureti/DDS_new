@@ -152,94 +152,110 @@ class _JourneyOrder extends HookViewModelWidget<DeliveryJourneyMapViewModel> {
   Widget buildViewModelWidget(
       BuildContext context, DeliveryJourneyMapViewModel viewModel) {
     return ViewModelBuilder<StopsListWidgetViewModel>.reactive(
+        onModelReady: (model) {
+          model.init();
+        },
         builder: (context, model, child) => model.isBusy
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : Container(
-                child: Column(
-                  children: model.deliveryJourney.stops
-                      .where((deliveryStop) => deliveryStop.orderId.isNotEmpty)
-                      .map<Widget>((deliveryStop) => Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '${deliveryStop.customerId}',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                FutureBuilder(
-                                  future: model.fetchCustomerDetails(
-                                      deliveryStop.customerId),
-                                  builder: (context, AsyncSnapshot snapshot) {
-                                    switch (snapshot.connectionState) {
-                                      case ConnectionState.waiting:
+            : model.deliveryJourney == null
+                ? Container(
+                    child: Text(
+                      'Fetching stops..',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  )
+                : Container(
+                    child: Column(
+                      children: model.deliveryJourney.stops
+                          .where(
+                              (deliveryStop) => deliveryStop.orderId.isNotEmpty)
+                          .map<Widget>((deliveryStop) => Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      '${deliveryStop.customerId}',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    FutureBuilder(
+                                      future: model.fetchCustomerDetails(
+                                          deliveryStop.customerId),
+                                      builder:
+                                          (context, AsyncSnapshot snapshot) {
+                                        switch (snapshot.connectionState) {
+                                          case ConnectionState.waiting:
 
-                                        ///@TODO : Add an animated container
-                                        return Container();
-                                        break;
-                                      default:
-                                        if (snapshot.hasError) {
-                                          return Text(snapshot.error);
-                                        } else {
-                                          if (!snapshot.hasData)
-                                            return Text('-');
-                                          else {
-                                            Customer _c = snapshot.data;
-                                            UserLocation _customerLocation =
-                                                _c.customerLocation;
-                                            viewModel.updateCustomers(_c);
+                                            ///@TODO : Add an animated container
+                                            return Container();
+                                            break;
+                                          default:
+                                            if (snapshot.hasError) {
+                                              return Text(snapshot.error);
+                                            } else {
+                                              if (!snapshot.hasData)
+                                                return Text('-');
+                                              else {
+                                                Customer _c = snapshot.data;
+                                                UserLocation _customerLocation =
+                                                    _c.customerLocation;
+                                                viewModel.updateCustomers(_c);
 
-                                            /// Add the coordinates
-                                            return Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                DistanceWidget(
-                                                    _customerLocation,
-                                                    viewModel.currentPosition),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Row(
+                                                /// Add the coordinates
+                                                return Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
-                                                    ClipOval(
-                                                      child: InkWell(
-                                                        onTap: () {
-                                                          viewModel.moveCameraTo(
-                                                              _customerLocation
-                                                                  .latitude,
-                                                              _customerLocation
-                                                                  .longitude);
-                                                        },
-                                                        child: Material(
-                                                          color: Colors.white,
-                                                          child: SizedBox(
-                                                            width: 30,
-                                                            height: 30,
-                                                            child: Icon(Icons
-                                                                .location_searching),
+                                                    DistanceWidget(
+                                                        _customerLocation,
+                                                        viewModel
+                                                            .currentPosition),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        ClipOval(
+                                                          child: InkWell(
+                                                            onTap: () {
+                                                              viewModel.moveCameraTo(
+                                                                  _customerLocation
+                                                                      .latitude,
+                                                                  _customerLocation
+                                                                      .longitude);
+                                                            },
+                                                            child: Material(
+                                                              color:
+                                                                  Colors.white,
+                                                              child: SizedBox(
+                                                                width: 30,
+                                                                height: 30,
+                                                                child: Icon(Icons
+                                                                    .location_searching),
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ),
+                                                      ],
+                                                    )
                                                   ],
-                                                )
-                                              ],
-                                            );
-                                          }
+                                                );
+                                              }
+                                            }
                                         }
-                                    }
-                                  },
+                                      },
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ))
-                      .toList(),
-                ),
-              ),
+                              ))
+                          .toList(),
+                    ),
+                  ),
         viewModelBuilder: () =>
             StopsListWidgetViewModel(journeyId: _journeyId));
   }
