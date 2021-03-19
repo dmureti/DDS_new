@@ -74,7 +74,7 @@ class _CustomerDetailViewState extends State<CustomerDetailView>
       case 3:
         toDisplay = IconButton(
           icon: Icon(Icons.add_circle_outline_sharp),
-          onPressed: !model.enableAddIssue
+          onPressed: model.enableAddIssue
               ? () {
                   model.navigateToAddIssue();
                 }
