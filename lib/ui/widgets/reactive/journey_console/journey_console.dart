@@ -205,12 +205,13 @@ class JourneyConsole extends StatelessWidget {
                                                   title: Text(
                                                       'View other journeys'),
                                                 ),
-                                                ListTile(
-                                                  leading:
-                                                      Icon(Icons.swap_calls),
-                                                  title:
-                                                      Text('Deselect Journey'),
-                                                ),
+                                                //@TODO: Activate deselect
+                                                // ListTile(
+                                                //   leading:
+                                                //       Icon(Icons.swap_calls),
+                                                //   title:
+                                                //       Text('Deselect Journey'),
+                                                // ),
                                               ],
                                             ),
                                           ),
