@@ -17,7 +17,7 @@ class PartialDeliveryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<PartialDeliveryViewModel>.reactive(
+    return ViewModelBuilder<PartialDeliveryViewModel>.nonReactive(
         builder: (context, model, child) {
           return Scaffold(
             appBar: AppBar(
@@ -32,6 +32,7 @@ class PartialDeliveryView extends StatelessWidget {
                       itemBuilder: (context, index) {
                         SalesOrderRequestItem salesOrderRequestItem =
                             model.orderItems[index];
+
                         return Container(
                           margin: EdgeInsets.symmetric(vertical: 4),
                           child: Material(
@@ -143,13 +144,11 @@ class UnitsDeliveredTextForm
       BuildContext context, PartialDeliveryViewModel model) {
     num toDeliver = salesOrderRequestItem.quantity -
         salesOrderRequestItem.quantityDelivered;
-    var controller =
-        useTextEditingController(text: toDeliver.toStringAsFixed(0));
     return TextFormField(
-      controller: controller,
+      initialValue: toDeliver.toString(),
       keyboardType: TextInputType.number,
       onChanged: (value) {
-        model.updateSalesOrderRequestItem(index, controller.text);
+        model.updateSalesOrderRequestItem(index, value);
       },
     );
   }

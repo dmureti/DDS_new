@@ -22,13 +22,23 @@ class PartialDeliveryViewModel extends BaseViewModel {
   List<SalesOrderRequestItem> get orderItems => salesOrder.orderItems;
 
   PartialDeliveryViewModel(
-      SalesOrder salesOrder, this.deliveryJourney, this.stopId)
-      : _salesOrder = salesOrder;
+      SalesOrder salesOrder, this.deliveryJourney, this.stopId) {
+    _salesOrder = salesOrder;
+    _newRequest = salesOrder.orderItems;
+  }
 
   updateSalesOrderRequestItem(int index, String val) {
-    _salesOrder.orderItems[index].quantityDelivered = int.parse(val);
-    notifyListeners();
+    _newRequest[index].quantity = int.parse(val);
+    // notifyListeners();
   }
+
+  setQuantityToDeliver(var val, int index) {}
+
+  List<SalesOrderRequestItem> _newRequest;
+  List<SalesOrderRequestItem> get newRequest => _newRequest;
+
+  int _quantityToDeliver;
+  int get quantityToDeliver => _quantityToDeliver;
 
   String _remarks = "";
   String get remarks => _remarks;
@@ -40,7 +50,7 @@ class PartialDeliveryViewModel extends BaseViewModel {
       "atStopId": stopId,
       "deliveryDateTime": DateTime.now().toUtc().toIso8601String(),
       "deliveryWarehouse": deliveryJourney.route,
-      "items": orderItems.map((SalesOrderRequestItem e) {
+      "items": newRequest.map((SalesOrderRequestItem e) {
         return {
           "item": {
             "id": e.soItemId,
@@ -48,7 +58,7 @@ class PartialDeliveryViewModel extends BaseViewModel {
             "itemName": e.itemName,
             "itemPrice": e.itemRate,
           },
-          "quantity": e.quantityDelivered
+          "quantity": e.quantity
         };
       }).toList(),
       "onJourneyId": deliveryJourney.journeyId,
