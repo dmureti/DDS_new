@@ -10,7 +10,7 @@ import 'sales_order_item_model.dart';
 
 class SalesOrderItemWidget<T> extends StatelessWidget {
   final Product item;
-  final SalesOrderViewModel salesOrderViewModel;
+  final salesOrderViewModel;
 
   SalesOrderItemWidget(
       {@required this.item, @required this.salesOrderViewModel});
