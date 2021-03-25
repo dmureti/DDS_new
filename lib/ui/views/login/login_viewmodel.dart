@@ -74,13 +74,35 @@ class LoginViewModel extends BaseViewModel {
   String _password;
   String get password => _password;
 
-  login({String email, String password}) async {
+  String _mobile;
+  String get mobile => _mobile;
+  setMobile(String val) {
+    _mobile = val.trim();
+    notifyListeners();
+  }
+
+  bool _usePhone = false;
+  bool get usePhone => _usePhone;
+  toggleUsePhone() {
+    _usePhone = !usePhone;
+    notifyListeners();
+  }
+
+  login() async {
     setBusy(true);
+    print(usePhone);
+    var result;
     if (rememberMe) {
       await _initService.saveUserCredentials(email: email, password: password);
     }
-    var result = await authenticationService.loginWithEmailAndPassword(
-        email: _email.trim(), password: _password.trim());
+
+    if (usePhone) {
+      result = await authenticationService.loginWithUserIdAndPassword(
+          userId: mobile, password: password.trim());
+    } else {
+      result = await authenticationService.loginWithUserIdAndPassword(
+          userId: _email.trim(), password: _password.trim());
+    }
     setBusy(false);
     if (result is User) {
       // Update the user

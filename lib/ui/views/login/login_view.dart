@@ -122,22 +122,30 @@ class _LoginViewState extends State<LoginView> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600, fontSize: 20),
                                 onChanged: (String val) {
-                                  model.updateEmail(val);
+                                  model.usePhone
+                                      ? model.setMobile(val)
+                                      : model.updateEmail(val);
                                 },
                                 validator: (String value) {
-                                  if (value != null &&
-                                      !EmailValidator.validate(value)) {
-                                    return 'Please enter a valid email address';
+                                  if (value != null) {
+                                    return 'Please enter a valid email address or phone number';
                                   }
                                   return null;
                                 },
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: InputDecoration(
-                                  hintText: 'Your email address',
-                                  hintStyle:
-                                      TextStyle(fontWeight: FontWeight.w600),
-                                  prefixIcon: Icon(Icons.email),
-                                ),
+                                    hintText: model.usePhone
+                                        ? 'Phone Number'
+                                        : 'Your email address',
+                                    hintStyle:
+                                        TextStyle(fontWeight: FontWeight.w600),
+                                    prefixIcon: model.usePhone
+                                        ? Icon(Icons.phone)
+                                        : Icon(Icons.email),
+                                    suffixIcon: IconButton(
+                                      icon: Icon(Icons.threesixty_outlined),
+                                      onPressed: model.toggleUsePhone,
+                                    )),
                               ),
                             ),
                             model.emailValidationMessage == null
@@ -219,9 +227,9 @@ class _LoginViewState extends State<LoginView> {
                                       ),
                                     ),
                                     onPressed: () {
-                                      if (_formKey.currentState.validate()) {
-                                        model.login();
-                                      }
+                                      // if (_formKey.currentState.validate()) {
+                                      model.login();
+                                      // }
                                     })
                           ],
                         ),
