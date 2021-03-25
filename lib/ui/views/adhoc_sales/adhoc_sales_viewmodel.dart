@@ -1,17 +1,35 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/customer_service.dart';
 import 'package:distributor/services/journey_service.dart';
+import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/stock_controller_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
-class AdhocSalesViewModel extends BaseViewModel {
+class AdhocSalesViewModel extends ReactiveViewModel {
   CustomerService _customerService = locator<CustomerService>();
   NavigationService _navigationService = locator<NavigationService>();
   DialogService _dialogService = locator<DialogService>();
+  LogisticsService _logisticsService = locator<LogisticsService>();
+
+  navigateToCart() async {
+    await _navigationService.navigateTo(Routes.adhocCartView,
+        arguments: AdhocCartViewArguments(
+            isWalkin: isWalkInCustomer, customer: customer));
+  }
+
+  bool get userHasJourneys {
+    if (_logisticsService.userJourneyList.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   ApiService _apiService = locator<ApiService>();
   String get token => _userService.user.token;
   navigateToPaymentView() async {}
@@ -29,7 +47,7 @@ class AdhocSalesViewModel extends BaseViewModel {
   String _customerType;
   String get customerType => _customerType;
 
-  int noOfSteps = 3;
+  int noOfSteps = 2;
 
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
@@ -44,6 +62,14 @@ class AdhocSalesViewModel extends BaseViewModel {
   updateCustomerType(String val) {
     _customerType = val;
     notifyListeners();
+  }
+
+  bool get isWalkInCustomer {
+    if (customerType.toLowerCase() == 'Walk-in') {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   AdhocSalesViewModel(Customer customer) : _customer = customer;
@@ -87,12 +113,7 @@ class AdhocSalesViewModel extends BaseViewModel {
   List<Customer> get customerList {
     if (_customerList.length > 0) {
       return _customerList
-          .where((element) => element.route
-              .toLowerCase()
-              .contains(deliveryJourney.route.toLowerCase()))
-          .toList()
-            ..sort(
-                (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+        ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
     } else {
       // print(_customerList.first.route);
       return _customerList
@@ -199,4 +220,7 @@ class AdhocSalesViewModel extends BaseViewModel {
       _navigationService.back(result: true);
     }
   }
+
+  @override
+  List<ReactiveServiceMixin> get reactiveServices => [_logisticsService];
 }
