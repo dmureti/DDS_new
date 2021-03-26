@@ -1,5 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/product_service.dart';
+import 'package:distributor/services/adhoc_cart_service.dart';
 
 import 'package:distributor/services/order_service.dart';
 import 'package:stacked/stacked.dart';
@@ -10,7 +11,9 @@ import 'package:intl/intl.dart';
 
 enum ProductOrdering { alphaAsc, alphaDesc }
 
-class SalesOrderViewModel extends BaseViewModel {
+class SalesOrderViewModel extends ReactiveViewModel {
+  AdhocCartService _adhocCartService = locator<AdhocCartService>();
+
   /// This is used to convert the local time to UTC.
   /// The [DatePicker] returns a date object with a default time of 00:00
   ///
@@ -156,12 +159,14 @@ class SalesOrderViewModel extends BaseViewModel {
 
   addToTotal(double value) {
     _total += value;
+    _adhocCartService.addToTotal(value);
     notifyListeners();
   }
 
   removeFromTotal(double value) {
     if (total > 0) {
       _total -= value;
+      _adhocCartService.subtractFromTotal(value);
     }
     notifyListeners();
   }
@@ -180,4 +185,7 @@ class SalesOrderViewModel extends BaseViewModel {
           title: 'Error', description: 'An error occurred.');
     }
   }
+
+  @override
+  List<ReactiveServiceMixin> get reactiveServices => [_adhocCartService];
 }
