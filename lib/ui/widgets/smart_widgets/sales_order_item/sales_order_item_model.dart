@@ -8,19 +8,29 @@ class SalesOrderItemModel extends BaseViewModel {
 //  SalesOrderItem salesOrderItem;
   double _total = 0.00;
   double get total => _total;
-  int _quantity = 0;
-  int get quantity => _quantity;
+  num _quantity = 0;
+  num get quantity => _quantity;
 
-  SalesOrderItemModel({@required this.product}) : assert(product != null);
+  num _maxQuantity;
+  num get maxQuantity => _maxQuantity;
+  SalesOrderItemModel({@required this.product, num maxQuantity})
+      : assert(product != null),
+        _maxQuantity = maxQuantity;
 
   bool get isEnabled => product.itemPrice > 0;
 
   /// If the item has a price enable the add item quantity
   addItemQuantity() {
     if (isEnabled) {
-      _quantity++;
-      setItemTotal();
-      notifyListeners();
+      if (maxQuantity == null) {
+        _quantity++;
+        setItemTotal();
+        notifyListeners();
+      } else if (quantity <= maxQuantity) {
+        _quantity++;
+        setItemTotal();
+        notifyListeners();
+      }
     } else {
       null;
     }

@@ -1,5 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
+import 'package:distributor/services/adhoc_cart_service.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/customer_service.dart';
 import 'package:distributor/services/journey_service.dart';
@@ -15,8 +16,13 @@ class AdhocSalesViewModel extends ReactiveViewModel {
   NavigationService _navigationService = locator<NavigationService>();
   DialogService _dialogService = locator<DialogService>();
   LogisticsService _logisticsService = locator<LogisticsService>();
+  AdhocCartService _adhocCartService = locator<AdhocCartService>();
 
   navigateToCart() async {
+    if (isWalkInCustomer) {
+      print(posProfile['defaultPriceList']);
+      _adhocCartService.setSellingPriceList(posProfile['defaultPriceList']);
+    }
     await _navigationService.navigateTo(Routes.adhocCartView,
         arguments: AdhocCartViewArguments(
             isWalkin: isWalkInCustomer, customer: customer));
@@ -47,7 +53,7 @@ class AdhocSalesViewModel extends ReactiveViewModel {
   String _customerType;
   String get customerType => _customerType;
 
-  int noOfSteps = 2;
+  int noOfSteps = 1;
 
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
@@ -60,12 +66,14 @@ class AdhocSalesViewModel extends ReactiveViewModel {
   }
 
   updateCustomerType(String val) {
-    _customerType = val;
+    _customerType = val.trim();
+
+    _adhocCartService.setCustomerType(val);
     notifyListeners();
   }
 
   bool get isWalkInCustomer {
-    if (customerType.toLowerCase() == 'Walk-in') {
+    if (customerType.toLowerCase() == 'walk-in') {
       return true;
     } else {
       return false;
@@ -78,6 +86,9 @@ class AdhocSalesViewModel extends ReactiveViewModel {
   Customer get customer => _customer;
   updateCustomer(Customer c) {
     _customer = c;
+    _adhocCartService.setCustomerId(c.id);
+    _adhocCartService.setWarehouse(c.branch);
+    _adhocCartService.setSellingPriceList(c.defaultPriceList);
     notifyListeners();
   }
 
@@ -106,6 +117,9 @@ class AdhocSalesViewModel extends ReactiveViewModel {
   String get customerName => _customerName;
   updateCustomerName(String val) {
     _customerName = val;
+    _adhocCartService.setCustomerId(val);
+    _adhocCartService.setWarehouse(deliveryJourney.branch);
+
     notifyListeners();
   }
 
@@ -148,6 +162,15 @@ class AdhocSalesViewModel extends ReactiveViewModel {
     }
   }
 
+  Map _posProfile;
+  Map get posProfile => _posProfile;
+
+  getUserPOSProfile() async {
+    _posProfile = await _stockControllerService.getUserPOSProfile();
+    print(_posProfile['defaultPriceList']);
+    notifyListeners();
+  }
+
   String _remarks;
   String get remarks => _remarks;
   void updateRemarks(String value) {
@@ -155,72 +178,15 @@ class AdhocSalesViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
-  String _paymentMode;
-  String get paymentMode => _paymentMode;
-
-  void setPaymentType(String value) async {
-    _paymentMode = value;
-    var result = await _apiService.api.getPOSAccount(value, token);
-    notifyListeners();
-  }
-
-  num _amount;
-  num get amount => _amount;
-  updateAmount(num value) {
-    _amount = value;
-    notifyListeners();
-  }
-
   String _customerId;
   String get customerId => _customerId;
   setCustomerId(String val) {
+    _adhocCartService.setCustomerId(val);
     _customerId = val;
     notifyListeners();
   }
 
-  createPayment() async {
-    setBusy(true);
-    Payment payment = Payment(
-      amount,
-      customer.name,
-      DateTime.now().toUtc().toIso8601String(),
-      paymentMode,
-    );
-    Map<String, dynamic> data = {
-      "customerId": customerId,
-      "items": [
-        {
-          "itemCode": "string",
-          "itemName": "string",
-          "itemRate": 0,
-          "quantity": 0
-        }
-      ],
-      "payment": {
-        "amount": 0,
-        "externalAccountId": "string",
-        "externalTxnID": "string",
-        "externalTxnNarrative": "string",
-        "payerAccount": "string",
-        "payerName": "string",
-        "paymentMode": "string",
-        "userTxnNarrative": "string"
-      },
-      "remarks": remarks,
-      "sellingPriceList": "string",
-      "warehouseId": "string"
-    };
-    var result = await _apiService.api
-        .createPOSPayment(modeOfPayment: paymentMode, token: token, data: data);
-    setBusy(false);
-    if (result is CustomException) {
-      await _dialogService.showDialog(
-          title: result.title, description: result.description);
-    } else {
-      _navigationService.back(result: true);
-    }
-  }
-
   @override
-  List<ReactiveServiceMixin> get reactiveServices => [_logisticsService];
+  List<ReactiveServiceMixin> get reactiveServices =>
+      [_logisticsService, _adhocCartService];
 }

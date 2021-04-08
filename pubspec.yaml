@@ -1,6 +1,6 @@
 name: distributor
 description: Digital Distribution System
-version: 7.0.1+1
+version: 7.0.4+1
 
 environment:
   sdk: ">=2.7.0 <3.0.0"

@@ -97,4 +97,10 @@ class CustomerService {
     var result = await api.createPayment(data, user.token, paymentMode);
     return result;
   }
+
+  listWarehouses() async {
+    var result = await api.listWarehouses(user.token);
+    print(result);
+    return result;
+  }
 }

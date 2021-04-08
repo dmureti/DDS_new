@@ -1,6 +1,7 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/user_service.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
@@ -15,6 +16,11 @@ class ProductService {
   fetchProductsByPriceList(Customer customer) async {
     var result = await _api.fetchProductsByPriceList(
         _user.token, customer.defaultPriceList);
+    return result;
+  }
+
+  fetchProductsByDefaultPriceList({@required String defaultStock}) async {
+    var result = await _api.fetchProductsByPriceList(_user.token, defaultStock);
     return result;
   }
 }

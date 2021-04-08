@@ -41,9 +41,7 @@ class SalesOrderViewModel extends ReactiveViewModel {
   Customer _customer;
   Customer get customer => _customer;
 
-  SalesOrderViewModel({@required Customer customer})
-      : _customer = customer,
-        assert(customer != null);
+  SalesOrderViewModel({@required Customer customer}) : _customer = customer;
 
   String _remarks = "";
   String get remarks => _remarks;
@@ -104,6 +102,7 @@ class SalesOrderViewModel extends ReactiveViewModel {
   }
 
   increaseSalesOrderItems(Product p, quantity) {
+    _adhocCartService.increaseSalesOrderItems(p, quantity);
     if (_items.contains(p)) {
       // Get the element that contains the product in the sales item
       for (int i = 0; i < _salesOrderItems.length; i++) {
@@ -141,6 +140,7 @@ class SalesOrderViewModel extends ReactiveViewModel {
   }
 
   decreaseSalesOrderItems(Product p, quantity) {
+    _adhocCartService.decreaseSalesOrderItems(p, quantity);
     if (_items.contains(p)) {
       // Get the element that contains the product in the sales item
       for (int i = 0; i < _salesOrderItems.length; i++) {

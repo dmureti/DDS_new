@@ -11,14 +11,16 @@ import 'sales_order_item_model.dart';
 class SalesOrderItemWidget<T> extends StatelessWidget {
   final Product item;
   final salesOrderViewModel;
+  final quantity;
 
   SalesOrderItemWidget(
-      {@required this.item, @required this.salesOrderViewModel});
+      {@required this.item, @required this.salesOrderViewModel, this.quantity});
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SalesOrderItemModel>.reactive(
-      viewModelBuilder: () => SalesOrderItemModel(product: item),
+      viewModelBuilder: () =>
+          SalesOrderItemModel(product: item, maxQuantity: quantity),
       builder: (context, model, child) => Container(
         margin:
             EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0, top: 10.0),

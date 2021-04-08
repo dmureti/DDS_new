@@ -90,12 +90,10 @@ class LoginViewModel extends BaseViewModel {
 
   login() async {
     setBusy(true);
-    print(usePhone);
     var result;
     if (rememberMe) {
       await _initService.saveUserCredentials(email: email, password: password);
     }
-
     if (usePhone) {
       result = await authenticationService.loginWithUserIdAndPassword(
           userId: mobile, password: password.trim());

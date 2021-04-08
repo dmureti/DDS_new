@@ -14,6 +14,8 @@ import '../core/models/payment_link.dart';
 import '../src/ui/views/add_adhoc_sale/add_adhoc_sale_view.dart';
 import '../src/ui/views/add_issue/add_issue_view.dart';
 import '../src/ui/views/add_payment/add_payment_view.dart';
+import '../src/ui/views/adhoc_cart_view/adhoc_cart_view.dart';
+import '../src/ui/views/adhoc_payment/adhoc_payment_view.dart';
 import '../src/ui/views/partial_delivery/partial_delivery_view.dart';
 import '../ui/views/customer_location.dart';
 import '../ui/views/customers/customer_detail/customer_detail_view.dart';
@@ -48,7 +50,9 @@ class Routes {
   static const String addPaymentView = '/add-payment-view';
   static const String partialDeliveryView = '/partial-delivery-view';
   static const String addIssueView = '/add-issue-view';
+  static const String adhocCartView = '/adhoc-cart-view';
   static const String addAdhocSaleView = '/add-adhoc-sale-view';
+  static const String adhocPaymentView = '/adhoc-payment-view';
   static const all = <String>{
     homeView,
     startupView,
@@ -67,7 +71,9 @@ class Routes {
     addPaymentView,
     partialDeliveryView,
     addIssueView,
+    adhocCartView,
     addAdhocSaleView,
+    adhocPaymentView,
   };
 }
 
@@ -92,7 +98,9 @@ class Router extends RouterBase {
     RouteDef(Routes.addPaymentView, page: AddPaymentView),
     RouteDef(Routes.partialDeliveryView, page: PartialDeliveryView),
     RouteDef(Routes.addIssueView, page: AddIssueView),
+    RouteDef(Routes.adhocCartView, page: AdhocCartView),
     RouteDef(Routes.addAdhocSaleView, page: AddAdhocSaleView),
+    RouteDef(Routes.adhocPaymentView, page: AdhocPaymentView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -267,6 +275,19 @@ class Router extends RouterBase {
         settings: data,
       );
     },
+    AdhocCartView: (data) {
+      final args = data.getArgs<AdhocCartViewArguments>(
+        orElse: () => AdhocCartViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => AdhocCartView(
+          key: args.key,
+          customer: args.customer,
+          isWalkin: args.isWalkin,
+        ),
+        settings: data,
+      );
+    },
     AddAdhocSaleView: (data) {
       final args = data.getArgs<AddAdhocSaleViewArguments>(
         orElse: () => AddAdhocSaleViewArguments(),
@@ -276,6 +297,12 @@ class Router extends RouterBase {
           key: args.key,
           customer: args.customer,
         ),
+        settings: data,
+      );
+    },
+    AdhocPaymentView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => AdhocPaymentView(),
         settings: data,
       );
     },
@@ -388,6 +415,14 @@ class AddIssueViewArguments {
   final Key key;
   final Customer customer;
   AddIssueViewArguments({this.key, this.customer});
+}
+
+/// AdhocCartView arguments holder class
+class AdhocCartViewArguments {
+  final Key key;
+  final Customer customer;
+  final bool isWalkin;
+  AdhocCartViewArguments({this.key, this.customer, this.isWalkin});
 }
 
 /// AddAdhocSaleView arguments holder class
