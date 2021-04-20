@@ -20,7 +20,6 @@ class AdhocSalesViewModel extends ReactiveViewModel {
 
   navigateToCart() async {
     if (isWalkInCustomer) {
-      print(posProfile['defaultPriceList']);
       _adhocCartService.setSellingPriceList(posProfile['defaultPriceList']);
     }
     await _navigationService.navigateTo(Routes.adhocCartView,
@@ -119,9 +118,8 @@ class AdhocSalesViewModel extends ReactiveViewModel {
   String get customerName => _customerName;
   updateCustomerName(String val) {
     _customerName = val;
-    _adhocCartService.setCustomerId(val);
+    _adhocCartService.setCustomerName(val);
     _adhocCartService.setWarehouse(deliveryJourney.branch);
-
     notifyListeners();
   }
 
