@@ -29,7 +29,9 @@ class AdhocSalesViewModel extends ReactiveViewModel {
   }
 
   bool get userHasJourneys {
-    if (_logisticsService.userJourneyList.length > 0) {
+    if (_logisticsService.userJourneyList.length > 0 &&
+        _logisticsService.currentJourney != null &&
+        _logisticsService.currentJourney.status == 'In Transit') {
       return true;
     } else {
       return false;
