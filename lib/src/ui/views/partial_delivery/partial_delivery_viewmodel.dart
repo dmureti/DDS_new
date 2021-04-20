@@ -12,6 +12,7 @@ class PartialDeliveryViewModel extends BaseViewModel {
   DialogService _dialogService = locator<DialogService>();
   UserService _userService = locator<UserService>();
   String get token => _userService.user.token;
+  SnackbarService _snackbarService = locator<SnackbarService>();
 
   SalesOrder _salesOrder;
   final DeliveryJourney deliveryJourney;
@@ -75,6 +76,9 @@ class PartialDeliveryViewModel extends BaseViewModel {
       return await _dialogService.showDialog(
           title: result.title, description: result.description);
     } else {
+      _snackbarService.showSnackbar(
+          message: 'The delivery was completed successfully');
+      _navigationService.back(result: true);
       // Notify the user that it was successful
       // Navigate back and clear the stack
     }
