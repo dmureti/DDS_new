@@ -18,34 +18,35 @@ class StartupViewModel extends BaseViewModel {
 
   AppEnv get appEnv => _initService.appEnv;
 
-  login(String email, String password) async {
-    var result = await authenticationService.loginWithEmailAndPassword(
-        email: email.trim(), password: password);
+  login(String userId, String password) async {
+    var result = await authenticationService.loginWithUserIdAndPassword(
+        userId: userId, password: password);
+    ;
     if (result is User) {
       _userService.updateUser(result);
       _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
     } else {
       _navigationService.navigateTo(Routes.loginView,
-          arguments: LoginViewArguments(email: email, password: password));
+          arguments: LoginViewArguments(email: userId, password: password));
     }
   }
 
   Future handleStartUpLogic() async {
     bool result = await _initService.init();
-    String email;
+    String userId;
     String password;
     if (!result) {
-      email = "";
+      userId = "";
       password = "";
       _navigationService.navigateTo(Routes.loginView,
-          arguments: LoginViewArguments(email: email, password: password));
+          arguments: LoginViewArguments(email: userId, password: password));
     } else {
       if (result) {
-        email = _initService.email ?? "";
+        userId = _initService.userId ?? "";
         password = _initService.password ?? "";
         // login(email, password);a
         _navigationService.navigateTo(Routes.loginView,
-            arguments: LoginViewArguments(email: email, password: password));
+            arguments: LoginViewArguments(email: userId, password: password));
       }
     }
   }
