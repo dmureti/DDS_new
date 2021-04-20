@@ -14,8 +14,8 @@ class InitService {
   bool _rememberMe;
   bool get rememberMe => _rememberMe;
 
-  String _email;
-  String get email => _email;
+  String _userId;
+  String get userId => _userId;
 
   String _password;
   String get password => _password;
@@ -56,14 +56,14 @@ class InitService {
     }
   }
 
-  saveUserCredentials({String email, String password}) async {
-    await prefs.setString('email', email);
+  saveUserCredentials({String userId, String password}) async {
+    await prefs.setString('userId', userId);
     await prefs.setString('password', password);
   }
 
   fetchUserCredentials() async {
-    if (prefs.containsKey('email')) {
-      _email = await prefs.getString('email');
+    if (prefs.containsKey('userId')) {
+      _userId = await prefs.getString('userId');
     }
     if (prefs.containsKey('password')) {
       _password = await prefs.getString('password');
