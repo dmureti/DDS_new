@@ -255,11 +255,18 @@ class _CustomerDetailViewState extends State<CustomerDetailView>
                       customer: widget.customer,
                     )
                   : Container(),
-              !model.enableIssuesTab
+              model.enableIssuesTab
                   ? NotificationsTab(
                       customer: widget.customer,
                     )
-                  : Container()
+                  : Container(
+                      margin: EdgeInsets.symmetric(horizontal: 8),
+                      child: Center(
+                          child: Text(
+                        'You dont have sufficient permissions to view issues',
+                        textAlign: TextAlign.center,
+                      )),
+                    )
             ],
           ),
         ),
