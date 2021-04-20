@@ -98,7 +98,6 @@ class AddPaymentViewModel extends BaseViewModel {
   }
 
   void submit() async {
-    print(externalTxnID);
     setBusy(true);
     String _paymentMode = paymentMode.toString().split(".").last;
     Payment payment = Payment(amount, customer.id,
@@ -111,9 +110,7 @@ class AddPaymentViewModel extends BaseViewModel {
         userTxnNarrative: userTrxNarrative,
         invoiceAllocation: invoiceAllocation);
     var result = await _customerService.addPayment(
-      paymentModes: paymentMode,
-      payment: payment,
-    );
+        paymentModes: paymentMode, payment: payment, customerId: customer.id);
     setBusy(false);
     if (result is CustomException) {
       await _dialogService.showDialog(
@@ -121,9 +118,6 @@ class AddPaymentViewModel extends BaseViewModel {
     } else {
       await _customerService.getCustomerAccountTransactions(
           customerId: customer.id);
-      await _dialogService.showDialog(
-          title: "Success",
-          description: "The transaction was added successfully.");
       _navigationService.back(result: true);
     }
   }

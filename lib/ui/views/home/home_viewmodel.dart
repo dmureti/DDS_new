@@ -47,6 +47,14 @@ class HomeViewModel extends ReactiveViewModel {
     setBusy(false);
   }
 
+  navigateToPasswordReset() async {
+    await _navigationService.navigateTo(Routes.resetPasswordView);
+  }
+
+  navigateToChangePassword() async {
+    await _navigationService.navigateTo(Routes.changePasswordView);
+  }
+
   bool get hasActivityUpdate => _activityService.hasUpdate;
 
   DeliveryJourney get currentJourney => _logisticsService.currentJourney;

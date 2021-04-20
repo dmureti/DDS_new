@@ -93,8 +93,8 @@ class LoginViewModel extends BaseViewModel {
           activityTitle: 'Login in', activityDesc: 'Logged In successfully'));
 
       //Check if the user is enabled
-      if (!result.enabled) {
-        _navigationService.pushNamedAndRemoveUntil(Routes.resetPasswordView);
+      if (result.status == 0) {
+        _navigationService.pushNamedAndRemoveUntil(Routes.changePasswordView);
       }
       //Navigate to the home page
       _navigationService.pushNamedAndRemoveUntil(Routes.homeView);

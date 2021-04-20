@@ -14,7 +14,9 @@ class AccountsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<AccountsTabViewModel>.reactive(
-        onModelReady: (model) => model.fetchCustomerAccounts(),
+        onModelReady: (model) => model.init(),
+        fireOnModelReadyOnce: false,
+        disposeViewModel: true,
         builder: (context, model, child) => model.isBusy
             ? Center(
                 child: CircularProgressIndicator(),

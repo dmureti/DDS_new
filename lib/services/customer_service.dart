@@ -21,7 +21,7 @@ class CustomerService with ReactiveServiceMixin {
   List<Customer> _customerList;
   List<Customer> get customerList => _customerList;
 
-  RxValue<CustomerAccount> _customerAccount = RxValue();
+  RxValue<CustomerAccount> _customerAccount = RxValue<CustomerAccount>();
   RxValue<List<Issue>> _customerIssues =
       RxValue<List<Issue>>(initial: List<Issue>());
 
@@ -121,14 +121,13 @@ class CustomerService with ReactiveServiceMixin {
     return false;
   }
 
-  Future<CustomerAccount> getCustomerAccountTransactions(
-      {String customerId}) async {
+  Future getCustomerAccountTransactions({String customerId}) async {
     var result = await api.getCustomerAccountTransactions(
         customerId: customerId, token: _userService.user.token);
     if (result is CustomerAccount) {
       _customerAccount.value = result;
+      notifyListeners();
     }
-    return result;
   }
 
   Future<Customer> getCustomerDetailById(String customerId) async {
@@ -136,13 +135,14 @@ class CustomerService with ReactiveServiceMixin {
     return result;
   }
 
-  addPayment({
-    PaymentModes paymentModes,
-    Payment payment,
-  }) async {
+  addPayment(
+      {PaymentModes paymentModes, Payment payment, String customerId}) async {
     String paymentMode = paymentModes.toString().split(".").last;
     Map<String, dynamic> data = payment.toJson();
     var result = await api.createPayment(data, user.token, paymentMode);
+    if (result is bool) {
+      await getCustomerAccountTransactions(customerId: customerId);
+    }
     return result;
   }
 

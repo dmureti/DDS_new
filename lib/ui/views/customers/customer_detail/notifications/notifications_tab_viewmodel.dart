@@ -29,6 +29,7 @@ class NotificationsTabViewModel extends ReactiveViewModel {
     setBusy(true);
     await _customerService.getCustomerIssues(customer.id);
     setBusy(false);
+    notifyListeners();
   }
 
   String _description = "";

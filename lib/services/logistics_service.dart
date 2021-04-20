@@ -9,10 +9,12 @@ import 'package:distributor/ui/widgets/smart_widgets/info_bar/info_bar_widget_vi
 import 'package:flutter/material.dart';
 import 'package:observable_ish/observable_ish.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import 'package:tripletriocore/tripletriocore.dart';
 
 class LogisticsService with ReactiveServiceMixin {
+  DialogService _dialogService = locator<DialogService>();
   ApiService _apiService = locator<ApiService>();
   UserService _userService = locator<UserService>();
   User get user => _userService.user;
@@ -75,7 +77,9 @@ class LogisticsService with ReactiveServiceMixin {
       _userJourneyList.value = result;
       return result;
     } else {
-      List<DeliveryJourney>();
+      await _dialogService.showDialog(
+          title: 'Error', description: result.description.toString());
+      return List<DeliveryJourney>();
     }
   }
 

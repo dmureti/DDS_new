@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
-class AccountsTabViewModel extends FutureViewModel {
+class AccountsTabViewModel extends ReactiveViewModel {
   final ApiService _apiService = locator<ApiService>();
   final UserService _userService = locator<UserService>();
   final CustomerService _customerService = locator<CustomerService>();
@@ -76,45 +76,37 @@ class AccountsTabViewModel extends FutureViewModel {
     notifyListeners();
   }
 
-  CustomerAccount _customerAccount;
-  CustomerAccount get customerAccount => _customerAccount;
+  CustomerAccount get customerAccount => _customerService.customerAccount;
 
-  List<CustomerTransaction> _customerTransactionList;
   List<CustomerTransaction> get customerTransactionList {
     if (_sortAscending == false) {
-      _customerTransactionList
+      customerAccount.transactions
           .sort((a, b) => ((b.entryDate.compareTo(a.entryDate))));
     } else {
-      _customerTransactionList
+      customerAccount.transactions
           .sort((a, b) => ((a.entryDate.compareTo(b.entryDate))));
     }
-    return _customerTransactionList;
+    return customerAccount.transactions;
   }
-
-  /// When the page loads return a list of the customers accounts in descending order
 
   final Customer customer;
 
   AccountsTabViewModel({@required this.customer}) : assert(customer != null);
 
-  Future<CustomerAccount> fetchCustomerAccounts() async {
-    _customerAccount = await _customerService.getCustomerAccountTransactions(
-        customerId: customer.id);
-    _customerTransactionList = _customerAccount.transactions;
-    _initialDate = DateTime.tryParse(_customerTransactionList[0].entryDate);
-    _startDate = DateTime.tryParse(_customerTransactionList[0].entryDate);
-    _endDate = DateTime.now();
-    notifyListeners();
-    return _customerAccount;
+  init() async {
+    await fetchCustomerAccounts();
   }
 
-  @override
-  Future<CustomerAccount> futureToRun() async {
-    if (canViewAccounts) {
-      CustomerAccount result = await fetchCustomerAccounts();
-      return result;
-    } else {
-      return null;
+  fetchCustomerAccounts() async {
+    await _customerService.getCustomerAccountTransactions(
+        customerId: customer.id);
+    notifyListeners();
+    if (customerAccount != null) {
+      _initialDate =
+          DateTime.tryParse(customerAccount.transactions[0].entryDate);
+      _startDate = DateTime.tryParse(customerAccount.transactions[0].entryDate);
+      _endDate = DateTime.now();
+      notifyListeners();
     }
   }
 
@@ -139,4 +131,7 @@ class AccountsTabViewModel extends FutureViewModel {
 //    _endDate = result.end.add(Duration(days: 1));
     notifyListeners();
   }
+
+  @override
+  List<ReactiveServiceMixin> get reactiveServices => [_customerService];
 }

@@ -7,6 +7,7 @@ import 'package:distributor/src/ui/views/adhoc_payment/adhoc_payment_view.dart';
 import 'package:distributor/src/ui/views/partial_delivery/partial_delivery_view.dart';
 import 'package:distributor/src/ui/views/delivery_note/delivery_note_view.dart';
 import 'package:distributor/src/ui/views/reset_password/reset_password_view.dart';
+import 'package:distributor/src/ui/views/change_password/change_password.dart';
 import 'package:distributor/ui/views/customer_location.dart';
 import 'package:distributor/ui/views/customers/customer_detail/customer_detail_view.dart';
 import 'package:distributor/ui/views/forgot_password/forgot_password_route.dart';
@@ -51,6 +52,7 @@ import '../ui/views/login/login_view.dart';
     MaterialRoute(page: AdhocPaymentView),
     MaterialRoute(page: DeliveryNoteView),
     MaterialRoute(page: ResetPasswordView),
+    MaterialRoute(page: ChangePasswordView),
   ],
 )
 class $Router {}

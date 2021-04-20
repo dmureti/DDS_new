@@ -101,6 +101,21 @@ class CustomerDetailViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  fetchAccounts() async {
+    setBusy(true);
+    await _customerService.getCustomerAccountTransactions(
+        customerId: customer.id);
+    setBusy(false);
+    notifyListeners();
+  }
+
+  fetchIssues() async {
+    setBusy(true);
+    await _customerService.getCustomerIssues(customer.id);
+    setBusy(false);
+    notifyListeners();
+  }
+
   navigateToCustomers() async {
     await _navigationService.navigateTo(Routes.homeView);
   }
@@ -111,7 +126,7 @@ class CustomerDetailViewModel extends BaseViewModel {
   }
 
   navigateToPaymentReference() async {
-    await await _navigationService.navigateTo(Routes.paymentReferenceView,
+    await _navigationService.navigateTo(Routes.paymentReferenceView,
         arguments: PaymentReferenceViewArguments(customer: customer));
   }
 
@@ -130,7 +145,7 @@ class CustomerDetailViewModel extends BaseViewModel {
         !enableAdhocSale ? navigateToMakeAdhocSale() : null;
         break;
       case 'add_issue':
-        enableAddIssue ? navigateToAddIssue() : null;
+        enableAddIssue ? await navigateToAddIssue() : null;
         break;
     }
   }
@@ -151,6 +166,7 @@ class CustomerDetailViewModel extends BaseViewModel {
     var result = await _navigationService.navigateTo(Routes.addPaymentView,
         arguments: AddPaymentViewArguments(customer: customer));
     if (result is bool) {
+      await fetchAccounts();
       _snackbarService.showSnackbar(
           message: 'The payment was added successfully.');
     }
@@ -165,6 +181,7 @@ class CustomerDetailViewModel extends BaseViewModel {
     var result = await _navigationService.navigateTo(Routes.addIssueView,
         arguments: AddIssueViewArguments(customer: customer));
     if (result is bool) {
+      await fetchIssues();
       _snackbarService.showSnackbar(
           message: 'The issue was added successfully.');
     }

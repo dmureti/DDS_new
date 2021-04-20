@@ -16,6 +16,7 @@ import '../src/ui/views/add_issue/add_issue_view.dart';
 import '../src/ui/views/add_payment/add_payment_view.dart';
 import '../src/ui/views/adhoc_cart_view/adhoc_cart_view.dart';
 import '../src/ui/views/adhoc_payment/adhoc_payment_view.dart';
+import '../src/ui/views/change_password/change_password.dart';
 import '../src/ui/views/delivery_note/delivery_note_view.dart';
 import '../src/ui/views/partial_delivery/partial_delivery_view.dart';
 import '../src/ui/views/reset_password/reset_password_view.dart';
@@ -57,6 +58,7 @@ class Routes {
   static const String adhocPaymentView = '/adhoc-payment-view';
   static const String deliveryNoteView = '/delivery-note-view';
   static const String resetPasswordView = '/reset-password-view';
+  static const String changePasswordView = '/change-password-view';
   static const all = <String>{
     homeView,
     startupView,
@@ -80,6 +82,7 @@ class Routes {
     adhocPaymentView,
     deliveryNoteView,
     resetPasswordView,
+    changePasswordView,
   };
 }
 
@@ -109,6 +112,7 @@ class Router extends RouterBase {
     RouteDef(Routes.adhocPaymentView, page: AdhocPaymentView),
     RouteDef(Routes.deliveryNoteView, page: DeliveryNoteView),
     RouteDef(Routes.resetPasswordView, page: ResetPasswordView),
+    RouteDef(Routes.changePasswordView, page: ChangePasswordView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -329,6 +333,12 @@ class Router extends RouterBase {
     ResetPasswordView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => ResetPasswordView(),
+        settings: data,
+      );
+    },
+    ChangePasswordView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ChangePasswordView(),
         settings: data,
       );
     },

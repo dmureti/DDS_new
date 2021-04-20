@@ -34,7 +34,6 @@ class OrderHistoryTabViewModel extends ReactiveViewModel {
             salesOrder: salesOrder,
             deliveryJourney: deliveryJourney,
             stopId: stopId));
-    print(result);
     if (result is bool) {
       await fetchCustomerOrders();
     }
