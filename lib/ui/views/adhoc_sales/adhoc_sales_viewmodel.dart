@@ -88,6 +88,7 @@ class AdhocSalesViewModel extends ReactiveViewModel {
   updateCustomer(Customer c) {
     _customer = c;
     _adhocCartService.setCustomerId(c.id);
+    _adhocCartService.setCustomerName(null);
     _adhocCartService.setWarehouse(c.branch);
     _adhocCartService.setSellingPriceList(c.defaultPriceList);
     notifyListeners();
@@ -119,6 +120,7 @@ class AdhocSalesViewModel extends ReactiveViewModel {
   updateCustomerName(String val) {
     _customerName = val;
     _adhocCartService.setCustomerName(val);
+    _adhocCartService.setCustomerId(null);
     _adhocCartService.setWarehouse(deliveryJourney.branch);
     notifyListeners();
   }
