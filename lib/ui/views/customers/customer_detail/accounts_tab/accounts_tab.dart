@@ -14,12 +14,13 @@ class AccountsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<AccountsTabViewModel>.reactive(
+        onModelReady: (model) => model.fetchCustomerAccounts(),
         builder: (context, model, child) => model.isBusy
             ? Center(
                 child: CircularProgressIndicator(),
               )
             : Container(
-                child: model.data == null
+                child: model.customerAccount == null
                     ? Center(
                         child: Text(
                           'This account does not have any account information.',
