@@ -1,16 +1,18 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/api_service.dart';
+import 'package:distributor/services/customer_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
-class AddIssueViewModel extends BaseViewModel {
+class AddIssueViewModel extends ReactiveViewModel {
   ApiService _apiService = locator<ApiService>();
   NavigationService _navigationService = locator<NavigationService>();
   DialogService _dialogService = locator<DialogService>();
   UserService _userService = locator<UserService>();
   SnackbarService _snackbarService = locator<SnackbarService>();
+  CustomerService _customerService = locator<CustomerService>();
   final Customer customer;
 
   AddIssueViewModel(this.customer);
@@ -46,16 +48,19 @@ class AddIssueViewModel extends BaseViewModel {
         issueType: "Request",
         subject: subject);
     setBusy(true);
-    var result = await _apiService.api
-        .createIssue(issue.toJson(), _userService.user.token);
+    var result = await _customerService.addCustomerIssue(issue, customer.id);
     setBusy(false);
-    if (result is bool) {
+    if (result) {
       _snackbarService.showSnackbar(
           message: 'The issue was added successfully.');
-      _navigationService.popRepeated(1);
+      await _customerService.getCustomerIssues(customer.id);
+      _navigationService.back(result: true);
     } else if (result is CustomException) {
       await _dialogService.showDialog(
           title: result.title, description: result.description);
     }
   }
+
+  @override
+  List<ReactiveServiceMixin> get reactiveServices => [_customerService];
 }
