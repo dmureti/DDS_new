@@ -119,7 +119,12 @@ class AddPaymentViewModel extends BaseViewModel {
       await _dialogService.showDialog(
           title: result.title, description: result.description);
     } else {
-      _navigationService.back();
+      await _customerService.getCustomerAccountTransactions(
+          customerId: customer.id);
+      await _dialogService.showDialog(
+          title: "Success",
+          description: "The transaction was added successfully.");
+      _navigationService.back(result: true);
     }
   }
 
