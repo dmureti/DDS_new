@@ -22,7 +22,7 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
                     color: Colors.transparent,
                   ),
                   accountEmail: Text(
-                    '${model.user.email ?? model.user.id}',
+                    '${model.user.email ?? model.user.mobile}',
                     style: TextStyle(color: Colors.black),
                   ),
                   accountName: Text(
@@ -87,6 +87,20 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
           //     model.navigateToHome(5);
           //   },
           // ),
+          Divider(),
+          model.user.status == 0
+              ? ListTile(
+                  title: Text('Change Password'),
+                  onTap: () async {
+                    model.navigateToChangePassword();
+                  },
+                )
+              : ListTile(
+                  title: Text('Reset Password'),
+                  onTap: () async {
+                    model.navigateToPasswordReset();
+                  },
+                ),
           ListTile(
             title: Text('Log out'),
             onTap: () async {
