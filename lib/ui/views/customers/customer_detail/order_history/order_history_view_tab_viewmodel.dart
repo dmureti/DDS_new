@@ -2,31 +2,29 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 
 import 'package:distributor/services/customer_service.dart';
+import 'package:distributor/services/order_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
-class OrderHistoryTabViewModel extends FutureViewModel {
+class OrderHistoryTabViewModel extends ReactiveViewModel {
   DialogService _dialogService = locator<DialogService>();
   CustomerService _customerService = locator<CustomerService>();
   NavigationService _navigationService = locator<NavigationService>();
+  OrderService _orderService = locator<OrderService>();
+  SnackbarService _snackbarService = locator<SnackbarService>();
+
   final Customer customer;
 
   OrderHistoryTabViewModel({@required this.customer})
       : assert(customer != null);
 
-  List<SalesOrder> _customerOrders;
-  List<SalesOrder> get customerOrders => _customerOrders;
+  List<SalesOrder> get customerOrders => _customerService.salesOrderList;
 
   Future fetchCustomerOrders() async {
-    List<SalesOrder> result =
-        await _customerService.fetchOrdersByCustomer(customer.id);
-    if (result is List<SalesOrder>) {
-      _customerOrders = result;
-      notifyListeners();
-    }
-    return result;
+    var result = await _customerService.fetchOrdersByCustomer(customer.id);
+    notifyListeners();
   }
 
   navigateToOrder(SalesOrder salesOrder, DeliveryJourney deliveryJourney,
@@ -42,17 +40,11 @@ class OrderHistoryTabViewModel extends FutureViewModel {
     }
   }
 
-  @override
-  Future futureToRun() => fetchCustomerOrders();
-
-  @override
-  void onError(error) {
-    _dialogService.showDialog(title: 'Error', description: 'Error');
+  init() async {
+    await fetchCustomerOrders();
   }
 
   @override
-  void onData(data) {
-    _customerOrders = data;
-    super.onData(data);
-  }
+  List<ReactiveServiceMixin> get reactiveServices =>
+      [_orderService, _customerService];
 }

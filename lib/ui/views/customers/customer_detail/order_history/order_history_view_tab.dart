@@ -15,7 +15,7 @@ class OrderHistoryTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<OrderHistoryTabViewModel>.reactive(
-      onModelReady: (model) => model.fetchCustomerOrders(),
+      onModelReady: (model) => model.init(),
       fireOnModelReadyOnce: false,
       disposeViewModel: true,
       builder: (context, model, child) => model.isBusy
@@ -33,7 +33,7 @@ class OrderHistoryTab extends StatelessWidget {
                     children: <Widget>[
                       AppBarSearch(
                         delegate: OrderSearchDelegate(
-                            salesOrderList: model.data,
+                            salesOrderList: model.customerOrders,
                             deliveryJourney: null,
                             onTap: model.navigateToOrder),
                       ),
@@ -45,7 +45,7 @@ class OrderHistoryTab extends StatelessWidget {
                 ),
                 model.hasError
                     ? Center(child: Text('An error occurred'))
-                    : model.data.length == 0
+                    : model.customerOrders.length == 0
                         ? Expanded(
                             child: Center(
                               child: Container(
@@ -56,10 +56,10 @@ class OrderHistoryTab extends StatelessWidget {
                           )
                         : Expanded(
                             child: ListView.builder(
-                              itemCount: model.data.length,
+                              itemCount: model.customerOrders.length,
                               itemBuilder: (context, int index) {
                                 List<SalesOrder> _customerOrdersList =
-                                    model.data;
+                                    model.customerOrders;
                                 SalesOrder salesOrder =
                                     _customerOrdersList[index];
                                 DeliveryJourney deliveryJourney = null;

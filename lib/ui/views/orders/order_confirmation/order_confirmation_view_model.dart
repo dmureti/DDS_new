@@ -1,6 +1,7 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/activity_service.dart';
 import 'package:distributor/services/api_service.dart';
+import 'package:distributor/services/customer_service.dart';
 import 'package:distributor/services/order_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,9 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
-class OrderConfirmationViewModel extends BaseViewModel {
+class OrderConfirmationViewModel extends ReactiveViewModel {
   OrderService _orderService = locator<OrderService>();
+  CustomerService _customerService = locator<CustomerService>();
   ApiService _apiService = locator<ApiService>();
   UserService _userService = locator<UserService>();
   DialogService _dialogService = locator<DialogService>();
@@ -30,10 +32,11 @@ class OrderConfirmationViewModel extends BaseViewModel {
 
   createSalesOrder(SalesOrderRequest salesOrder) async {
     setBusy(true);
-    var result = await _orderService.createSalesOrder(salesOrder);
+    var result = await _orderService.createSalesOrder(salesOrder, customer);
     setBusy(false);
     if (result is bool) {
       if (result) {
+        await _customerService.fetchOrdersByCustomer(customer.id);
         _activityService.addActivity(Activity(
             activityTitle: 'Sales Order submitted',
             activityDesc:
@@ -47,4 +50,9 @@ class OrderConfirmationViewModel extends BaseViewModel {
   }
 
   calculateSalesOrderItemTotal() {}
+
+  @override
+  // TODO: implement reactiveServices
+  List<ReactiveServiceMixin> get reactiveServices =>
+      [_customerService, _orderService];
 }

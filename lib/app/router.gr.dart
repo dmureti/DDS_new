@@ -138,7 +138,7 @@ class Router extends RouterBase {
       return MaterialPageRoute<dynamic>(
         builder: (context) => LoginView(
           key: args.key,
-          email: args.email,
+          userId: args.userId,
           password: args.password,
         ),
         settings: data,
@@ -259,9 +259,7 @@ class Router extends RouterBase {
       );
     },
     PartialDeliveryView: (data) {
-      final args = data.getArgs<PartialDeliveryViewArguments>(
-        orElse: () => PartialDeliveryViewArguments(),
-      );
+      final args = data.getArgs<PartialDeliveryViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
         builder: (context) => PartialDeliveryView(
           key: args.key,
@@ -351,9 +349,9 @@ class HomeViewArguments {
 /// LoginView arguments holder class
 class LoginViewArguments {
   final Key key;
-  final String email;
+  final String userId;
   final String password;
-  LoginViewArguments({this.key, this.email, this.password});
+  LoginViewArguments({this.key, this.userId, this.password});
 }
 
 /// CustomerDetailView arguments holder class
@@ -437,7 +435,10 @@ class PartialDeliveryViewArguments {
   final DeliveryJourney deliveryJourney;
   final DeliveryStop deliveryStop;
   PartialDeliveryViewArguments(
-      {this.key, this.salesOrder, this.deliveryJourney, this.deliveryStop});
+      {this.key,
+      this.salesOrder,
+      this.deliveryJourney,
+      @required this.deliveryStop});
 }
 
 /// AddIssueView arguments holder class

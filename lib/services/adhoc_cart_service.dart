@@ -25,7 +25,6 @@ class AdhocCartService with ReactiveServiceMixin {
   List get paymentModeDetails => _paymentModeDetails.value;
 
   init() async {
-    print('init');
     if (_logisticsService.currentJourney != null) {
       await getPaymentModes(_logisticsService.currentJourney.branch);
     }
@@ -51,6 +50,7 @@ class AdhocCartService with ReactiveServiceMixin {
   RxValue _total = RxValue(initial: 0);
   RxValue _paymentMode = RxValue(initial: "");
   RxValue _customerId = RxValue(initial: "");
+  RxValue _customerName = RxValue(initial: "");
   RxValue _sellingPriceList = RxValue(initial: "");
   RxValue<List<SalesOrderItem>> _items =
       RxValue(initial: List<SalesOrderItem>());
@@ -64,6 +64,7 @@ class AdhocCartService with ReactiveServiceMixin {
       _paymentMode,
       _customerId,
       _remarks,
+      _customerName,
       _items,
       _itemsInCart,
       _warehouse,
@@ -103,6 +104,11 @@ class AdhocCartService with ReactiveServiceMixin {
     notifyListeners();
   }
 
+  resetTotal() {
+    _total.value = 0;
+    notifyListeners();
+  }
+
   decreaseSalesOrderItems(Product p, quantity) {
     if (_itemsInCart.value.contains(p)) {
       // Get the element that contains the product in the sales item
@@ -110,9 +116,11 @@ class AdhocCartService with ReactiveServiceMixin {
         if (_items.value[i].item == p) {
           // Decrease the value of the sales order item
           _items.value[i].quantity--;
+          _total.value = _total.value - _total - items[i].item.itemPrice;
           if (items[i].quantity == 0) {
             _itemsInCart.value.remove(p);
             _items.value.removeAt(i);
+            _total.value = _total.value - _total - items[i].item.itemPrice;
           }
         }
       }
@@ -126,6 +134,10 @@ class AdhocCartService with ReactiveServiceMixin {
 
   setCustomerId(String val) {
     _customerId.value = val;
+  }
+
+  setCustomerName(String val) {
+    _customerName.value = val;
   }
 
   setSellingPriceList(String val) {
@@ -146,9 +158,12 @@ class AdhocCartService with ReactiveServiceMixin {
     }
   }
 
+  get customerName => _customerName.value;
+
   createPayment() async {
     Map<String, dynamic> data = {
       "customerId": customerId,
+      "customerName": customerName,
       "items": items
           .map((e) => {
                 "itemCode": e.item.itemCode,
@@ -173,6 +188,7 @@ class AdhocCartService with ReactiveServiceMixin {
     };
     var result = await api.createPOSPayment(
         modeOfPayment: paymentMode, data: data, token: token);
+    resetTotal();
     return result;
   }
 

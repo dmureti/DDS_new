@@ -78,7 +78,8 @@ class LoginViewModel extends BaseViewModel {
     setBusy(true);
     var result;
     if (rememberMe) {
-      await _initService.saveUserCredentials(email: userId, password: password);
+      await _initService.saveUserCredentials(
+          userId: userId, password: password);
     }
 
     result = await authenticationService.loginWithUserIdAndPassword(
@@ -90,6 +91,11 @@ class LoginViewModel extends BaseViewModel {
       // Update the activity Service
       _activityService.addActivity(Activity(
           activityTitle: 'Login in', activityDesc: 'Logged In successfully'));
+
+      //Check if the user is enabled
+      if (!result.enabled) {
+        _navigationService.pushNamedAndRemoveUntil(Routes.resetPasswordView);
+      }
       //Navigate to the home page
       _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
     } else if (result is CustomException) {

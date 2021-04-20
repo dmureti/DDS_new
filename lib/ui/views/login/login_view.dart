@@ -10,10 +10,10 @@ import 'package:tripletriocore/tripletriocore.dart';
 // import 'login.i18n.dart';
 
 class LoginView extends StatefulWidget {
-  final String email;
+  final String userId;
   final String password;
 
-  const LoginView({Key key, this.email, this.password}) : super(key: key);
+  const LoginView({Key key, this.userId, this.password}) : super(key: key);
   @override
   _LoginViewState createState() => _LoginViewState();
 }
@@ -21,18 +21,18 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _emailController;
+  TextEditingController _userIdController;
   TextEditingController _passwordController;
   @override
   void initState() {
-    _emailController = TextEditingController(text: widget.email);
+    _userIdController = TextEditingController(text: widget.userId);
     _passwordController = TextEditingController(text: widget.password);
     super.initState();
   }
 
   @override
   void dispose() {
-    _emailController?.dispose();
+    _userIdController?.dispose();
     _passwordController?.dispose();
     super.dispose();
   }
@@ -118,7 +118,7 @@ class _LoginViewState extends State<LoginView> {
                           children: [
                             TextFormFieldPadding(
                               child: TextFormField(
-                                controller: _emailController,
+                                controller: _userIdController,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600, fontSize: 20),
                                 onChanged: (String val) {
@@ -228,7 +228,7 @@ class _LoginViewState extends State<LoginView> {
           ),
         ),
       ),
-      viewModelBuilder: () => LoginViewModel(widget.email, widget.password),
+      viewModelBuilder: () => LoginViewModel(widget.userId, widget.password),
     );
   }
 }

@@ -79,8 +79,6 @@ class PartialDeliveryViewModel extends BaseViewModel {
       _snackbarService.showSnackbar(
           message: 'The delivery was completed successfully');
       _navigationService.back(result: true);
-      // Notify the user that it was successful
-      // Navigate back and clear the stack
     }
   }
 }

@@ -27,11 +27,12 @@ class StartupViewModel extends BaseViewModel {
       _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
     } else {
       _navigationService.navigateTo(Routes.loginView,
-          arguments: LoginViewArguments(email: userId, password: password));
+          arguments: LoginViewArguments(userId: userId, password: password));
     }
   }
 
   Future handleStartUpLogic() async {
+    print('starting');
     bool result = await _initService.init();
     String userId;
     String password;
@@ -39,14 +40,14 @@ class StartupViewModel extends BaseViewModel {
       userId = "";
       password = "";
       _navigationService.navigateTo(Routes.loginView,
-          arguments: LoginViewArguments(email: userId, password: password));
+          arguments: LoginViewArguments(userId: userId, password: password));
     } else {
       if (result) {
         userId = _initService.userId ?? "";
         password = _initService.password ?? "";
         // login(email, password);a
         _navigationService.navigateTo(Routes.loginView,
-            arguments: LoginViewArguments(email: userId, password: password));
+            arguments: LoginViewArguments(userId: userId, password: password));
       }
     }
   }

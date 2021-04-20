@@ -96,11 +96,9 @@ class CustomerDetailViewModel extends BaseViewModel {
 
   Future fetchCustomerOrders() async {
     setBusy(true);
-    List<SalesOrder> result =
-        await _customerService.fetchOrdersByCustomer(customer.id);
+    await _customerService.fetchOrdersByCustomer(customer.id);
     setBusy(false);
     notifyListeners();
-    return result;
   }
 
   navigateToCustomers() async {

@@ -1,19 +1,21 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/api_service.dart';
+import 'package:distributor/services/customer_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
-class NotificationsTabViewModel extends BaseViewModel {
+class NotificationsTabViewModel extends ReactiveViewModel {
   final Customer _customer;
   UserService _userService = locator<UserService>();
   ApiService _apiService = locator<ApiService>();
   DialogService _dialogService = locator<DialogService>();
   NavigationService _navigationService = locator<NavigationService>();
   SnackbarService _snackbarService = locator<SnackbarService>();
+  CustomerService _customerService = locator<CustomerService>();
 
   NotificationsTabViewModel({@required Customer customer})
       : _customer = customer,
@@ -21,21 +23,12 @@ class NotificationsTabViewModel extends BaseViewModel {
 
   Customer get customer => _customer;
 
-  List<Issue> _issueList;
-  List<Issue> get issueList => _issueList;
+  List<Issue> get issueList => _customerService.issueList;
 
   getIssues() async {
     setBusy(true);
-    var result = await _apiService.api
-        .getCustomersIssuesByCustomer(customer.id, _userService.user.token);
+    await _customerService.getCustomerIssues(customer.id);
     setBusy(false);
-    if (result is List<Issue>) {
-      _issueList = result;
-      notifyListeners();
-    } else {
-      await _dialogService.showDialog(
-          title: "Error fetching Issues", description: "");
-    }
   }
 
   String _description = "";
@@ -69,11 +62,10 @@ class NotificationsTabViewModel extends BaseViewModel {
         issueType: "Request",
         subject: subject);
     setBusy(true);
-    var result = await _apiService.api
-        .createIssue(issue.toJson(), _userService.user.token);
+    var result = await _customerService.addCustomerIssue(issue, customer.id);
     setBusy(false);
     if (result is bool) {
-      getIssues();
+      await getIssues();
     } else if (result is CustomException) {
       await _dialogService.showDialog(
           title: result.title, description: result.description);
@@ -89,4 +81,7 @@ class NotificationsTabViewModel extends BaseViewModel {
           message: 'The issue was added successfully.');
     }
   }
+
+  @override
+  List<ReactiveServiceMixin> get reactiveServices => [_customerService];
 }

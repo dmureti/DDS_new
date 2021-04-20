@@ -27,6 +27,8 @@ class CustomerService with ReactiveServiceMixin {
 
   CustomerAccount get customerAccount => _customerAccount.value;
 
+  List<Issue> get issueList => _customerIssues.value;
+
   getCustomerIssues(String customerId) async {
     var result = await _apiService.api
         .getCustomersIssuesByCustomer(customerId, user.token);
@@ -89,6 +91,7 @@ class CustomerService with ReactiveServiceMixin {
     enableCustomerTab;
     enableAccountsTab;
     enablePlaceOrderButton;
+    enableIssuesTab;
     //If accounts enabled
   }
 
@@ -100,8 +103,22 @@ class CustomerService with ReactiveServiceMixin {
     if (result is List<SalesOrder>) {
       _salesOrderList.value = result;
       notifyListeners();
+    } else {
+      _salesOrderList.value = List<SalesOrder>();
+      notifyListeners();
     }
-    return result;
+    return true;
+  }
+
+  addCustomerIssue(Issue issue, String customerId) async {
+    var result = await _apiService.api
+        .createIssue(issue.toJson(), _userService.user.token);
+    if (result is bool) {
+      await getCustomerIssues(customerId);
+      notifyListeners();
+      return true;
+    }
+    return false;
   }
 
   Future<CustomerAccount> getCustomerAccountTransactions(

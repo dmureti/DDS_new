@@ -1,5 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/api_service.dart';
+import 'package:distributor/services/customer_service.dart';
 import 'package:distributor/services/user_service.dart';
 
 import 'package:observable_ish/observable_ish.dart';
@@ -7,10 +8,16 @@ import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 class OrderService with ReactiveServiceMixin {
+  CustomerService _customerService = locator<CustomerService>();
   OrderService() {
-    listenToReactiveValues(
-        [_ordersPlaced, _salesOrderItems, _valueOfOrdersPlaced]);
+    listenToReactiveValues([
+      _ordersPlaced,
+      _salesOrderItems,
+      _valueOfOrdersPlaced,
+      _salesOrderList
+    ]);
   }
+
   ApiService _apiService = locator<ApiService>();
   UserService _userService = locator<UserService>();
   Api get api => _apiService.api;
@@ -31,22 +38,34 @@ class OrderService with ReactiveServiceMixin {
       RxValue<List<SalesOrderItem>>(initial: List<SalesOrderItem>());
   List<SalesOrderItem> get salesOrderItems => _salesOrderItems.value;
 
+  RxValue<List<SalesOrder>> _salesOrderList =
+      RxValue<List<SalesOrder>>(initial: List<SalesOrder>());
+  List<SalesOrder> get salesOrderList => _salesOrderList.value;
+
   addToSalesOrderItemList() {}
   removeFromSalesOrderItemList() {}
   clearSalesOrderItemList() {}
 
   Future getSalesOrderItems(String salesOrderId) async {
     var result = await api.getSalesOrderRequestItems(salesOrderId, user.token);
+    if (result is List<SalesOrderRequestItem>) {
+      // _salesOrderItems.value = result;
+    }
     return result;
   }
 
-  Future createSalesOrder(SalesOrderRequest salesOrderRequest) async {
+  Future createSalesOrder(
+      SalesOrderRequest salesOrderRequest, Customer customer) async {
     var result = await api.createSalesOrder(user.token, salesOrderRequest);
     if (result is bool) {
       /// Increase the count of sales orders
       _ordersPlaced.value++;
       updateValueOfOrdersPlaced(salesOrderRequest.total);
+      await _customerService.fetchOrdersByCustomer(customer.id);
+      notifyListeners();
     }
     return result;
   }
+
+  getSalesOrders(String customerId) async {}
 }
