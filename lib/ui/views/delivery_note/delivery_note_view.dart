@@ -5,8 +5,11 @@ import 'package:tripletriocore/tripletriocore.dart';
 
 class DeliveryNoteView extends StatelessWidget {
   final SalesOrder salesOrder;
+  final DeliveryStop deliveryStop;
 
-  const DeliveryNoteView({Key key, this.salesOrder}) : super(key: key);
+  const DeliveryNoteView(
+      {Key key, this.salesOrder, @required this.deliveryStop})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

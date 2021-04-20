@@ -46,13 +46,13 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
       var result = await _journeyService.startTrip();
       setBusy(false);
       if (result) {
-        print(journeyStatus.toLowerCase());
         notifyListeners();
         return true;
-      } else {
-        await _dialogService.showDialog(
-            title: 'Could not start trip', description: result.toString());
       }
+      // else {
+      //   await _dialogService.showDialog(
+      //       title: 'Could not start trip', description: result.toString());
+      // }
     } else if (journeyStatus.toLowerCase() == 'in transit') {
       setBusy(true);
       var result = await _journeyService.stopTrip();
@@ -60,10 +60,11 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
       if (result is bool) {
         notifyListeners();
         return true;
-      } else {
-        await _dialogService.showDialog(
-            title: 'Could not stop trip', description: result.toString());
       }
+      // else {
+      //   await _dialogService.showDialog(
+      //       title: 'Could not stop trip', description: result.toString());
+      // }
     } else {
       return null;
     }

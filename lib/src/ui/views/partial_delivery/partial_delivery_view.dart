@@ -9,10 +9,13 @@ import 'package:tripletriocore/tripletriocore.dart';
 class PartialDeliveryView extends StatelessWidget {
   final SalesOrder salesOrder;
   final DeliveryJourney deliveryJourney;
-  final String stopId;
+  final DeliveryStop deliveryStop;
 
   const PartialDeliveryView(
-      {Key key, this.salesOrder, this.deliveryJourney, this.stopId})
+      {Key key,
+      this.salesOrder,
+      this.deliveryJourney,
+      @required this.deliveryStop})
       : super(key: key);
 
   @override
@@ -30,9 +33,8 @@ class PartialDeliveryView extends StatelessWidget {
                   Expanded(
                     child: ListView.builder(
                       itemBuilder: (context, index) {
-                        SalesOrderRequestItem salesOrderRequestItem =
-                            model.orderItems[index];
-
+                        var salesOrderRequestItem =
+                            model.deliveryStop.deliveryItems[index];
                         return Container(
                           margin: EdgeInsets.symmetric(vertical: 4),
                           child: Material(
@@ -48,13 +50,13 @@ class PartialDeliveryView extends StatelessWidget {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        salesOrderRequestItem.itemCode,
+                                        salesOrderRequestItem['itemCode'],
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18),
                                       ),
                                       Text(
-                                        salesOrderRequestItem.quantity
+                                        salesOrderRequestItem['quantity']
                                             .toStringAsFixed(0),
                                         style: TextStyle(
                                             fontSize: 18,
@@ -75,26 +77,26 @@ class PartialDeliveryView extends StatelessWidget {
                                         Row(
                                           children: [
                                             Text(
-                                              salesOrderRequestItem.itemName,
+                                              salesOrderRequestItem['itemName'],
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold),
                                             ),
                                           ],
                                         ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Delivered ${salesOrderRequestItem.quantityDelivered.toStringAsFixed(0)}',
-                                            ),
-                                            SizedBox(
-                                              width: 4,
-                                            ),
-                                            Text(
-                                              '${salesOrderRequestItem.lineAmount.toStringAsFixed(2)}',
-                                            ),
-                                          ],
-                                        ),
+                                        // Row(
+                                        //   children: [
+                                        //     Text(
+                                        //       'Delivered ${salesOrderRequestItem.quantityDelivered.toStringAsFixed(0)}',
+                                        //     ),
+                                        //     SizedBox(
+                                        //       width: 4,
+                                        //     ),
+                                        //     // Text(
+                                        //     //   '${salesOrderRequestItem.lineAmount.toStringAsFixed(2)}',
+                                        //     // ),
+                                        //   ],
+                                        // ),
                                       ],
                                     ),
                                   ),
@@ -107,7 +109,7 @@ class PartialDeliveryView extends StatelessWidget {
                           ),
                         );
                       },
-                      itemCount: model.orderItems.length,
+                      itemCount: model.deliveryStop.deliveryItems.length,
                     ),
                   ),
                   Container(
@@ -128,27 +130,29 @@ class PartialDeliveryView extends StatelessWidget {
             ),
           );
         },
-        viewModelBuilder: () =>
-            PartialDeliveryViewModel(salesOrder, deliveryJourney, stopId));
+        viewModelBuilder: () => PartialDeliveryViewModel(
+            salesOrder, deliveryJourney, deliveryStop.stopId, deliveryStop));
   }
 }
 
 class UnitsDeliveredTextForm
     extends HookViewModelWidget<PartialDeliveryViewModel> {
-  final SalesOrderRequestItem salesOrderRequestItem;
+  final salesOrderRequestItem;
   final int index;
 
   UnitsDeliveredTextForm(this.salesOrderRequestItem, this.index);
   @override
   Widget buildViewModelWidget(
       BuildContext context, PartialDeliveryViewModel model) {
-    num toDeliver = salesOrderRequestItem.quantity -
-        salesOrderRequestItem.quantityDelivered;
+    // num toDeliver = salesOrderRequestItem.quantity -
+    //     salesOrderRequestItem.quantityDelivered;
     return TextFormField(
-      initialValue: toDeliver.toString(),
+      initialValue: salesOrderRequestItem['quantity'].toString(),
       keyboardType: TextInputType.number,
       onChanged: (value) {
-        model.updateSalesOrderRequestItem(index, value);
+        if (int.parse(value) <= salesOrderRequestItem['quantity']) {
+          model.updateSalesOrderRequestItem(index, value);
+        }
       },
     );
   }

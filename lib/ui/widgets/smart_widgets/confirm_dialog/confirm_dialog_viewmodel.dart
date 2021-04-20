@@ -12,6 +12,18 @@ class ConfirmDialogViewModel extends BaseViewModel {
   LogisticsService _logisticsService = locator<LogisticsService>();
   NavigationService _navigationService = locator<NavigationService>();
   SnackbarService _snackbarService = locator<SnackbarService>();
+  LocationService _locationService = locator<LocationService>();
+
+  String _deliveryLocation;
+  String get deliveryLocation => _deliveryLocation;
+
+  getCurrentLocation() async {
+    var result = await _locationService.getLocation();
+    if (result != null) {
+      _deliveryLocation = "${result.latitude},${result.longitude}";
+      notifyListeners();
+    }
+  }
 
   final SalesOrder _salesOrder;
   SalesOrder get salesOrder => _salesOrder;
@@ -29,9 +41,10 @@ class ConfirmDialogViewModel extends BaseViewModel {
   }
 
   completeTrip(String stopId) async {
+    await getCurrentLocation();
     setBusy(true);
-    var result =
-        await _journeyService.makeFullSODelivery(salesOrder.orderNo, stopId);
+    var result = await _journeyService.makeFullSODelivery(
+        salesOrder.orderNo, stopId, deliveryLocation);
     setBusy(false);
     if (result is CustomException) {
       await _dialogService.showDialog(

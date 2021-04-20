@@ -21,11 +21,14 @@ class PartialDeliveryViewModel extends BaseViewModel {
 
   List<SalesOrderRequestItem> get orderItems => salesOrder.orderItems;
 
-  PartialDeliveryViewModel(
-      SalesOrder salesOrder, this.deliveryJourney, this.stopId) {
+  PartialDeliveryViewModel(SalesOrder salesOrder, this.deliveryJourney,
+      this.stopId, this._deliveryStop) {
     _salesOrder = salesOrder;
     _newRequest = salesOrder.orderItems;
   }
+
+  final DeliveryStop _deliveryStop;
+  get deliveryStop => _deliveryStop;
 
   updateSalesOrderRequestItem(int index, String val) {
     _newRequest[index].quantity = int.parse(val);

@@ -45,7 +45,7 @@ class JourneySummaryWidgetViewModel extends ReactiveViewModel {
   UserSummary get userSummary => _userSummary;
 
   getUserSummary() async {
-    var result = await _api.getUserSummary(_user.token, userId: _user.email);
+    var result = await _api.getUserSummary(_user.token, user: _user);
     return result;
   }
 

@@ -122,9 +122,7 @@ class _LoginViewState extends State<LoginView> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600, fontSize: 20),
                                 onChanged: (String val) {
-                                  model.usePhone
-                                      ? model.setMobile(val)
-                                      : model.updateEmail(val);
+                                  model.setUserId(val);
                                 },
                                 validator: (String value) {
                                   if (value != null) {
@@ -134,25 +132,13 @@ class _LoginViewState extends State<LoginView> {
                                 },
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: InputDecoration(
-                                    hintText: model.usePhone
-                                        ? 'Phone Number'
-                                        : 'Your email address',
-                                    hintStyle:
-                                        TextStyle(fontWeight: FontWeight.w600),
-                                    prefixIcon: model.usePhone
-                                        ? Icon(Icons.phone)
-                                        : Icon(Icons.email),
-                                    suffixIcon: IconButton(
-                                      icon: Icon(Icons.threesixty_outlined),
-                                      onPressed: model.toggleUsePhone,
-                                    )),
+                                  hintText: 'Email Address / Phone ',
+                                  hintStyle:
+                                      TextStyle(fontWeight: FontWeight.w600),
+                                  prefixIcon: Icon(Icons.person),
+                                ),
                               ),
                             ),
-                            model.emailValidationMessage == null
-                                ? Container()
-                                : FormErrorContainer(
-                                    errorMsg: model.emailValidationMessage,
-                                  ),
                             TextFormFieldPadding(
                               child: TextFormField(
                                 validator: (value) {

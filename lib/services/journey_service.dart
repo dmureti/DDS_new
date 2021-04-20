@@ -10,6 +10,7 @@ import 'package:distributor/ui/widgets/smart_widgets/info_bar/info_bar_widget_vi
 import 'package:flutter/cupertino.dart';
 import 'package:observable_ish/observable_ish.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import 'package:tripletriocore/tripletriocore.dart';
 
@@ -21,6 +22,7 @@ class JourneyService with ReactiveServiceMixin {
   LogisticsService _logisticsService = locator<LogisticsService>();
   ApiService _apiService = locator<ApiService>();
   UserService _userService = locator<UserService>();
+  DialogService _dialogService = locator<DialogService>();
 
   Api get _api => _apiService.api;
   User get _user => _userService.user;
@@ -106,7 +108,9 @@ class JourneyService with ReactiveServiceMixin {
       return true;
     } else {
       /// The update failed. Return the error string to caller
-      return result.message;
+      await _dialogService.showDialog(
+          title: 'Error', description: result.message);
+      return false;
     }
   }
 
@@ -132,9 +136,13 @@ class JourneyService with ReactiveServiceMixin {
     return noOfCompletedStops / deliveryStops.length * 100;
   }
 
-  Future makeFullSODelivery(String orderId, String stopId) async {
+  Future makeFullSODelivery(
+      String orderId, String stopId, String deliveryLocation) async {
     var result = await _api.makeFullDelivery(currentJourney.journeyId,
-        orderId: orderId, token: _user.token, stopId: stopId);
+        orderId: orderId,
+        token: _user.token,
+        stopId: stopId,
+        deliveryLocation: deliveryLocation);
     if (result is! CustomException) {
       _noOfCompletedStops.value++;
     }

@@ -24,17 +24,22 @@ class OrderHistoryTabViewModel extends FutureViewModel {
         await _customerService.fetchOrdersByCustomer(customer.id);
     if (result is List<SalesOrder>) {
       _customerOrders = result;
+      notifyListeners();
     }
     return result;
   }
 
   navigateToOrder(SalesOrder salesOrder, DeliveryJourney deliveryJourney,
       String stopId) async {
-    await _navigationService.navigateTo(Routes.orderDetailView,
+    var result = await _navigationService.navigateTo(Routes.orderDetailView,
         arguments: OrderDetailViewArguments(
             salesOrder: salesOrder,
             deliveryJourney: deliveryJourney,
             stopId: stopId));
+    print(result);
+    if (result is bool) {
+      await fetchCustomerOrders();
+    }
   }
 
   @override

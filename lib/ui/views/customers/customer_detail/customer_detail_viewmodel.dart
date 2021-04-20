@@ -99,6 +99,7 @@ class CustomerDetailViewModel extends BaseViewModel {
     List<SalesOrder> result =
         await _customerService.fetchOrdersByCustomer(customer.id);
     setBusy(false);
+    notifyListeners();
     return result;
   }
 
@@ -142,6 +143,7 @@ class CustomerDetailViewModel extends BaseViewModel {
         arguments: CreateSalesOrderViewArguments(customer: customer));
 
     if (result) {
+      await fetchCustomerOrders();
       _snackbarService.showSnackbar(
           message: 'The order was placed successfully');
     }

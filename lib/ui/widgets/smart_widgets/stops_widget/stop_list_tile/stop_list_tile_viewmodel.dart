@@ -79,6 +79,7 @@ class StopListTileViewModel extends FutureViewModel<SalesOrder> {
     await _navigationService
         .navigateTo(Routes.orderDetailView,
             arguments: OrderDetailViewArguments(
+                deliveryStop: deliveryStop,
                 salesOrder: salesOrder,
                 deliveryJourney: deliveryJourney,
                 stopId: deliveryStop.stopId))

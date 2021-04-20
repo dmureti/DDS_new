@@ -16,6 +16,8 @@ class OrderHistoryTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<OrderHistoryTabViewModel>.reactive(
       onModelReady: (model) => model.fetchCustomerOrders(),
+      fireOnModelReadyOnce: false,
+      disposeViewModel: true,
       builder: (context, model, child) => model.isBusy
           ? Center(
               child: CircularProgressIndicator(),

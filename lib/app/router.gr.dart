@@ -16,7 +16,9 @@ import '../src/ui/views/add_issue/add_issue_view.dart';
 import '../src/ui/views/add_payment/add_payment_view.dart';
 import '../src/ui/views/adhoc_cart_view/adhoc_cart_view.dart';
 import '../src/ui/views/adhoc_payment/adhoc_payment_view.dart';
+import '../src/ui/views/delivery_note/delivery_note_view.dart';
 import '../src/ui/views/partial_delivery/partial_delivery_view.dart';
+import '../src/ui/views/reset_password/reset_password_view.dart';
 import '../ui/views/customer_location.dart';
 import '../ui/views/customers/customer_detail/customer_detail_view.dart';
 import '../ui/views/forgot_password/forgot_password_route.dart';
@@ -53,6 +55,8 @@ class Routes {
   static const String adhocCartView = '/adhoc-cart-view';
   static const String addAdhocSaleView = '/add-adhoc-sale-view';
   static const String adhocPaymentView = '/adhoc-payment-view';
+  static const String deliveryNoteView = '/delivery-note-view';
+  static const String resetPasswordView = '/reset-password-view';
   static const all = <String>{
     homeView,
     startupView,
@@ -74,6 +78,8 @@ class Routes {
     adhocCartView,
     addAdhocSaleView,
     adhocPaymentView,
+    deliveryNoteView,
+    resetPasswordView,
   };
 }
 
@@ -101,6 +107,8 @@ class Router extends RouterBase {
     RouteDef(Routes.adhocCartView, page: AdhocCartView),
     RouteDef(Routes.addAdhocSaleView, page: AddAdhocSaleView),
     RouteDef(Routes.adhocPaymentView, page: AdhocPaymentView),
+    RouteDef(Routes.deliveryNoteView, page: DeliveryNoteView),
+    RouteDef(Routes.resetPasswordView, page: ResetPasswordView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -182,6 +190,7 @@ class Router extends RouterBase {
       return MaterialPageRoute<dynamic>(
         builder: (context) => OrderDetailView(
           salesOrder: args.salesOrder,
+          deliveryStop: args.deliveryStop,
           deliveryJourney: args.deliveryJourney,
           stopId: args.stopId,
           key: args.key,
@@ -258,7 +267,7 @@ class Router extends RouterBase {
           key: args.key,
           salesOrder: args.salesOrder,
           deliveryJourney: args.deliveryJourney,
-          stopId: args.stopId,
+          deliveryStop: args.deliveryStop,
         ),
         settings: data,
       );
@@ -303,6 +312,25 @@ class Router extends RouterBase {
     AdhocPaymentView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => AdhocPaymentView(),
+        settings: data,
+      );
+    },
+    DeliveryNoteView: (data) {
+      final args = data.getArgs<DeliveryNoteViewArguments>(
+        orElse: () => DeliveryNoteViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => DeliveryNoteView(
+          key: args.key,
+          deliveryJourney: args.deliveryJourney,
+          deliveryStop: args.deliveryStop,
+        ),
+        settings: data,
+      );
+    },
+    ResetPasswordView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ResetPasswordView(),
         settings: data,
       );
     },
@@ -351,11 +379,13 @@ class CustomerLocationArguments {
 /// OrderDetailView arguments holder class
 class OrderDetailViewArguments {
   final SalesOrder salesOrder;
+  final DeliveryStop deliveryStop;
   final DeliveryJourney deliveryJourney;
   final String stopId;
   final Key key;
   OrderDetailViewArguments(
       {this.salesOrder,
+      @required this.deliveryStop,
       @required this.deliveryJourney,
       @required this.stopId,
       this.key});
@@ -405,9 +435,9 @@ class PartialDeliveryViewArguments {
   final Key key;
   final SalesOrder salesOrder;
   final DeliveryJourney deliveryJourney;
-  final String stopId;
+  final DeliveryStop deliveryStop;
   PartialDeliveryViewArguments(
-      {this.key, this.salesOrder, this.deliveryJourney, this.stopId});
+      {this.key, this.salesOrder, this.deliveryJourney, this.deliveryStop});
 }
 
 /// AddIssueView arguments holder class
@@ -430,4 +460,13 @@ class AddAdhocSaleViewArguments {
   final Key key;
   final Customer customer;
   AddAdhocSaleViewArguments({this.key, this.customer});
+}
+
+/// DeliveryNoteView arguments holder class
+class DeliveryNoteViewArguments {
+  final Key key;
+  final DeliveryJourney deliveryJourney;
+  final DeliveryStop deliveryStop;
+  DeliveryNoteViewArguments(
+      {this.key, this.deliveryJourney, this.deliveryStop});
 }

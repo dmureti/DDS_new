@@ -20,8 +20,9 @@ class UserSummaryViewmodel extends BaseModel {
 
   Future<void> getUserSummary() async {
     setBusy(true);
+    print(user.id);
     APIResponseObject apiResponseObject =
-        await _api.getUserSummary(user.token, userId: user.email);
+        await _api.getUserSummary(user.token, user: user);
     if (apiResponseObject.status) {
       _userSummary = apiResponseObject.payload;
     } else {

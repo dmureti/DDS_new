@@ -10,11 +10,13 @@ import 'package:distributor/ui/views/delivery_note/delivery_note_view.dart';
 
 class OrderDetailView extends StatelessWidget {
   final SalesOrder salesOrder;
+  final DeliveryStop deliveryStop;
   final DeliveryJourney deliveryJourney;
   final String stopId;
 
   const OrderDetailView(
       {this.salesOrder,
+      @required this.deliveryStop,
       @required this.deliveryJourney,
       @required this.stopId,
       Key key})
@@ -29,7 +31,7 @@ class OrderDetailView extends StatelessWidget {
       },
       viewModelBuilder: () => OrderDetailViewModel(
           salesOrder: salesOrder,
-          stopId: stopId,
+          deliveryStop: deliveryStop,
           deliveryJourney: deliveryJourney),
       builder: (context, model, child) => DefaultTabController(
         length: 3,
@@ -84,9 +86,13 @@ class OrderDetailView extends StatelessWidget {
                 Tab(
                   text: 'Particulars',
                 ),
-                Tab(
-                  text: 'History',
-                )
+                deliveryStop == null
+                    ? Tab(
+                        text: 'History',
+                      )
+                    : Tab(
+                        text: 'History',
+                      )
               ],
             ),
           ),
@@ -185,10 +191,10 @@ class OrderDetailView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            model.stopId != null
+                            model.deliveryStop != null
                                 ? Expanded(
                                     child: OrderParticular(
-                                      salesOrder: salesOrder,
+                                      deliveryStop: deliveryStop,
                                     ),
                                   )
                                 : SalesOrderItemList(
@@ -198,12 +204,15 @@ class OrderDetailView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(15, 10, 10, 0),
-                      child: DeliveryNoteView(
-                        salesOrder: model.salesOrder,
-                      ),
-                    ),
+                    deliveryStop == null
+                        ? Container(
+                            margin: EdgeInsets.fromLTRB(15, 10, 10, 0),
+                            child: DeliveryNoteView(
+                              salesOrder: model.salesOrder,
+                              deliveryStop: deliveryStop,
+                            ),
+                          )
+                        : Container(),
                   ],
                 ),
         ),

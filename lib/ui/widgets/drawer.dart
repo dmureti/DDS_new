@@ -22,7 +22,7 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
                     color: Colors.transparent,
                   ),
                   accountEmail: Text(
-                    '${model.user.email}',
+                    '${model.user.email ?? model.user.id}',
                     style: TextStyle(color: Colors.black),
                   ),
                   accountName: Text(

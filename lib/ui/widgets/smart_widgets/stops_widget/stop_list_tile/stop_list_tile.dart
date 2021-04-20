@@ -40,7 +40,7 @@ class StopListTile extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            deliveryStop.orderId,
+                            deliveryStop.deliveryNoteId,
                             style: kSalesOrderIdTextStyle,
                           ),
                           SizedBox(

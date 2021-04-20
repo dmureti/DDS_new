@@ -12,6 +12,7 @@ import 'package:tripletriocore/tripletriocore.dart';
 
 class OrderDetailViewModel extends ReactiveViewModel {
   LogisticsService _logisticsService = locator<LogisticsService>();
+  LocationService _locationService = locator<LocationService>();
   JourneyService _journeyService = locator<JourneyService>();
   ApiService _apiService = locator<ApiService>();
   UserService _userService = locator<UserService>();
@@ -24,8 +25,20 @@ class OrderDetailViewModel extends ReactiveViewModel {
   Customer _customer;
   Customer get customer => _customer;
 
+  String _deliveryLocation;
+  String get deliveryLocation => _deliveryLocation;
+
+  getCurrentLocation() async {
+    var result = await _locationService.getLocation();
+    if (result != null) {
+      _deliveryLocation = "${result.latitude},${result.longitude}";
+      notifyListeners();
+    }
+  }
+
   init() async {
     await retrieveSalesOrder();
+    await getCurrentLocation();
   }
 
   List<SalesOrderRequestItem> _salesOrderRequestItems =
@@ -56,7 +69,7 @@ class OrderDetailViewModel extends ReactiveViewModel {
   }
 
   final String salesOrderId;
-  final String stopId;
+  final DeliveryStop deliveryStop;
 
   SalesOrder _salesOrder;
   SalesOrder get salesOrder => _salesOrder;
@@ -87,7 +100,7 @@ class OrderDetailViewModel extends ReactiveViewModel {
   OrderDetailViewModel(
       {SalesOrder salesOrder,
       @required DeliveryJourney deliveryJourney,
-      @required this.stopId})
+      @required this.deliveryStop})
       : _deliveryJourney = deliveryJourney,
         salesOrderId = salesOrder.orderNo,
         _salesOrder = salesOrder;
@@ -106,7 +119,7 @@ class OrderDetailViewModel extends ReactiveViewModel {
   handleOrderAction(String action) async {
     switch (action) {
       case 'full_delivery':
-        if (stopId != null) {}
+        if (deliveryStop != null) {}
         DialogResponse response = await _dialogService.showConfirmationDialog(
             description:
                 'You are about to close the Sales Order ${salesOrder.orderNo} for ${salesOrder.customerName}.',
@@ -116,7 +129,7 @@ class OrderDetailViewModel extends ReactiveViewModel {
         if (response.confirmed) {
           setBusy(true);
           var result = await _journeyService.makeFullSODelivery(
-              salesOrder.orderNo, stopId);
+              deliveryStop.orderId, deliveryStop.stopId, deliveryLocation);
           setBusy(false);
           if (result is CustomException) {
             // print(result.description);
@@ -134,7 +147,7 @@ class OrderDetailViewModel extends ReactiveViewModel {
             arguments: PartialDeliveryViewArguments(
                 salesOrder: salesOrder,
                 deliveryJourney: deliveryJourney,
-                stopId: stopId));
+                deliveryStop: deliveryStop));
         break;
       case 'add_payment':
         var result = await _navigationService.navigateTo(Routes.addPaymentView,

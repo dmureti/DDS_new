@@ -15,8 +15,8 @@ class LoginViewModel extends BaseViewModel {
 
   List<AppEnv> get environments => _initService.availableEnvList;
 
-  LoginViewModel(String email, String password)
-      : _email = email,
+  LoginViewModel(String userId, String password)
+      : _userId = userId,
         _password = password;
 
   init() async {
@@ -74,33 +74,15 @@ class LoginViewModel extends BaseViewModel {
   String _password;
   String get password => _password;
 
-  String _mobile;
-  String get mobile => _mobile;
-  setMobile(String val) {
-    _mobile = val.trim();
-    notifyListeners();
-  }
-
-  bool _usePhone = false;
-  bool get usePhone => _usePhone;
-  toggleUsePhone() {
-    _usePhone = !usePhone;
-    notifyListeners();
-  }
-
   login() async {
     setBusy(true);
     var result;
     if (rememberMe) {
-      await _initService.saveUserCredentials(email: email, password: password);
+      await _initService.saveUserCredentials(email: userId, password: password);
     }
-    if (usePhone) {
-      result = await authenticationService.loginWithUserIdAndPassword(
-          userId: mobile, password: password.trim());
-    } else {
-      result = await authenticationService.loginWithUserIdAndPassword(
-          userId: _email.trim(), password: _password.trim());
-    }
+
+    result = await authenticationService.loginWithUserIdAndPassword(
+        userId: userId, password: password);
     setBusy(false);
     if (result is User) {
       // Update the user
@@ -119,19 +101,22 @@ class LoginViewModel extends BaseViewModel {
     }
   }
 
-  String _email;
-  String get email => _email;
-  void updateEmail(String value) {
-    _email = value;
-    notifyListeners();
-  }
-
   void updatePassword(String value) {
-    _password = value;
-    notifyListeners();
+    if (value.isNotEmpty) {
+      _password = value.trim();
+      notifyListeners();
+    }
   }
 
   void navigateToForgotPassword() async {
     await _navigationService.navigateTo(Routes.homeView);
+  }
+
+  String _userId;
+  String get userId => _userId;
+  setUserId(String val) {
+    if (val.isNotEmpty) {
+      _userId = val.trim();
+    }
   }
 }

@@ -242,8 +242,8 @@ class OrderConfirmation extends StatelessWidget {
                                   horizontal: 25, vertical: 10),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20)),
-                              onPressed: () async {
-                                await model.createSalesOrder(salesOrderRequest);
+                              onPressed: () {
+                                model.createSalesOrder(salesOrderRequest);
                               },
                               child: Text(
                                 'place order'.toUpperCase(),

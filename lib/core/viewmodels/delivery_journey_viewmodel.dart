@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/api_service.dart';
@@ -15,12 +16,14 @@ class DeliveryJourneyViewmodel extends BaseViewModel {
   navigateToSalesOrder(
       {String salesOrder,
       String stopId,
+      @required DeliveryStop deliveryStop,
       DeliveryJourney deliveryJourney}) async {
     var result = await _apiService.api
         .getSalesOrderDetail(token: _user.token, orderId: salesOrder);
     if (result is SalesOrder) {
       await _navigationService.navigateTo(Routes.orderDetailView,
           arguments: OrderDetailViewArguments(
+              deliveryStop: deliveryStop,
               stopId: stopId,
               salesOrder: result,
               deliveryJourney: deliveryJourney));
