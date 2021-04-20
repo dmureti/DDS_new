@@ -255,7 +255,7 @@ class _CustomerDetailViewState extends State<CustomerDetailView>
                       customer: widget.customer,
                     )
                   : Container(),
-              !model.enableIssuesTab
+              model.enableIssuesTab
                   ? NotificationsTab(
                       customer: widget.customer,
                     )
