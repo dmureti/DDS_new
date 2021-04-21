@@ -14,6 +14,7 @@ class AdhocSalesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<AdhocSalesViewModel>.reactive(
         onModelReady: (model) {
+          model.initReactive();
           model.fetchCustomers();
           model.fetchStockBalance();
           model.getUserPOSProfile();
