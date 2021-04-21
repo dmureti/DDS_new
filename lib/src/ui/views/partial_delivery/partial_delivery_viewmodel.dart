@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/journey_service.dart';
@@ -13,6 +15,7 @@ class PartialDeliveryViewModel extends BaseViewModel {
   UserService _userService = locator<UserService>();
   String get token => _userService.user.token;
   SnackbarService _snackbarService = locator<SnackbarService>();
+  LocationService _locationService = locator<LocationService>();
 
   SalesOrder _salesOrder;
   final DeliveryJourney deliveryJourney;
@@ -26,6 +29,21 @@ class PartialDeliveryViewModel extends BaseViewModel {
       this.stopId, this._deliveryStop) {
     _salesOrder = salesOrder;
     _newRequest = salesOrder.orderItems;
+  }
+
+  UserLocation _userLocation;
+  UserLocation get userLocation => _userLocation;
+
+  getUserLocation() async {
+    var result = await _locationService.getLocation();
+    if (result is UserLocation) {
+      _userLocation = result;
+      notifyListeners();
+    }
+  }
+
+  init() async {
+    await getUserLocation();
   }
 
   final DeliveryStop _deliveryStop;
@@ -53,11 +71,13 @@ class PartialDeliveryViewModel extends BaseViewModel {
     Map<String, dynamic> data = {
       "atStopId": stopId,
       "deliveryDateTime": DateTime.now().toUtc().toIso8601String(),
+      "deliveryLocation":
+          "lat:${userLocation.latitude.toString()},lng:${userLocation.longitude.toString()}",
       "deliveryWarehouse": deliveryJourney.route,
       "items": newRequest.map((SalesOrderRequestItem e) {
         return {
           "item": {
-            "id": e.soItemId,
+            "id": e.itemCode,
             "itemCode": e.itemCode,
             "itemName": e.itemName,
             "itemPrice": e.itemRate,
@@ -69,11 +89,12 @@ class PartialDeliveryViewModel extends BaseViewModel {
       "remarks": remarks,
       "salesOrderId": salesOrder.orderNo
     };
+    print(json.encode(data));
     var result = await _journeyService.makePartialDelivery(
         journeyId: deliveryJourney.journeyId, data: data);
     setBusy(false);
     if (result is CustomException) {
-      return await _dialogService.showDialog(
+      await _dialogService.showDialog(
           title: result.title, description: result.description);
     } else {
       _snackbarService.showSnackbar(

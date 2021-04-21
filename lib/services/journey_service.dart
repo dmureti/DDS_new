@@ -153,7 +153,7 @@ class JourneyService with ReactiveServiceMixin {
   Future makePartialDelivery(
       {@required String journeyId, @required Map<String, dynamic> data}) async {
     var result = await _api.makeCustomDelivery(journeyId, _user.token, data);
-    if (result is! CustomException) {
+    if (result is bool) {
       _noOfCompletedStops.value++;
     }
     return result;

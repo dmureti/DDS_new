@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/logistics_service.dart';
@@ -49,7 +51,7 @@ class AdhocCartService with ReactiveServiceMixin {
 
   RxValue _total = RxValue(initial: 0);
   RxValue _paymentMode = RxValue(initial: "");
-  RxValue _customerId = RxValue(initial: "");
+  RxValue _customerId = RxValue(initial: null);
   RxValue _customerName = RxValue(initial: "");
   RxValue _sellingPriceList = RxValue(initial: "");
   RxValue<List<SalesOrderItem>> _items =
@@ -75,7 +77,7 @@ class AdhocCartService with ReactiveServiceMixin {
   }
 
   num get total => _total.value;
-  String get customerId => _customerId.value;
+  String get customerId => _customerId.value ?? null;
   String get warehouse => _warehouse.value;
   String get customerType => _customerType.value;
   List<SalesOrderItem> get items => _items.value;
@@ -106,6 +108,8 @@ class AdhocCartService with ReactiveServiceMixin {
 
   resetTotal() {
     _total.value = 0;
+    _itemsInCart.value.clear();
+    _items.value.clear();
     notifyListeners();
   }
 
@@ -116,11 +120,10 @@ class AdhocCartService with ReactiveServiceMixin {
         if (_items.value[i].item == p) {
           // Decrease the value of the sales order item
           _items.value[i].quantity--;
-          _total.value = _total.value - _total - items[i].item.itemPrice;
+
           if (items[i].quantity == 0) {
             _itemsInCart.value.remove(p);
             _items.value.removeAt(i);
-            _total.value = _total.value - _total - items[i].item.itemPrice;
           }
         }
       }
@@ -132,7 +135,7 @@ class AdhocCartService with ReactiveServiceMixin {
     _customerType.value = val;
   }
 
-  setCustomerId(String val) {
+  setCustomerId(var val) {
     _customerId.value = val;
   }
 
@@ -186,9 +189,12 @@ class AdhocCartService with ReactiveServiceMixin {
       "sellingPriceList": sellingPriceList,
       "warehouseId": warehouse
     };
+    print(json.encode(data));
     var result = await api.createPOSPayment(
         modeOfPayment: paymentMode, data: data, token: token);
-    resetTotal();
+    if (result is bool) {
+      resetTotal();
+    }
     return result;
   }
 

@@ -34,13 +34,15 @@ class AdhocCartView extends StatelessWidget {
                                       SalesOrderViewModel>.reactive(
                                   builder:
                                       (context, salesOrderViewModel, child) {
-                                    return !model.stockBalanceList
-                                            .contains(product.itemCode)
+                                    return model.checkIfStockExists(product)
                                         ? SalesOrderItemWidget(
                                             quantity: model.stockBalanceList
-                                                .firstWhere((element) =>
-                                                    element.itemCode ==
-                                                    product.itemCode)
+                                                .firstWhere(
+                                                    (element) =>
+                                                        element.itemCode ==
+                                                        product.itemCode,
+                                                    orElse: () =>
+                                                        Product(quantity: 0))
                                                 .quantity,
                                             item: model
                                                 .customerProductList[index],

@@ -1,4 +1,5 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/adhoc_cart_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -41,7 +42,7 @@ class AdhocPaymentViewmodel extends ReactiveViewModel {
     if (result is bool) {
       await _dialogService.showDialog(
           title: 'Success', description: 'The adhoc sale was successful');
-      _navigationService.popRepeated(3);
+      _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
     } else if (result is CustomException) {
       await _dialogService.showDialog(
           title: 'Error', description: result.description);

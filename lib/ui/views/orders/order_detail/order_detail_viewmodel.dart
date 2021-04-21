@@ -132,7 +132,6 @@ class OrderDetailViewModel extends ReactiveViewModel {
               deliveryStop.orderId, deliveryStop.stopId, deliveryLocation);
           setBusy(false);
           if (result is CustomException) {
-            // print(result.description);
             await _dialogService.showDialog(
                 title: result.title, description: result.description);
           } else {

@@ -8,6 +8,7 @@ class SalesOrderItemModel extends BaseViewModel {
 //  SalesOrderItem salesOrderItem;
   double _total = 0.00;
   double get total => _total;
+
   num _quantity = 0;
   num get quantity => _quantity;
 
@@ -26,7 +27,7 @@ class SalesOrderItemModel extends BaseViewModel {
         _quantity++;
         setItemTotal();
         notifyListeners();
-      } else if (quantity <= maxQuantity) {
+      } else if (quantity < maxQuantity) {
         _quantity++;
         setItemTotal();
         notifyListeners();
@@ -39,7 +40,7 @@ class SalesOrderItemModel extends BaseViewModel {
   /// If [isEnabled] set the total price for this item
   setItemTotal() {
     if (isEnabled) {
-      var result = product.itemPrice * _quantity;
+      var result = product.itemPrice * quantity;
       _total = result.roundToDouble();
       notifyListeners();
     }

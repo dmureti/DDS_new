@@ -186,7 +186,7 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
                           salesOrderViewModel
                               .addToTotal(model.product.itemPrice);
                           model.addItemQuantity();
-//                    print(salesOrderViewModel.total.toStringAsFixed(2));
+//
                         }
                       : null,
                   icon: Icon(Icons.add_circle),

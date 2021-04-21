@@ -36,6 +36,13 @@ class AdhocCartViewModel extends ReactiveViewModel {
   List<Product> _stockBalanceList;
   List<Product> get stockBalanceList => _stockBalanceList;
 
+  checkIfStockExists(Product product) {
+    Product p = _stockBalanceList.firstWhere(
+        (element) => element.itemCode == product.itemCode,
+        orElse: () => null);
+    return p != null;
+  }
+
   final bool _isWalkin;
   final Customer _customer;
 
