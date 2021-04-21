@@ -17,6 +17,7 @@ class AdhocSalesViewModel extends ReactiveViewModel {
   DialogService _dialogService = locator<DialogService>();
   LogisticsService _logisticsService = locator<LogisticsService>();
   AdhocCartService _adhocCartService = locator<AdhocCartService>();
+  JourneyService _journeyService = locator<JourneyService>();
 
   navigateToCart() async {
     if (isWalkInCustomer) {
@@ -30,7 +31,7 @@ class AdhocSalesViewModel extends ReactiveViewModel {
   bool get userHasJourneys {
     if (_logisticsService.userJourneyList.length > 0 &&
         _logisticsService.currentJourney != null &&
-        _logisticsService.currentJourney.status == 'In Transit') {
+        journeyStatus?.toLowerCase() == 'in transit') {
       return true;
     } else {
       return false;
@@ -43,7 +44,7 @@ class AdhocSalesViewModel extends ReactiveViewModel {
 
   StockControllerService _stockControllerService =
       locator<StockControllerService>();
-  JourneyService _journeyService = locator<JourneyService>();
+
   UserService _userService = locator<UserService>();
   List<String> customerTypes = ['Walk-in', 'Contract'];
 
@@ -116,13 +117,15 @@ class AdhocSalesViewModel extends ReactiveViewModel {
   }
 
   String _customerName;
-  String get customerName => _customerName;
+  String get customerName => _customerName ?? "Customer";
   updateCustomerName(String val) {
-    _customerName = val;
-    _adhocCartService.setCustomerName(val);
-    _adhocCartService.setCustomerId(null);
+    if (val.isNotEmpty) {
+      _customerName = val;
+      notifyListeners();
+    }
+    _adhocCartService.setCustomerName(customerName);
     _adhocCartService.setWarehouse(deliveryJourney.branch);
-    notifyListeners();
+    _adhocCartService.setCustomerId(null);
   }
 
   List<Customer> _customerList;
@@ -188,7 +191,13 @@ class AdhocSalesViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
+  String get journeyStatus => _journeyService.journeyStatus;
+
   @override
   List<ReactiveServiceMixin> get reactiveServices =>
-      [_logisticsService, _adhocCartService];
+      [_logisticsService, _adhocCartService, _journeyService];
+
+  void initReactive() {
+    _adhocCartService.resetTotal();
+  }
 }
