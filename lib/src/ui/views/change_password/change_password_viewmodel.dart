@@ -11,13 +11,15 @@ class ChangePasswordViewModel extends BaseViewModel {
   UserService _userService = locator<UserService>();
 
   init() async {
-    if (_userService.user.status == 0) {
-      await _dialogService.showDialog(
-          title: 'Inactive account',
-          description:
-              'Your account is not activated.\nPlease log in to Web Application to activate it or contact the System Administrator');
-    }
+    // if (_userService.user.status == 0) {
+    //   await _dialogService.showDialog(
+    //       title: 'Inactive account',
+    //       description:
+    //           'Your account is not activated.\nPlease log in to Web Application to activate it or contact the System Administrator');
+    // }
   }
+
+  authenticateUser() async {}
 
   String _password;
   String get password => _password;
@@ -44,7 +46,10 @@ class ChangePasswordViewModel extends BaseViewModel {
 
   bool _enableSubmit = false;
   bool get enableSubmit {
-    if (password.isNotEmpty &&
+    if (password != null &&
+        oldPassword != null &&
+        confirmPassword != null &&
+        password.isNotEmpty &&
         oldPassword.isNotEmpty &&
         confirmPassword.isNotEmpty) {
       if (password == confirmPassword) {
@@ -64,7 +69,9 @@ class ChangePasswordViewModel extends BaseViewModel {
     } else {
       await _dialogService.showDialog(
           title: 'Success',
-          description: 'Your password was updated successfully.');
+          description:
+              'Your password was updated successfully. Please sign in again with your new password');
+      // Get the user again
       _navigationService.pushNamedAndRemoveUntil(Routes.loginView);
     }
   }
@@ -79,6 +86,7 @@ class ChangePasswordViewModel extends BaseViewModel {
   setNewPassword(String val) {
     if (val.isNotEmpty) {
       _password = val.trim();
+      notifyListeners();
     }
   }
 }
