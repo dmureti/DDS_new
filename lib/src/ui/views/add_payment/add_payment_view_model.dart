@@ -24,7 +24,7 @@ class AddPaymentViewModel extends BaseViewModel {
   DateTime _lastDate = DateTime.now();
   DateTime get lastDate => _lastDate;
 
-  DateTime _firstDate = DateTime.now().subtract(Duration(days: 40));
+  DateTime _firstDate = DateTime.now().subtract(Duration(days: 7));
   DateTime get firstDate => _firstDate;
 
   DateTime _initialDate = DateTime.now();
