@@ -155,7 +155,7 @@ class AccessControlService {
   }
 
   bool enableIssuesTab() {
-    return checkIfAuthExists(authList, Authority(auth: ' CUI.VU'));
+    return checkIfAuthExists(authList, Authority(auth: 'CUI.VU'));
   }
 
   bool enableInfoTab() {
