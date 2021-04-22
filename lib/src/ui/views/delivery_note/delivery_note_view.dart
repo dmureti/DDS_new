@@ -103,7 +103,7 @@ class DeliveryNoteView extends StatelessWidget {
                                               MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             Text(
-                                              'Order No : ${model.deliveryStop.orderId}',
+                                              'Order No : ${model.deliveryStop.deliveryNoteId}',
                                               style: TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w700),
@@ -119,6 +119,8 @@ class DeliveryNoteView extends StatelessWidget {
 
                                         Divider(),
 
+                                        Text(
+                                            'Sales Order No : ${model.deliveryStop.orderId}'),
                                         Container(
                                           child: Text(
                                               'Order Date: ${Helper.getDay(deliveryJourney.deliveryDate)}'),

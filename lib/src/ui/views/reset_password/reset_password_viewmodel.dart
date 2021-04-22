@@ -15,7 +15,7 @@ class ResetPasswordViewmodel extends BaseViewModel {
 
   void resetPassword() async {
     setBusy(true);
-    var result = await _userService.resetPassword();
+    var result = await _userService.resetPassword(int.parse(userId));
     setBusy(false);
     if (result is CustomException) {
       await _dialogService.showDialog(

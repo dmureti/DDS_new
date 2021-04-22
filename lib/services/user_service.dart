@@ -14,9 +14,8 @@ class UserService {
     _user = user;
   }
 
-  resetPassword() async {
-    var result =
-        await _apiService.api.resetAppUserPassword(user.token, user.id);
+  resetPassword(var userId) async {
+    var result = await _apiService.api.resetAppUserPassword(userId: userId);
     return result;
   }
 
