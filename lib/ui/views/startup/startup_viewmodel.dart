@@ -32,7 +32,6 @@ class StartupViewModel extends BaseViewModel {
   }
 
   Future handleStartUpLogic() async {
-    print('starting');
     bool result = await _initService.init();
     String userId;
     String password;
