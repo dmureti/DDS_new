@@ -1,8 +1,10 @@
 // Will maintain info about a user
 import 'package:distributor/services/api_service.dart';
+import 'package:injectable/injectable.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 import 'package:distributor/app/locator.dart';
 
+@lazySingleton
 class UserService {
   ApiService _apiService = locator<ApiService>();
 
