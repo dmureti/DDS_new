@@ -88,19 +88,14 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
           //   },
           // ),
           Divider(),
-          model.user.status == 0
-              ? ListTile(
-                  title: Text('Change Password'),
-                  onTap: () async {
-                    model.navigateToChangePassword();
-                  },
-                )
-              : ListTile(
-                  title: Text('Reset Password'),
-                  onTap: () async {
-                    model.navigateToPasswordReset();
-                  },
-                ),
+
+          ListTile(
+            title: Text('Change Password'),
+            onTap: () async {
+              model.navigateToChangePassword();
+            },
+          ),
+
           ListTile(
             title: Text('Log out'),
             onTap: () async {

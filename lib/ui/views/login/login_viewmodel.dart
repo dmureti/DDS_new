@@ -115,7 +115,7 @@ class LoginViewModel extends BaseViewModel {
   }
 
   void navigateToForgotPassword() async {
-    await _navigationService.navigateTo(Routes.homeView);
+    await _navigationService.navigateTo(Routes.resetPasswordView);
   }
 
   String _userId;

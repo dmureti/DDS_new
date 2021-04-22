@@ -189,7 +189,20 @@ class _LoginViewState extends State<LoginView> {
                                       const EdgeInsets.only(left: 8.0, top: 10),
                                   child: RememberMeCheckbox(),
                                 ),
-//                      _buildPasswordForgetButton(context, model)
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 8.0, top: 10),
+                                  child: FlatButton(
+                                      onPressed: model.navigateToForgotPassword,
+                                      child: Text(
+                                        'Reset Password',
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            decoration:
+                                                TextDecoration.underline),
+                                      )),
+                                )
                               ],
                             ),
                             UIHelper.verticalSpace(30),
@@ -216,7 +229,7 @@ class _LoginViewState extends State<LoginView> {
                                       // if (_formKey.currentState.validate()) {
                                       model.login();
                                       // }
-                                    })
+                                    }),
                           ],
                         ),
                       ),

@@ -13,21 +13,24 @@ class ChangePasswordView extends StatelessWidget {
         builder: (context, model, child) {
           return Scaffold(
             appBar: AppBar(
-              title: Text('Password Reset'),
+              title: Text('Change Password'),
             ),
             body: Container(
               margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              child: Column(
+              child: ListView(
                 children: [
                   Text(
                       'If it is the first time to use this application, use the password you received via email or sms as the old password'),
+                  SizedBox(
+                    height: 16,
+                  ),
                   _oldPassTextFormField(),
                   SizedBox(
-                    height: 4,
+                    height: 8,
                   ),
                   _newPassTextFormField(),
                   SizedBox(
-                    height: 4,
+                    height: 8,
                   ),
                   _confirmPassTextFormField(),
                   SizedBox(

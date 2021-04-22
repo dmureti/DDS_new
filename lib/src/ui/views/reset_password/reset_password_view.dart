@@ -1,4 +1,5 @@
 import 'package:distributor/src/ui/views/reset_password/reset_password_viewmodel.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:stacked/stacked.dart';
@@ -17,15 +18,42 @@ class ResetPasswordView extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               child: Column(
                 children: [
-                  RaisedButton(
-                    onPressed: model.resetPassword,
-                    child: Text('Reset Password'),
-                  )
+                  Text(
+                      'Forgotten your password ? Please enter your phone number or email address. You shall receive a reset password'),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  _UserIdTextFormField(),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  model.isBusy
+                      ? BusyWidget()
+                      : RaisedButton(
+                          onPressed:
+                              model.userId != null && model.userId.isNotEmpty
+                                  ? model.resetPassword
+                                  : null,
+                          child: Text('Reset Password'),
+                        )
                 ],
               ),
             ),
           );
         },
         viewModelBuilder: () => ResetPasswordViewmodel());
+  }
+}
+
+class _UserIdTextFormField extends HookViewModelWidget<ResetPasswordViewmodel> {
+  @override
+  Widget buildViewModelWidget(
+      BuildContext context, ResetPasswordViewmodel model) {
+    var _controller = useTextEditingController();
+    return TextFormField(
+      decoration: InputDecoration(prefixIcon: Icon(Icons.person)),
+      onChanged: (val) => model.setUserId(val),
+      controller: _controller,
+    );
   }
 }

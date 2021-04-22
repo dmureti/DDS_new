@@ -4,7 +4,6 @@ import 'package:injectable/injectable.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 import 'package:distributor/app/locator.dart';
 
-@lazySingleton
 class UserService {
   ApiService _apiService = locator<ApiService>();
 

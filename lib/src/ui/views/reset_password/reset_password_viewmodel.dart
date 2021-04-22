@@ -10,6 +10,9 @@ class ResetPasswordViewmodel extends BaseViewModel {
   DialogService _dialogService = locator<DialogService>();
   UserService _userService = locator<UserService>();
 
+  String _userId;
+  String get userId => _userId;
+
   void resetPassword() async {
     setBusy(true);
     var result = await _userService.resetPassword();
@@ -22,6 +25,13 @@ class ResetPasswordViewmodel extends BaseViewModel {
           title: 'Success',
           description: 'Your password was reset successfully');
       _navigationService.pushNamedAndRemoveUntil(Routes.loginView);
+    }
+  }
+
+  setUserId(String val) {
+    if (val.isNotEmpty) {
+      _userId = val.trim();
+      notifyListeners();
     }
   }
 }
