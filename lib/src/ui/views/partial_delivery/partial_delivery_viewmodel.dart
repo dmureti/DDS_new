@@ -19,16 +19,16 @@ class PartialDeliveryViewModel extends BaseViewModel {
 
   SalesOrder _salesOrder;
   final DeliveryJourney deliveryJourney;
-  final String stopId;
-
+  String get stopId => deliveryStop.stopId;
+  final DeliveryNote deliveryNote;
   SalesOrder get salesOrder => _salesOrder;
 
-  List<SalesOrderRequestItem> get orderItems => salesOrder.orderItems;
-
   PartialDeliveryViewModel(SalesOrder salesOrder, this.deliveryJourney,
-      this.stopId, this._deliveryStop) {
+      this.deliveryNote, this._deliveryStop) {
     _salesOrder = salesOrder;
-    _newRequest = salesOrder.orderItems;
+    _newRequest = deliveryNote.deliveryItems
+        .map((e) => SalesOrderRequestItem.fromMap(e))
+        .toList();
   }
 
   UserLocation _userLocation;
@@ -47,14 +47,12 @@ class PartialDeliveryViewModel extends BaseViewModel {
   }
 
   final DeliveryStop _deliveryStop;
-  get deliveryStop => _deliveryStop;
+  DeliveryStop get deliveryStop => _deliveryStop;
 
   updateSalesOrderRequestItem(int index, String val) {
     _newRequest[index].quantity = int.parse(val);
-    // notifyListeners();
+    notifyListeners();
   }
-
-  setQuantityToDeliver(var val, int index) {}
 
   List<SalesOrderRequestItem> _newRequest;
   List<SalesOrderRequestItem> get newRequest => _newRequest;
@@ -87,19 +85,21 @@ class PartialDeliveryViewModel extends BaseViewModel {
       }).toList(),
       "onJourneyId": deliveryJourney.journeyId,
       "remarks": remarks,
-      "salesOrderId": salesOrder.orderNo
+      "salesOrderId": deliveryStop.orderId
     };
     print(json.encode(data));
     var result = await _journeyService.makePartialDelivery(
         journeyId: deliveryJourney.journeyId, data: data);
     setBusy(false);
-    if (result is CustomException) {
-      await _dialogService.showDialog(
-          title: result.title, description: result.description);
-    } else {
-      _snackbarService.showSnackbar(
-          message: 'The delivery was completed successfully');
-      _navigationService.back(result: true);
-    }
+    print(result);
+    _navigationService.back(result: result);
+    // if (result is CustomException) {
+    //   await _dialogService.showDialog(
+    //       title: result.title, description: result.description);
+    // } else {
+    //   _snackbarService.showSnackbar(
+    //       message: 'The delivery was completed successfully');
+    //   _navigationService.back(result: true);
+    // }
   }
 }

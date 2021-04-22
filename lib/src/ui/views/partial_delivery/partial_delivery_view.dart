@@ -1,4 +1,5 @@
 import 'package:distributor/src/ui/views/partial_delivery/partial_delivery_viewmodel.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/app_bar_column_title.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -9,23 +10,29 @@ import 'package:tripletriocore/tripletriocore.dart';
 class PartialDeliveryView extends StatelessWidget {
   final SalesOrder salesOrder;
   final DeliveryJourney deliveryJourney;
+  final DeliveryNote deliveryNote;
   final DeliveryStop deliveryStop;
 
   const PartialDeliveryView(
       {Key key,
       this.salesOrder,
       this.deliveryJourney,
+      @required this.deliveryNote,
       @required this.deliveryStop})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print(deliveryStop.stopId);
     return ViewModelBuilder<PartialDeliveryViewModel>.reactive(
         onModelReady: (model) => model.init(),
         builder: (context, model, child) {
           return Scaffold(
             appBar: AppBar(
-              title: Text('Partial Delivery'),
+              title: AppBarColumnTitle(
+                mainTitle: 'Partial Delivery',
+                subTitle: model.deliveryStop.deliveryNoteId,
+              ),
             ),
             body: Container(
               margin: EdgeInsets.symmetric(horizontal: 8),
@@ -37,7 +44,7 @@ class PartialDeliveryView extends StatelessWidget {
                           child: ListView.builder(
                             itemBuilder: (context, index) {
                               var salesOrderRequestItem =
-                                  model.deliveryStop.deliveryItems[index];
+                                  model.deliveryNote.deliveryItems[index];
                               return Container(
                                 margin: EdgeInsets.symmetric(vertical: 4),
                                 child: Material(
@@ -137,7 +144,7 @@ class PartialDeliveryView extends StatelessWidget {
           );
         },
         viewModelBuilder: () => PartialDeliveryViewModel(
-            salesOrder, deliveryJourney, deliveryStop.stopId, deliveryStop));
+            salesOrder, deliveryJourney, deliveryNote, deliveryStop));
   }
 }
 
@@ -150,8 +157,6 @@ class UnitsDeliveredTextForm
   @override
   Widget buildViewModelWidget(
       BuildContext context, PartialDeliveryViewModel model) {
-    // num toDeliver = salesOrderRequestItem.quantity -
-    //     salesOrderRequestItem.quantityDelivered;
     return TextFormField(
       initialValue: salesOrderRequestItem['quantity'].toString(),
       keyboardType: TextInputType.number,

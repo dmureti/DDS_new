@@ -49,6 +49,7 @@ class StopListTileViewModel extends FutureViewModel<SalesOrder> {
     setBusy(false);
     if (result is SalesOrder) {
       _salesOrder = result;
+      notifyListeners();
       return result;
     } else {
       _dialogService.showDialog(
@@ -74,19 +75,13 @@ class StopListTileViewModel extends FutureViewModel<SalesOrder> {
   }
 
   /// When a user taps the corresponding listitem they will be redirected to the order detail view
-  Future navigateToOrderDetailView(
+  Future navigateToDeliveryDetailView(
       DeliveryJourney deliveryJourney, DeliveryStop deliveryStop) async {
-    await _navigationService
-        .navigateTo(Routes.orderDetailView,
-            arguments: OrderDetailViewArguments(
-                deliveryStop: deliveryStop,
-                salesOrder: salesOrder,
-                deliveryJourney: deliveryJourney,
-                stopId: deliveryStop.stopId))
-        .then((value) async {
-      _salesOrder = await fetchSalesOrder();
-      notifyListeners();
-    });
+    var result = await _navigationService.navigateTo(Routes.deliveryNoteView,
+        arguments: DeliveryNoteViewArguments(
+            deliveryJourney: deliveryJourney, deliveryStop: deliveryStop));
+    _salesOrder = await fetchSalesOrder();
+    notifyListeners();
   }
 
   @override

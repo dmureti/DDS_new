@@ -32,7 +32,7 @@ class StopListTile extends StatelessWidget {
                     elevation: 1,
                     child: ListTile(
                       onTap: () async {
-                        await model.navigateToOrderDetailView(
+                        await model.navigateToDeliveryDetailView(
                             deliveryJourney, deliveryStop);
                       },
                       title: Row(

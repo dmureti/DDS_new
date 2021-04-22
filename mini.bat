@@ -1,0 +1,3 @@
+ECHO OFF
+ECHO Building Mini
+flutter build apk --flavor mini -t lib/main_mini.dart && cd build\app\outputs\apk\mini\release && firebase login:ci && set /p firebase_token=Enter the firebase token && firebase appdistribution:distribute app-mini-release.apk  --app 1:1027587126449:android:d7aae40824af1b32315e90  --testers-file testers.txt --release-notes-file release_notes.txt --token "%firebase_token%" & cd D:\projects\mobile\tripletrio_fix\l1

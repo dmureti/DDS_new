@@ -269,6 +269,7 @@ class Router extends RouterBase {
           key: args.key,
           salesOrder: args.salesOrder,
           deliveryJourney: args.deliveryJourney,
+          deliveryNote: args.deliveryNote,
           deliveryStop: args.deliveryStop,
         ),
         settings: data,
@@ -326,6 +327,7 @@ class Router extends RouterBase {
           key: args.key,
           deliveryJourney: args.deliveryJourney,
           deliveryStop: args.deliveryStop,
+          customer: args.customer,
         ),
         settings: data,
       );
@@ -443,11 +445,13 @@ class PartialDeliveryViewArguments {
   final Key key;
   final SalesOrder salesOrder;
   final DeliveryJourney deliveryJourney;
+  final DeliveryNote deliveryNote;
   final DeliveryStop deliveryStop;
   PartialDeliveryViewArguments(
       {this.key,
       this.salesOrder,
       this.deliveryJourney,
+      @required this.deliveryNote,
       @required this.deliveryStop});
 }
 
@@ -478,6 +482,7 @@ class DeliveryNoteViewArguments {
   final Key key;
   final DeliveryJourney deliveryJourney;
   final DeliveryStop deliveryStop;
+  final Customer customer;
   DeliveryNoteViewArguments(
-      {this.key, this.deliveryJourney, this.deliveryStop});
+      {this.key, this.deliveryJourney, this.deliveryStop, this.customer});
 }

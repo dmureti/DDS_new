@@ -148,7 +148,7 @@ class MapViewmodel extends FutureViewModel<UserLocation> {
 
   UserLocation _currentPosition;
   UserLocation get currentPosition => _currentPosition;
-  Future<UserLocation> getCurrentPosition() async {
+  getCurrentPosition() async {
     var result = await _locationService.getLocation();
     if (result is UserLocation) {
       return _currentPosition;

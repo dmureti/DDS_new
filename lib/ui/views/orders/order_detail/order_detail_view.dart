@@ -37,36 +37,36 @@ class OrderDetailView extends StatelessWidget {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-            actions: [
-              PopupMenuButton(
-                itemBuilder: (context) {
-                  return <PopupMenuEntry<Object>>[
-                    PopupMenuItem(
-                      child: Text('Full Delivery'),
-                      value: stopId != null ? 'full_delivery' : 'not_possible',
-                    ),
-                    PopupMenuItem(
-                      child: Text('Partial Delivery'),
-                      value:
-                          stopId != null ? 'partial_delivery' : 'not_possible',
-                    ),
-                    PopupMenuDivider(),
-                    PopupMenuItem(
-                      child: Text('Receive Returns'),
-                      value: 'receive_return',
-                    ),
-                    PopupMenuDivider(),
-                    PopupMenuItem(
-                      child: Text('Add Payment'),
-                      value: 'add_payment',
-                    ),
-                  ];
-                },
-                onSelected: (x) {
-                  model.handleOrderAction(x);
-                },
-              )
-            ],
+            // actions: [
+            //   PopupMenuButton(
+            //     itemBuilder: (context) {
+            //       return <PopupMenuEntry<Object>>[
+            //         PopupMenuItem(
+            //           child: Text('Full Delivery'),
+            //           value: stopId != null ? 'full_delivery' : 'not_possible',
+            //         ),
+            //         PopupMenuItem(
+            //           child: Text('Partial Delivery'),
+            //           value:
+            //               stopId != null ? 'partial_delivery' : 'not_possible',
+            //         ),
+            //         PopupMenuDivider(),
+            //         PopupMenuItem(
+            //           child: Text('Receive Returns'),
+            //           value: 'receive_return',
+            //         ),
+            //         PopupMenuDivider(),
+            //         PopupMenuItem(
+            //           child: Text('Add Payment'),
+            //           value: 'add_payment',
+            //         ),
+            //       ];
+            //     },
+            //     onSelected: (x) {
+            //       model.handleOrderAction(x);
+            //     },
+            //   )
+            // ],
             title: salesOrder != null
                 ? Text(
                     '${salesOrder.customerName}',
@@ -86,13 +86,9 @@ class OrderDetailView extends StatelessWidget {
                 Tab(
                   text: 'Particulars',
                 ),
-                deliveryStop == null
-                    ? Tab(
-                        text: 'History',
-                      )
-                    : Tab(
-                        text: 'History',
-                      )
+                Tab(
+                  text: 'History',
+                )
               ],
             ),
           ),
@@ -191,28 +187,20 @@ class OrderDetailView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            model.deliveryStop != null
-                                ? Expanded(
-                                    child: OrderParticular(
-                                      deliveryStop: deliveryStop,
-                                    ),
-                                  )
-                                : SalesOrderItemList(
-                                    salesOrderId: model.salesOrder.orderNo,
-                                  ),
+                            SalesOrderItemList(
+                              salesOrderId: model.salesOrder.orderNo,
+                            ),
                           ],
                         ),
                       ),
                     ),
-                    deliveryStop == null
-                        ? Container(
-                            margin: EdgeInsets.fromLTRB(15, 10, 10, 0),
-                            child: DeliveryNoteView(
-                              salesOrder: model.salesOrder,
-                              deliveryStop: deliveryStop,
-                            ),
-                          )
-                        : Container(),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(15, 10, 10, 0),
+                      child: DeliveryNoteView(
+                        salesOrder: model.salesOrder,
+                        deliveryStop: deliveryStop,
+                      ),
+                    )
                   ],
                 ),
         ),

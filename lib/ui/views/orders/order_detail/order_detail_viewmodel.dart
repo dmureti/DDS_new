@@ -147,6 +147,13 @@ class OrderDetailViewModel extends ReactiveViewModel {
                 salesOrder: salesOrder,
                 deliveryJourney: deliveryJourney,
                 deliveryStop: deliveryStop));
+        if (result is CustomException) {
+          await _dialogService.showDialog(
+              title: result.title, description: result.description);
+        } else {
+          _snackbarService.showSnackbar(
+              message: 'The partial delivery was closed successfully');
+        }
         break;
       case 'add_payment':
         var result = await _navigationService.navigateTo(Routes.addPaymentView,
