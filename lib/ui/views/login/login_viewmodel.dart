@@ -92,12 +92,12 @@ class LoginViewModel extends BaseViewModel {
       _activityService.addActivity(Activity(
           activityTitle: 'Login in', activityDesc: 'Logged In successfully'));
 
-      //Check if the user is enabled
-      if (result.status == 0) {
+      if (result.status != 1) {
         _navigationService.pushNamedAndRemoveUntil(Routes.changePasswordView);
+      } else {
+        //Navigate to the home page
+        _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
       }
-      //Navigate to the home page
-      _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
     } else if (result is CustomException) {
       await _dialogService.showDialog(
           title: 'Login Failure', description: result.description);
