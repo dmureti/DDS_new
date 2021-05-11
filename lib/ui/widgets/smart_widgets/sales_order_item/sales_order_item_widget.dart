@@ -1,8 +1,11 @@
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/ui/views/orders/create_order/sales_order_view_model.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_hooks/stacked_hooks.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 import 'package:flutter/material.dart';
 
@@ -83,92 +86,27 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    int initialQuantity = model.quantity;
-                    int newQuantity = model.quantity;
-                    await showModalBottomSheet(
-                        backgroundColor: Colors.white,
-                        context: context,
-                        builder: (context) => Container(
-                              margin: EdgeInsets.only(bottom: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Edit Quantity'.toUpperCase(),
-                                      style: TextStyle(
-                                          fontSize: 23,
-                                          color: Colors.grey,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(model.product.itemName),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                      autofocus: true,
-                                      inputFormatters: [
-                                        WhitelistingTextInputFormatter
-                                            .digitsOnly
-                                      ],
-                                      keyboardType: TextInputType.number,
-                                      onChanged: (value) {
-                                        newQuantity = int.parse(value);
-                                      },
-                                      initialValue: model.quantity.toString(),
-                                      decoration: InputDecoration(
-                                          suffixIcon: IconButton(
-                                        icon: Icon(FontAwesomeIcons.save),
-                                        onPressed: () {
-                                          //Make sure that the total is not zero
-                                          salesOrderViewModel
-                                              .editQuantityManually(
-                                                  model.product, newQuantity);
-                                          if (model.total >= 0) {
-                                            // Check if new quantity is less than the initial
-                                            if (initialQuantity < newQuantity) {
-                                              model.updateQuantity(
-                                                  newQuantity.toString(),
-                                                  model.product);
-                                              num difference =
-                                                  newQuantity - initialQuantity;
-                                              salesOrderViewModel.addToTotal(
-                                                  difference *
-                                                      model.product.itemPrice);
-                                              salesOrderViewModel
-                                                  .increaseSalesOrderItems(
-                                                      model.product,
-                                                      difference);
-                                            }
-                                            if (initialQuantity > newQuantity) {
-                                              // Less products
-                                              num difference =
-                                                  initialQuantity - newQuantity;
-                                              model.updateQuantity(
-                                                  newQuantity.toString(),
-                                                  model.product);
-                                              salesOrderViewModel
-                                                  .removeFromTotal(difference *
-                                                      model.product.itemPrice);
-                                              salesOrderViewModel
-                                                  .decreaseSalesOrderItems(
-                                                      model.product,
-                                                      difference);
-                                            }
-                                          }
-                                          Navigator.pop(context);
-//
-                                        },
-                                      )),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ));
+                    var input = await showQuantityDialog(
+                        quantity: model.quantity, model: model);
+                    //Check the difference
+                    int difference = input - model.quantity;
+                    if (difference < 0) {
+                      salesOrderViewModel.decreaseSalesOrderItems(
+                          model.product, input);
+                      if (model.total >= 0 && model.quantity > 0) {
+                        salesOrderViewModel
+                            .addToTotal(model.product.itemPrice * difference);
+                      }
+                      model.removeItemQuantity(val: input);
+                    } else if (difference > 0) {
+                      salesOrderViewModel.increaseSalesOrderItems(
+                          model.product, 1);
+                      salesOrderViewModel
+                          .addToTotal(model.product.itemPrice * difference);
+                      model.addItemQuantity(val: input);
+                    } else {
+                      print('equal');
+                    }
                   },
                   child: Text(
                     model.quantity.toString(),
@@ -199,3 +137,129 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
     );
   }
 }
+
+showQuantityDialog(
+    {@required int quantity, @required SalesOrderItemModel model}) async {
+  TextEditingController _textEditingController =
+      TextEditingController(text: model.quantity.toString());
+  return await showDialog(
+      context: StackedService.navigatorKey.currentContext,
+      builder: (context) {
+        return Center(
+          child: Material(
+            elevation: 3,
+            type: MaterialType.card,
+            color: Colors.white,
+            child: Container(
+              margin: EdgeInsets.only(left: 10, right: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Edit Quantity'.toUpperCase(),
+                          style: TextStyle(
+                              fontSize: 23,
+                              color: Colors.pink,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.close),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(model.product.itemName),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      autofocus: true,
+                      keyboardType: TextInputType.number,
+                      controller: _textEditingController,
+                      inputFormatters: [
+                        WhitelistingTextInputFormatter.digitsOnly
+                      ],
+                      decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                        onPressed: () {
+                          model.setQuantity(_textEditingController.text);
+                        },
+                        icon: Icon(Icons.send),
+                      )),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
+}
+
+// TextFormField(
+// autofocus: true,
+// inputFormatters: [
+// WhitelistingTextInputFormatter
+//     .digitsOnly
+// ],
+// keyboardType: TextInputType.number,
+// onChanged: (value) {
+// newQuantity = int.parse(value);
+// },
+// initialValue: model.quantity.toString(),
+// decoration: InputDecoration(
+// suffixIcon: IconButton(
+// icon: Icon(FontAwesomeIcons.save),
+// onPressed: () {
+// //Make sure that the total is not zero
+// salesOrderViewModel
+//     .editQuantityManually(
+// model.product, newQuantity);
+// if (model.total >= 0) {
+// // Check if new quantity is less than the initial
+// if (initialQuantity < newQuantity) {
+// model.updateQuantity(
+// newQuantity.toString(),
+// model.product);
+// num difference =
+// newQuantity - initialQuantity;
+// salesOrderViewModel.addToTotal(
+// difference *
+// model.product.itemPrice);
+// salesOrderViewModel
+//     .increaseSalesOrderItems(
+// model.product,
+// difference);
+// }
+// if (initialQuantity > newQuantity) {
+// // Less products
+// num difference =
+// initialQuantity - newQuantity;
+// model.updateQuantity(
+// newQuantity.toString(),
+// model.product);
+// salesOrderViewModel
+//     .removeFromTotal(difference *
+// model.product.itemPrice);
+// salesOrderViewModel
+//     .decreaseSalesOrderItems(
+// model.product,
+// difference);
+// }
+// }
+// Navigator.pop(context);
+// //
+// },
+// )),
+// )

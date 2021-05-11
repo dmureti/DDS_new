@@ -1,9 +1,12 @@
+import 'package:distributor/app/locator.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import 'package:tripletriocore/tripletriocore.dart';
 import 'package:flutter/material.dart';
 
 class SalesOrderItemModel extends BaseViewModel {
+  NavigationService _navigationService = locator<NavigationService>();
   final Product product;
 //  SalesOrderItem salesOrderItem;
   double _total = 0.00;
@@ -21,14 +24,18 @@ class SalesOrderItemModel extends BaseViewModel {
   bool get isEnabled => product.itemPrice > 0;
 
   /// If the item has a price enable the add item quantity
-  addItemQuantity() {
+  addItemQuantity({int val}) {
     if (isEnabled) {
       if (maxQuantity == null) {
-        _quantity++;
+        if (val != null) {
+          _quantity = val;
+        } else {
+          _quantity++;
+        }
         setItemTotal();
         notifyListeners();
       } else if (quantity < maxQuantity) {
-        _quantity++;
+        _quantity = quantity + val;
         setItemTotal();
         notifyListeners();
       }
@@ -48,9 +55,13 @@ class SalesOrderItemModel extends BaseViewModel {
 
   /// If [isEnabled] remove [quantity] of 1 unit from the total quantity
   /// If the [quantity] is equal to zero. Disable
-  removeItemQuantity() {
+  removeItemQuantity({int val}) {
     if (_quantity > 0 && isEnabled) {
-      _quantity--;
+      if (val != null) {
+        _quantity = val;
+      } else {
+        _quantity--;
+      }
       setItemTotal();
       notifyListeners();
     }
@@ -69,5 +80,14 @@ class SalesOrderItemModel extends BaseViewModel {
     }
   }
 
-  setQuantity() {}
+  getDifference(double initial, double newVal) {
+    return initial - newVal;
+  }
+
+  setQuantity(String val) {
+    if (val.isNotEmpty) {
+      var newVal = int.parse(val);
+      _navigationService.back(result: newVal);
+    }
+  }
 }

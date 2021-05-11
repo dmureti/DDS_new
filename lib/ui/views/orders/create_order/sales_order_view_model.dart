@@ -147,7 +147,7 @@ class SalesOrderViewModel extends ReactiveViewModel {
         if (_salesOrderItems[i].item == p) {
           // Decrease the value of the sales order item
           _salesOrderItems[i].quantity--;
-          if (salesOrderItems[i].quantity == 0) {
+          if (salesOrderItems[i].quantity == 0 || quantity == 0) {
             _items.remove(p);
             _salesOrderItems.removeAt(i);
           }
