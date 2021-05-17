@@ -51,7 +51,7 @@ class DeliveryNoteView extends StatelessWidget {
                       return <PopupMenuEntry<Object>>[
                         PopupMenuItem(
                           child: Text('Full Delivery'),
-                          value: model.deliveryStop.stopId != null ||
+                          value: model.deliveryStop.stopId != null &&
                                   model.deliveryNote.deliveryStatus
                                           .toLowerCase() ==
                                       'draft'
