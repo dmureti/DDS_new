@@ -17,6 +17,17 @@ class AdhocCartService with ReactiveServiceMixin {
   ApiService _apiService = locator<ApiService>();
   UserService _userService = locator<UserService>();
   LogisticsService _logisticsService = locator<LogisticsService>();
+  LocationService _locationService = locator<LocationService>();
+
+  UserLocation _userLocation;
+  UserLocation get userLocation => _userLocation;
+
+  getCurrentLocation() async {
+    var result = await _locationService.getLocation();
+    if (result is UserLocation) {
+      _userLocation = result;
+    }
+  }
 
   List<String> get paymentModes {
     if (customerType.toLowerCase() == 'contract') {
@@ -38,6 +49,7 @@ class AdhocCartService with ReactiveServiceMixin {
     if (_logisticsService.currentJourney != null) {
       await getPaymentModes(_logisticsService.currentJourney.branch);
     }
+    await getCurrentLocation();
   }
 
   getPOSAccount(String modeOfPayment, branchId) async {
@@ -193,6 +205,7 @@ class AdhocCartService with ReactiveServiceMixin {
         "paymentMode": paymentMode == 'INVOICE LATER' ? 'ACCOUNT' : paymentMode,
         "userTxnNarrative": "string"
       },
+      "deliveryLocation": "${userLocation.latitude},${userLocation.longitude}",
       "remarks": remarks,
       "sellingPriceList": sellingPriceList,
       "warehouseId": warehouse
