@@ -16,7 +16,7 @@ class AddPaymentViewModel extends BaseViewModel {
   List<PaymentModes> _paymentModes = [
     PaymentModes.MPESA,
     PaymentModes.Equitel,
-    PaymentModes.Cash
+    PaymentModes.Cash,
   ];
 
   List get paymentModes => _paymentModes;
@@ -65,6 +65,15 @@ class AddPaymentViewModel extends BaseViewModel {
     _transactionDate = dt;
     notifyListeners();
   }
+
+  List<String> walkInCustomerPaymentOption = ['MPESA', 'Equitel', 'Cash'];
+
+  List<String> contractCustomerPaymentOptions = [
+    'MPESA',
+    'Equitel',
+    'Cash',
+    'Invoice Later'
+  ];
 
   num _amount;
   num get amount => _amount;
