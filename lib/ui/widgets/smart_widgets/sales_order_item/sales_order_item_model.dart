@@ -35,7 +35,11 @@ class SalesOrderItemModel extends BaseViewModel {
         setItemTotal();
         notifyListeners();
       } else if (quantity < maxQuantity) {
-        _quantity = quantity + val;
+        if (val != null) {
+          _quantity = quantity + val;
+        } else {
+          _quantity++;
+        }
         setItemTotal();
         notifyListeners();
       }

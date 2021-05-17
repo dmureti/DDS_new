@@ -13,13 +13,22 @@ class AdhocPaymentViewmodel extends ReactiveViewModel {
   @override
   List<ReactiveServiceMixin> get reactiveServices => [_adhocCartService];
 
-  List<String> _paymentModes;
   List<String> get paymentModes => _adhocCartService.paymentModes;
 
   num get total => _adhocCartService.total;
 
+  bool get isWalkinCustomer {
+    if (customerType.toLowerCase() == 'contract') {
+      return false;
+    }
+    return true;
+  }
+
   String _paymentMode;
   String get paymentMode => _paymentMode;
+
+  String get customerType => _adhocCartService.customerType;
+
   setPaymentType(String val) {
     _adhocCartService.setPaymentMode(val);
     _paymentMode = val;

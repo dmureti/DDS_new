@@ -18,7 +18,15 @@ class AdhocCartService with ReactiveServiceMixin {
   UserService _userService = locator<UserService>();
   LogisticsService _logisticsService = locator<LogisticsService>();
 
-  List<String> get paymentModes => ['MPESA', 'Equitel', 'CASH'];
+  List<String> get paymentModes {
+    if (customerType.toLowerCase() == 'contract') {
+      return ['MPESA', 'Equitel', 'CASH', 'INVOICE LATER'];
+    } else {
+      return ['MPESA', 'Equitel', 'CASH'];
+    }
+  }
+
+  String get customerType => _customerType.value;
 
   RxValue<List<Product>> _itemsInCart = RxValue(initial: List<Product>());
   List<Product> get itemsInCart => _itemsInCart.value;
@@ -79,7 +87,7 @@ class AdhocCartService with ReactiveServiceMixin {
   num get total => _total.value;
   String get customerId => _customerId.value ?? null;
   String get warehouse => _warehouse.value;
-  String get customerType => _customerType.value;
+
   List<SalesOrderItem> get items => _items.value;
   String get sellingPriceList => _sellingPriceList.value;
   String get paymentMode => _paymentMode.value;
@@ -182,16 +190,18 @@ class AdhocCartService with ReactiveServiceMixin {
         "externalTxnNarrative": "string",
         "payerAccount": "string",
         "payerName": "string",
-        "paymentMode": paymentMode,
+        "paymentMode": paymentMode == 'INVOICE LATER' ? 'ACCOUNT' : paymentMode,
         "userTxnNarrative": "string"
       },
       "remarks": remarks,
       "sellingPriceList": sellingPriceList,
       "warehouseId": warehouse
     };
-    print(json.encode(data));
+    // print(json.encode(data));
     var result = await api.createPOSPayment(
-        modeOfPayment: paymentMode, data: data, token: token);
+        modeOfPayment: paymentMode == 'INVOICE LATER' ? 'ACCOUNT' : paymentMode,
+        data: data,
+        token: token);
     if (result is bool) {
       resetTotal();
     }

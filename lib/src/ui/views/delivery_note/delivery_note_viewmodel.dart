@@ -67,6 +67,7 @@ class DeliveryNoteViewModel extends BaseViewModel {
             confirmationTitle: 'CONFIRM',
             cancelTitle: 'CANCEL');
         if (response.confirmed) {
+          print(deliveryLocation);
           setBusy(true);
           var result = await _journeyService.makeFullSODelivery(
               deliveryStop.orderId, deliveryStop.stopId, deliveryLocation);

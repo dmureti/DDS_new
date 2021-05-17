@@ -39,6 +39,7 @@ class AdhocPaymentView extends StatelessWidget {
                   SizedBox(
                     height: 8,
                   ),
+                  _buildPaymentFields(model.paymentMode),
                   SizedBox(
                     height: 8,
                   ),
@@ -66,6 +67,20 @@ class AdhocPaymentView extends StatelessWidget {
         },
         viewModelBuilder: () => AdhocPaymentViewmodel());
   }
+
+  _buildPaymentFields(String paymentType) {
+    switch (paymentType) {
+      case 'MPESA':
+        return _MPESAFormField();
+        break;
+      case 'Equitel':
+        return _AirtelFormField();
+        break;
+      default:
+        return Container();
+        break;
+    }
+  }
 }
 
 class _RemarksTextField extends HookViewModelWidget<AdhocPaymentViewmodel> {
@@ -81,6 +96,62 @@ class _RemarksTextField extends HookViewModelWidget<AdhocPaymentViewmodel> {
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
         hintText: 'Remarks',
+      ),
+    );
+  }
+}
+
+class _MPESAFormField extends HookViewModelWidget<AdhocPaymentViewmodel> {
+  @override
+  Widget buildViewModelWidget(
+      BuildContext context, AdhocPaymentViewmodel model) {
+    return Container(
+      child: Column(
+        children: [
+          TextFormField(
+            decoration: InputDecoration(hintText: 'Till/Paybill Number'),
+          ),
+          TextFormField(
+            decoration: InputDecoration(hintText: 'Telephone Number'),
+          ),
+          TextFormField(
+            decoration: InputDecoration(hintText: 'Reference'),
+          ),
+          TextFormField(
+            decoration: InputDecoration(hintText: 'Telephone Number'),
+          ),
+          TextFormField(
+            decoration: InputDecoration(hintText: 'Payer Name'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AirtelFormField extends HookViewModelWidget<AdhocPaymentViewmodel> {
+  @override
+  Widget buildViewModelWidget(
+      BuildContext context, AdhocPaymentViewmodel viewModel) {
+    return Container(
+      child: Column(
+        children: [
+          TextFormField(
+            decoration: InputDecoration(hintText: 'Till/Paybill Number'),
+          ),
+          TextFormField(
+            decoration: InputDecoration(hintText: 'Telephone Number'),
+          ),
+          TextFormField(
+            decoration: InputDecoration(hintText: 'Reference'),
+          ),
+          TextFormField(
+            decoration: InputDecoration(hintText: 'Telephone Number'),
+          ),
+          TextFormField(
+            decoration: InputDecoration(hintText: 'Payer Name'),
+          ),
+        ],
       ),
     );
   }

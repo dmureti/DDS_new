@@ -100,61 +100,6 @@ class AdhocSalesView extends StatelessWidget {
                                         : _CustomerNameTextField()
                                     : Text('Select a customer type'),
                               ),
-                              // Step(
-                              //   title: Text('Cart Items'),
-                              //   state: model.customerType == null
-                              //       ? StepState.disabled
-                              //       : model.currentIndex == 2
-                              //           ? StepState.editing
-                              //           : StepState.complete,
-                              //   isActive:
-                              //       model.currentIndex == 2 ? true : false,
-                              //   content: model.productList == null
-                              //       ? Center(
-                              //           child: CircularProgressIndicator(),
-                              //         )
-                              //       : model.productList.length > 0
-                              //           ? Text('')
-                              //           : Text('No products found'),
-                              // ),
-                              // Step(
-                              //     state: model.customerType == null
-                              //         ? StepState.disabled
-                              //         : model.currentIndex == 3
-                              //             ? StepState.editing
-                              //             : StepState.complete,
-                              //     isActive:
-                              //         model.currentIndex == 3 ? true : false,
-                              //     title: Text('Payment'),
-                              //     content: Column(
-                              //       crossAxisAlignment:
-                              //           CrossAxisAlignment.start,
-                              //       children: [
-                              //         DropdownButton(
-                              //             key: Key('paymentmodes'),
-                              //             items: model.paymentModes
-                              //                 .map((e) => DropdownMenuItem(
-                              //                       child: Text(e),
-                              //                       value: e,
-                              //                     ))
-                              //                 .toList(),
-                              //             value: model.paymentMode,
-                              //             isExpanded: true,
-                              //             dropdownColor: Colors.white,
-                              //             hint: Text('Select payment mode'),
-                              //             onChanged: (val) {
-                              //               model.setPaymentType(val);
-                              //             }),
-                              //         SizedBox(
-                              //           height: 8,
-                              //         ),
-                              //         Text('Amount : Kshs'),
-                              //         SizedBox(
-                              //           height: 8,
-                              //         ),
-                              //         _RemarksTextField(),
-                              //       ],
-                              //     ))
                             ],
                           ),
                         ],

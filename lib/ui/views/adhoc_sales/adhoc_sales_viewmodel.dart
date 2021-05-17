@@ -48,7 +48,8 @@ class AdhocSalesViewModel extends ReactiveViewModel {
   UserService _userService = locator<UserService>();
   List<String> customerTypes = ['Walk-in', 'Contract'];
 
-  List<String> get paymentModes => ['MPESA', 'Equitel', 'CASH'];
+  List<String> get paymentModes =>
+      ['MPESA', 'Equitel', 'CASH', "Invoice Later"];
 
   Future fetchPaymentModes() async {}
 
@@ -69,7 +70,6 @@ class AdhocSalesViewModel extends ReactiveViewModel {
 
   updateCustomerType(String val) {
     _customerType = val.trim();
-
     _adhocCartService.setCustomerType(val);
     notifyListeners();
   }
