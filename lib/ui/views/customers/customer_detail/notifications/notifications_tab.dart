@@ -30,19 +30,21 @@ class NotificationsTab extends StatelessWidget {
                                   child: Material(
                                     elevation: 2,
                                     child: ListTile(
-                                      leading: Text(issue.dateReported),
+                                      trailing: Text(issue.dateReported),
                                       title: Row(
                                         children: [
                                           Text(issue.referenceNo),
                                           SizedBox(
                                             width: 8,
                                           ),
-                                          Text(issue.subject),
                                         ],
                                       ),
-                                      // subtitle: issue.description != null
-                                      //     ? Text(issue.description)
-                                      //     : Text(''),
+                                      subtitle: issue.subject != null
+                                          ? Text(
+                                              issue.subject,
+                                              overflow: TextOverflow.ellipsis,
+                                            )
+                                          : Text(''),
                                     ),
                                   ),
                                 );

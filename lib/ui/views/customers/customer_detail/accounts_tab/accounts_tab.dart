@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/ui/views/customers/customer_detail/accounts_tab/accounts_tab_viewmodel.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -31,27 +32,6 @@ class AccountsTab extends StatelessWidget {
                       )
                     : Column(
                         children: [
-                          /// Container to filter tabs
-//                          Container(
-//                            color: kDarkBlue,
-//                            child: Row(
-//                              children: [
-//                                IconButton(
-//                                  icon: Icon(
-//                                    Icons.sort_by_alpha,
-//                                    color: model.sortAscending == false
-//                                        ? Colors.white
-//                                        : Colors.pink,
-//                                  ),
-//                                  splashColor: Colors.pink,
-//                                  onPressed: () {
-//                                    model.toggleSortByDate();
-//                                  },
-//                                )
-//                              ],
-//                            ),
-//                          ),
-
                           /// Opening and closing balance
                           Container(
                             padding: EdgeInsets.symmetric(horizontal: 10),
