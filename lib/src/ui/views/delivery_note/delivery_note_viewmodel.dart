@@ -98,6 +98,7 @@ class DeliveryNoteViewModel extends BaseViewModel {
         }
         break;
       case 'add_payment':
+        print(customer.name);
         var result = await _navigationService.navigateTo(Routes.addPaymentView,
             arguments: AddPaymentViewArguments(customer: customer));
         if (result) {
@@ -107,7 +108,7 @@ class DeliveryNoteViewModel extends BaseViewModel {
         break;
       case 'not_possible':
         await _dialogService.showDialog(
-            title: 'Not possible',
+            title: 'Operation not possible',
             description: 'You cannot perform this action.');
         break;
     }

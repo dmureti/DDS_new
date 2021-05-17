@@ -73,10 +73,10 @@ class DeliveryNoteView extends StatelessWidget {
                           value: 'receive_return',
                         ),
                         PopupMenuDivider(),
-                        PopupMenuItem(
-                          child: Text('Add Payment'),
-                          value: 'add_payment',
-                        ),
+                        // PopupMenuItem(
+                        //   child: Text('Add Payment'),
+                        //   value: 'add_payment',
+                        // ),
                       ];
                     },
                     onSelected: (x) {
