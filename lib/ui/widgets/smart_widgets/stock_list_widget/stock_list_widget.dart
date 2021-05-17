@@ -11,17 +11,23 @@ class StockListWidget extends StatelessWidget {
         builder: (context, model, child) => model.productList == null
             ? CircularProgressIndicator()
             : Expanded(
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    Product product = model.productList[index];
-                    return ListTile(
-                      title: Text(product.itemName),
-                      subtitle: Text(product.itemCode),
-                      trailing: Text(product.quantity.toStringAsFixed(0)),
-                    );
-                  },
-                  itemCount: model.productList.length,
-                ),
+                child: model.productList.isEmpty
+                    ? Container(
+                        child: Center(
+                          child: Text('The vehicle has no stock.'),
+                        ),
+                      )
+                    : ListView.builder(
+                        itemBuilder: (context, index) {
+                          Product product = model.productList[index];
+                          return ListTile(
+                            title: Text(product.itemName),
+                            subtitle: Text(product.itemCode),
+                            trailing: Text(product.quantity.toStringAsFixed(0)),
+                          );
+                        },
+                        itemCount: model.productList.length,
+                      ),
               ),
         viewModelBuilder: () => StockListWidgetViewModel());
   }
