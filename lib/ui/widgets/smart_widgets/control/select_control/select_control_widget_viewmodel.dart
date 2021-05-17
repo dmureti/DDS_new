@@ -67,7 +67,7 @@ class SelectControlWidgetViewModel extends ReactiveViewModel {
             title: 'Could not fetch delivery', description: result.toString());
       }
     }
-    print(isCurrentSelection);
+
     notifyListeners();
   }
 

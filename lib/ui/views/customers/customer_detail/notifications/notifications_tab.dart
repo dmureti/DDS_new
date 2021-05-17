@@ -31,6 +31,9 @@ class NotificationsTab extends StatelessWidget {
                                   child: Material(
                                     elevation: 2,
                                     child: ListTile(
+                                      onTap: () {
+                                        model.showDetailedIssueDialog(issue);
+                                      },
                                       trailing: Text(
                                           Helper.formatDateForAccounts(
                                               issue.dateReported)),

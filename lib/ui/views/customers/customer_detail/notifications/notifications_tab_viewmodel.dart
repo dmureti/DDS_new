@@ -55,6 +55,13 @@ class NotificationsTabViewModel extends ReactiveViewModel {
 
   List<String> get issues => ['Feedback', 'Request', 'Problem'];
 
+  showDetailedIssueDialog(Issue issue) async {
+    await _dialogService.showDialog(
+        title: issue.subject,
+        description:
+            issue.description ?? "This issue does not have a description");
+  }
+
   addIssue() async {
     Issue issue = Issue(
         customerId: customer.id,
