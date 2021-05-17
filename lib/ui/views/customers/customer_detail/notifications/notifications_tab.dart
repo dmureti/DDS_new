@@ -1,3 +1,4 @@
+import 'package:distributor/core/helper.dart';
 import 'package:distributor/ui/views/customers/customer_detail/notifications/notifications_tab_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -30,7 +31,9 @@ class NotificationsTab extends StatelessWidget {
                                   child: Material(
                                     elevation: 2,
                                     child: ListTile(
-                                      trailing: Text(issue.dateReported),
+                                      trailing: Text(
+                                          Helper.formatDateForAccounts(
+                                              issue.dateReported)),
                                       title: Row(
                                         children: [
                                           Text(issue.referenceNo),
