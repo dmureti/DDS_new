@@ -1,3 +1,4 @@
+import 'package:distributor/core/enums.dart';
 import 'package:distributor/src/ui/views/change_password/change_password_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +7,20 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 
 class ChangePasswordView extends StatelessWidget {
+  final PasswordChangeType passwordChangeType;
+  final String identityType;
+  final String identityValue;
+
+  const ChangePasswordView(
+      {Key key,
+      @required this.passwordChangeType,
+      this.identityType,
+      this.identityValue})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ChangePasswordViewModel>.reactive(
-        onModelReady: (model) => model.init(),
         builder: (context, model, child) {
           return Scaffold(
             appBar: AppBar(
@@ -19,8 +30,7 @@ class ChangePasswordView extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               child: ListView(
                 children: [
-                  Text(
-                      'If it is the first time to use this application, use the password you received via email or sms as the old password'),
+                  Text(model.introTextToDisplay),
                   SizedBox(
                     height: 16,
                   ),
@@ -48,7 +58,8 @@ class ChangePasswordView extends StatelessWidget {
             ),
           );
         },
-        viewModelBuilder: () => ChangePasswordViewModel());
+        viewModelBuilder: () =>
+            ChangePasswordViewModel(passwordChangeType, identityValue));
   }
 }
 
@@ -61,7 +72,10 @@ class _oldPassTextFormField
     return TextFormField(
       onChanged: (val) => model.setOldPassword(val),
       controller: _controller,
-      decoration: InputDecoration(labelText: 'Old password'),
+      decoration: InputDecoration(
+          labelText: model.passwordChangeType != PasswordChangeType.user
+              ? 'Temporary password'
+              : 'Old Password'),
     );
   }
 }

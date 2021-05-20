@@ -10,6 +10,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
+import '../core/enums.dart';
 import '../core/models/payment_link.dart';
 import '../src/ui/views/add_adhoc_sale/add_adhoc_sale_view.dart';
 import '../src/ui/views/add_issue/add_issue_view.dart';
@@ -339,8 +340,14 @@ class Router extends RouterBase {
       );
     },
     ChangePasswordView: (data) {
+      final args = data.getArgs<ChangePasswordViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => ChangePasswordView(),
+        builder: (context) => ChangePasswordView(
+          key: args.key,
+          passwordChangeType: args.passwordChangeType,
+          identityType: args.identityType,
+          identityValue: args.identityValue,
+        ),
         settings: data,
       );
     },
@@ -485,4 +492,17 @@ class DeliveryNoteViewArguments {
   final Customer customer;
   DeliveryNoteViewArguments(
       {this.key, this.deliveryJourney, this.deliveryStop, this.customer});
+}
+
+/// ChangePasswordView arguments holder class
+class ChangePasswordViewArguments {
+  final Key key;
+  final PasswordChangeType passwordChangeType;
+  final String identityType;
+  final String identityValue;
+  ChangePasswordViewArguments(
+      {this.key,
+      @required this.passwordChangeType,
+      this.identityType,
+      this.identityValue});
 }

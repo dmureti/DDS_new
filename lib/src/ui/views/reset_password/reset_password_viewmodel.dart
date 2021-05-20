@@ -1,5 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
+import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -15,7 +16,7 @@ class ResetPasswordViewmodel extends BaseViewModel {
 
   void resetPassword() async {
     setBusy(true);
-    var result = await _userService.resetPassword(int.parse(userId));
+    var result = await _userService.resetPassword(identityValue: userId);
     setBusy(false);
     if (result is CustomException) {
       await _dialogService.showDialog(
@@ -24,7 +25,10 @@ class ResetPasswordViewmodel extends BaseViewModel {
       await _dialogService.showDialog(
           title: 'Success',
           description: 'Your password was reset successfully');
-      _navigationService.pushNamedAndRemoveUntil(Routes.loginView);
+      _navigationService.pushNamedAndRemoveUntil(Routes.changePasswordView,
+          arguments: ChangePasswordViewArguments(
+              passwordChangeType: PasswordChangeType.reset,
+              identityValue: userId));
     }
   }
 

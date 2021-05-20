@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/api_service.dart';
+import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/order_service.dart';
 import 'package:distributor/services/user_service.dart';
@@ -18,6 +19,7 @@ class AdhocCartService with ReactiveServiceMixin {
   UserService _userService = locator<UserService>();
   LogisticsService _logisticsService = locator<LogisticsService>();
   LocationService _locationService = locator<LocationService>();
+  JourneyService _journeyService = locator<JourneyService>();
 
   UserLocation _userLocation;
   UserLocation get userLocation => _userLocation;
@@ -208,9 +210,10 @@ class AdhocCartService with ReactiveServiceMixin {
       "deliveryLocation": "${userLocation.latitude},${userLocation.longitude}",
       "remarks": remarks,
       "sellingPriceList": sellingPriceList,
-      "warehouseId": warehouse
+      "warehouseId": _journeyService.currentJourney.route
     };
     // print(json.encode(data));
+    print(_journeyService.currentJourney.route);
     var result = await api.createPOSPayment(
         modeOfPayment: paymentMode == 'INVOICE LATER' ? 'ACCOUNT' : paymentMode,
         data: data,

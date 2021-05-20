@@ -52,7 +52,9 @@ class HomeViewModel extends ReactiveViewModel {
   }
 
   navigateToChangePassword() async {
-    await _navigationService.navigateTo(Routes.changePasswordView);
+    await _navigationService.navigateTo(Routes.changePasswordView,
+        arguments: ChangePasswordViewArguments(
+            passwordChangeType: PasswordChangeType.user));
   }
 
   bool get hasActivityUpdate => _activityService.hasUpdate;

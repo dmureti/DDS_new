@@ -124,7 +124,7 @@ class AdhocSalesViewModel extends ReactiveViewModel {
       notifyListeners();
     }
     _adhocCartService.setCustomerName(customerName);
-    _adhocCartService.setWarehouse(deliveryJourney.branch);
+    _adhocCartService.setWarehouse(deliveryJourney.route);
     _adhocCartService.setCustomerId(null);
   }
 

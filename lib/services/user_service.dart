@@ -1,10 +1,12 @@
 // Will maintain info about a user
+import 'package:auto_route/auto_route.dart';
+import 'package:distributor/core/mixin/validator.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 import 'package:distributor/app/locator.dart';
 
-class UserService {
+class UserService with Validator {
   ApiService _apiService = locator<ApiService>();
 
   User _user;
@@ -14,8 +16,41 @@ class UserService {
     _user = user;
   }
 
-  resetPassword(var userId) async {
-    var result = await _apiService.api.resetAppUserPassword(userId: userId);
+  ///{
+  //   "identityType": "string",
+  //   "identityValue": "string",
+  //   "resetCode": "string",
+  //   "password": "string"
+  // }
+  completeResetMyPassword(
+      {@required String identityValue,
+      @required resetCode,
+      @required password}) async {
+    String identityType = checkIdentificationType(identityValue);
+    Map<String, dynamic> data = {
+      "identityType": identityType,
+      "identityValue": identityValue,
+      "resetCode": resetCode,
+      "password": password
+    };
+    var result = await _apiService.api.completeResetMyPassword(data);
+    return result;
+  }
+
+  resetPassword({
+    @required String identityValue,
+  }) async {
+    String identityType;
+    if (identityValue.contains('@')) {
+      identityType = "email";
+    } else {
+      identityType = "mobile";
+    }
+    Map<String, dynamic> data = {
+      "identityValue": identityValue,
+      "identityType": identityType
+    };
+    var result = await _apiService.api.initResetMyPassword(data: data);
     return result;
   }
 

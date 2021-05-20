@@ -1,5 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
+import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/activity_service.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/user_service.dart';
@@ -93,7 +94,9 @@ class LoginViewModel extends BaseViewModel {
           activityTitle: 'Login in', activityDesc: 'Logged In successfully'));
 
       if (result.status != 1) {
-        _navigationService.pushNamedAndRemoveUntil(Routes.changePasswordView);
+        _navigationService.pushNamedAndRemoveUntil(Routes.changePasswordView,
+            arguments: ChangePasswordViewArguments(
+                passwordChangeType: PasswordChangeType.initial));
       } else {
         //Navigate to the home page
         _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
