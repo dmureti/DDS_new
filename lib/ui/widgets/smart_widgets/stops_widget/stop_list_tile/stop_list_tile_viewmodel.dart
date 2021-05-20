@@ -10,7 +10,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 /// This class extends the [FutureViewModel] to enable it to fetch the [SalesOrder] corresponding to the sa
-class StopListTileViewModel extends FutureViewModel<SalesOrder> {
+class StopListTileViewModel extends BaseViewModel {
   ApiService _apiService = locator<ApiService>();
   NavigationService _navigationService = locator<NavigationService>();
   DialogService _dialogService = locator<DialogService>();
@@ -20,16 +20,19 @@ class StopListTileViewModel extends FutureViewModel<SalesOrder> {
   UserService _userService = locator<UserService>();
   User get _user => _userService.user;
   final String _salesOrderId;
+  final DeliveryStop deliveryStop;
 
-  List<DeliveryStop> _deliveryStop;
-  List<DeliveryStop> get deliveryStop => _deliveryStop;
+  List<DeliveryStop> _deliveryStopList;
+  // List<DeliveryStop> get deliveryStop => _deliveryStopList;
 
   SalesOrder _salesOrder;
   SalesOrder get salesOrder => _salesOrder;
 
-  StopListTileViewModel(this._journeyId, {String salesOrderId})
+  StopListTileViewModel(this._journeyId,
+      {String salesOrderId, DeliveryStop deliveryStop})
       : _salesOrderId = salesOrderId,
-        assert(salesOrderId != null);
+        deliveryStop = deliveryStop,
+        assert(salesOrderId != null, deliveryStop != null);
 
   final String _journeyId;
 
@@ -80,10 +83,25 @@ class StopListTileViewModel extends FutureViewModel<SalesOrder> {
     var result = await _navigationService.navigateTo(Routes.deliveryNoteView,
         arguments: DeliveryNoteViewArguments(
             deliveryJourney: deliveryJourney, deliveryStop: deliveryStop));
-    _salesOrder = await fetchSalesOrder();
+    // _salesOrder = await fetchSalesOrder();
+    await getDeliveryNote();
     notifyListeners();
   }
 
-  @override
-  Future<SalesOrder> futureToRun() async => await fetchSalesOrder();
+  DeliveryNote _deliveryNote;
+  DeliveryNote get deliveryNote => _deliveryNote;
+
+  Future getDeliveryNote() async {
+    var result = await _apiService.api.getDeliveryNoteDetails(
+        deliveryNoteId: deliveryStop.deliveryNoteId, token: _user.token);
+    if (result is DeliveryNote) {
+      _deliveryNote = result;
+      notifyListeners();
+      return result;
+    }
+  }
+
+  init() async {
+    await getDeliveryNote();
+  }
 }

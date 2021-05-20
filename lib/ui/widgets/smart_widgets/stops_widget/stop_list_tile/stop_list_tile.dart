@@ -14,67 +14,56 @@ class StopListTile extends StatelessWidget {
       @required this.deliveryJourney,
       @required this.deliveryStop,
       Key key})
-      : assert(salesOrderId != null, deliveryJourney != null),
+      : assert(salesOrderId != null, deliveryStop != null),
         super(key: key);
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<StopListTileViewModel>.reactive(
+      onModelReady: (model) => model.init(),
       viewModelBuilder: () => StopListTileViewModel(deliveryJourney.journeyId,
-          salesOrderId: salesOrderId),
-      builder: (context, model, child) => model.isBusy
+          salesOrderId: salesOrderId, deliveryStop: deliveryStop),
+      builder: (context, model, child) => model.deliveryNote == null
           ? CircularProgressIndicator()
-          : model.hasError
-              ? Text(model.error.toString())
-              : Container(
-                  margin: EdgeInsets.all(8),
-                  child: Material(
-                    type: MaterialType.card,
-                    elevation: 1,
-                    child: ListTile(
-                      onTap: () async {
-                        await model.navigateToDeliveryDetailView(
-                            deliveryJourney, deliveryStop);
-                      },
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Text(
-                            deliveryStop.deliveryNoteId,
-                            style: kSalesOrderIdTextStyle,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: Text(
-                              deliveryStop.customerId,
-                              style: kCustomerNameTextStyle,
-                              textAlign: TextAlign.right,
-                            ),
-                          )
-                        ],
+          : Container(
+              margin: EdgeInsets.all(8),
+              child: Material(
+                type: MaterialType.card,
+                elevation: 1,
+                child: ListTile(
+                  onTap: () async {
+                    await model.navigateToDeliveryDetailView(
+                        deliveryJourney, deliveryStop);
+                  },
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text(
+                        model.deliveryStop.deliveryNoteId,
+                        style: kSalesOrderIdTextStyle,
                       ),
-                      subtitle: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('${model.salesOrder.orderStatus}'),
-                          Spacer(),
-
-//                          Text(
-//                            'kms away',
-//                            style: kStopSecondaryTextStyle,
-//                          ),
-                        ],
+                      SizedBox(
+                        width: 10,
                       ),
-//                      trailing: model.salesOrder.orderStatus
-//                              .toLowerCase()
-//                              .contains('to bill')
-//                          ? Icon(Icons.check)
-//                          : Icon(Icons.timer),
-                    ),
+                      Expanded(
+                        child: Text(
+                          model.deliveryStop.customerId,
+                          style: kCustomerNameTextStyle,
+                          textAlign: TextAlign.right,
+                        ),
+                      )
+                    ],
+                  ),
+                  subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('${model.deliveryNote.deliveryStatus}'),
+                      Spacer(),
+                    ],
                   ),
                 ),
+              ),
+            ),
     );
   }
 }
