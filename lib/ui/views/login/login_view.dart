@@ -75,7 +75,6 @@ class _LoginViewState extends State<LoginView> {
                 )
               : Container(),
         ),
-        // resizeToAvoidBottomPadding: true,
         extendBodyBehindAppBar: true,
         body: Container(
           height: MediaQuery.of(context).size.height,
@@ -118,6 +117,7 @@ class _LoginViewState extends State<LoginView> {
                           children: [
                             TextFormFieldPadding(
                               child: TextFormField(
+                                autofocus: true,
                                 controller: _userIdController,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600, fontSize: 20),
@@ -225,11 +225,16 @@ class _LoginViewState extends State<LoginView> {
                                         ),
                                       ),
                                     ),
-                                    onPressed: () {
-                                      // if (_formKey.currentState.validate()) {
-                                      model.login();
-                                      // }
-                                    }),
+                                    onPressed: model.userId == null ||
+                                            model.password == null ||
+                                            model.userId.isEmpty ||
+                                            model.password.isEmpty
+                                        ? null
+                                        : () {
+                                            // if (_formKey.currentState.validate()) {
+                                            model.login();
+                                            // }
+                                          }),
                           ],
                         ),
                       ),

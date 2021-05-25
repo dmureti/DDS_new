@@ -26,6 +26,7 @@ class AdhocSalesViewModel extends ReactiveViewModel {
     await _navigationService.navigateTo(Routes.adhocCartView,
         arguments: AdhocCartViewArguments(
             isWalkin: isWalkInCustomer, customer: customer));
+    _adhocCartService.resetTotal();
   }
 
   bool get userHasJourneys {
@@ -172,7 +173,6 @@ class AdhocSalesViewModel extends ReactiveViewModel {
 
   getUserPOSProfile() async {
     _posProfile = await _stockControllerService.getUserPOSProfile();
-    print(_posProfile['defaultPriceList']);
     notifyListeners();
   }
 
@@ -199,5 +199,9 @@ class AdhocSalesViewModel extends ReactiveViewModel {
 
   void initReactive() {
     _adhocCartService.resetTotal();
+  }
+
+  init() async {
+    await _adhocCartService.init();
   }
 }

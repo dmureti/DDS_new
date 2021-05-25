@@ -18,6 +18,7 @@ class AdhocSalesView extends StatelessWidget {
           model.fetchCustomers();
           model.fetchStockBalance();
           model.getUserPOSProfile();
+          model.init();
           // model.listWarehouses();
         },
         builder: (context, model, child) {

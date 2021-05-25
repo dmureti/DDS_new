@@ -31,11 +31,30 @@ class AdhocCartService with ReactiveServiceMixin {
     }
   }
 
+  List<String> _paymentModes;
+
   List<String> get paymentModes {
+    List<String> _modes = [];
     if (customerType.toLowerCase() == 'contract') {
-      return ['MPESA', 'Equitel', 'CASH', 'INVOICE LATER'];
+      if (showMPesa) {
+        _modes.add('MPESA');
+      }
+      if (showAirtel) {
+        _modes.add('EQUITEL');
+      }
+      _modes.addAll(['CASH', 'INVOICE LATER']);
+      print(_modes);
+      return _modes;
     } else {
-      return ['MPESA', 'Equitel', 'CASH'];
+      if (showMPesa) {
+        _modes.add('MPESA');
+      }
+      if (showAirtel) {
+        _modes.add('EQUITEL');
+      }
+      _modes.add('CASH');
+      print(_modes);
+      return _modes;
     }
   }
 
@@ -47,24 +66,47 @@ class AdhocCartService with ReactiveServiceMixin {
   RxValue<List> _paymentModeDetails = RxValue(initial: List());
   List get paymentModeDetails => _paymentModeDetails.value;
 
+  RxValue<bool> _showMPesa = RxValue(initial: false);
+  RxValue<bool> _showEquitel = RxValue(initial: false);
+
+  bool get showMPesa => _showMPesa.value;
+  bool get showAirtel => _showEquitel.value;
+
+  var _mpesaDetail;
+  get mpesaDetail => _mpesaDetail;
+
   init() async {
     if (_logisticsService.currentJourney != null) {
-      await getPaymentModes(_logisticsService.currentJourney.branch);
+      var mpesaRes =
+          await getPOSAccount('MPESA', _journeyService.currentJourney.branch);
+      if (mpesaRes is List) {
+        if (mpesaRes.isNotEmpty) {
+          _showMPesa.value = true;
+          _mpesaDetail = mpesaRes;
+        }
+      }
+      var airtelRes =
+          await getPOSAccount('EQUITEL', _journeyService.currentJourney.branch);
+      if (airtelRes is List) {
+        if (airtelRes.isNotEmpty) {
+          _showEquitel.value = true;
+        }
+      }
+      // await getPaymentModes(_journeyService.currentJourney.route);
     }
     await getCurrentLocation();
   }
 
   getPOSAccount(String modeOfPayment, branchId) async {
     var result = await _apiService.api.getPOSAccount(
-      modeOfPayment,
-      _userService.user.token,
-    );
-    print(result);
+        modeOfPayment, _userService.user.token,
+        branchId: branchId);
+    return result;
   }
 
   getPaymentModes(String branchId) async {
     for (int i = 0; i < paymentModes.length; i++) {
-      getPOSAccount(paymentModes[i], branchId);
+      await getPOSAccount(paymentModes[i], branchId);
     }
   }
 
@@ -91,6 +133,8 @@ class AdhocCartService with ReactiveServiceMixin {
       _customerName,
       _items,
       _itemsInCart,
+      _showEquitel,
+      _showMPesa,
       _warehouse,
       _customerType,
       _sellingPriceList
@@ -212,8 +256,8 @@ class AdhocCartService with ReactiveServiceMixin {
       "sellingPriceList": sellingPriceList,
       "warehouseId": _journeyService.currentJourney.route
     };
-    // print(json.encode(data));
-    print(_journeyService.currentJourney.route);
+    print(json.encode(data));
+    // print(_journeyService.currentJourney.route);
     var result = await api.createPOSPayment(
         modeOfPayment: paymentMode == 'INVOICE LATER' ? 'ACCOUNT' : paymentMode,
         data: data,

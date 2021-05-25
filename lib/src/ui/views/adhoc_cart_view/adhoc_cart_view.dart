@@ -53,7 +53,7 @@ class AdhocCartView extends StatelessWidget {
                                   viewModelBuilder: () => SalesOrderViewModel(
                                       customer: model.customer));
                             },
-                            itemCount: model.stockBalanceList.length,
+                            itemCount: model.customerProductList.length,
                           ),
                         ),
                         Container(
