@@ -71,61 +71,75 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
                 Spacer(),
                 IconButton(
                   onPressed: model.isEnabled
-                      ? () {
-                          salesOrderViewModel.decreaseSalesOrderItems(
-                              model.product, 1);
-                          if (model.total >= 0 && model.quantity > 0) {
-                            salesOrderViewModel
-                                .removeFromTotal(model.product.itemPrice);
-                          }
-                          model.removeItemQuantity();
+                      ? model.quantity == 0
+                          ? null
+                          : () {
+                              salesOrderViewModel.decreaseSalesOrderItems(
+                                  model.product, 1);
+                              if (model.total >= 0 && model.quantity > 0) {
+                                salesOrderViewModel
+                                    .removeFromTotal(model.product.itemPrice);
+                              }
+                              model.removeItemQuantity();
 //                    print(salesOrderViewModel.total.toStringAsFixed(2));
-                        }
+                            }
                       : null,
                   icon: Icon(Icons.remove_circle),
                 ),
-                GestureDetector(
-                  onTap: () async {
-                    var input = await showQuantityDialog(
-                        quantity: model.quantity, model: model);
-                    //Check the difference
-                    int difference = input - model.quantity;
-                    if (difference < 0) {
-                      salesOrderViewModel.decreaseSalesOrderItems(
-                          model.product, input);
-                      if (model.total >= 0 && model.quantity > 0) {
-                        salesOrderViewModel
-                            .addToTotal(model.product.itemPrice * difference);
-                      }
-                      model.removeItemQuantity(val: input);
-                    } else if (difference > 0) {
-                      salesOrderViewModel.increaseSalesOrderItems(
-                          model.product, 1);
-                      salesOrderViewModel
-                          .addToTotal(model.product.itemPrice * difference);
-                      model.addItemQuantity(val: input);
-                    } else {
-                      print('equal');
-                    }
-                  },
-                  child: Text(
-                    model.quantity.toString(),
-                    style: model.quantity == 0
-                        ? TextStyle()
-                        : TextStyle(
-                            fontWeight: FontWeight.w700, color: Colors.black),
-                  ),
-                ),
+                // GestureDetector(
+                //   onTap: () async {
+                //     var input = await showQuantityDialog(
+                //         quantity: model.quantity, model: model);
+                //     if (input is int) {
+                //       //Check the difference
+                //       int difference = input - model.quantity;
+                //       if (difference < 0) {
+                //         salesOrderViewModel.decreaseSalesOrderItems(
+                //             model.product, input);
+                //         if (model.total >= 0 && model.quantity > 0) {
+                //           salesOrderViewModel
+                //               .addToTotal(model.product.itemPrice * difference);
+                //         }
+                //         model.removeItemQuantity(val: input);
+                //       } else if (difference > 0) {
+                //         salesOrderViewModel.increaseSalesOrderItems(
+                //             model.product, 1);
+                //         salesOrderViewModel
+                //             .addToTotal(model.product.itemPrice * difference);
+                //         model.addItemQuantity(val: input);
+                //       }
+                //     }
+                //   },
+                //   child: Text(
+                //     model.quantity.toString(),
+                //     style: model.quantity == 0
+                //         ? TextStyle()
+                //         : TextStyle(
+                //             fontWeight: FontWeight.w700, color: Colors.black),
+                //   ),
+                // ),
                 IconButton(
                   onPressed: model.isEnabled
-                      ? () {
-                          salesOrderViewModel.increaseSalesOrderItems(
-                              model.product, 1);
-                          salesOrderViewModel
-                              .addToTotal(model.product.itemPrice);
-                          model.addItemQuantity();
+                      ? model.maxQuantity != null &&
+                              model.quantity < model.maxQuantity
+                          ? () {
+                              salesOrderViewModel.increaseSalesOrderItems(
+                                  model.product, 1);
+                              salesOrderViewModel
+                                  .addToTotal(model.product.itemPrice);
+                              model.addItemQuantity();
 //
-                        }
+                            }
+                          : model.maxQuantity == null
+                              ? () {
+                                  salesOrderViewModel.increaseSalesOrderItems(
+                                      model.product, 1);
+                                  salesOrderViewModel
+                                      .addToTotal(model.product.itemPrice);
+                                  model.addItemQuantity();
+//
+                                }
+                              : null
                       : null,
                   icon: Icon(Icons.add_circle),
                 )

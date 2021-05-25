@@ -92,9 +92,14 @@ class DeliveryNoteViewModel extends BaseViewModel {
           await _dialogService.showDialog(
               title: result.title, description: result.description);
         } else {
-          _snackbarService.showSnackbar(
-              message: 'The partial delivery was closed successfully');
-          await getDeliveryNote();
+          //Check if delivery was completed
+          if (result is bool) {
+            if (result) {
+              _snackbarService.showSnackbar(
+                  message: 'The partial delivery was closed successfully');
+              await getDeliveryNote();
+            }
+          }
         }
         break;
       case 'add_payment':
