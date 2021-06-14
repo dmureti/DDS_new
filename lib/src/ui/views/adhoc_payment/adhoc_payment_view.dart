@@ -54,9 +54,11 @@ class AdhocPaymentView extends StatelessWidget {
                       : Container(
                           width: MediaQuery.of(context).size.width,
                           child: RaisedButton(
-                            onPressed: () {
-                              model.completeAdhoc();
-                            },
+                            onPressed: model.enableCheckout
+                                ? () {
+                                    model.completeAdhoc();
+                                  }
+                                : null,
                             child: Text('COMPLETE'),
                           ),
                         ),

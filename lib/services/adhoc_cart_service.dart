@@ -43,7 +43,6 @@ class AdhocCartService with ReactiveServiceMixin {
         _modes.add('EQUITEL');
       }
       _modes.addAll(['CASH', 'INVOICE LATER']);
-      print(_modes);
       return _modes;
     } else {
       if (showMPesa) {
@@ -161,15 +160,16 @@ class AdhocCartService with ReactiveServiceMixin {
       for (int i = 0; i < _items.value.length; i++) {
         if (_items.value[i].item == p) {
           // Increase the value of the sales order item
-          _items.value[i].quantity++;
+          _items.value[i].quantity += quantity;
+          notifyListeners();
         }
       }
     } else {
       _itemsInCart.value.add(p);
       SalesOrderItem s = SalesOrderItem(item: p, quantity: quantity);
       _items.value.add(s);
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   resetTotal() {
@@ -185,7 +185,7 @@ class AdhocCartService with ReactiveServiceMixin {
       for (int i = 0; i < _items.value.length; i++) {
         if (_items.value[i].item == p) {
           // Decrease the value of the sales order item
-          _items.value[i].quantity--;
+          _items.value[i].quantity -= quantity;
 
           if (items[i].quantity == 0) {
             _itemsInCart.value.remove(p);

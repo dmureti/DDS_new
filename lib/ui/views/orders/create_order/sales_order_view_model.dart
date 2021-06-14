@@ -108,15 +108,18 @@ class SalesOrderViewModel extends ReactiveViewModel {
       for (int i = 0; i < _salesOrderItems.length; i++) {
         if (_salesOrderItems[i].item == p) {
           // Increase the value of the sales order item
-          _salesOrderItems[i].quantity++;
+          _salesOrderItems[i].quantity += quantity;
+          // print(_salesOrderItems[i].quantity);
+          notifyListeners();
         }
       }
     } else {
       _items.add(p);
       SalesOrderItem s = SalesOrderItem(item: p, quantity: quantity);
       _salesOrderItems.add(s);
+      notifyListeners();
     }
-    notifyListeners();
+    // print(quantity);
   }
 
   editQuantityManually(Product p, quantity) {
@@ -146,8 +149,10 @@ class SalesOrderViewModel extends ReactiveViewModel {
       for (int i = 0; i < _salesOrderItems.length; i++) {
         if (_salesOrderItems[i].item == p) {
           // Decrease the value of the sales order item
-          _salesOrderItems[i].quantity--;
-          if (salesOrderItems[i].quantity == 0 || quantity == 0) {
+          _salesOrderItems[i].quantity -= quantity;
+          print(quantity);
+          print(_salesOrderItems[i].quantity);
+          if (salesOrderItems[i].quantity == 0) {
             _items.remove(p);
             _salesOrderItems.removeAt(i);
           }

@@ -155,10 +155,12 @@ class CustomerDetailViewModel extends BaseViewModel {
         Routes.createSalesOrderView,
         arguments: CreateSalesOrderViewArguments(customer: customer));
 
-    if (result) {
-      await fetchCustomerOrders();
-      _snackbarService.showSnackbar(
-          message: 'The order was placed successfully');
+    if (result is bool) {
+      if (result) {
+        await fetchCustomerOrders();
+        _snackbarService.showSnackbar(
+            message: 'The order was placed successfully');
+      }
     }
   }
 

@@ -98,4 +98,11 @@ class SalesOrderItemModel extends BaseViewModel {
       _navigationService.back(result: newVal);
     }
   }
+
+  processManualInput(int val) {
+    //Set the quantity
+    _quantity = val;
+    setItemTotal();
+    notifyListeners();
+  }
 }

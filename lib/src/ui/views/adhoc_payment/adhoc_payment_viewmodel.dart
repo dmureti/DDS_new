@@ -57,4 +57,6 @@ class AdhocPaymentViewmodel extends ReactiveViewModel {
           title: 'Error', description: result.description);
     }
   }
+
+  bool get enableCheckout => paymentMode != null && paymentMode.isNotEmpty;
 }

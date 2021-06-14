@@ -1,5 +1,6 @@
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/ui/views/orders/create_order/sales_order_view_model.dart';
+import 'package:distributor/ui/widgets/smart_widgets/manual_input_widget/manual_input_widget.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -86,38 +87,46 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
                       : null,
                   icon: Icon(Icons.remove_circle),
                 ),
-                // GestureDetector(
-                //   onTap: () async {
-                //     var input = await showQuantityDialog(
-                //         quantity: model.quantity, model: model);
-                //     if (input is int) {
-                //       //Check the difference
-                //       int difference = input - model.quantity;
-                //       if (difference < 0) {
-                //         salesOrderViewModel.decreaseSalesOrderItems(
-                //             model.product, input);
-                //         if (model.total >= 0 && model.quantity > 0) {
-                //           salesOrderViewModel
-                //               .addToTotal(model.product.itemPrice * difference);
-                //         }
-                //         model.removeItemQuantity(val: input);
-                //       } else if (difference > 0) {
-                //         salesOrderViewModel.increaseSalesOrderItems(
-                //             model.product, 1);
-                //         salesOrderViewModel
-                //             .addToTotal(model.product.itemPrice * difference);
-                //         model.addItemQuantity(val: input);
-                //       }
-                //     }
-                //   },
-                //   child: Text(
-                //     model.quantity.toString(),
-                //     style: model.quantity == 0
-                //         ? TextStyle()
-                //         : TextStyle(
-                //             fontWeight: FontWeight.w700, color: Colors.black),
-                //   ),
-                // ),
+                SizedBox(
+                  width: 5,
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    var difference = await showQuantityDialog(
+                        quantity: model.quantity, model: model);
+                    if (difference is int) {
+                      num totalDifference =
+                          difference * model.product.itemPrice;
+                      //update the salesOrderViewmodel
+                      salesOrderViewModel.addToTotal(totalDifference);
+                      // Get the difference in terms of quantity
+                      num differenceInQuantity =
+                          totalDifference / model.product.itemPrice;
+                      if (differenceInQuantity != 0) {
+                        /// Check if there was an overall reduction in cart items
+                        /// If the difference is less than zero
+                        /// The number of cart items shall reduce
+                        if (differenceInQuantity < 0) {
+                          salesOrderViewModel.decreaseSalesOrderItems(
+                              model.product, (-(differenceInQuantity)).toInt());
+                        } else {
+                          salesOrderViewModel.increaseSalesOrderItems(
+                              model.product, differenceInQuantity.toInt());
+                        }
+                      }
+                    }
+                  },
+                  child: Text(
+                    model.quantity.toString(),
+                    style: model.quantity == 0
+                        ? TextStyle()
+                        : TextStyle(
+                            fontWeight: FontWeight.w700, color: Colors.black),
+                  ),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
                 IconButton(
                   onPressed: model.isEnabled
                       ? model.maxQuantity != null &&
@@ -154,69 +163,16 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
 
 showQuantityDialog(
     {@required int quantity, @required SalesOrderItemModel model}) async {
-  TextEditingController _textEditingController =
-      TextEditingController(text: model.quantity.toString());
   return await showDialog(
       context: StackedService.navigatorKey.currentContext,
       builder: (context) {
-        return Center(
-          child: Material(
-            elevation: 3,
-            type: MaterialType.card,
-            color: Colors.white,
-            child: Container(
-              margin: EdgeInsets.only(left: 10, right: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Edit Quantity'.toUpperCase(),
-                          style: TextStyle(
-                              fontSize: 23,
-                              color: Colors.pink,
-                              fontWeight: FontWeight.w700),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.close),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(model.product.itemName),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      autofocus: true,
-                      keyboardType: TextInputType.number,
-                      controller: _textEditingController,
-                      inputFormatters: [
-                        WhitelistingTextInputFormatter.digitsOnly
-                      ],
-                      decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                        onPressed: () {
-                          model.setQuantity(_textEditingController.text);
-                        },
-                        icon: Icon(Icons.send),
-                      )),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+        bool isAdhocSale = model.maxQuantity != null;
+        return ManualInputWidget(
+          quantity: quantity.toInt(),
+          maxQuantity: model.maxQuantity,
+          isAdhocSale: isAdhocSale,
+          product: model.product,
+          onPressed: model.processManualInput,
         );
       });
 }

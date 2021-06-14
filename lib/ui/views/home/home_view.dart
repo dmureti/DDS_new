@@ -32,33 +32,6 @@ class HomeView extends StatelessWidget {
               icon: Icon(FontAwesome.refresh),
             ),
             MapIconButton(),
-            // IconButton(
-            //   onPressed: model.navigateToNotificationsView,
-            //   icon: Badge(
-            //     toAnimate: true,
-            //     badgeContent: Padding(
-            //       padding: const EdgeInsets.all(3.0),
-            //       child: Text(
-            //         model.noOfUpdates,
-            //         style: TextStyle(color: Colors.white, fontSize: 10),
-            //       ),
-            //     ),
-            //     showBadge: model.hasActivityUpdate == true ? true : false,
-            //     padding: EdgeInsets.all(3.0),
-            //     position: BadgePosition(top: -10, end: -10),
-            //     child: Icon(
-            //       Icons.notifications,
-            //       color: Colors.white,
-            //     ),
-            //   ),
-            // ),
-            // IconButton(
-            //   onPressed: null,
-            //   icon: Icon(
-            //     Icons.more_vert,
-            //     color: Colors.white,
-            //   ),
-            // ),
           ],
         ),
         bottomNavigationBar: Theme(
