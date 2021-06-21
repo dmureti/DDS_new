@@ -22,7 +22,7 @@ class AdhocSalesView extends StatelessWidget {
           // model.listWarehouses();
         },
         builder: (context, model, child) {
-          return !model.userHasJourneys
+          return model.userHasJourneys
               ? Container(
                   child: Column(
                   children: [
