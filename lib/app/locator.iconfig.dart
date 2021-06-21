@@ -8,11 +8,11 @@ import 'package:distributor/services/third_party_services_module.dart';
 import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/activity_service.dart';
 import 'package:distributor/services/api_service.dart';
-import 'package:distributor/services/cache_service.dart';
+
 import 'package:distributor/services/customer_service.dart';
-import 'package:distributor/core/models/data_order_service.dart';
+
 import 'package:stacked_services/stacked_services.dart';
-import 'package:distributor/core/models/data_filter_service.dart';
+
 import 'package:distributor/services/init_service.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -34,14 +34,13 @@ void $initGetIt(GetIt g, {String environment}) {
   g.registerLazySingleton<ActivityService>(() => ActivityService());
   g.registerLazySingleton<ApiService>(
       () => thirdPartyServicesModule.appService);
-  g.registerLazySingleton<CacheService>(
-      () => thirdPartyServicesModule.cacheService);
+
   g.registerLazySingleton<CustomerService>(
       () => thirdPartyServicesModule.customerService);
-  g.registerLazySingleton<DataOrderService>(() => DataOrderService());
+
   g.registerLazySingleton<DialogService>(
       () => thirdPartyServicesModule.dialogService);
-  g.registerLazySingleton<FilterService>(() => FilterService());
+
   g.registerLazySingleton<InitService>(
       () => thirdPartyServicesModule.initService);
   g.registerLazySingleton<JourneyService>(
@@ -72,8 +71,7 @@ class _$ThirdPartyServicesModule extends ThirdPartyServicesModule {
   AccessControlService get accessControlService => AccessControlService();
   @override
   ApiService get appService => ApiService();
-  @override
-  CacheService get cacheService => CacheService();
+
   @override
   CustomerService get customerService => CustomerService();
   @override

@@ -23,7 +23,6 @@ import '../src/ui/views/partial_delivery/partial_delivery_view.dart';
 import '../src/ui/views/reset_password/reset_password_view.dart';
 import '../ui/views/customer_location.dart';
 import '../ui/views/customers/customer_detail/customer_detail_view.dart';
-import '../ui/views/forgot_password/forgot_password_route.dart';
 import '../ui/views/home/home_view.dart';
 import '../ui/views/journey/journey_view.dart';
 import '../ui/views/link_payment/link_payment_view.dart';
@@ -40,7 +39,6 @@ class Routes {
   static const String homeView = '/home-view';
   static const String startupView = '/';
   static const String loginView = '/login-view';
-  static const String forgotPasswordRoute = '/forgot-password-route';
   static const String journeyView = '/journey-view';
   static const String customerDetailView = '/customer-detail-view';
   static const String createSalesOrderView = '/create-sales-order-view';
@@ -64,7 +62,6 @@ class Routes {
     homeView,
     startupView,
     loginView,
-    forgotPasswordRoute,
     journeyView,
     customerDetailView,
     createSalesOrderView,
@@ -94,7 +91,6 @@ class Router extends RouterBase {
     RouteDef(Routes.homeView, page: HomeView),
     RouteDef(Routes.startupView, page: StartupView),
     RouteDef(Routes.loginView, page: LoginView),
-    RouteDef(Routes.forgotPasswordRoute, page: ForgotPasswordRoute),
     RouteDef(Routes.journeyView, page: JourneyView),
     RouteDef(Routes.customerDetailView, page: CustomerDetailView),
     RouteDef(Routes.createSalesOrderView, page: CreateSalesOrderView),
@@ -146,12 +142,6 @@ class Router extends RouterBase {
           userId: args.userId,
           password: args.password,
         ),
-        settings: data,
-      );
-    },
-    ForgotPasswordRoute: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => ForgotPasswordRoute(),
         settings: data,
       );
     },

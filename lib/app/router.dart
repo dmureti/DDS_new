@@ -10,7 +10,7 @@ import 'package:distributor/src/ui/views/reset_password/reset_password_view.dart
 import 'package:distributor/src/ui/views/change_password/change_password.dart';
 import 'package:distributor/ui/views/customer_location.dart';
 import 'package:distributor/ui/views/customers/customer_detail/customer_detail_view.dart';
-import 'package:distributor/ui/views/forgot_password/forgot_password_route.dart';
+
 import 'package:distributor/ui/views/home/home_view.dart';
 import 'package:distributor/ui/views/journey/journey_view.dart';
 import 'package:distributor/ui/views/link_payment/link_payment_view.dart';
@@ -24,7 +24,6 @@ import 'package:distributor/ui/views/payment_reference/payment_reference_view.da
 import 'package:distributor/ui/views/startup/startup_view.dart';
 import 'package:distributor/ui/widgets/smart_widgets/map_view/delivery_journey_map_view.dart';
 
-import '../ui/views/forgot_password/forgot_password_route.dart';
 import '../ui/views/link_payment/link_payment_view.dart';
 import '../ui/views/login/login_view.dart';
 
@@ -33,7 +32,6 @@ import '../ui/views/login/login_view.dart';
     MaterialRoute(page: HomeView),
     MaterialRoute(page: StartupView, initial: true),
     MaterialRoute(page: LoginView),
-    MaterialRoute(page: ForgotPasswordRoute),
     MaterialRoute(page: JourneyView),
     MaterialRoute(page: CustomerDetailView),
     MaterialRoute(page: CreateSalesOrderView),

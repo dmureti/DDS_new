@@ -60,15 +60,6 @@ ThemeData _buildAppTheme() {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       textTheme: ButtonTextTheme.normal,
     ),
-//    tabBarTheme: base.tabBarTheme.copyWith(
-//        indicatorSize: TabBarIndicatorSize.tab,
-//        labelColor: Colors.pink,
-//        labelStyle: TextStyle(fontWeight: FontWeight.w700),
-//        indicator: BoxDecoration(
-//            border: Border.all(width: 2),
-//            borderRadius: BorderRadius.circular(12)),
-//        unselectedLabelColor: kDarkBlue,
-//        unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500)),
     primaryIconTheme: base.iconTheme.copyWith(color: Colors.white),
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: EdgeInsets.all(10.0),

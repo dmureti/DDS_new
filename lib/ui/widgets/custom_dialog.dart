@@ -54,23 +54,18 @@ class CustomDialog extends StatelessWidget {
                 ),
                 SizedBox(height: 16.0),
                 ListView.builder(
-                    itemCount: description.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            description[index] + '.',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                            ),
-                          ),
-                        )),
-
-//                Text(
-//                  description,
-//                  textAlign: TextAlign.center,
-//
-//                ),
+                  itemCount: description.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      description[index] + '.',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                ),
                 SizedBox(height: 24.0),
                 Align(
                   alignment: Alignment.bottomRight,

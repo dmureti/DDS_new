@@ -1,7 +1,7 @@
 import 'package:distributor/services/access_controller_service.dart';
-import 'package:distributor/services/adhoc_cart_service.dart';
+
 import 'package:distributor/services/api_service.dart';
-import 'package:distributor/services/cache_service.dart';
+
 import 'package:distributor/services/customer_service.dart';
 import 'package:distributor/services/init_service.dart';
 import 'package:distributor/services/journey_service.dart';
@@ -37,8 +37,7 @@ abstract class ThirdPartyServicesModule {
   LogisticsService get logisticsService;
   @lazySingleton
   JourneyService get journeyService;
-  @lazySingleton
-  CacheService get cacheService;
+
   @lazySingleton
   OrderService get orderService;
   @lazySingleton
