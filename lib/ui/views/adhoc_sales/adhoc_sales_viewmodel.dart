@@ -31,8 +31,9 @@ class AdhocSalesViewModel extends ReactiveViewModel {
 
   bool get userHasJourneys {
     if (_logisticsService.userJourneyList.length > 0 &&
-        _logisticsService.currentJourney != null &&
-        journeyStatus?.toLowerCase() == 'in transit') {
+            _logisticsService.currentJourney != null &&
+            journeyStatus?.toLowerCase() == 'in transit' ||
+        _userService.user.hasSalesChannel) {
       return true;
     } else {
       return false;

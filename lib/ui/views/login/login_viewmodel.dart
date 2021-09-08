@@ -89,6 +89,8 @@ class LoginViewModel extends BaseViewModel {
     if (result is User) {
       // Update the user
       _userService.updateUser(result);
+      print(result.hasSalesChannel);
+
       // Update the activity Service
       _activityService.addActivity(Activity(
           activityTitle: 'Login in', activityDesc: 'Logged In successfully'));

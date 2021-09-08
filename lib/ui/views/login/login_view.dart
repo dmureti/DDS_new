@@ -120,7 +120,7 @@ class _LoginViewState extends State<LoginView> {
                                 autofocus: true,
                                 controller: _userIdController,
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 20),
+                                    fontWeight: FontWeight.w600, fontSize: 16),
                                 onChanged: (String val) {
                                   model.setUserId(val);
                                 },
@@ -148,7 +148,7 @@ class _LoginViewState extends State<LoginView> {
                                   return null;
                                 },
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 20),
+                                    fontWeight: FontWeight.w600, fontSize: 16),
                                 onChanged: (String val) =>
                                     model.updatePassword(val),
                                 keyboardType: TextInputType.text,
@@ -197,8 +197,8 @@ class _LoginViewState extends State<LoginView> {
                                       child: Text(
                                         'Reset Password',
                                         style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
                                             decoration:
                                                 TextDecoration.underline),
                                       )),

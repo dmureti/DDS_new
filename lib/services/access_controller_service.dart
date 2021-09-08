@@ -18,7 +18,7 @@ class AccessControlService {
 
     bool res1 = checkIfAuthExists(authList, authManageState);
     bool res2 = checkIfAuthExists(authList, authViewJourneyInfo);
-    if (res1 || res2) {
+    if (res1 || res2 || user.hasSalesChannel) {
       result = true;
     }
     return result;
@@ -45,7 +45,7 @@ class AccessControlService {
 
     bool res1 = checkIfAuthExists(authList, authManageState);
     bool res2 = checkIfAuthExists(authList, authViewJourneyInfo);
-    if (res1 || res2) {
+    if (res1 || res2 || user.hasSalesChannel) {
       result = true;
     }
     return result;
@@ -97,7 +97,8 @@ class AccessControlService {
   /// Default : Disable stock balance tab
   bool get enableStockTab {
     Authority authViewStock = Authority(auth: 'VSB.VU');
-    bool result = checkIfAuthExists(authList, authViewStock);
+    bool result =
+        checkIfAuthExists(authList, authViewStock) || user.hasSalesChannel;
     return result;
   }
 
@@ -107,7 +108,8 @@ class AccessControlService {
   /// Default : Hide the column
   bool get displayValueOfStockColumn {
     bool result = checkIfAuthExists(
-        authList, Authority(auth: 'virtual_stock_balance.view_cog'));
+            authList, Authority(auth: 'virtual_stock_balance.view_cog')) ||
+        user.hasSalesChannel;
     return result;
   }
 
@@ -120,7 +122,8 @@ class AccessControlService {
         checkIfAuthExists(authList, Authority(auth: 'CUF.VU')) ||
         checkIfAuthExists(authList, Authority(auth: 'CUA.VU')) ||
         checkIfAuthExists(authList, Authority(auth: 'CUI.VU')) ||
-        checkIfAuthExists(authList, Authority(auth: 'SO.VU'))) {
+        checkIfAuthExists(authList, Authority(auth: 'SO.VU')) ||
+        user.hasSalesChannel) {
       return true;
     }
     return false;
@@ -135,7 +138,8 @@ class AccessControlService {
   }
 
   bool get enableMakeAdhocSale {
-    return checkIfAuthExists(authList, Authority(auth: 'SIAS.INP'));
+    return checkIfAuthExists(authList, Authority(auth: 'SIAS.INP')) ||
+        user.hasSalesChannel;
   }
 
   /// Enable place order button
@@ -168,7 +172,8 @@ class AccessControlService {
   }
 
   bool get enableAdhocView {
-    return checkIfAuthExists(authList, Authority(auth: 'SIAS.INP'));
+    return checkIfAuthExists(authList, Authority(auth: 'SIAS.INP')) ||
+        user.hasSalesChannel;
   }
 
   bool get enableAddPaymentMenu {

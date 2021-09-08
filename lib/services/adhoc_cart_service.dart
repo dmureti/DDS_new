@@ -254,7 +254,8 @@ class AdhocCartService with ReactiveServiceMixin {
       "deliveryLocation": "${userLocation.latitude},${userLocation.longitude}",
       "remarks": remarks,
       "sellingPriceList": sellingPriceList,
-      "warehouseId": _journeyService.currentJourney.route
+      "warehouseId":
+          _journeyService.currentJourney.route ?? _userService.user.salesChannel
     };
     print(json.encode(data));
     // print(_journeyService.currentJourney.route);

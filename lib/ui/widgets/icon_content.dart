@@ -22,7 +22,7 @@ class IconContent extends StatelessWidget {
           child: Text(
             title,
             style: TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700),
+                color: Colors.white, fontSize: 15, fontWeight: FontWeight.w500),
             textAlign: TextAlign.center,
           ),
         )

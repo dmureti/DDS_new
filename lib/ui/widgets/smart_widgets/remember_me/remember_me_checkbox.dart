@@ -16,7 +16,7 @@ class RememberMeCheckbox extends HookViewModelWidget<LoginViewModel> {
         ),
         Text(
           'Remember me',
-          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 19),
+          style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
         ),
       ],
     );
