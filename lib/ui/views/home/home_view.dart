@@ -27,6 +27,12 @@ class HomeView extends StatelessWidget {
           elevation: 0,
           title: _buildTitle(model.currentIndex),
           actions: <Widget>[
+            model.showPendingStockTransactionsIconButton
+                ? IconButton(
+                    icon: Icon(Icons.eleven_mp),
+                    onPressed: () {},
+                  )
+                : Container(),
             IconButton(
               onPressed: () => model.refresh(),
               icon: Icon(FontAwesome.refresh),

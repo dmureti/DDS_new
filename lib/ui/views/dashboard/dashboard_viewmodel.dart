@@ -2,12 +2,15 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/user_service.dart';
+
+import 'package:distributor/traits/contextual_viewmodel.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
-class DashboardViewModel extends FutureViewModel<List<DeliveryJourney>> {
+class DashboardViewModel extends FutureViewModel<List<DeliveryJourney>>
+    with ContextualViewmodel {
   LogisticsService _logisticsService = locator<LogisticsService>();
   UserService _userService = locator<UserService>();
   DialogService _dialogService = locator<DialogService>();

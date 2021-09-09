@@ -8,6 +8,9 @@ import 'package:distributor/src/ui/views/partial_delivery/partial_delivery_view.
 import 'package:distributor/src/ui/views/delivery_note/delivery_note_view.dart';
 import 'package:distributor/src/ui/views/reset_password/reset_password_view.dart';
 import 'package:distributor/src/ui/views/change_password/change_password.dart';
+import 'package:distributor/src/ui/views/stock_transaction/stock_transaction_list_view.dart';
+import 'package:distributor/src/ui/views/stock_transfer/stock_transfer_view.dart';
+import 'package:distributor/src/ui/views/voucher_detail/voucher_detail_view.dart';
 import 'package:distributor/ui/views/customer_location.dart';
 import 'package:distributor/ui/views/customers/customer_detail/customer_detail_view.dart';
 
@@ -47,10 +50,13 @@ import '../ui/views/login/login_view.dart';
     MaterialRoute(page: AddIssueView),
     MaterialRoute(page: AdhocCartView),
     MaterialRoute(page: AddAdhocSaleView),
+    MaterialRoute(page: StockTransactionListView),
     MaterialRoute(page: AdhocPaymentView),
     MaterialRoute(page: DeliveryNoteView),
     MaterialRoute(page: ResetPasswordView),
     MaterialRoute(page: ChangePasswordView),
+    MaterialRoute(page: StockTransferView),
+    MaterialRoute(page: VoucherDetailView)
   ],
 )
 class $Router {}

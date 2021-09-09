@@ -15,6 +15,22 @@ class StockView extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   InfoBarController(),
+                  model.renderPendingStockTransactionsButton
+                      ? Container(
+                          height: 50,
+                          child: ButtonBar(
+                            children: [
+                              IconButton(
+                                  onPressed:
+                                      model.navigateToPendingTransactionsView,
+                                  icon: Icon(Icons.update)),
+                              IconButton(
+                                  onPressed: model.navigateToReturnStockView,
+                                  icon: Icon(Icons.read_more_outlined))
+                            ],
+                          ),
+                        )
+                      : Container(),
                   StockControllerWidget()
                 ],
               ),

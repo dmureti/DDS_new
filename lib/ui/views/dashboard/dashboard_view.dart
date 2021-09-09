@@ -1,4 +1,5 @@
 import 'package:distributor/ui/views/dashboard/dashboard_viewmodel.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/shop_name.dart';
 
 import 'package:distributor/ui/widgets/smart_widgets/dashboard_controller/dashboard_view_controller_view.dart';
 
@@ -93,6 +94,13 @@ class DashboardView extends StatelessWidget {
                                     color: Colors.transparent,
                                     height: 10,
                                   ),
+
+                                  //Display the shop details
+
+                                  model.showShop
+                                      ? ShopNameWidget(
+                                          storeName: model.salesChannel)
+                                      : Container(),
 
                                   /// The Dashboard view will establish what widgets should be displayed
                                   /// If the user does not have any deliveries

@@ -9,6 +9,7 @@ import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/permission_service.dart';
 import 'package:distributor/services/user_service.dart';
+import 'package:distributor/traits/contextual_viewmodel.dart';
 import 'package:distributor/ui/views/adhoc_sales/adhoc_sales_view.dart';
 
 import 'package:distributor/ui/views/customers/customer_view.dart';
@@ -21,7 +22,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
-class HomeViewModel extends ReactiveViewModel {
+class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   PermissionService _permissionService = locator<PermissionService>();
   LogisticsService _logisticsService = locator<LogisticsService>();
   ActivityService _activityService = locator<ActivityService>();
@@ -35,6 +36,9 @@ class HomeViewModel extends ReactiveViewModel {
   HomeViewModel(int index) : _currentIndex = index;
 
   String get noOfUpdates => _activityService.noOfUpdates.toString();
+
+  bool get showPendingStockTransactionsIconButton =>
+      renderPendingStockTransactionsButton && currentIndex == 3;
 
   get enableJourneyTab => _accessControlService.enableJourneyTab;
   get enableHomeTab => _accessControlService.enableHomeTab;

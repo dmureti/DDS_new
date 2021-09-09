@@ -1,6 +1,6 @@
 name: distributor
 description: Digital Distribution System
-version: 7.8.22+1
+version: 7.8.23+1
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -33,9 +33,8 @@ dependencies:
   intl: ^0.17.0
   font_awesome_flutter: ^8.5.0
   enum_to_string: ^1.0.8
-  get:
-#  support for translations
-#  i18n_extension:
+#  get:
+
   google_maps_flutter: ^0.5.26+4
   flutter_polyline_points: ^0.2.2
   geolocator: ^5.3.1
@@ -55,14 +54,13 @@ dev_dependencies:
 #  test: ^1.15.7
   build_runner: ^1.10.1
   auto_route_generator: ^0.6.8
-  injectable_generator: ^1.0.4
+  injectable_generator:
   flutter_test:
     sdk: flutter
 
 flutter:
   uses-material-design: true
   assets:
-
     - assets/images/minibakeries-logo.jpg
     - assets/images/aromatic-board-bread-breakfast.jpg
     - assets/images/no_journey.png
