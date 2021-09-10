@@ -1,12 +1,11 @@
 // Will maintain info about a user
 import 'package:auto_route/auto_route.dart';
-import 'package:distributor/core/mixin/validator.dart';
 import 'package:distributor/services/api_service.dart';
-import 'package:injectable/injectable.dart';
+import 'package:flutter/material.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 import 'package:distributor/app/locator.dart';
 
-class UserService with Validator {
+class UserService {
   ApiService _apiService = locator<ApiService>();
 
   User _user;
@@ -58,5 +57,13 @@ class UserService with Validator {
     Map<String, dynamic> data = {"current": current, "new": newPass};
     var result = await _apiService.api.changeAppUserPwd(user.token, data);
     return result;
+  }
+
+  String checkIdentificationType(var value) {
+    if (value.toString().contains('@')) {
+      return "email";
+    } else {
+      return "mobile";
+    }
   }
 }

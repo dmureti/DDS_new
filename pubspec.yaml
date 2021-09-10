@@ -1,6 +1,6 @@
 name: distributor
 description: Digital Distribution System
-version: 7.8.23+1
+version: 7.8.22+1
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -17,11 +17,11 @@ dependencies:
   #preferences
   shared_preferences: ^0.5.7+3
 
-  stacked: ^1.9.5
-  stacked_services: ^0.7.3
-  auto_route: ^0.6.7
-  injectable: ^1.0.4
-  get_it: ^5.0.6
+  stacked:
+  stacked_services:
+  auto_route:
+  injectable:
+  get_it:
   stacked_hooks: ^0.1.3+2
   flutter_hooks: ^0.15.0
   observable_ish: ^2.1.5
@@ -33,17 +33,18 @@ dependencies:
   intl: ^0.17.0
   font_awesome_flutter: ^8.5.0
   enum_to_string: ^1.0.8
-#  get:
-
+  get:
+  #  support for translations
+  #  i18n_extension:
   google_maps_flutter: ^0.5.26+4
   flutter_polyline_points: ^0.2.2
   geolocator: ^5.3.1
-#  flutter_localizations:
-#    sdk: flutter
+  #  flutter_localizations:
+  #    sdk: flutter
   tripletriocore:
-     path: '../tripletrio_core'
-#    git: 'https://github.com/AlbertKamau/tripletrio_core'
-    
+    path: '../tripletrio_core'
+    #    git: 'https://github.com/AlbertKamau/tripletrio_core'
+
 
   flutter:
     sdk: flutter
@@ -51,10 +52,10 @@ dependencies:
 #  json_serializable: ^4.0.0-nullsafety.0
 
 dev_dependencies:
-#  test: ^1.15.7
-  build_runner: ^1.10.1
+  #  test: ^1.15.7
+  build_runner:
   auto_route_generator: ^0.6.8
-  injectable_generator:
+  injectable_generator: ^1.0.7
   flutter_test:
     sdk: flutter
 

@@ -3,6 +3,7 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/user_service.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';

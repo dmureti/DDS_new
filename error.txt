@@ -1,0 +1,428 @@
+[  +64 ms] executing: [C:\flutter/] git -c log.showSignature=false log -n 1 --pretty=format:%H
+[ +466 ms] Exit code 0 from: git -c log.showSignature=false log -n 1 --pretty=format:%H
+[        ] 4cc385b4b84ac2f816d939a49ea1f328c4e0b48e
+[        ] executing: [C:\flutter/] git tag --points-at 4cc385b4b84ac2f816d939a49ea1f328c4e0b48e
+[  +62 ms] Exit code 0 from: git tag --points-at 4cc385b4b84ac2f816d939a49ea1f328c4e0b48e
+[        ] 2.5.0
+[   +7 ms] executing: [C:\flutter/] git rev-parse --abbrev-ref --symbolic @{u}
+[  +44 ms] Exit code 0 from: git rev-parse --abbrev-ref --symbolic @{u}
+[        ] origin/stable
+[        ] executing: [C:\flutter/] git ls-remote --get-url origin
+[  +41 ms] Exit code 0 from: git ls-remote --get-url origin
+[        ] https://github.com/flutter/flutter.git
+[ +112 ms] executing: [C:\flutter/] git rev-parse --abbrev-ref HEAD
+[  +45 ms] Exit code 0 from: git rev-parse --abbrev-ref HEAD
+[        ] stable
+[  +53 ms] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[   +3 ms] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'WindowsUwpEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[  +59 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'WindowsUwpEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[  +29 ms] Using C:\flutter\.pub-cache for the pub cache.
+[        ] executing: C:\flutter\bin\cache\dart-sdk\bin\pub run build_runner build --verbose
+[INFO] Generating build script...
+[INFO] Generating build script completed, took 362ms
+
+[WARNING] Deleted previous snapshot due to missing asset graph.
+[INFO] Creating build script snapshot......
+[INFO] Creating build script snapshot... completed, took 11.4s
+
+[INFO] BuildDefinition:Initializing inputs
+[INFO] BuildDefinition:Building new asset graph...
+[INFO] BuildDefinition:Building new asset graph completed, took 917ms
+
+[INFO] BuildDefinition:Checking for unexpected pre-existing outputs....
+[INFO] BuildDefinition:Checking for unexpected pre-existing outputs. completed, took 1ms
+
+[INFO] Build:Running build...
+[WARNING] auto_route_generator:autoRouteGenerator on lib/core/mixin/validator.dart:
+Your current `analyzer` version may not fully support your current SDK version.
+
+Please try upgrading to the latest `analyzer` by running `flutter packages upgrade`.
+
+Analyzer language version: 2.12.0
+SDK language version: 2.14.0
+
+If you are getting this message and have the latest analyzer please file
+an issue at https://github.com/dart-lang/sdk/issues/new with the title
+"No published analyzer available for language version 2.14.0".
+Please search the issue tracker first and thumbs up and/or subscribe to
+existing issues if present to avoid duplicates.
+
+[INFO] build_resolvers:Generating SDK summary...
+[SEVERE] auto_route_generator:autoRouteGenerator on lib/core/mixin/validator.dart:
+
+Bad state: Unexpected diagnostics:
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - Operator declarations must be preceded by the keyword 'operator'.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:16 - Methods must have an explicit list of parameters.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - A function body must be provided.
+package:analyzer/dart/sdk/build_sdk_summary.dart 212:7   _Builder._parse
+package:analyzer/dart/sdk/build_sdk_summary.dart 147:36  _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+dart:core                                                List.forEach
+package:analyzer/dart/sdk/build_sdk_summary.dart 101:20  _Builder.build
+package:analyzer/dart/sdk/build_sdk_summary.dart 75:5    buildSdkSummary
+package:build_resolvers/src/resolver.dart 389:36         _defaultSdkSummaryGenerator
+package:build_resolvers/src/resolver.dart 327:11         AnalyzerResolvers._ensureInitialized.<fn>
+package:build_resolvers/src/resolver.dart 334:5          AnalyzerResolvers.get
+package:build                                            _DelayedResolver.isLibrary
+package:source_gen/src/builder.dart 75:10                _Builder.build
+
+[SEVERE] auto_route_generator:autoRouteGenerator on lib/core/mixin/validator.dart:
+
+Bad state: Unexpected diagnostics:
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - Operator declarations must be preceded by the keyword 'operator'.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:16 - Methods must have an explicit list of parameters.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - A function body must be provided.
+package:analyzer/dart/sdk/build_sdk_summary.dart 212:7   _Builder._parse
+package:analyzer/dart/sdk/build_sdk_summary.dart 147:36  _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+dart:core                                                List.forEach
+package:analyzer/dart/sdk/build_sdk_summary.dart 101:20  _Builder.build
+package:analyzer/dart/sdk/build_sdk_summary.dart 75:5    buildSdkSummary
+package:build_resolvers/src/resolver.dart 389:36         _defaultSdkSummaryGenerator
+package:build_resolvers/src/resolver.dart 327:11         AnalyzerResolvers._ensureInitialized.<fn>
+package:build_resolvers/src/resolver.dart 334:5          AnalyzerResolvers.get
+package:build                                            _DelayedResolver.isLibrary
+package:source_gen/src/builder.dart 75:10                _Builder.build
+
+[SEVERE] auto_route_generator:autoRouteGenerator on lib/core/mixin/validator.dart:
+
+Bad state: Unexpected diagnostics:
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - Operator declarations must be preceded by the keyword 'operator'.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:16 - Methods must have an explicit list of parameters.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - A function body must be provided.
+package:analyzer/dart/sdk/build_sdk_summary.dart 212:7   _Builder._parse
+package:analyzer/dart/sdk/build_sdk_summary.dart 147:36  _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+dart:core                                                List.forEach
+package:analyzer/dart/sdk/build_sdk_summary.dart 101:20  _Builder.build
+package:analyzer/dart/sdk/build_sdk_summary.dart 75:5    buildSdkSummary
+package:build_resolvers/src/resolver.dart 389:36         _defaultSdkSummaryGenerator
+package:build_resolvers/src/resolver.dart 327:11         AnalyzerResolvers._ensureInitialized.<fn>
+package:build_resolvers/src/resolver.dart 334:5          AnalyzerResolvers.get
+package:build                                            _DelayedResolver.isLibrary
+package:source_gen/src/builder.dart 75:10                _Builder.build
+
+[SEVERE] auto_route_generator:autoRouteGenerator on lib/core/mixin/validator.dart:
+
+Bad state: Unexpected diagnostics:
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - Operator declarations must be preceded by the keyword 'operator'.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:16 - Methods must have an explicit list of parameters.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - A function body must be provided.
+package:analyzer/dart/sdk/build_sdk_summary.dart 212:7   _Builder._parse
+package:analyzer/dart/sdk/build_sdk_summary.dart 147:36  _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+dart:core                                                List.forEach
+package:analyzer/dart/sdk/build_sdk_summary.dart 101:20  _Builder.build
+package:analyzer/dart/sdk/build_sdk_summary.dart 75:5    buildSdkSummary
+package:build_resolvers/src/resolver.dart 389:36         _defaultSdkSummaryGenerator
+package:build_resolvers/src/resolver.dart 327:11         AnalyzerResolvers._ensureInitialized.<fn>
+package:build_resolvers/src/resolver.dart 334:5          AnalyzerResolvers.get
+package:build                                            _DelayedResolver.isLibrary
+package:source_gen/src/builder.dart 75:10                _Builder.build
+
+[SEVERE] auto_route_generator:autoRouteGenerator on lib/core/mixin/validator.dart:
+
+Bad state: Unexpected diagnostics:
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - Operator declarations must be preceded by the keyword 'operator'.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:16 - Methods must have an explicit list of parameters.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - A function body must be provided.
+package:analyzer/dart/sdk/build_sdk_summary.dart 212:7   _Builder._parse
+package:analyzer/dart/sdk/build_sdk_summary.dart 147:36  _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+dart:core                                                List.forEach
+package:analyzer/dart/sdk/build_sdk_summary.dart 101:20  _Builder.build
+package:analyzer/dart/sdk/build_sdk_summary.dart 75:5    buildSdkSummary
+package:build_resolvers/src/resolver.dart 389:36         _defaultSdkSummaryGenerator
+package:build_resolvers/src/resolver.dart 327:11         AnalyzerResolvers._ensureInitialized.<fn>
+package:build_resolvers/src/resolver.dart 334:5          AnalyzerResolvers.get
+package:build                                            _DelayedResolver.isLibrary
+package:source_gen/src/builder.dart 75:10                _Builder.build
+
+[SEVERE] auto_route_generator:autoRouteGenerator on lib/core/mixin/validator.dart:
+
+Bad state: Unexpected diagnostics:
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - Operator declarations must be preceded by the keyword 'operator'.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:16 - Methods must have an explicit list of parameters.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - A function body must be provided.
+package:analyzer/dart/sdk/build_sdk_summary.dart 212:7   _Builder._parse
+package:analyzer/dart/sdk/build_sdk_summary.dart 147:36  _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+dart:core                                                List.forEach
+package:analyzer/dart/sdk/build_sdk_summary.dart 101:20  _Builder.build
+package:analyzer/dart/sdk/build_sdk_summary.dart 75:5    buildSdkSummary
+package:build_resolvers/src/resolver.dart 389:36         _defaultSdkSummaryGenerator
+package:build_resolvers/src/resolver.dart 327:11         AnalyzerResolvers._ensureInitialized.<fn>
+package:build_resolvers/src/resolver.dart 334:5          AnalyzerResolvers.get
+package:build                                            _DelayedResolver.isLibrary
+package:source_gen/src/builder.dart 75:10                _Builder.build
+
+[SEVERE] auto_route_generator:autoRouteGenerator on lib/core/mixin/validator.dart:
+
+Bad state: Unexpected diagnostics:
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - Operator declarations must be preceded by the keyword 'operator'.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:16 - Methods must have an explicit list of parameters.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - A function body must be provided.
+package:analyzer/dart/sdk/build_sdk_summary.dart 212:7   _Builder._parse
+package:analyzer/dart/sdk/build_sdk_summary.dart 147:36  _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+dart:core                                                List.forEach
+package:analyzer/dart/sdk/build_sdk_summary.dart 101:20  _Builder.build
+package:analyzer/dart/sdk/build_sdk_summary.dart 75:5    buildSdkSummary
+package:build_resolvers/src/resolver.dart 389:36         _defaultSdkSummaryGenerator
+package:build_resolvers/src/resolver.dart 327:11         AnalyzerResolvers._ensureInitialized.<fn>
+package:build_resolvers/src/resolver.dart 334:5          AnalyzerResolvers.get
+package:build                                            _DelayedResolver.isLibrary
+package:source_gen/src/builder.dart 75:10                _Builder.build
+
+[SEVERE] auto_route_generator:autoRouteGenerator on lib/core/mixin/validator.dart:
+
+Bad state: Unexpected diagnostics:
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - Operator declarations must be preceded by the keyword 'operator'.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:16 - Methods must have an explicit list of parameters.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - A function body must be provided.
+package:analyzer/dart/sdk/build_sdk_summary.dart 212:7   _Builder._parse
+package:analyzer/dart/sdk/build_sdk_summary.dart 147:36  _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+dart:core                                                List.forEach
+package:analyzer/dart/sdk/build_sdk_summary.dart 101:20  _Builder.build
+package:analyzer/dart/sdk/build_sdk_summary.dart 75:5    buildSdkSummary
+package:build_resolvers/src/resolver.dart 389:36         _defaultSdkSummaryGenerator
+package:build_resolvers/src/resolver.dart 327:11         AnalyzerResolvers._ensureInitialized.<fn>
+package:build_resolvers/src/resolver.dart 334:5          AnalyzerResolvers.get
+package:build                                            _DelayedResolver.isLibrary
+package:source_gen/src/builder.dart 75:10                _Builder.build
+
+[SEVERE] auto_route_generator:autoRouteGenerator on lib/core/mixin/validator.dart:
+
+Bad state: Unexpected diagnostics:
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - Operator declarations must be preceded by the keyword 'operator'.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:16 - Methods must have an explicit list of parameters.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - A function body must be provided.
+package:analyzer/dart/sdk/build_sdk_summary.dart 212:7   _Builder._parse
+package:analyzer/dart/sdk/build_sdk_summary.dart 147:36  _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+dart:core                                                List.forEach
+package:analyzer/dart/sdk/build_sdk_summary.dart 101:20  _Builder.build
+package:analyzer/dart/sdk/build_sdk_summary.dart 75:5    buildSdkSummary
+package:build_resolvers/src/resolver.dart 389:36         _defaultSdkSummaryGenerator
+package:build_resolvers/src/resolver.dart 327:11         AnalyzerResolvers._ensureInitialized.<fn>
+package:build_resolvers/src/resolver.dart 334:5          AnalyzerResolvers.get
+package:build                                            _DelayedResolver.isLibrary
+package:source_gen/src/builder.dart 75:10                _Builder.build
+
+[SEVERE] auto_route_generator:autoRouteGenerator on lib/core/mixin/validator.dart:
+
+Bad state: Unexpected diagnostics:
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - Operator declarations must be preceded by the keyword 'operator'.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:16 - Methods must have an explicit list of parameters.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - A function body must be provided.
+package:analyzer/dart/sdk/build_sdk_summary.dart 212:7   _Builder._parse
+package:analyzer/dart/sdk/build_sdk_summary.dart 147:36  _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+dart:core                                                List.forEach
+package:analyzer/dart/sdk/build_sdk_summary.dart 101:20  _Builder.build
+package:analyzer/dart/sdk/build_sdk_summary.dart 75:5    buildSdkSummary
+package:build_resolvers/src/resolver.dart 389:36         _defaultSdkSummaryGenerator
+package:build_resolvers/src/resolver.dart 327:11         AnalyzerResolvers._ensureInitialized.<fn>
+package:build_resolvers/src/resolver.dart 334:5          AnalyzerResolvers.get
+package:build                                            _DelayedResolver.isLibrary
+package:source_gen/src/builder.dart 75:10                _Builder.build
+
+[SEVERE] auto_route_generator:autoRouteGenerator on lib/core/mixin/validator.dart:
+
+Bad state: Unexpected diagnostics:
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - Operator declarations must be preceded by the keyword 'operator'.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:16 - Methods must have an explicit list of parameters.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - A function body must be provided.
+package:analyzer/dart/sdk/build_sdk_summary.dart 212:7   _Builder._parse
+package:analyzer/dart/sdk/build_sdk_summary.dart 147:36  _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+dart:core                                                List.forEach
+package:analyzer/dart/sdk/build_sdk_summary.dart 101:20  _Builder.build
+package:analyzer/dart/sdk/build_sdk_summary.dart 75:5    buildSdkSummary
+package:build_resolvers/src/resolver.dart 389:36         _defaultSdkSummaryGenerator
+package:build_resolvers/src/resolver.dart 327:11         AnalyzerResolvers._ensureInitialized.<fn>
+package:build_resolvers/src/resolver.dart 334:5          AnalyzerResolvers.get
+package:build                                            _DelayedResolver.isLibrary
+package:source_gen/src/builder.dart 75:10                _Builder.build
+
+[SEVERE] auto_route_generator:autoRouteGenerator on lib/core/mixin/validator.dart:
+
+Bad state: Unexpected diagnostics:
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - Operator declarations must be preceded by the keyword 'operator'.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:16 - Methods must have an explicit list of parameters.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - A function body must be provided.
+package:analyzer/dart/sdk/build_sdk_summary.dart 212:7   _Builder._parse
+package:analyzer/dart/sdk/build_sdk_summary.dart 147:36  _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+dart:core                                                List.forEach
+package:analyzer/dart/sdk/build_sdk_summary.dart 101:20  _Builder.build
+package:analyzer/dart/sdk/build_sdk_summary.dart 75:5    buildSdkSummary
+package:build_resolvers/src/resolver.dart 389:36         _defaultSdkSummaryGenerator
+package:build_resolvers/src/resolver.dart 327:11         AnalyzerResolvers._ensureInitialized.<fn>
+package:build_resolvers/src/resolver.dart 334:5          AnalyzerResolvers.get
+package:build                                            _DelayedResolver.isLibrary
+package:source_gen/src/builder.dart 75:10                _Builder.build
+
+[SEVERE] auto_route_generator:autoRouteGenerator on lib/core/mixin/validator.dart:
+
+Bad state: Unexpected diagnostics:
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - Operator declarations must be preceded by the keyword 'operator'.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:16 - Methods must have an explicit list of parameters.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - A function body must be provided.
+package:analyzer/dart/sdk/build_sdk_summary.dart 212:7   _Builder._parse
+package:analyzer/dart/sdk/build_sdk_summary.dart 147:36  _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+dart:core                                                List.forEach
+package:analyzer/dart/sdk/build_sdk_summary.dart 101:20  _Builder.build
+package:analyzer/dart/sdk/build_sdk_summary.dart 75:5    buildSdkSummary
+package:build_resolvers/src/resolver.dart 389:36         _defaultSdkSummaryGenerator
+package:build_resolvers/src/resolver.dart 327:11         AnalyzerResolvers._ensureInitialized.<fn>
+package:build_resolvers/src/resolver.dart 334:5          AnalyzerResolvers.get
+package:build                                            _DelayedResolver.isLibrary
+package:source_gen/src/builder.dart 75:10                _Builder.build
+
+[SEVERE] auto_route_generator:autoRouteGenerator on lib/core/mixin/validator.dart:
+
+Bad state: Unexpected diagnostics:
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - Operator declarations must be preceded by the keyword 'operator'.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:16 - Methods must have an explicit list of parameters.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - A function body must be provided.
+package:analyzer/dart/sdk/build_sdk_summary.dart 212:7   _Builder._parse
+package:analyzer/dart/sdk/build_sdk_summary.dart 147:36  _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+dart:core                                                List.forEach
+package:analyzer/dart/sdk/build_sdk_summary.dart 101:20  _Builder.build
+package:analyzer/dart/sdk/build_sdk_summary.dart 75:5    buildSdkSummary
+package:build_resolvers/src/resolver.dart 389:36         _defaultSdkSummaryGenerator
+package:build_resolvers/src/resolver.dart 327:11         AnalyzerResolvers._ensureInitialized.<fn>
+package:build_resolvers/src/resolver.dart 334:5          AnalyzerResolvers.get
+package:build                                            _DelayedResolver.isLibrary
+package:source_gen/src/builder.dart 75:10                _Builder.build
+
+[SEVERE] auto_route_generator:autoRouteGenerator on lib/core/mixin/validator.dart:
+
+Bad state: Unexpected diagnostics:
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - Operator declarations must be preceded by the keyword 'operator'.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:16 - Methods must have an explicit list of parameters.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - A function body must be provided.
+package:analyzer/dart/sdk/build_sdk_summary.dart 212:7   _Builder._parse
+package:analyzer/dart/sdk/build_sdk_summary.dart 147:36  _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+dart:core                                                List.forEach
+package:analyzer/dart/sdk/build_sdk_summary.dart 101:20  _Builder.build
+package:analyzer/dart/sdk/build_sdk_summary.dart 75:5    buildSdkSummary
+package:build_resolvers/src/resolver.dart 389:36         _defaultSdkSummaryGenerator
+package:build_resolvers/src/resolver.dart 327:11         AnalyzerResolvers._ensureInitialized.<fn>
+package:build_resolvers/src/resolver.dart 334:5          AnalyzerResolvers.get
+package:build                                            _DelayedResolver.isLibrary
+package:source_gen/src/builder.dart 75:10                _Builder.build
+
+[SEVERE] auto_route_generator:autoRouteGenerator on lib/core/mixin/validator.dart:
+
+Bad state: Unexpected diagnostics:
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - Operator declarations must be preceded by the keyword 'operator'.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:16 - Methods must have an explicit list of parameters.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - A function body must be provided.
+package:analyzer/dart/sdk/build_sdk_summary.dart 212:7   _Builder._parse
+package:analyzer/dart/sdk/build_sdk_summary.dart 147:36  _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+dart:core                                                List.forEach
+package:analyzer/dart/sdk/build_sdk_summary.dart 101:20  _Builder.build
+package:analyzer/dart/sdk/build_sdk_summary.dart 75:5    buildSdkSummary
+package:build_resolvers/src/resolver.dart 389:36         _defaultSdkSummaryGenerator
+package:build_resolvers/src/resolver.dart 327:11         AnalyzerResolvers._ensureInitialized.<fn>
+package:build_resolvers/src/resolver.dart 334:5          AnalyzerResolvers.get
+package:build                                            _DelayedResolver.isLibrary
+package:source_gen/src/builder.dart 75:10                _Builder.build
+
+[SEVERE] auto_route_generator:autoRouteGenerator on lib/core/mixin/validator.dart:
+
+Bad state: Unexpected diagnostics:
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - Operator declarations must be preceded by the keyword 'operator'.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:16 - Methods must have an explicit list of parameters.
+C:\flutter\bin\cache\dart-sdk\lib\core\int.dart:117:18 - A function body must be provided.
+package:analyzer/dart/sdk/build_sdk_summary.dart 212:7   _Builder._parse
+package:analyzer/dart/sdk/build_sdk_summary.dart 147:36  _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+package:analyzer/dart/sdk/build_sdk_summary.dart 143:9   _Builder._addLibrary
+dart:core                                                List.forEach
+package:analyzer/dart/sdk/build_sdk_summary.dart 101:20  _Builder.build
+package:analyzer/dart/sdk/build_sdk_summary.dart 75:5    buildSdkSummary
+package:build_resolvers/src/resolver.dart 389:36         _defaultSdkSummaryGenerator
+package:build_resolvers/src/resolver.dart 327:11         AnalyzerResolvers._ensureInitialized.<fn>
+package:build_resolvers/src/resolver.dart 334:5          AnalyzerResolvers.get
+package:build                                            _DelayedResolver.isLibrary
+package:source_gen/src/builder.dart 75:10                _Builder.build
+
+[INFO] Heartbeat:1.6s elapsed, 1/17 actions completed.
+[INFO] Heartbeat:2.7s elapsed, 1/17 actions completed.
+[INFO] Heartbeat:3.8s elapsed, 1/17 actions completed.
+[INFO] Heartbeat:4.9s elapsed, 1/17 actions completed.
+[INFO] Heartbeat:5.9s elapsed, 1/17 actions completed.
+[INFO] Heartbeat:7.0s elapsed, 1/17 actions completed.
+Terminate batch job (Y/N)? Terminate batch job (Y/N)? Terminate batch job (Y/N)? Terminate batch job (Y/N)? Terminate batch job (Y/N)? Terminate batch job (Y/N)? 

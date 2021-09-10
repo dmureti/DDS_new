@@ -1,4 +1,5 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/access_controller_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -8,11 +9,19 @@ mixin ContextualViewmodel {
   final _accessControlService = locator<AccessControlService>();
   final _navigationService = locator<NavigationService>();
 
-  navigateToPendingTransactionsView() async {}
+  navigateToPendingTransactionsView() async {
+    _navigationService.navigateTo(Routes.stockTransactionListView);
+  }
 
-  navigateToVoucherDetail(String stocktransactionId) async {}
+  navigateToVoucherDetail(String stocktransactionId) async {
+    _navigationService.navigateTo(Routes.voucherDetailView,
+        arguments:
+            VoucherDetailViewArguments(transactionId: stocktransactionId));
+  }
 
-  navigateToReturnStockView() async {}
+  navigateToReturnStockView() async {
+    await _navigationService.navigateTo(Routes.stockTransferView);
+  }
 
   User get user => _accessControlService.user;
   List<Authority> get _authList => _accessControlService.authList;
@@ -35,7 +44,7 @@ mixin ContextualViewmodel {
   }
 
   bool get renderPendingStockTransactionsButton {
-    if (user.hasSalesChannel &&
+    if (user.hasSalesChannel ||
         _accessControlService.checkIfAuthExists(
             _authList, Authority(auth: 'ITR.AUTH'))) {
       return true;

@@ -31,7 +31,7 @@ class StockTransactionListView extends StatelessWidget {
                             ],
                           ),
                           subtitle: Text(transaction.entryDate),
-                          onTap: model.navigateToVoucherDetailView(
+                          onTap: () => model.navigateToVoucherDetail(
                               transaction.stockTransactionId),
                           trailing: IconButton(
                             icon: Icon(Icons.more_vert),

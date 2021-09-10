@@ -21,7 +21,7 @@ class StockTransferView extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(model.salesChannel),
+                      Text(model.user.salesChannel ?? ''),
                       Text('Main Warehouse')
                     ],
                   ),

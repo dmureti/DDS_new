@@ -1,7 +1,3 @@
-// {"message":"Success",
-// "payload":[{"stockTransactionId":"TR-21-00007","entryDate":"2021-09-07 09:07:08",
-// "voucherType":"Stock",
-// "voucherSubType":"TransferIn","sourceWarehouse":"Bamburi","destinationWarehouse":"Bombolulu","transactionStatus":"Pending","items":[],"value":248.85}],"recordCount":-1}
 import 'package:tripletriocore/tripletriocore.dart';
 
 class Transaction {
@@ -15,7 +11,28 @@ class Transaction {
   List<Map<String, int>> items;
   double value;
 
-  Transaction();
+  Transaction(
+      {this.stockTransactionId,
+      this.entryDate,
+      this.voucherType,
+      this.voucherSubType,
+      this.transactionStatus,
+      this.items,
+      this.value,
+      this.destinationWarehouse,
+      this.sourceWarehouse});
+
+  factory Transaction.fromMap(Map<String, dynamic> parsedJson) {
+    return Transaction(
+        transactionStatus: parsedJson['transactionStatus'],
+        value: parsedJson['value'],
+        destinationWarehouse: parsedJson['destinationWarehouse'],
+        entryDate: parsedJson['entryDate'],
+        sourceWarehouse: parsedJson['sourceWarehouse'],
+        stockTransactionId: parsedJson['stockTransactionId'],
+        voucherSubType: parsedJson['voucherSubType'],
+        voucherType: parsedJson['voucherType']);
+  }
 }
 
 class StockTransferRequest {

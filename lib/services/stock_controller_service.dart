@@ -1,4 +1,5 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/journey_service.dart';
@@ -24,6 +25,15 @@ class StockControllerService {
 //	When the balances are displayed, the specific column "value of stock"
 //	should only be displayed if the user has "virtual_stock_balance.view_cog" permission;
 //	otherwise, hide this column
+
+  getTransactionsPendingAuth() async {
+    var result = await _api.getPendingAuthStockTransactions(_user.token);
+    if (result is List) {
+      return result.map((e) => Transaction.fromMap(e)).toList();
+    } else {
+      return <Transaction>[];
+    }
+  }
 
   List<Product> _productList;
   List<Product> get productList => _productList;
