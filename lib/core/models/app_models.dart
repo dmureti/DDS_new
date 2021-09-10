@@ -8,7 +8,7 @@ class Transaction {
   String sourceWarehouse;
   String destinationWarehouse;
   String transactionStatus;
-  List<Map<String, int>> items;
+  List<Product> items;
   double value;
 
   Transaction(
@@ -24,6 +24,9 @@ class Transaction {
 
   factory Transaction.fromMap(Map<String, dynamic> parsedJson) {
     return Transaction(
+        items: parsedJson['items']
+            .map<Product>((e) => Product.fromJson(e))
+            .toList(),
         transactionStatus: parsedJson['transactionStatus'],
         value: parsedJson['value'],
         destinationWarehouse: parsedJson['destinationWarehouse'],
@@ -38,15 +41,15 @@ class Transaction {
 class StockTransferRequest {
   // Channel
   String fromWarehouse;
-  List<Map<Item, int>> items;
+  List<Product> items;
   // Branch
   String toWarehouse;
 
-  StockTransferRequest({this.fromWarehouse, this.toWarehouse});
+  StockTransferRequest({this.fromWarehouse, this.toWarehouse, this.items});
 
   Map<String, dynamic> toJson() => {
         "fromWarehouse": fromWarehouse,
-        "items": items,
+        "items": items.map((e) => e.toJson()).toList(),
         "toWarehouse": toWarehouse
       };
 }

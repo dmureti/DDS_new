@@ -10,7 +10,7 @@ import 'package:stacked_services/stacked_services.dart' as _i8;
 import 'package:tripletriocore/tripletriocore.dart' as _i11;
 
 import '../core/models/product_service.dart' as _i16;
-import '../core/models/search_service.dart' as _i17;
+import '../core/models/search_service.dart' as _i18;
 import '../services/access_controller_service.dart' as _i3;
 import '../services/activity_service.dart' as _i4;
 import '../services/adhoc_cart_service.dart' as _i5;
@@ -22,11 +22,12 @@ import '../services/logistics_service.dart' as _i12;
 import '../services/order_service.dart' as _i13;
 import '../services/payments_service.dart' as _i14;
 import '../services/permission_service.dart' as _i15;
-import '../services/stock_controller_service.dart' as _i18;
-import '../services/stop_service.dart' as _i19;
-import '../services/third_party_services_module.dart' as _i21;
+import '../services/return_stock_service.dart' as _i17;
+import '../services/stock_controller_service.dart' as _i19;
+import '../services/stop_service.dart' as _i20;
+import '../services/third_party_services_module.dart' as _i22;
 import '../services/user_service.dart'
-    as _i20; // ignore_for_file: unnecessary_lambdas
+    as _i21; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -57,18 +58,19 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i14.PaymentsService>(() => _i14.PaymentsService());
   gh.lazySingleton<_i15.PermissionService>(() => _i15.PermissionService());
   gh.lazySingleton<_i16.ProductService>(() => _i16.ProductService());
-  gh.lazySingleton<_i17.SearchService>(() => _i17.SearchService());
+  gh.lazySingleton<_i17.ReturnStockService>(() => _i17.ReturnStockService());
+  gh.lazySingleton<_i18.SearchService>(() => _i18.SearchService());
   gh.lazySingleton<_i8.SnackbarService>(
       () => thirdPartyServicesModule.snackbarService);
-  gh.lazySingleton<_i18.StockControllerService>(
+  gh.lazySingleton<_i19.StockControllerService>(
       () => thirdPartyServicesModule.stockControlService);
-  gh.lazySingleton<_i19.StopService>(() => _i19.StopService());
-  gh.lazySingleton<_i20.UserService>(
+  gh.lazySingleton<_i20.StopService>(() => _i20.StopService());
+  gh.lazySingleton<_i21.UserService>(
       () => thirdPartyServicesModule.userService);
   return get;
 }
 
-class _$ThirdPartyServicesModule extends _i21.ThirdPartyServicesModule {
+class _$ThirdPartyServicesModule extends _i22.ThirdPartyServicesModule {
   @override
   _i3.AccessControlService get accessControlService =>
       _i3.AccessControlService();
@@ -93,8 +95,8 @@ class _$ThirdPartyServicesModule extends _i21.ThirdPartyServicesModule {
   @override
   _i8.SnackbarService get snackbarService => _i8.SnackbarService();
   @override
-  _i18.StockControllerService get stockControlService =>
-      _i18.StockControllerService();
+  _i19.StockControllerService get stockControlService =>
+      _i19.StockControllerService();
   @override
-  _i20.UserService get userService => _i20.UserService();
+  _i21.UserService get userService => _i21.UserService();
 }

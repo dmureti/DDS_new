@@ -1,3 +1,4 @@
+import 'package:distributor/ui/widgets/dumb_widgets/product_quantity_tile.dart';
 import 'package:distributor/ui/widgets/smart_widgets/stock_list_widget/stock_list_widget_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -20,11 +21,7 @@ class StockListWidget extends StatelessWidget {
                     : ListView.builder(
                         itemBuilder: (context, index) {
                           Product product = model.productList[index];
-                          return ListTile(
-                            title: Text(product.itemName),
-                            subtitle: Text(product.itemCode),
-                            trailing: Text(product.quantity.toStringAsFixed(0)),
-                          );
+                          return ProductQuantityTile(product: product);
                         },
                         itemCount: model.productList.length,
                       ),

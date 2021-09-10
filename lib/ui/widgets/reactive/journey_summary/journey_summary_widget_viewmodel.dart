@@ -19,6 +19,27 @@ class JourneySummaryWidgetViewModel extends ReactiveViewModel {
   Api get _api => _apiService.api;
   User get _user => _userService.user;
 
+  int _deliveriesCompleted;
+  int _deliveriesPending;
+  int _paymentsReceived;
+  int _ordersMade;
+
+  int get deliveriesCompleted => _deliveriesCompleted;
+  int get deliveriesPending => _deliveriesPending;
+  int get paymehtsReceived => _paymentsReceived;
+  int get ordersMade => _ordersMade;
+
+  getSummary() async {
+    var result = await _userService.getUserSummary();
+    if (result is UserSummary) {
+      _paymentsReceived = result.payments;
+      _ordersMade = result.ordersMade;
+      _deliveriesPending = result.delivery_pending;
+      _deliveriesCompleted = result.delivery_done;
+    }
+    notifyListeners();
+  }
+
   int get ongoingJourney =>
       _logisticsService.userJourneyList
           .where((deliveryJourney) =>
@@ -26,34 +47,33 @@ class JourneySummaryWidgetViewModel extends ReactiveViewModel {
           .length ??
       0;
 
-  int get completedJourney =>
-      _logisticsService.userJourneyList
-          .where((deliveryJourney) =>
-              deliveryJourney.status.toLowerCase().contains('completed'))
-          .length ??
-      0;
-  int get pendingJourney =>
-      _logisticsService.userJourneyList
-          .where((deliveryJourney) =>
-              deliveryJourney.status.toLowerCase().contains('scheduled'))
-          .length ??
-      0;
-  int get paymentsReceived => _paymentsService.paymentsReceived ?? 0;
-  int get ordersMade => _orderService.ordersPlaced ?? 0;
+  // int get completedJourney => userSummary.delivery_done ?? 0;
+  // int get pendingJourney =>
+  //     _logisticsService.userJourneyList
+  //         .where((deliveryJourney) =>
+  //             deliveryJourney.status.toLowerCase().contains('scheduled'))
+  //         .length ??
+  //     0;
+  // int get paymentsReceived => _paymentsService.paymentsReceived ?? 0;
+  // int get ordersMade => _orderService.ordersPlaced ?? 0;
 
   UserSummary _userSummary;
   UserSummary get userSummary => _userSummary;
 
   getUserSummary() async {
     var result = await _api.getUserSummary(_user.token, user: _user);
-    return result;
+    if (result is UserSummary) {
+      _userSummary = result;
+      _deliveriesCompleted = userSummary.delivery_done;
+      _deliveriesPending = userSummary.delivery_pending;
+      _ordersMade = userSummary.ordersMade;
+      _paymentsReceived = userSummary.payments;
+      notifyListeners();
+    }
   }
 
   init() async {
-    setBusy(true);
-    _userSummary = await getUserSummary();
-    setBusy(false);
-    return _userSummary;
+    await getUserSummary();
   }
 
   @override

@@ -49,10 +49,10 @@ class ReportFieldRow extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Container(
-            width: 150,
+            width: 140,
             child: Text(
               '$field',
-              style: TextStyle(fontWeight: FontWeight.w700),
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
             ),
           ),
           SizedBox(
@@ -61,6 +61,7 @@ class ReportFieldRow extends StatelessWidget {
           Text(
             '$value',
             overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
           ),
         ],
       ),

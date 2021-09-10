@@ -14,8 +14,8 @@ class ReusableCard extends StatelessWidget {
       child: Material(
         color: color,
         type: MaterialType.card,
-        elevation: 5,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Container(
           child: cardChild,
         ),

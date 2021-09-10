@@ -20,6 +20,14 @@ class StockControllerService {
   bool _hasJourney = false;
   bool get hasJourney => _hasJourney;
 
+  getStockTransaction(String stockTransactionId, String voucherType) async {
+    var result = await _api.getStockTransaction(_user.token,
+        voucherType: voucherType, stockTransactionId: stockTransactionId);
+    if (result != null) {
+      return Transaction.fromMap(result);
+    }
+  }
+
 //	Stock balance tab on L1 app is enabled if the user has
 //	"virtual_stock_balance.view".
 //	When the balances are displayed, the specific column "value of stock"
@@ -72,5 +80,13 @@ class StockControllerService {
     var result =
         await _api.getUserPOSProfile(token: _user.token, userId: _user.id);
     return result;
+  }
+
+  updateStatus(Transaction t, String status) async {
+    return await _api.updateTransactionStatus(
+        token: _user.token,
+        voucherNo: t.stockTransactionId,
+        voucherType: t.voucherType,
+        status: status);
   }
 }

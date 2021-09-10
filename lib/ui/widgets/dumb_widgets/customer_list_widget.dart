@@ -27,11 +27,11 @@ Widget CustomerList({List<Customer> customerList, Function onTap}) {
       itemBuilder: (context, index) {
         Customer customer = customerList[index];
         return Container(
-          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
           child: Material(
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            elevation: 3,
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+            elevation: 1,
             type: MaterialType.card,
             child: ListTile(
               trailing: Container(
@@ -118,17 +118,17 @@ Widget CustomerList({List<Customer> customerList, Function onTap}) {
                 onTap(customer);
               },
               title: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                padding: const EdgeInsets.symmetric(vertical: 2.0),
                 child: Text(
                   '${customer.name}',
                   style: TextStyle(
                       color: kDarkBlue,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600),
                 ),
               ),
               subtitle: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                padding: const EdgeInsets.symmetric(vertical: 2.0),
                 child: Row(
                   children: [
                     Text(
@@ -144,7 +144,7 @@ Widget CustomerList({List<Customer> customerList, Function onTap}) {
                       '${customer.route}'.toUpperCase(),
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          fontSize: 16,
+                          fontSize: 12,
                           color: kLightBlue),
                     ),
                   ],

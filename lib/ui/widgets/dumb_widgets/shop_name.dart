@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ShopNameWidget extends StatelessWidget {
@@ -8,7 +9,10 @@ class ShopNameWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 8),
-      child: Text(storeName),
+      child: Text(
+        storeName,
+        style: TextStyle(fontWeight: FontWeight.w500),
+      ),
     );
   }
 }

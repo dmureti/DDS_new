@@ -371,6 +371,7 @@ class Router extends RouterBase {
         builder: (context) => VoucherDetailView(
           key: args.key,
           transactionId: args.transactionId,
+          voucherType: args.voucherType,
         ),
         settings: data,
       );
@@ -535,5 +536,7 @@ class ChangePasswordViewArguments {
 class VoucherDetailViewArguments {
   final Key key;
   final String transactionId;
-  VoucherDetailViewArguments({this.key, @required this.transactionId});
+  final String voucherType;
+  VoucherDetailViewArguments(
+      {this.key, @required this.transactionId, @required this.voucherType});
 }

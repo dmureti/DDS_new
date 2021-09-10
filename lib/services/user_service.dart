@@ -66,4 +66,8 @@ class UserService {
       return "mobile";
     }
   }
+
+  getUserSummary() async {
+    return await _apiService.api.getUserSummary(user.token, user: user);
+  }
 }

@@ -6,10 +6,18 @@ import 'package:stacked/stacked.dart';
 class TransactionViewmodel extends BaseViewModel {
   final stockControlService = locator<StockControllerService>();
 
-  approveTransaction() async {}
-  cancelTransaction() async {}
+  approveTransaction(Transaction t) async {
+    return await stockControlService.updateStatus(t, 'Approve');
+  }
 
-  getStockTransaction(String transactionId) async {}
+  cancelTransaction(Transaction t) async {
+    return await stockControlService.updateStatus(t, 'Cancel');
+  }
+
+  getStockTransaction(String stockTransactionId, String voucherType) async {
+    return await stockControlService.getStockTransaction(
+        stockTransactionId, voucherType);
+  }
 
   getAllStockTransactions() async {
     return await stockControlService.getTransactionsPendingAuth();

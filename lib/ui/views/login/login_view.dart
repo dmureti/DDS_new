@@ -117,7 +117,6 @@ class _LoginViewState extends State<LoginView> {
                           children: [
                             TextFormFieldPadding(
                               child: TextFormField(
-                                autofocus: true,
                                 controller: _userIdController,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600, fontSize: 16),

@@ -20,7 +20,7 @@ class JourneySummaryWidget extends StatelessWidget {
                         child: ReusableCard(
                           color: Color.fromRGBO(49, 130, 243, 1),
                           cardChild: IconContent(
-                            amount: model.completedJourney,
+                            amount: model.deliveriesCompleted,
                             title: 'Deliveries\n Completed',
                           ),
                         ),
@@ -33,7 +33,7 @@ class JourneySummaryWidget extends StatelessWidget {
                             ReusableCard(
                               color: Color.fromRGBO(49, 130, 243, 1),
                               cardChild: IconContent(
-                                amount: model.pendingJourney,
+                                amount: model.deliveriesPending,
                                 title: 'Deliveries\n Pending',
                               ),
                             ),
@@ -67,7 +67,7 @@ class JourneySummaryWidget extends StatelessWidget {
                         child: ReusableCard(
                           color: Color.fromRGBO(49, 130, 243, 1),
                           cardChild: IconContent(
-                            amount: model.paymentsReceived,
+                            amount: model.paymehtsReceived,
                             title: 'Payments\n Received',
                           ),
                         ),

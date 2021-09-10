@@ -4,6 +4,7 @@ import 'package:distributor/services/access_controller_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
+import 'package:distributor/core/models/app_models.dart';
 
 mixin ContextualViewmodel {
   final _accessControlService = locator<AccessControlService>();
@@ -13,10 +14,11 @@ mixin ContextualViewmodel {
     _navigationService.navigateTo(Routes.stockTransactionListView);
   }
 
-  navigateToVoucherDetail(String stocktransactionId) async {
+  navigateToVoucherDetail(Transaction transaction) async {
     _navigationService.navigateTo(Routes.voucherDetailView,
-        arguments:
-            VoucherDetailViewArguments(transactionId: stocktransactionId));
+        arguments: VoucherDetailViewArguments(
+            transactionId: transaction.stockTransactionId,
+            voucherType: transaction.voucherType));
   }
 
   navigateToReturnStockView() async {
@@ -44,7 +46,7 @@ mixin ContextualViewmodel {
   }
 
   bool get renderPendingStockTransactionsButton {
-    if (user.hasSalesChannel ||
+    if (user.hasSalesChannel &&
         _accessControlService.checkIfAuthExists(
             _authList, Authority(auth: 'ITR.AUTH'))) {
       return true;

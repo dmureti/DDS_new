@@ -51,4 +51,7 @@ class DashboardViewModel extends FutureViewModel<List<DeliveryJourney>>
   init() async {
     await _logisticsService.fetchJourneys();
   }
+
+  UserSummary _userSummary;
+  UserSummary get userSummary => _userSummary;
 }

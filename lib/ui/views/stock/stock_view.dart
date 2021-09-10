@@ -1,4 +1,5 @@
 import 'package:distributor/ui/views/stock/stock_viewmodel.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/flat_button_widget.dart';
 import 'package:distributor/ui/widgets/smart_widgets/info_bar_controller/info_bar_controller_view.dart';
 import 'package:distributor/ui/widgets/smart_widgets/stock_controller/stock_controller_widget.dart';
 import 'package:flutter/material.dart';
@@ -18,19 +19,26 @@ class StockView extends StatelessWidget {
                   model.user.hasSalesChannel
                       ? Container(
                           height: 50,
-                          child: ButtonBar(
-                            children: [
-                              model.renderPendingStockTransactionsButton
-                                  ? IconButton(
-                                      onPressed: () => model
-                                          .navigateToPendingTransactionsView(),
-                                      icon: Icon(Icons.update))
-                                  : Container(),
-                              IconButton(
-                                  onPressed: () =>
+                          margin: EdgeInsets.only(bottom: 5),
+                          child: Material(
+                            elevation: 1,
+                            child: ButtonBar(
+                              alignment: MainAxisAlignment.end,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                if (model.renderPendingStockTransactionsButton)
+                                  FlatButtonWidget(
+                                    onTap: () => model
+                                        .navigateToPendingTransactionsView(),
+                                    label: 'Pending Stock Transactions',
+                                  ),
+                                FlatButtonWidget(
+                                  label: 'Return Stock',
+                                  onTap: () =>
                                       model.navigateToReturnStockView(),
-                                  icon: Icon(Icons.read_more_outlined))
-                            ],
+                                )
+                              ],
+                            ),
                           ),
                         )
                       : Container(),

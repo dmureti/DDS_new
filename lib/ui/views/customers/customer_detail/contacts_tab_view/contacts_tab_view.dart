@@ -44,7 +44,7 @@ class ContactsTabView extends StatelessWidget {
                                           child: Text(
                                         'General Information'.toUpperCase(),
                                         style: TextStyle(
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             fontSize: 18.0),
                                       )),
                                       Padding(
@@ -119,7 +119,7 @@ class ContactsTabView extends StatelessWidget {
                                 type: MaterialType.card,
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(5),
-                                elevation: 3.0,
+                                elevation: 1.0,
                                 child: Container(
                                   margin: EdgeInsets.only(bottom: 10.0),
                                   padding: EdgeInsets.all(15.0),
@@ -132,7 +132,7 @@ class ContactsTabView extends StatelessWidget {
                                         child: Text(
                                           'Financial Information'.toUpperCase(),
                                           style: TextStyle(
-                                              fontWeight: FontWeight.w900,
+                                              fontWeight: FontWeight.w600,
                                               fontSize: 18.0),
                                         ),
                                       ),
@@ -170,7 +170,7 @@ class ContactsTabView extends StatelessWidget {
                                 type: MaterialType.card,
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(5),
-                                elevation: 3.0,
+                                elevation: 1.0,
                                 child: Container(
                                   margin: EdgeInsets.only(bottom: 10.0),
                                   padding: EdgeInsets.all(15.0),
@@ -180,7 +180,7 @@ class ContactsTabView extends StatelessWidget {
                                       Text(
                                         'App Users'.toUpperCase(),
                                         style: TextStyle(
-                                            fontWeight: FontWeight.w900,
+                                            fontWeight: FontWeight.w600,
                                             fontSize: 18.0),
                                       ),
                                       Padding(

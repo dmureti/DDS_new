@@ -26,11 +26,10 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
       viewModelBuilder: () =>
           SalesOrderItemModel(product: item, maxQuantity: quantity),
       builder: (context, model, child) => Container(
-        margin:
-            EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0, top: 10.0),
+        margin: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 4.0, top: 4.0),
         child: Material(
           type: MaterialType.card,
-          elevation: model.isEnabled ? 3.0 : 0.0,
+          elevation: model.isEnabled ? 1.0 : 0.0,
           child: ListTile(
             title: Container(
                 child: Row(
@@ -43,7 +42,7 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
                         decoration: TextDecoration.none,
                         decorationThickness: 1,
                         color: Colors.indigo,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
 //                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -176,60 +175,3 @@ showQuantityDialog(
         );
       });
 }
-
-// TextFormField(
-// autofocus: true,
-// inputFormatters: [
-// WhitelistingTextInputFormatter
-//     .digitsOnly
-// ],
-// keyboardType: TextInputType.number,
-// onChanged: (value) {
-// newQuantity = int.parse(value);
-// },
-// initialValue: model.quantity.toString(),
-// decoration: InputDecoration(
-// suffixIcon: IconButton(
-// icon: Icon(FontAwesomeIcons.save),
-// onPressed: () {
-// //Make sure that the total is not zero
-// salesOrderViewModel
-//     .editQuantityManually(
-// model.product, newQuantity);
-// if (model.total >= 0) {
-// // Check if new quantity is less than the initial
-// if (initialQuantity < newQuantity) {
-// model.updateQuantity(
-// newQuantity.toString(),
-// model.product);
-// num difference =
-// newQuantity - initialQuantity;
-// salesOrderViewModel.addToTotal(
-// difference *
-// model.product.itemPrice);
-// salesOrderViewModel
-//     .increaseSalesOrderItems(
-// model.product,
-// difference);
-// }
-// if (initialQuantity > newQuantity) {
-// // Less products
-// num difference =
-// initialQuantity - newQuantity;
-// model.updateQuantity(
-// newQuantity.toString(),
-// model.product);
-// salesOrderViewModel
-//     .removeFromTotal(difference *
-// model.product.itemPrice);
-// salesOrderViewModel
-//     .decreaseSalesOrderItems(
-// model.product,
-// difference);
-// }
-// }
-// Navigator.pop(context);
-// //
-// },
-// )),
-// )
