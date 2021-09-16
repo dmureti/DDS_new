@@ -1,3 +1,4 @@
+import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:distributor/ui/views/customer_location.dart';
 import 'package:distributor/ui/views/customers/customer_viewmodel.dart';
@@ -121,10 +122,7 @@ Widget CustomerList({List<Customer> customerList, Function onTap}) {
                 padding: const EdgeInsets.symmetric(vertical: 2.0),
                 child: Text(
                   '${customer.name}',
-                  style: TextStyle(
-                      color: kDarkBlue,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600),
+                  style: kListStyleTitle1,
                 ),
               ),
               subtitle: Padding(
@@ -133,19 +131,14 @@ Widget CustomerList({List<Customer> customerList, Function onTap}) {
                   children: [
                     Text(
                       'ROUTE',
-                      style: TextStyle(
-                        fontSize: 12,
-                      ),
+                      style: kListStyleSubTitle2,
                     ),
                     SizedBox(
                       width: 5,
                     ),
                     Text(
                       '${customer.route}'.toUpperCase(),
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12,
-                          color: kLightBlue),
+                      style: kListStyleSubTitle1,
                     ),
                   ],
                 ),

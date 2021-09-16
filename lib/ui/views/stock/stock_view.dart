@@ -33,10 +33,11 @@ class StockView extends StatelessWidget {
                                     label: 'Pending Stock Transactions',
                                   ),
                                 FlatButtonWidget(
-                                  label: 'Return Stock',
-                                  onTap: () =>
-                                      model.navigateToReturnStockView(),
-                                )
+                                    label: 'Return Stock',
+                                    onTap: () async {
+                                      await model.navigateToReturnStockView();
+                                      model.notifyListeners();
+                                    })
                               ],
                             ),
                           ),

@@ -15,14 +15,20 @@ mixin ContextualViewmodel {
   }
 
   navigateToVoucherDetail(Transaction transaction) async {
-    _navigationService.navigateTo(Routes.voucherDetailView,
+    var result = await _navigationService.navigateTo(Routes.voucherDetailView,
         arguments: VoucherDetailViewArguments(
             transactionId: transaction.stockTransactionId,
             voucherType: transaction.voucherType));
+    // _navigationService.back(result: result);
   }
 
   navigateToReturnStockView() async {
-    await _navigationService.navigateTo(Routes.stockTransferView);
+    var result = await _navigationService.navigateTo(Routes.stockTransferView);
+    if (result is bool) {
+      if (result) {
+        //Fetch the stock items
+      }
+    }
   }
 
   User get user => _accessControlService.user;

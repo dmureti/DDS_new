@@ -25,9 +25,10 @@ class StockTransactionListView extends StatelessWidget {
                         var transaction = model.stockTransactionList[index];
                         return TransactionTile(
                           transaction,
-                          onTap: () => model.navigateToVoucherDetail(
-                            transaction,
-                          ),
+                          onTap: () async {
+                            await model.navigateToVoucherDetail(transaction);
+                            model.getStockTransactions();
+                          },
                         );
                       },
                     ),

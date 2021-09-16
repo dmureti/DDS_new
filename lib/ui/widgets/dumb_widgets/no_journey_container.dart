@@ -1,3 +1,6 @@
+import 'package:distributor/src/strings.dart';
+import 'package:distributor/src/ui/text_styles.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
 import 'package:flutter/material.dart';
 
 class NoJourneyContainer extends StatelessWidget {
@@ -15,14 +18,7 @@ class NoJourneyContainer extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text(
-              'You have not been assigned any deliveries today.',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black45),
-            ),
+            child: EmptyContentContainer(label: kStringNoJourney),
           ),
         ],
       ),

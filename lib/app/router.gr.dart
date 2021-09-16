@@ -24,6 +24,7 @@ import '../src/ui/views/reset_password/reset_password_view.dart';
 import '../src/ui/views/stock_transaction/stock_transaction_list_view.dart';
 import '../src/ui/views/stock_transfer/stock_transfer_view.dart';
 import '../src/ui/views/voucher_detail/voucher_detail_view.dart';
+import '../ui/views/adhoc_sales/adhoc_sales_view.dart';
 import '../ui/views/customer_location.dart';
 import '../ui/views/customers/customer_detail/customer_detail_view.dart';
 import '../ui/views/home/home_view.dart';
@@ -64,6 +65,7 @@ class Routes {
   static const String changePasswordView = '/change-password-view';
   static const String stockTransferView = '/stock-transfer-view';
   static const String voucherDetailView = '/voucher-detail-view';
+  static const String adhocSalesView = '/adhoc-sales-view';
   static const all = <String>{
     homeView,
     startupView,
@@ -90,6 +92,7 @@ class Routes {
     changePasswordView,
     stockTransferView,
     voucherDetailView,
+    adhocSalesView,
   };
 }
 
@@ -122,6 +125,7 @@ class Router extends RouterBase {
     RouteDef(Routes.changePasswordView, page: ChangePasswordView),
     RouteDef(Routes.stockTransferView, page: StockTransferView),
     RouteDef(Routes.voucherDetailView, page: VoucherDetailView),
+    RouteDef(Routes.adhocSalesView, page: AdhocSalesView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -376,6 +380,18 @@ class Router extends RouterBase {
         settings: data,
       );
     },
+    AdhocSalesView: (data) {
+      final args = data.getArgs<AdhocSalesViewArguments>(
+        orElse: () => AdhocSalesViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => AdhocSalesView(
+          key: args.key,
+          customer: args.customer,
+        ),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -539,4 +555,11 @@ class VoucherDetailViewArguments {
   final String voucherType;
   VoucherDetailViewArguments(
       {this.key, @required this.transactionId, @required this.voucherType});
+}
+
+/// AdhocSalesView arguments holder class
+class AdhocSalesViewArguments {
+  final Key key;
+  final Customer customer;
+  AdhocSalesViewArguments({this.key, this.customer});
 }

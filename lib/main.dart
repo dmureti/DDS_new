@@ -8,22 +8,11 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 import 'package:distributor/app/router.gr.dart' as app_router;
 
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   FlavorConfig(variables: {"appName": "Mini", "baseUrl": ""});
-//   setupLocator();
-//   runApp(MainApp());
-// }
-
 class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       supportedLocales: const [Locale('en'), Locale('en_us')],
-      // localizationsDelegates: [
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate
-      // ],
       title: Globals.appName,
       debugShowCheckedModeBanner: false,
       theme: _kAppTheme,
@@ -48,11 +37,8 @@ ThemeData _buildAppTheme() {
     appBarTheme: AppBarTheme(
         elevation: 1.0,
         color: kDarkBlue,
-        textTheme: TextTheme(
-            headline6: TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-                fontWeight: FontWeight.w600)),
+        titleTextStyle: TextStyle(
+            color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w600),
         iconTheme: IconThemeData(color: Colors.white)),
     buttonColor: Colors.pink,
     buttonTheme: base.buttonTheme.copyWith(
@@ -86,7 +72,7 @@ TextTheme _buildAppTextTheme(TextTheme base) {
       .copyWith(
         headline5: base.headline5.copyWith(
           color: Colors.pink,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w600,
           fontFamily: 'Simpel',
           fontSize: 18.0,
         ),
@@ -96,13 +82,13 @@ TextTheme _buildAppTextTheme(TextTheme base) {
           fontSize: 14.0,
         ),
         bodyText1: base.bodyText1.copyWith(
-            fontWeight: FontWeight.w500, fontSize: 16.0, color: Colors.white),
+            fontWeight: FontWeight.w400, fontSize: 14.0, color: Colors.white),
         button: base.button.copyWith(color: Colors.pink),
         bodyText2: base.bodyText1.copyWith(
-            fontWeight: FontWeight.w500, fontSize: 16.0, color: Colors.white),
+            fontWeight: FontWeight.w500, fontSize: 14.0, color: Colors.white),
       )
       .apply(
-        fontFamily: 'Simpel',
+        fontFamily: 'Proxima Nova',
         displayColor: Colors.grey,
         bodyColor: Colors.black,
       );

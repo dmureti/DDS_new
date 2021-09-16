@@ -1,3 +1,4 @@
+import 'package:distributor/src/strings.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/no_journey_container.dart';
 import 'package:distributor/ui/widgets/smart_widgets/stock_controller/stock_controller_widget_viewmodel.dart';
 import 'package:distributor/ui/widgets/smart_widgets/stock_list_widget/stock_list_widget.dart';
@@ -12,7 +13,7 @@ class StockControllerWidget extends StatelessWidget {
             ? NoJourneyContainer()
             : model.hasSelectedJourney == true
                 ? StockListWidget()
-                : _buildCenterContainer('You have not selected a journey.'),
+                : _buildCenterContainer(kStringNoJourneySelected),
         viewModelBuilder: () => StockControllerWidgetViewModel());
   }
 

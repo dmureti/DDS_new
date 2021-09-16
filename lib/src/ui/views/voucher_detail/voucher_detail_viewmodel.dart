@@ -1,10 +1,15 @@
+import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/src/ui/common/transaction_viewmodel.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class VoucherDetailViewmodel extends TransactionViewmodel {
+  final _dialogService = locator<DialogService>();
   final String transactionId;
   final String voucherType;
+
+  List<String> statusStrings = ["Approve", "Cancel"];
 
   Transaction _stockTransaction;
   Transaction get stockTransaction => _stockTransaction;
@@ -23,39 +28,44 @@ class VoucherDetailViewmodel extends TransactionViewmodel {
       _stockTransaction = result;
       notifyListeners();
     } else {}
+    return;
   }
 
-  bool _status = false;
-  bool get status => _status;
+  String _status;
+  String get status => _status;
 
-  setStatusFromString(String val) {
-    switch (val) {
-      case 'Approve':
-        return true;
-      case 'Cancel':
-        return false;
-    }
-  }
-
-  setStatusFromBool(bool val) {
-    switch (val) {
-      case true:
-        return 'Approve';
-      case false:
-        return 'Cancel';
-    }
-  }
-
-  toggleStatus(bool val) {
-    if (val) {
-      _status = val;
-      approveTransaction(stockTransaction);
-    } else {
-      _status = false;
-      cancelTransaction(stockTransaction);
-    }
+  setStatus(String val) async {
     _status = val;
+    await commitStatusChange(val);
+    _disableDropdown = true;
     getTransaction();
     notifyListeners();
+    await _dialogService.showDialog(
+        title: 'Success',
+        description: 'The transaction has been ${val}ed successfully');
+  }
+
+  bool _disableDropdown = false;
+  bool get disableDropdown => _disableDropdown;
+
+  commitStatusChange(String val) async {
+    switch (status.toLowerCase()) {
+      case 'accept':
+        approveTransaction(stockTransaction);
+        return;
+        break;
+      case 'cancel':
+        cancelTransaction(stockTransaction);
+        return;
+        break;
+    }
+    return;
+  }
+
+  showConfirmationDialog() async {
+    var dialogResponse = await _dialogService.showConfirmationDialog(
+        title: '$status transaction',
+        description: 'Are you sure you want to $status this transaction ? ');
+    return dialogResponse;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:distributor/src/ui/views/adhoc_listing/adhoc_listing_view.dart';
 import 'package:distributor/ui/access_controllers/global/bottom_navbar/bottom_nav_bar.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:distributor/ui/views/adhoc_sales/adhoc_sales_view.dart';
@@ -20,7 +21,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
-      onModelReady: (model) async => await model.init(),
+      onModelReady: (model) => model.init(),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           actionsIconTheme: IconThemeData(color: Colors.white),
@@ -31,6 +32,16 @@ class HomeView extends StatelessWidget {
             //   onPressed: () => model.refresh(),
             //   icon: Icon(FontAwesome.refresh),
             // ),
+            model.currentIndex == 2
+                ? IconButton(
+                    onPressed: () {
+                      model.navigateToAddAdhocSale();
+                    },
+                    icon: Icon(Icons.add_circle_outline),
+                    tooltip: 'Add Adhoc Sale',
+                  )
+                : Container(),
+
             MapIconButton(),
           ],
         ),
@@ -67,7 +78,8 @@ class HomeView extends StatelessWidget {
         return RoutesListingView();
         break;
       case 2:
-        return AdhocSalesView();
+        return AdhocListingView();
+        // return AdhocSalesView();
         break;
       case 3:
         return StockView();

@@ -22,112 +22,118 @@ class AdhocSalesView extends StatelessWidget {
           // model.listWarehouses();
         },
         builder: (context, model, child) {
-          return model.userHasJourneys
-              ? Container(
-                  child: Column(
-                  children: [
-                    Expanded(
-                      child: ListView(
-                        children: [
-                          Stepper(
-                            onStepTapped: model.onStepTapped,
-                            onStepCancel: model.onStepCancel,
-                            currentStep: model.currentIndex,
-                            onStepContinue: model.onStepContinue,
-                            steps: [
-                              Step(
-                                title: Text('Customer Type'),
-                                isActive:
-                                    model.currentIndex == 0 ? true : false,
-                                state: model.currentIndex != 0 &&
-                                        model.customerType == null
-                                    ? StepState.error
-                                    : model.currentIndex == 0
-                                        ? StepState.editing
-                                        : StepState.complete,
-                                content: DropdownButton(
-                                  key: Key('selectCustomerTypeKey'),
-                                  dropdownColor: Colors.white,
-                                  isExpanded: true,
-                                  hint: Text('Select a customer type'),
-                                  value: model.customerType,
-                                  onChanged: model.updateCustomerType,
-                                  items: model.customerTypes
-                                      .map((e) => DropdownMenuItem(
-                                            child: Text(e),
-                                            value: e,
-                                          ))
-                                      .toList(),
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('Adhoc Sales'),
+            ),
+            body: model.userHasJourneys
+                ? Container(
+                    child: Column(
+                    children: [
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            Stepper(
+                              onStepTapped: model.onStepTapped,
+                              onStepCancel: model.onStepCancel,
+                              currentStep: model.currentIndex,
+                              onStepContinue: model.onStepContinue,
+                              steps: [
+                                Step(
+                                  title: Text('Customer Type'),
+                                  isActive:
+                                      model.currentIndex == 0 ? true : false,
+                                  state: model.currentIndex != 0 &&
+                                          model.customerType == null
+                                      ? StepState.error
+                                      : model.currentIndex == 0
+                                          ? StepState.editing
+                                          : StepState.complete,
+                                  content: DropdownButton(
+                                    key: Key('selectCustomerTypeKey'),
+                                    dropdownColor: Colors.white,
+                                    isExpanded: true,
+                                    hint: Text('Select a customer type'),
+                                    value: model.customerType,
+                                    onChanged: model.updateCustomerType,
+                                    items: model.customerTypes
+                                        .map((e) => DropdownMenuItem(
+                                              child: Text(e),
+                                              value: e,
+                                            ))
+                                        .toList(),
+                                  ),
                                 ),
-                              ),
-                              Step(
-                                title: Text('Customer Detail'),
-                                isActive:
-                                    model.currentIndex == 1 ? true : false,
-                                state: model.customerType == null
-                                    ? StepState.disabled
-                                    : model.currentIndex == 1
-                                        ? StepState.editing
-                                        : StepState.complete,
-                                content: model.customerType != null
-                                    ? model.customerType.toLowerCase() ==
-                                            'contract'
-                                        ? model.customerList == null
-                                            ? Center(
-                                                child:
-                                                    CircularProgressIndicator(),
-                                              )
-                                            : model.customerList.length > 0
-                                                ? DropdownButton(
-                                                    key: Key(
-                                                        'selectCustomerKey'),
-                                                    dropdownColor: Colors.white,
-                                                    isExpanded: true,
-                                                    hint:
-                                                        Text('Select customer'),
-                                                    value: model.customer,
-                                                    onChanged:
-                                                        model.updateCustomer,
-                                                    items: model.customerList
-                                                        .map((e) =>
-                                                            DropdownMenuItem(
-                                                              child:
-                                                                  Text(e.name),
-                                                              value: e,
-                                                            ))
-                                                        .toList(),
-                                                  )
-                                                : Text('No customers found')
-                                        : _CustomerNameTextField()
-                                    : Text('Select a customer type'),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: RaisedButton(
-                          onPressed: model.isCompleted
-                              ? () {
-                                  model.navigateToCart();
-                                }
-                              : null,
-                          child: Text('CONTINUE TO CART'),
+                                Step(
+                                  title: Text('Customer Detail'),
+                                  isActive:
+                                      model.currentIndex == 1 ? true : false,
+                                  state: model.customerType == null
+                                      ? StepState.disabled
+                                      : model.currentIndex == 1
+                                          ? StepState.editing
+                                          : StepState.complete,
+                                  content: model.customerType != null
+                                      ? model.customerType.toLowerCase() ==
+                                              'contract'
+                                          ? model.customerList == null
+                                              ? Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                )
+                                              : model.customerList.length > 0
+                                                  ? DropdownButton(
+                                                      key: Key(
+                                                          'selectCustomerKey'),
+                                                      dropdownColor:
+                                                          Colors.white,
+                                                      isExpanded: true,
+                                                      hint: Text(
+                                                          'Select customer'),
+                                                      value: model.customer,
+                                                      onChanged:
+                                                          model.updateCustomer,
+                                                      items: model.customerList
+                                                          .map((e) =>
+                                                              DropdownMenuItem(
+                                                                child: Text(
+                                                                    e.name),
+                                                                value: e,
+                                                              ))
+                                                          .toList(),
+                                                    )
+                                                  : Text('No customers found')
+                                          : _CustomerNameTextField()
+                                      : Text('Select a customer type'),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                    )
-                  ],
-                ))
-              : Container(
-                  child: Center(
-                    child: Text(
-                        'You have not been assigned any deliveries today.'),
+                      Container(
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RaisedButton(
+                            onPressed: model.isCompleted
+                                ? () {
+                                    model.navigateToCart();
+                                  }
+                                : null,
+                            child: Text('CONTINUE TO CART'),
+                          ),
+                        ),
+                      )
+                    ],
+                  ))
+                : Container(
+                    child: Center(
+                      child: Text(
+                          'You have not been assigned any deliveries today.'),
+                    ),
                   ),
-                );
+          );
         },
         viewModelBuilder: () => AdhocSalesViewModel(customer));
   }

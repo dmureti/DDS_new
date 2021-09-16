@@ -3,6 +3,7 @@ import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/activity_service.dart';
+import 'package:distributor/services/adhoc_cart_service.dart';
 import 'package:distributor/services/init_service.dart';
 import 'package:distributor/services/journey_service.dart';
 
@@ -27,6 +28,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   LogisticsService _logisticsService = locator<LogisticsService>();
   ActivityService _activityService = locator<ActivityService>();
   JourneyService _journeyService = locator<JourneyService>();
+  AdhocCartService _adhocCartService = locator<AdhocCartService>();
 
   UserService _userService = locator<UserService>();
   NavigationService _navigationService = locator<NavigationService>();
@@ -138,6 +140,9 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   init() async {
     await _logisticsService.fetchJourneys();
     await _permissionService.init();
+    //Check if the user has permissions before enabling this
+    // await fetchAdhocSales();
+    return;
   }
 
   void navigateToJourneyMapView() async {
@@ -197,4 +202,22 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
         break;
     }
   }
+
+  void navigateToAddAdhocSale() async {
+    var result = await _navigationService.navigateTo(Routes.adhocSalesView);
+    if (result is bool) {
+      if (result) {
+        //If successful
+        await fetchAdhocSales();
+      }
+    }
+  }
+
+  fetchAdhocSales() async {
+    // _adhocSalesList = await _adhocCartService.fetchAdhocSalesList();
+    // notifyListeners();
+  }
+
+  List _adhocSalesList = [];
+  List get adhocSalesList => _adhocSalesList;
 }

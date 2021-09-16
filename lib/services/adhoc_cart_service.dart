@@ -272,4 +272,8 @@ class AdhocCartService with ReactiveServiceMixin {
   setWarehouse(String branch) {
     _warehouse.value = branch;
   }
+
+  fetchAdhocSalesList() {
+    return [];
+  }
 }

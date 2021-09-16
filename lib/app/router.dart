@@ -12,6 +12,7 @@ import 'package:distributor/src/ui/views/change_password/change_password.dart';
 import 'package:distributor/src/ui/views/stock_transaction/stock_transaction_list_view.dart';
 import 'package:distributor/src/ui/views/stock_transfer/stock_transfer_view.dart';
 import 'package:distributor/src/ui/views/voucher_detail/voucher_detail_view.dart';
+import 'package:distributor/ui/views/adhoc_sales/adhoc_sales_view.dart';
 import 'package:distributor/ui/views/customer_location.dart';
 import 'package:distributor/ui/views/customers/customer_detail/customer_detail_view.dart';
 
@@ -57,7 +58,8 @@ import '../ui/views/login/login_view.dart';
     MaterialRoute(page: ResetPasswordView),
     MaterialRoute(page: ChangePasswordView),
     MaterialRoute(page: StockTransferView),
-    MaterialRoute(page: VoucherDetailView)
+    MaterialRoute(page: VoucherDetailView),
+    MaterialRoute(page: AdhocSalesView)
   ],
 )
 class $Router {}

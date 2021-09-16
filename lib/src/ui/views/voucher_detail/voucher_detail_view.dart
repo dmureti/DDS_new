@@ -35,16 +35,33 @@ class VoucherDetailView extends StatelessWidget {
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: SwitchListTile(
-                                  value: model.status,
-                                  onChanged: model.toggleStatus,
-                                  title: Text('Change Status'),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: DropdownButton(
+                                    disabledHint:
+                                        Text('Operation not possible'),
+                                    isExpanded: true,
+                                    value: model.status,
+                                    onChanged: model.disableDropdown
+                                        ? null
+                                        : (String val) {
+                                            model.setStatus(val);
+                                          },
+                                    hint: Text(
+                                        'Accept or Cancel this transaction'),
+                                    items: model.statusStrings
+                                        .map((e) => DropdownMenuItem(
+                                              child: Text(e),
+                                              value: e,
+                                            ))
+                                        .toList(),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           Container(
                             width: double.infinity,

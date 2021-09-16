@@ -1,4 +1,5 @@
 import 'package:distributor/core/helper.dart';
+import 'package:distributor/src/ui/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
@@ -17,7 +18,7 @@ class OrderHistoryTile extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 5.0),
       child: Material(
         type: MaterialType.card,
-        elevation: 3.0,
+        elevation: 1.0,
         child: ListTile(
           onTap: () async {
             onTap(salesOrder, deliveryJourney, null);
@@ -33,7 +34,7 @@ class OrderHistoryTile extends StatelessWidget {
             children: [
               Text(
                 '${salesOrder.orderNo}',
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                style: kListStyleTitle1,
               ),
               Container(
                   decoration: BoxDecoration(
