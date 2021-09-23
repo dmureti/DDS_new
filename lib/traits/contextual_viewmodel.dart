@@ -10,8 +10,17 @@ mixin ContextualViewmodel {
   final _accessControlService = locator<AccessControlService>();
   final _navigationService = locator<NavigationService>();
 
+  bool _rebuildTree = false;
+  bool get rebuildTree => _rebuildTree;
+
+  setRebuildTree(bool val) {
+    _rebuildTree = val;
+  }
+
   navigateToPendingTransactionsView() async {
-    _navigationService.navigateTo(Routes.stockTransactionListView);
+    var result =
+        await _navigationService.navigateTo(Routes.stockTransactionListView);
+    return result;
   }
 
   navigateToVoucherDetail(Transaction transaction) async {

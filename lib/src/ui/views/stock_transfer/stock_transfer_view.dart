@@ -31,7 +31,7 @@ class StockTransferView extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
-                          child: ListView.builder(
+                          child: ListView.separated(
                             itemBuilder: (context, index) {
                               Product product = model.productList[index];
                               return ReturnStockTileWidget(
@@ -40,6 +40,11 @@ class StockTransferView extends StatelessWidget {
                               );
                             },
                             itemCount: model.productList.length,
+                            separatorBuilder: (context, index) {
+                              return Divider(
+                                height: 5,
+                              );
+                            },
                           ),
                         ),
                         Container(

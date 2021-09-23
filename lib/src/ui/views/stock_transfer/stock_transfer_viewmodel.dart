@@ -49,7 +49,7 @@ class StockTransferViewmodel extends BaseViewModel with ContextualViewmodel {
   }
 
   onChange(Product product) {
-    print('I have changed ${product.quantity} pcs to ${product.itemName}');
+    // print('I have changed ${product.quantity} pcs to ${product.itemName}');
     _returnStockService.updateItemsToReturn(product);
     notifyListeners();
   }

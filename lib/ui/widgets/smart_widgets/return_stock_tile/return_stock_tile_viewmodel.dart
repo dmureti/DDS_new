@@ -19,7 +19,7 @@ class ReturnStockTileViewmodel extends BaseViewModel {
             itemPrice: product.itemPrice,
             itemName: product.itemName);
 
-  String get getBalance => (maxQuantity - quantity).toString();
+  int get getBalance => (maxQuantity - quantity) ?? 0;
 
   remove({num val = 1}) {
     if (quantity > 0) {
@@ -29,8 +29,18 @@ class ReturnStockTileViewmodel extends BaseViewModel {
     notifyListeners();
   }
 
-  updateProduct() {
-    //Set the value of the product
+  updateProduct(String val) {
+    if (val != null) {
+      var newVal = int.parse(val.trim());
+      //Set the value of the product
+      if (newVal >= 0 && newVal <= maxQuantity) {
+        product.updateQuantity(newVal);
+        _quantity = newVal;
+        notifyListeners();
+      }
+    }
+
+    notifyListeners();
   }
 
   bool get canAdd => quantity < maxQuantity;
@@ -43,4 +53,6 @@ class ReturnStockTileViewmodel extends BaseViewModel {
     }
     notifyListeners();
   }
+
+  bool get isValid => quantity < maxQuantity;
 }

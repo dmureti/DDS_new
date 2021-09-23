@@ -6,13 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class StockControllerWidget extends StatelessWidget {
+  final bool rebuildWidgetTree;
+
+  const StockControllerWidget({Key key, this.rebuildWidgetTree = false})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<StockControllerWidgetViewModel>.reactive(
         builder: (context, model, child) => model.hasJourneys == false
             ? NoJourneyContainer()
             : model.hasSelectedJourney == true
-                ? StockListWidget()
+                ? StockListWidget(
+                    rebuild: rebuildWidgetTree,
+                  )
                 : _buildCenterContainer(kStringNoJourneySelected),
         viewModelBuilder: () => StockControllerWidgetViewModel());
   }

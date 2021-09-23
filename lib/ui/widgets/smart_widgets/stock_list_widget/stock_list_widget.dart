@@ -7,23 +7,33 @@ import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 class StockListWidget extends StatelessWidget {
+  final bool rebuild;
+
+  const StockListWidget({Key key, this.rebuild = false}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<StockListWidgetViewModel>.reactive(
-        onModelReady: (model) => model.fetchStockBalance(),
+        fireOnModelReadyOnce: false,
+        disposeViewModel: true,
+        onModelReady: (model) => model.init(),
         builder: (context, model, child) => model.productList == null
             ? CircularProgressIndicator()
             : Expanded(
                 child: model.productList.isEmpty
                     ? EmptyContentContainer(label: kStringNoStock)
-                    : ListView.builder(
+                    : ListView.separated(
                         itemBuilder: (context, index) {
                           Product product = model.productList[index];
                           return ProductQuantityTile(product: product);
                         },
                         itemCount: model.productList.length,
+                        separatorBuilder: (context, index) {
+                          return Divider(
+                            height: 1,
+                          );
+                        },
                       ),
               ),
-        viewModelBuilder: () => StockListWidgetViewModel());
+        viewModelBuilder: () => StockListWidgetViewModel(rebuild));
   }
 }

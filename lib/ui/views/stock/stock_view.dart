@@ -11,6 +11,8 @@ class StockView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<StockViewModel>.reactive(
+        disposeViewModel: true,
+        fireOnModelReadyOnce: false,
         builder: (context, model, child) => Container(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -28,8 +30,14 @@ class StockView extends StatelessWidget {
                               children: [
                                 if (model.renderPendingStockTransactionsButton)
                                   FlatButtonWidget(
-                                    onTap: () => model
-                                        .navigateToPendingTransactionsView(),
+                                    onTap: () async {
+                                      await model
+                                          .navigateToPendingTransactionsView();
+                                      model.setRebuildTree(true);
+                                      print(
+                                          '${model.rebuildTree} from stock view');
+                                      model.notifyListeners();
+                                    },
                                     label: 'Pending Stock Transactions',
                                   ),
                                 FlatButtonWidget(
@@ -43,7 +51,9 @@ class StockView extends StatelessWidget {
                           ),
                         )
                       : Container(),
-                  StockControllerWidget()
+                  StockControllerWidget(
+                    rebuildWidgetTree: model.rebuildTree,
+                  )
                 ],
               ),
             ),

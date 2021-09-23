@@ -39,7 +39,8 @@ class ReturnStockService {
     } else {
       await _dialogService.showDialog(
           title: 'Success',
-          description: 'The stock was returned successfully.');
+          description:
+              'The stock was returned successfully.Use the Pending Stock Transactions Button to commit this transaction.');
       return true;
     }
   }

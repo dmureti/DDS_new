@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:distributor/core/helper.dart';
+import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/ui/views/customers/customer_detail/accounts_tab/accounts_tab_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
 import 'package:flutter/material.dart';
@@ -235,7 +236,12 @@ class AccountsTab extends StatelessWidget {
                             height: 16,
                           ),
                           Expanded(
-                            child: ListView.builder(
+                            child: ListView.separated(
+                                separatorBuilder: (context, index) {
+                                  return Divider(
+                                    height: 1,
+                                  );
+                                },
                                 itemCount: model.customerTransactionList
                                     .where(
                                       (customerTransaction) =>
@@ -277,16 +283,17 @@ class AccountsTab extends StatelessWidget {
                                                 children: [
                                                   Text(
                                                     c.description,
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w700),
+                                                    style: kListStyleTitle1,
                                                   ),
                                                   SizedBox(
                                                     height: 4,
                                                   ),
-                                                  Text(Helper
-                                                      .formatDateForAccounts(
-                                                          c.entryDate)),
+                                                  Text(
+                                                    Helper
+                                                        .formatDateForAccounts(
+                                                            c.entryDate),
+                                                    style: kListStyleSubTitle1,
+                                                  ),
                                                 ],
                                               ),
                                               Column(
@@ -297,17 +304,18 @@ class AccountsTab extends StatelessWidget {
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w900,
-                                                              fontSize: 18),
+                                                                      .w600,
+                                                              fontSize: 14),
                                                         )
                                                       : Text(
                                                           '${Helper.formatCurrency(c.debitAmount)} KES',
                                                           style: TextStyle(
                                                               color:
                                                                   Colors.green,
+                                                              fontSize: 14,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w900))
+                                                                      .w600))
                                                 ],
                                               )
                                             ],

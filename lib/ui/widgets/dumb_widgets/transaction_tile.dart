@@ -20,24 +20,52 @@ class TransactionTile extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         child: ListTile(
           onTap: onTap,
-          title: Text(transaction.stockTransactionId, style: kListStyleTitle1),
-          leading: Text(Helper.getDay(transaction.entryDate)),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    child: Text('FR0M : '),
+                    width: 50,
+                  ),
+                  Text(
+                    transaction.sourceWarehouse,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    child: Text('TO :'),
+                    width: 50,
+                  ),
+                  Text(
+                    transaction.destinationWarehouse,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          leading:
+              Text(transaction.stockTransactionId, style: kListStyleTitle1),
           subtitle: Row(
             children: [
               Text(
                 transaction.voucherType.toUpperCase(),
                 style: kListStyleSubTitle1,
               ),
-              SizedBox(
-                width: 5,
-              ),
               Text(
                 transaction.voucherSubType,
                 style: kListStyleSubTitle2,
               ),
+              Spacer(),
+              Text(transaction.transactionStatus.toUpperCase()),
             ],
           ),
-          trailing: Text(transaction.transactionStatus),
         ),
       ),
     );

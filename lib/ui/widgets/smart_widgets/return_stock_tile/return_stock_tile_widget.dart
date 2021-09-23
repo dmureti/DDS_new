@@ -1,3 +1,5 @@
+import 'package:distributor/src/ui/text_styles.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/product_quantity_container.dart';
 import 'package:distributor/ui/widgets/smart_widgets/return_stock_tile/return_stock_tile_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -17,50 +19,129 @@ class ReturnStockTileWidget extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             child: Row(
               children: [
-                Container(
-                  child: Text(model.getBalance),
-                  width: 20,
+                // Container(
+                //   child: Text(
+                //     model.getBalance,
+                //     // '99999',
+                //     style: kListStyleItemCount,
+                //     textAlign: TextAlign.center,
+                //   ),
+                //   width: 55,
+                // ),
+                ProductQuantityContainer(
+                  quantity: model.getBalance,
+                  style: kListStyleItemCount,
                 ),
                 SizedBox(
-                  width: 10,
+                  width: 5,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(product.itemName),
-                    Text(product.itemCode),
+                    Text(
+                      product.itemName,
+                      style: kListStyleTitle1,
+                    ),
+                    Text(
+                      product.itemCode,
+                      style: kListStyleSubTitle1,
+                    ),
                   ],
                 ),
                 Spacer(),
                 Container(
-                  width: 120,
-                  child: Row(
-                    children: [
-                      IconButton(
-                        onPressed: model.canRemove
-                            ? () {
-                                //Update the product
-                                // onChange();
-                                model.remove();
-                                // onRemove(model.item, val: model.quantity);
-                                onChange(model.product);
+                  width: 150,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(32),
+                    border: Border.all(color: Colors.black12, width: 2),
+                  ),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: Row(
+                        children: [
+                          IconButton(
+                            onPressed: model.canRemove
+                                ? () {
+                                    //Update the product
+                                    // onChange();
+                                    model.remove();
+                                    // onRemove(model.item, val: model.quantity);
+                                    onChange(model.product);
+                                  }
+                                : null,
+                            icon: Icon(Icons.remove_circle_outline),
+                            visualDensity: VisualDensity.compact,
+                          ),
+                          GestureDetector(
+                            onTap: () async {
+                              var result = await showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return SimpleDialog(
+                                      insetPadding:
+                                          EdgeInsets.symmetric(horizontal: 12),
+                                      title: Text(
+                                          'Return ${product.itemName} To Branch'),
+                                      children: [
+                                        Divider(),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                              'Number of pieces available is ${model.maxQuantity}'),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: TextField(
+                                            onChanged: (val) {
+                                              model.updateProduct(val);
+                                            },
+                                            decoration: InputDecoration(),
+                                            onSubmitted: (val) {
+                                              model.updateProduct(val);
+                                            },
+                                            keyboardType: TextInputType.number,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: RaisedButton(
+                                            onPressed: () {
+                                              onChange(model.product);
+                                              Navigator.pop(
+                                                  context, model.product);
+                                            },
+                                            child: Text('Submit'),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  });
+
+                              if (result is Product) {
+                                model.updateProduct(
+                                    result.quantity.toStringAsFixed(0));
+                                onChange(result);
+                                model.notifyListeners();
                               }
-                            : null,
-                        icon: Icon(Icons.remove_circle_outline),
+                            },
+                            child: ProductQuantityContainer(
+                                quantity: model.quantity),
+                          ),
+                          IconButton(
+                            onPressed: model.canAdd
+                                ? () {
+                                    model.add();
+                                    // onAdd(model.item, val: model.quantity);
+                                    onChange(model.product);
+                                  }
+                                : null,
+                            icon: Icon(Icons.add_circle_outline),
+                            visualDensity: VisualDensity.compact,
+                          ),
+                        ],
                       ),
-                      Container(
-                          width: 20,
-                          child: Text(model.quantity.toStringAsFixed(0))),
-                      IconButton(
-                          onPressed: model.canAdd
-                              ? () {
-                                  model.add();
-                                  // onAdd(model.item, val: model.quantity);
-                                  onChange(model.product);
-                                }
-                              : null,
-                          icon: Icon(Icons.add_circle_outline)),
-                    ],
+                    ),
                   ),
                 )
               ],

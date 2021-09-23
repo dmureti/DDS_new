@@ -11,6 +11,8 @@ class StockTransactionListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<StockTransactionViewmodel>.reactive(
         onModelReady: (model) => model.getStockTransactions(),
+        fireOnModelReadyOnce: false,
+        disposeViewModel: true,
         builder: (context, model, child) {
           return Scaffold(
             appBar: AppBar(

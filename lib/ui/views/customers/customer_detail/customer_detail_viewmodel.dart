@@ -142,7 +142,7 @@ class CustomerDetailViewModel extends BaseViewModel {
         enableAddPayment ? await navigateTOAddPayment() : null;
         break;
       case 'make_adhoc_sale':
-        !enableAdhocSale ? navigateToMakeAdhocSale() : null;
+        enableAdhocSale ? await navigateToMakeAdhocSale() : null;
         break;
       case 'add_issue':
         enableAddIssue ? await navigateToAddIssue() : null;

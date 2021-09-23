@@ -4,6 +4,7 @@ import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:distributor/ui/shared/widgets.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/app_bar_column_title.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/product_quantity_container.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/product_quantity_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -41,6 +42,7 @@ class VoucherDetailView extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: DropdownButton(
+                                    dropdownColor: Colors.white,
                                     disabledHint:
                                         Text('Operation not possible'),
                                     isExpanded: true,
@@ -139,8 +141,8 @@ class VoucherDetailView extends StatelessWidget {
                                                       fontSize: 14,
                                                       color: Colors.black54)),
                                               Spacer(),
-                                              Text(
-                                                p.quantity.toStringAsFixed(0),
+                                              ProductQuantityContainer(
+                                                quantity: p.quantity,
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.w400,
                                                     fontSize: 14,

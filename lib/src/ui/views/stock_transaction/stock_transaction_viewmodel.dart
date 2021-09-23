@@ -13,5 +13,6 @@ class StockTransactionViewmodel extends TransactionViewmodel
     setBusy(true);
     _stockTransactionList = await getAllStockTransactions();
     setBusy(false);
+    notifyListeners();
   }
 }

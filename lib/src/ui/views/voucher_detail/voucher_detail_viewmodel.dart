@@ -36,13 +36,26 @@ class VoucherDetailViewmodel extends TransactionViewmodel {
 
   setStatus(String val) async {
     _status = val;
-    await commitStatusChange(val);
-    _disableDropdown = true;
-    getTransaction();
+    var dialogResponse = await _dialogService.showConfirmationDialog(
+        title: 'Change Status',
+        description:
+            'Are you sure you want to $val the status of this pending transaction?',
+        cancelTitle: 'NO',
+        confirmationTitle: 'Yes');
+    if (dialogResponse.confirmed) {
+      await commitStatusChange(val);
+      _disableDropdown = true;
+      await _dialogService.showDialog(
+          title: 'Success',
+          description: 'The transaction has been ${val}d successfully');
+      getTransaction();
+    } else {
+      await _dialogService.showDialog(
+          title: 'Status Not Changed',
+          description: 'The status of the transaction has not changed.');
+      _status = null;
+    }
     notifyListeners();
-    await _dialogService.showDialog(
-        title: 'Success',
-        description: 'The transaction has been ${val}ed successfully');
   }
 
   bool _disableDropdown = false;
@@ -50,7 +63,7 @@ class VoucherDetailViewmodel extends TransactionViewmodel {
 
   commitStatusChange(String val) async {
     switch (status.toLowerCase()) {
-      case 'accept':
+      case 'approve':
         approveTransaction(stockTransaction);
         return;
         break;

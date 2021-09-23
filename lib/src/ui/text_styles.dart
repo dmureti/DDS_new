@@ -14,3 +14,10 @@ TextStyle kListStyleSubTitle1 =
 TextStyle kListStyleSubTitle2 = TextStyle(
   fontSize: 12,
 );
+
+TextStyle kListStyleItemCount = TextStyle(
+  fontSize: 16,
+);
+
+const TextStyle kCartQuantity =
+    TextStyle(fontSize: 16, fontWeight: FontWeight.w500);
