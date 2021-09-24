@@ -99,11 +99,11 @@ class _LoginViewState extends State<LoginView> {
                     // mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Expanded(
-                        flex: 2,
+                        flex: 1,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            UIHelper.verticalSpace(20),
+                            // UIHelper.verticalSpace(5),
                             LoginTextField(
                               text: 'SIGN IN',
                             ),
