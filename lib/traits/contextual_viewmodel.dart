@@ -24,10 +24,14 @@ mixin ContextualViewmodel {
   }
 
   navigateToVoucherDetail(Transaction transaction) async {
-    var result = await _navigationService.navigateTo(Routes.voucherDetailView,
+    var result = await _navigationService.replaceWith(Routes.voucherDetailView,
         arguments: VoucherDetailViewArguments(
             transactionId: transaction.stockTransactionId,
             voucherType: transaction.voucherType));
+    if (result is bool) {
+      _navigationService.pushNamedAndRemoveUntil(Routes.homeView,
+          arguments: HomeViewArguments(index: 3));
+    }
     // _navigationService.back(result: result);
   }
 

@@ -11,8 +11,7 @@ class StockListWidgetViewModel extends BaseViewModel {
 
   List<Product> _productList;
 
-  StockListWidgetViewModel(this.rebuildTree) {
-    print(this.rebuildTree);
+  StockListWidgetViewModel(bool rebuildTree) : _rebuildTree = rebuildTree {
     if (rebuildTree) {
       fetchStockBalance();
     }
@@ -20,21 +19,22 @@ class StockListWidgetViewModel extends BaseViewModel {
 
   List<Product> get productList => _productList;
 
-  final bool rebuildTree;
+  final bool _rebuildTree;
+  get rebuildTree => _rebuildTree ?? false;
 
   init() async {
     await fetchStockBalance();
   }
 
   fetchStockBalance() async {
+    setBusy(true);
     var result = await _stockControllerService.getStockBalance();
+    setBusy(false);
     if (result is List<Product>) {
       _productList = result;
-      print('rebuilt');
       notifyListeners();
     } else if (result is CustomException) {
       _productList = List<Product>();
-      print('no_rebuild');
       notifyListeners();
       await _dialogService.showDialog(
           title: result.title, description: result.description);

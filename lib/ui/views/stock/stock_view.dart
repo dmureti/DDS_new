@@ -13,6 +13,7 @@ class StockView extends StatelessWidget {
     return ViewModelBuilder<StockViewModel>.reactive(
         disposeViewModel: true,
         fireOnModelReadyOnce: false,
+        createNewModelOnInsert: true,
         builder: (context, model, child) => Container(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -34,8 +35,6 @@ class StockView extends StatelessWidget {
                                       await model
                                           .navigateToPendingTransactionsView();
                                       model.setRebuildTree(true);
-                                      print(
-                                          '${model.rebuildTree} from stock view');
                                       model.notifyListeners();
                                     },
                                     label: 'Pending Stock Transactions',

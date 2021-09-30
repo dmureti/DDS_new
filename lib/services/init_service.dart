@@ -8,7 +8,7 @@ class InitService {
 
   updateAppEnv(AppEnv appEnv) {
     _appEnv = appEnv;
-    print(_appEnv.flavorValues.baseUrl);
+    // print(_appEnv.flavorValues.baseUrl);
   }
 
   bool _rememberMe;
@@ -25,6 +25,7 @@ class InitService {
     if (_appEnv == null) {
       _appEnv = _availableEnvList.first;
     }
+
     return _appEnv;
   }
 

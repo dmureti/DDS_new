@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 class ProductQuantityContainer extends StatelessWidget {
   final int quantity;
   final TextStyle style;
+  final TextStyle secondaryStyle;
   const ProductQuantityContainer(
-      {Key key, @required this.quantity, this.style = kCartQuantity})
+      {Key key,
+      @required this.quantity,
+      this.style = kCartQuantity,
+      this.secondaryStyle = kCartSecondaryStyle})
       : super(key: key);
 
   @override
@@ -14,7 +18,7 @@ class ProductQuantityContainer extends StatelessWidget {
       width: 55,
       child: Text(
         quantity.toStringAsFixed(0),
-        style: style,
+        style: quantity > 0 ? secondaryStyle : style,
         textAlign: TextAlign.center,
       ),
     );

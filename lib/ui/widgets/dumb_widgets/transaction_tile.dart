@@ -20,50 +20,61 @@ class TransactionTile extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         child: ListTile(
           onTap: onTap,
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          title: Row(
             children: [
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    child: Text('FR0M : '),
-                    width: 50,
-                  ),
-                  Text(
-                    transaction.sourceWarehouse,
+                  Row(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            child: Text(
+                              'FR0M : ',
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                            width: 60,
+                          ),
+                          Text(
+                            transaction.sourceWarehouse,
+                          ),
+                        ],
+                      ),
+                      Text(transaction.stockTransactionId,
+                          style: kListStyleTitle1),
+                    ],
                   ),
                   SizedBox(
-                    width: 5,
+                    height: 2,
                   ),
-                ],
-              ),
-              Row(
-                children: [
-                  Container(
-                    child: Text('TO :'),
-                    width: 50,
-                  ),
-                  Text(
-                    transaction.destinationWarehouse,
+                  Row(
+                    children: [
+                      Container(
+                        child: Text(
+                          'TO :',
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        width: 60,
+                      ),
+                      Text(
+                        transaction.destinationWarehouse,
+                      ),
+                    ],
                   ),
                 ],
               ),
             ],
           ),
-          leading:
-              Text(transaction.stockTransactionId, style: kListStyleTitle1),
           subtitle: Row(
             children: [
+              Text(Helper.formatDate(DateTime.parse(transaction.entryDate)),
+                  style: kListStyleSubTitle1),
+              Spacer(),
               Text(
                 transaction.voucherType.toUpperCase(),
                 style: kListStyleSubTitle1,
               ),
-              Text(
-                transaction.voucherSubType,
-                style: kListStyleSubTitle2,
-              ),
-              Spacer(),
-              Text(transaction.transactionStatus.toUpperCase()),
             ],
           ),
         ),

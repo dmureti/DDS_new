@@ -112,7 +112,7 @@ class CreateSalesOrderView extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      height: 230,
+                      height: 200,
                       child: SummaryDraggableSheet(model, customer),
                     )
                   ],
@@ -174,7 +174,7 @@ class _SummaryDraggableSheetState extends State<SummaryDraggableSheet> {
                 Text(
                   'Order Details',
                   style: TextStyle(
-                    fontSize: 23,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

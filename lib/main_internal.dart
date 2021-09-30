@@ -25,7 +25,13 @@ void main() async {
       flavor: Flavor.internal,
       name: 'Mini',
       flavorValues: FlavorValues(
-          baseUrl: 'https://testdds.ddsolutions.tech/dds-backend/api/v1'),
+          baseUrl: 'https://dds.ddsolutions.tech/dds-backend/api/v1'),
+    ),
+    AppEnv(
+      flavor: Flavor.internal,
+      name: 'Alpha',
+      flavorValues: FlavorValues(
+          baseUrl: 'https://testdds.ddsolutions.tech/alpha-backend/api/v1'),
     ),
   ];
   _initService.setAvailableEnvList(_appEnv);

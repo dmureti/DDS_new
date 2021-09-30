@@ -6,6 +6,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 class VoucherDetailViewmodel extends TransactionViewmodel {
   final _dialogService = locator<DialogService>();
+  final _navigationService = locator<NavigationService>();
   final String transactionId;
   final String voucherType;
 
@@ -49,6 +50,7 @@ class VoucherDetailViewmodel extends TransactionViewmodel {
           title: 'Success',
           description: 'The transaction has been ${val}d successfully');
       getTransaction();
+      _navigationService.back(result: true);
     } else {
       await _dialogService.showDialog(
           title: 'Status Not Changed',

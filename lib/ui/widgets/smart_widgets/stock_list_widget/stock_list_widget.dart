@@ -16,24 +16,26 @@ class StockListWidget extends StatelessWidget {
         fireOnModelReadyOnce: false,
         disposeViewModel: true,
         onModelReady: (model) => model.init(),
-        builder: (context, model, child) => model.productList == null
-            ? CircularProgressIndicator()
-            : Expanded(
-                child: model.productList.isEmpty
-                    ? EmptyContentContainer(label: kStringNoStock)
-                    : ListView.separated(
-                        itemBuilder: (context, index) {
-                          Product product = model.productList[index];
-                          return ProductQuantityTile(product: product);
-                        },
-                        itemCount: model.productList.length,
-                        separatorBuilder: (context, index) {
-                          return Divider(
-                            height: 1,
-                          );
-                        },
-                      ),
-              ),
+        createNewModelOnInsert: true,
+        builder: (context, model, child) =>
+            model.productList == null || model.isBusy
+                ? CircularProgressIndicator()
+                : Expanded(
+                    child: model.productList.isEmpty
+                        ? EmptyContentContainer(label: kStringNoStock)
+                        : ListView.separated(
+                            itemBuilder: (context, index) {
+                              Product product = model.productList[index];
+                              return ProductQuantityTile(product: product);
+                            },
+                            itemCount: model.productList.length,
+                            separatorBuilder: (context, index) {
+                              return Divider(
+                                height: 1,
+                              );
+                            },
+                          ),
+                  ),
         viewModelBuilder: () => StockListWidgetViewModel(rebuild));
   }
 }

@@ -19,18 +19,10 @@ class ReturnStockTileWidget extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             child: Row(
               children: [
-                // Container(
-                //   child: Text(
-                //     model.getBalance,
-                //     // '99999',
-                //     style: kListStyleItemCount,
-                //     textAlign: TextAlign.center,
-                //   ),
-                //   width: 55,
-                // ),
                 ProductQuantityContainer(
                   quantity: model.getBalance,
                   style: kListStyleItemCount,
+                  secondaryStyle: kListStyleItemCount,
                 ),
                 SizedBox(
                   width: 5,

@@ -1,5 +1,7 @@
 import 'package:distributor/core/helper.dart';
+import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/ui/views/orders/create_order/sales_order_view_model.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/product_quantity_container.dart';
 import 'package:distributor/ui/widgets/smart_widgets/manual_input_widget/manual_input_widget.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -62,96 +64,121 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
               ],
             )),
             isThreeLine: true,
-            subtitle: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(model.isEnabled
-                    ? 'Kshs ${Helper.formatCurrency(model.total)}'
-                    : 'NA'),
-                Spacer(),
-                IconButton(
-                  onPressed: model.isEnabled
-                      ? model.quantity == 0
-                          ? null
-                          : () {
-                              salesOrderViewModel.decreaseSalesOrderItems(
-                                  model.product, 1);
-                              if (model.total >= 0 && model.quantity > 0) {
-                                salesOrderViewModel
-                                    .removeFromTotal(model.product.itemPrice);
-                              }
-                              model.removeItemQuantity();
+            subtitle: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(model.isEnabled
+                      ? 'Kshs ${Helper.formatCurrency(model.total)}'
+                      : 'NA'),
+                  Spacer(),
+                  Container(
+                    width: 150,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(32),
+                      border: Border.all(color: Colors.black12, width: 2),
+                    ),
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(1.0),
+                        child: Row(
+                          children: [
+                            IconButton(
+                              onPressed: model.isEnabled
+                                  ? model.quantity == 0
+                                      ? null
+                                      : () {
+                                          salesOrderViewModel
+                                              .decreaseSalesOrderItems(
+                                                  model.product, 1);
+                                          if (model.total >= 0 &&
+                                              model.quantity > 0) {
+                                            salesOrderViewModel.removeFromTotal(
+                                                model.product.itemPrice);
+                                          }
+                                          model.removeItemQuantity();
 //                    print(salesOrderViewModel.total.toStringAsFixed(2));
-                            }
-                      : null,
-                  icon: Icon(Icons.remove_circle),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    var difference = await showQuantityDialog(
-                        quantity: model.quantity, model: model);
-                    if (difference is int) {
-                      num totalDifference =
-                          difference * model.product.itemPrice;
-                      //update the salesOrderViewmodel
-                      salesOrderViewModel.addToTotal(totalDifference);
-                      // Get the difference in terms of quantity
-                      num differenceInQuantity =
-                          totalDifference / model.product.itemPrice;
-                      if (differenceInQuantity != 0) {
-                        /// Check if there was an overall reduction in cart items
-                        /// If the difference is less than zero
-                        /// The number of cart items shall reduce
-                        if (differenceInQuantity < 0) {
-                          salesOrderViewModel.decreaseSalesOrderItems(
-                              model.product, (-(differenceInQuantity)).toInt());
-                        } else {
-                          salesOrderViewModel.increaseSalesOrderItems(
-                              model.product, differenceInQuantity.toInt());
-                        }
-                      }
-                    }
-                  },
-                  child: Text(
-                    model.quantity.toString(),
-                    style: model.quantity == 0
-                        ? TextStyle()
-                        : TextStyle(
-                            fontWeight: FontWeight.w700, color: Colors.black),
-                  ),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                IconButton(
-                  onPressed: model.isEnabled
-                      ? model.maxQuantity != null &&
-                              model.quantity < model.maxQuantity
-                          ? () {
-                              salesOrderViewModel.increaseSalesOrderItems(
-                                  model.product, 1);
-                              salesOrderViewModel
-                                  .addToTotal(model.product.itemPrice);
-                              model.addItemQuantity();
-//
-                            }
-                          : model.maxQuantity == null
-                              ? () {
-                                  salesOrderViewModel.increaseSalesOrderItems(
-                                      model.product, 1);
+                                        }
+                                  : null,
+                              icon: Icon(Icons.remove_circle),
+                              visualDensity: VisualDensity.compact,
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                var difference = await showQuantityDialog(
+                                    quantity: model.quantity, model: model);
+                                if (difference is int) {
+                                  num totalDifference =
+                                      difference * model.product.itemPrice;
+                                  //update the salesOrderViewmodel
                                   salesOrderViewModel
-                                      .addToTotal(model.product.itemPrice);
-                                  model.addItemQuantity();
-//
+                                      .addToTotal(totalDifference);
+                                  // Get the difference in terms of quantity
+                                  num differenceInQuantity =
+                                      totalDifference / model.product.itemPrice;
+                                  if (differenceInQuantity != 0) {
+                                    /// Check if there was an overall reduction in cart items
+                                    /// If the difference is less than zero
+                                    /// The number of cart items shall reduce
+                                    if (differenceInQuantity < 0) {
+                                      salesOrderViewModel
+                                          .decreaseSalesOrderItems(
+                                              model.product,
+                                              (-(differenceInQuantity))
+                                                  .toInt());
+                                    } else {
+                                      salesOrderViewModel
+                                          .increaseSalesOrderItems(
+                                              model.product,
+                                              differenceInQuantity.toInt());
+                                    }
+                                  }
                                 }
-                              : null
-                      : null,
-                  icon: Icon(Icons.add_circle),
-                )
-              ],
+                              },
+                              child: ProductQuantityContainer(
+                                quantity: model.quantity,
+                                style: kCartQuantity,
+                                secondaryStyle: kCartSecondaryStyle,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: model.isEnabled
+                                  ? model.maxQuantity != null &&
+                                          model.quantity < model.maxQuantity
+                                      ? () {
+                                          salesOrderViewModel
+                                              .increaseSalesOrderItems(
+                                                  model.product, 1);
+                                          salesOrderViewModel.addToTotal(
+                                              model.product.itemPrice);
+                                          model.addItemQuantity();
+//
+                                        }
+                                      : model.maxQuantity == null
+                                          ? () {
+                                              salesOrderViewModel
+                                                  .increaseSalesOrderItems(
+                                                      model.product, 1);
+                                              salesOrderViewModel.addToTotal(
+                                                  model.product.itemPrice);
+                                              model.addItemQuantity();
+//
+                                            }
+                                          : null
+                                  : null,
+                              icon: Icon(
+                                Icons.add_circle,
+                              ),
+                              visualDensity: VisualDensity.compact,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
