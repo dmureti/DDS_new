@@ -13,7 +13,7 @@ class LogisticsModel extends BaseModel {
   DeliveryJourney _currentJourney;
 
   // List of completedJourneys
-  List<DeliveryJourney> _completedJourneys = List<DeliveryJourney>();
+  List<DeliveryJourney> _completedJourneys = <DeliveryJourney>[];
 
   List<DeliveryJourney> get completedJourneys {
     var result = _userJourneyList.where((DeliveryJourney d) {

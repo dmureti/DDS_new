@@ -57,7 +57,7 @@ class DeliveryJourneyViewmodel extends BaseViewModel {
 
   Api get api => _apiService.api;
 
-  List<DeliveryStop> _deliveryStop = List<DeliveryStop>();
+  List<DeliveryStop> _deliveryStop = <DeliveryStop>[];
   List<DeliveryStop> get deliveryStop => _deliveryJourney.stops.map((e) {
         if (e.customerId.isNotEmpty) {
           _deliveryStop.add(e);
