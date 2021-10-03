@@ -5,6 +5,9 @@
       <root url="jar://C:/gradle/caches/transforms-2/files-2.1/145d7f358e9406ffa3a5273196a24ff3/jetified-play-services-places-placereport-16.0.0/jars/classes.jar!/" />
       <root url="file://C:/gradle/caches/transforms-2/files-2.1/145d7f358e9406ffa3a5273196a24ff3/jetified-play-services-places-placereport-16.0.0/AndroidManifest.xml" />
       <root url="file://C:/gradle/caches/transforms-2/files-2.1/145d7f358e9406ffa3a5273196a24ff3/jetified-play-services-places-placereport-16.0.0/res" />
+      <root url="file://C:/gradle/caches/transforms-2/files-2.1/2e2af0466337f2e0c3ef94f3ef262d53/jetified-play-services-places-placereport-16.0.0/AndroidManifest.xml" />
+      <root url="file://C:/gradle/caches/transforms-2/files-2.1/2e2af0466337f2e0c3ef94f3ef262d53/jetified-play-services-places-placereport-16.0.0/res" />
+      <root url="jar://C:/gradle/caches/transforms-2/files-2.1/2e2af0466337f2e0c3ef94f3ef262d53/jetified-play-services-places-placereport-16.0.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

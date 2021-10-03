@@ -19,7 +19,7 @@ class DashboardView extends StatelessWidget {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                        colors: [Color(0xFF182848), Color(0xFF4B6CB7)],
+                        colors: [Color(0xFF303891), Color(0xFF4B6CB7)],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter),
                   ),
@@ -126,7 +126,7 @@ class DashboardView extends StatelessWidget {
     return Text(
       'Welcome back' + ', ${model.user.full_name}',
       style: TextStyle(
-          color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w500),
+          color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.w500),
     );
   }
 }

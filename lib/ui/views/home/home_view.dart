@@ -46,7 +46,7 @@ class HomeView extends StatelessWidget {
         ),
         bottomNavigationBar: Theme(
           data: Theme.of(context).copyWith(
-            canvasColor: Color(0xFF182848),
+            canvasColor: Color(0xFF303891),
           ),
           child: BottomNavBar(
             homeViewModel: model,

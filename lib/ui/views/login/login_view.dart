@@ -42,6 +42,7 @@ class _LoginViewState extends State<LoginView> {
     return ViewModelBuilder<LoginViewModel>.reactive(
       onModelReady: (model) => model.init(),
       builder: (context, model, child) => Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
@@ -103,6 +104,11 @@ class _LoginViewState extends State<LoginView> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
+                            Container(
+                              child: Image.asset('assets/images/mini_logo.png'),
+                              // width: 150,
+                              height: 150,
+                            ),
                             LoginTextField(
                               text: 'Sign In',
                             ),
@@ -125,6 +131,7 @@ class _LoginViewState extends State<LoginView> {
                                 },
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: InputDecoration(
+                                  filled: false,
                                   hintText: 'Email Address / Phone ',
                                   hintStyle:
                                       TextStyle(fontWeight: FontWeight.w600),
@@ -151,6 +158,7 @@ class _LoginViewState extends State<LoginView> {
                                 controller: _passwordController,
                                 obscureText: model.obscurePassword,
                                 decoration: InputDecoration(
+                                  filled: false,
                                   hintText: '*****',
                                   hintStyle:
                                       TextStyle(fontWeight: FontWeight.w600),
@@ -210,8 +218,7 @@ class _LoginViewState extends State<LoginView> {
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 20, vertical: 14),
                                     shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(18)),
+                                        borderRadius: BorderRadius.circular(9)),
                                     child: Container(
                                       width: 250,
                                       child: Center(

@@ -12,11 +12,13 @@ class JourneySelectionWidget extends StatelessWidget {
         builder: (context, model, child) => Container(
               margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
               decoration: BoxDecoration(
-                  color: Colors.pink, borderRadius: BorderRadius.circular(8)),
+                color: Color(0xFFe31f22),
+                borderRadius: BorderRadius.circular(8),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Material(
-                  color: Colors.pink,
+                  color: Color(0xFFe31f22),
                   type: MaterialType.card,
                   elevation: 4,
                   borderRadius: BorderRadius.circular(5),

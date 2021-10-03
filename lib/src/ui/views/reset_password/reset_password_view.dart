@@ -51,7 +51,10 @@ class _UserIdTextFormField extends HookViewModelWidget<ResetPasswordViewmodel> {
       BuildContext context, ResetPasswordViewmodel model) {
     var _controller = useTextEditingController();
     return TextFormField(
-      decoration: InputDecoration(prefixIcon: Icon(Icons.person)),
+      decoration: InputDecoration(
+          prefixIcon: Icon(Icons.person),
+          filled: false,
+          helperText: 'Email Address OR Phone Number'),
       onChanged: (val) => model.setUserId(val),
       controller: _controller,
     );

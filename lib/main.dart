@@ -34,14 +34,16 @@ ThemeData _buildAppTheme() {
             TextStyle(fontWeight: FontWeight.w900, color: Colors.indigo)),
     appBarTheme: AppBarTheme(
         elevation: 1.0,
-        color: kDarkBlue,
+        color: Color(0xFF303891),
         titleTextStyle: TextStyle(
             color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w600),
         iconTheme: IconThemeData(color: Colors.white)),
     buttonColor: Colors.pink,
     buttonTheme: base.buttonTheme.copyWith(
       buttonColor: Colors.pink,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
       textTheme: ButtonTextTheme.normal,
     ),
     primaryIconTheme: base.iconTheme.copyWith(color: Colors.white),
