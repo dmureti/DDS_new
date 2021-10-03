@@ -2,7 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/ui/views/customers/customer_detail/accounts_tab/accounts_tab_viewmodel.dart';
-import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
+
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';

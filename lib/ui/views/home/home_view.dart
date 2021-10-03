@@ -1,8 +1,7 @@
-import 'package:badges/badges.dart';
 import 'package:distributor/src/ui/views/adhoc_listing/adhoc_listing_view.dart';
 import 'package:distributor/ui/access_controllers/global/bottom_navbar/bottom_nav_bar.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
-import 'package:distributor/ui/views/adhoc_sales/adhoc_sales_view.dart';
+
 import 'package:distributor/ui/views/customers/customer_view.dart';
 import 'package:distributor/ui/views/dashboard/dashboard_view.dart';
 import 'package:distributor/ui/views/home/home_viewmodel.dart';
@@ -11,7 +10,7 @@ import 'package:distributor/ui/views/stock/stock_view.dart';
 import 'package:distributor/ui/widgets/drawer.dart';
 import 'package:distributor/ui/widgets/reactive/map_icon_button/map_iconbutton.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+
 import 'package:stacked/stacked.dart';
 
 class HomeView extends StatelessWidget {

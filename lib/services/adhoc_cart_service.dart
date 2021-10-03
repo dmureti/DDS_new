@@ -4,7 +4,6 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/logistics_service.dart';
-import 'package:distributor/services/order_service.dart';
 import 'package:distributor/services/user_service.dart';
 
 import 'package:injectable/injectable.dart';
@@ -14,7 +13,6 @@ import 'package:tripletriocore/tripletriocore.dart';
 
 @lazySingleton
 class AdhocCartService with ReactiveServiceMixin {
-  OrderService _orderService = locator<OrderService>();
   ApiService _apiService = locator<ApiService>();
   UserService _userService = locator<UserService>();
   LogisticsService _logisticsService = locator<LogisticsService>();
@@ -59,10 +57,10 @@ class AdhocCartService with ReactiveServiceMixin {
 
   String get customerType => _customerType.value;
 
-  RxValue<List<Product>> _itemsInCart = RxValue(initial: List<Product>());
+  RxValue<List<Product>> _itemsInCart = RxValue(initial: <Product>[]);
   List<Product> get itemsInCart => _itemsInCart.value;
 
-  RxValue<List> _paymentModeDetails = RxValue(initial: List());
+  RxValue<List> _paymentModeDetails = RxValue(initial: []);
   List get paymentModeDetails => _paymentModeDetails.value;
 
   RxValue<bool> _showMPesa = RxValue(initial: false);
@@ -117,8 +115,7 @@ class AdhocCartService with ReactiveServiceMixin {
   RxValue _customerId = RxValue(initial: null);
   RxValue _customerName = RxValue(initial: "");
   RxValue _sellingPriceList = RxValue(initial: "");
-  RxValue<List<SalesOrderItem>> _items =
-      RxValue(initial: List<SalesOrderItem>());
+  RxValue<List<SalesOrderItem>> _items = RxValue(initial: <SalesOrderItem>[]);
   RxValue _remarks = RxValue(initial: "");
   RxValue _customerType = RxValue(initial: "");
   RxValue _warehouse = RxValue(initial: "");

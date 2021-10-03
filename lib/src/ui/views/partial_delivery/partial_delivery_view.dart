@@ -2,7 +2,7 @@ import 'package:distributor/src/ui/views/partial_delivery/partial_delivery_viewm
 import 'package:distributor/ui/widgets/dumb_widgets/app_bar_column_title.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 import 'package:tripletriocore/tripletriocore.dart';

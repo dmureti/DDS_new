@@ -20,7 +20,7 @@ class AddAdhocSaleViewModel extends BaseViewModel {
     } else if (result is CustomException) {
       await _dialogService.showDialog(
           title: result.title, description: result.description);
-      _productList = List<Product>();
+      _productList = <Product>[];
       notifyListeners();
     }
   }

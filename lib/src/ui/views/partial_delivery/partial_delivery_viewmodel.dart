@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:distributor/app/locator.dart';
-import 'package:distributor/services/api_service.dart';
+
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:stacked/stacked.dart';
@@ -11,10 +11,9 @@ import 'package:tripletriocore/tripletriocore.dart';
 class PartialDeliveryViewModel extends BaseViewModel {
   NavigationService _navigationService = locator<NavigationService>();
   JourneyService _journeyService = locator<JourneyService>();
-  DialogService _dialogService = locator<DialogService>();
   UserService _userService = locator<UserService>();
   String get token => _userService.user.token;
-  SnackbarService _snackbarService = locator<SnackbarService>();
+
   LocationService _locationService = locator<LocationService>();
 
   SalesOrder _salesOrder;

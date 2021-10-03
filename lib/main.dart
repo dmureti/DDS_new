@@ -2,8 +2,6 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:flutter/material.dart';
-
-// import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 import 'package:distributor/app/router.gr.dart' as app_router;

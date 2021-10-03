@@ -1,7 +1,7 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/access_controller_service.dart';
-import 'package:stacked/stacked.dart';
+
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 import 'package:distributor/core/models/app_models.dart';

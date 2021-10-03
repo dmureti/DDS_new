@@ -150,7 +150,7 @@ class AdhocSalesViewModel extends ReactiveViewModel {
       _customerList = result;
       notifyListeners();
     } else {
-      _customerList = List<Customer>();
+      _customerList = <Customer>[];
       notifyListeners();
     }
   }
@@ -164,7 +164,7 @@ class AdhocSalesViewModel extends ReactiveViewModel {
       _productList = result;
       notifyListeners();
     } else if (result is CustomException) {
-      _productList = List<Product>();
+      _productList = <Product>[];
       notifyListeners();
     }
   }

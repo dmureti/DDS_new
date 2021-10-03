@@ -23,7 +23,7 @@ class ActivityService with ReactiveServiceMixin {
 
   // List of activities that the user has been involved in
   RxValue<List<Activity>> _sessionActivityList =
-      RxValue<List<Activity>>(initial: List<Activity>());
+      RxValue<List<Activity>>(initial: <Activity>[]);
   List<Activity> get sessionActivityList => _sessionActivityList.value;
 
   RxValue<bool> _hasUpdate = RxValue<bool>(initial: false);

@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 import 'package:tripletriocore/tripletriocore.dart';
-import 'package:distributor/ui/widgets/dumb_widgets/no_journey_container.dart';
 
 class AdhocSalesView extends StatelessWidget {
   final Customer customer;

@@ -35,11 +35,11 @@ class OrderService with ReactiveServiceMixin {
   }
 
   RxValue<List<SalesOrderItem>> _salesOrderItems =
-      RxValue<List<SalesOrderItem>>(initial: List<SalesOrderItem>());
+      RxValue<List<SalesOrderItem>>(initial: <SalesOrderItem>[]);
   List<SalesOrderItem> get salesOrderItems => _salesOrderItems.value;
 
   RxValue<List<SalesOrder>> _salesOrderList =
-      RxValue<List<SalesOrder>>(initial: List<SalesOrder>());
+      RxValue<List<SalesOrder>>(initial: <SalesOrder>[]);
   List<SalesOrder> get salesOrderList => _salesOrderList.value;
 
   addToSalesOrderItemList() {}

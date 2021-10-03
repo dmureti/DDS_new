@@ -23,7 +23,7 @@ class DeliveryNoteViewmodel extends BaseViewModel {
   Api get api => _apiService.api;
   User get user => _userService.user;
 
-  List<DeliveryNote> _deliveryNotes = List<DeliveryNote>();
+  List<DeliveryNote> _deliveryNotes = <DeliveryNote>[];
   List<DeliveryNote> get deliveryNotes => _deliveryNotes;
 
   getDeliveryNotesForCustomer() async {

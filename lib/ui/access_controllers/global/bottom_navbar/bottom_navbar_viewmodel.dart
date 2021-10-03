@@ -1,8 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/access_controller_service.dart';
-import 'package:distributor/services/customer_service.dart';
-import 'package:distributor/services/journey_service.dart';
-import 'package:distributor/services/stock_controller_service.dart';
+
 import 'package:stacked/stacked.dart';
 
 class BottomNavBarViewModel extends BaseViewModel {
@@ -17,9 +15,6 @@ class BottomNavBarViewModel extends BaseViewModel {
 
   BottomNavBarViewModel(this.onTap, int index) : _index = index ?? 0;
   AccessControlService _accessControlService = locator<AccessControlService>();
-  StockControllerService _stockControllerService = StockControllerService();
-  CustomerService _customerService = locator<CustomerService>();
-  JourneyService _journeyService = JourneyService();
 
   bool _enableCustomerTab = false;
   bool get enableCustomerTab => _enableCustomerTab;

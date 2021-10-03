@@ -62,22 +62,22 @@ class JourneyService with ReactiveServiceMixin {
 
   /// The [DeliveryStop] of the active [DeliveryJourney]
   RxValue<List<DeliveryStop>> _deliveryStops =
-      RxValue<List<DeliveryStop>>(initial: List<DeliveryStop>());
+      RxValue<List<DeliveryStop>>(initial: <DeliveryStop>[]);
   List<DeliveryStop> get deliveryStops => _currentJourney.value.stops
       .where((stop) => stop.orderId.isNotEmpty)
       .toList();
 
   /// The List of [SalesOrder] for this delivery
   RxValue<List<SalesOrder>> _salesOrder =
-      RxValue<List<SalesOrder>>(initial: List<SalesOrder>());
+      RxValue<List<SalesOrder>>(initial: <SalesOrder>[]);
   List<SalesOrder> get salesOrder => _salesOrder.value;
 
   /// The [Customer] list in the  [DeliveryJourney]
   RxValue<List<Customer>> _customers =
-      RxValue<List<Customer>>(initial: List<Customer>());
+      RxValue<List<Customer>>(initial: <Customer>[]);
   List<Customer> get customers => _customers.value;
 
-  List<DeliveryStop> _completedStops = List<DeliveryStop>();
+  List<DeliveryStop> _completedStops = <DeliveryStop>[];
   List<DeliveryStop> get completedStops {
     return _completedStops;
   }

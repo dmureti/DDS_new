@@ -42,17 +42,19 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
 
   updateJourneyStatus() async {
     if (journeyStatus.toLowerCase() == 'scheduled') {
-      setBusy(true);
-      var result = await _journeyService.startTrip();
-      setBusy(false);
-      if (result) {
-        notifyListeners();
-        return true;
+      var dialogResponse = await _dialogService.showConfirmationDialog();
+      //Check if user has confirmed that the journey should start
+      if (dialogResponse.confirmed) {
+        setBusy(true);
+        var result = await _journeyService.startTrip();
+        setBusy(false);
+        if (result) {
+          notifyListeners();
+          return true;
+        }
       }
-      // else {
-      //   await _dialogService.showDialog(
-      //       title: 'Could not start trip', description: result.toString());
-      // }
+      //Do nothing if the user did not confirm
+
     } else if (journeyStatus.toLowerCase() == 'in transit') {
       setBusy(true);
       var result = await _journeyService.stopTrip();

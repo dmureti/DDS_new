@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:distributor/src/ui/views/voucher_detail/voucher_detail_viewmodel.dart';
-import 'package:distributor/ui/shared/brand_colors.dart';
+
 import 'package:distributor/ui/shared/widgets.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/app_bar_column_title.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/product_quantity_container.dart';
-import 'package:distributor/ui/widgets/dumb_widgets/product_quantity_tile.dart';
+
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';

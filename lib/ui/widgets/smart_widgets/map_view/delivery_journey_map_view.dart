@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route_annotations.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/journey_map_view_header.dart';
 import 'package:distributor/ui/widgets/smart_widgets/distance_widget/distance_widget.dart';

@@ -32,7 +32,7 @@ class LogisticsService with ReactiveServiceMixin {
 
   /// Reactive user journey list
   RxValue<List<DeliveryJourney>> _userJourneyList =
-      RxValue<List<DeliveryJourney>>(initial: List<DeliveryJourney>());
+      RxValue<List<DeliveryJourney>>(initial: <DeliveryJourney>[]);
   List<DeliveryJourney> get userJourneyList => _userJourneyList.value;
 
   /// Contains the state of the current journey
@@ -79,7 +79,7 @@ class LogisticsService with ReactiveServiceMixin {
     } else {
       await _dialogService.showDialog(
           title: 'Error', description: result.description.toString());
-      return List<DeliveryJourney>();
+      return <DeliveryJourney>[];
     }
   }
 

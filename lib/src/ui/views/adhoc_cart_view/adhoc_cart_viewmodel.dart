@@ -69,7 +69,7 @@ class AdhocCartViewModel extends ReactiveViewModel {
       _customerProductList = result;
       notifyListeners();
     } else {
-      _customerProductList = List<Product>();
+      _customerProductList = <Product>[];
       await _dialogService.showDialog(
           title: 'Error', description: 'An error occurred.');
     }
@@ -83,7 +83,7 @@ class AdhocCartViewModel extends ReactiveViewModel {
       _customerProductList = result;
       notifyListeners();
     } else {
-      _customerProductList = List<Product>();
+      _customerProductList = <Product>[];
       await _dialogService.showDialog(
           title: 'Error', description: 'An error occurred.');
     }
@@ -95,7 +95,7 @@ class AdhocCartViewModel extends ReactiveViewModel {
       _stockBalanceList = result;
       notifyListeners();
     } else if (result is CustomException) {
-      _stockBalanceList = List<Product>();
+      _stockBalanceList = <Product>[];
       notifyListeners();
       await _dialogService.showDialog(
           title: result.title, description: result.description);

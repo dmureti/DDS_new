@@ -1,12 +1,9 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/access_controller_service.dart';
-
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/customer_service.dart';
-import 'package:distributor/services/permission_service.dart';
 import 'package:distributor/services/user_service.dart';
-import 'package:distributor/src/ui/views/add_issue/add_issue_view.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -37,7 +34,7 @@ class CustomerDetailViewModel extends BaseViewModel {
   CustomerDetailViewModel({@required this.customer});
 
   List<double> get coordinates {
-    List<double> _coordinates = List<double>();
+    List<double> _coordinates = <double>[];
     if (customer.gpsLocation != null) {
       List<String> splitGPSString = customer.gpsLocation.split(',');
       splitGPSString.map((e) {

@@ -23,7 +23,7 @@ class CustomerService with ReactiveServiceMixin {
 
   RxValue<CustomerAccount> _customerAccount = RxValue<CustomerAccount>();
   RxValue<List<Issue>> _customerIssues =
-      RxValue<List<Issue>>(initial: List<Issue>());
+      RxValue<List<Issue>>(initial: <Issue>[]);
 
   CustomerAccount get customerAccount => _customerAccount.value;
 
@@ -51,7 +51,7 @@ class CustomerService with ReactiveServiceMixin {
   }
 
   RxValue<List<SalesOrder>> _salesOrderList =
-      RxValue<List<SalesOrder>>(initial: List<SalesOrder>());
+      RxValue<List<SalesOrder>>(initial: <SalesOrder>[]);
   List<SalesOrder> get salesOrderList => _salesOrderList.value;
 
   CustomerService() {
@@ -104,7 +104,7 @@ class CustomerService with ReactiveServiceMixin {
       _salesOrderList.value = result;
       notifyListeners();
     } else {
-      _salesOrderList.value = List<SalesOrder>();
+      _salesOrderList.value = <SalesOrder>[];
       notifyListeners();
     }
     return true;

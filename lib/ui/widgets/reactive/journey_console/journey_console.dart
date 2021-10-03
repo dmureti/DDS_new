@@ -19,15 +19,16 @@ class JourneyConsole extends StatelessWidget {
                         width: double.infinity,
                         height: 70,
                         decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                          stops: [0, 0.9],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                          colors: [
-                            Colors.black87,
-                            Colors.pinkAccent,
-                          ],
-                        )),
+                          gradient: LinearGradient(
+                            stops: [0, 0.9],
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                            colors: [
+                              Colors.black87,
+                              Colors.pinkAccent,
+                            ],
+                          ),
+                        ),
                       ),
                       Material(
                         color: Colors.pink.withOpacity(0.9),
@@ -47,9 +48,11 @@ class JourneyConsole extends StatelessWidget {
                                           width: 50,
                                           height: 50,
                                           child: Center(
-                                              child: CircularProgressIndicator(
-                                            backgroundColor: kDarkBlue,
-                                          )))
+                                            child: CircularProgressIndicator(
+                                              backgroundColor: kDarkBlue,
+                                            ),
+                                          ),
+                                        )
                                       : SizedBox(
                                           width: 50,
                                           height: 50,

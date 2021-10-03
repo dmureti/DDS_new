@@ -57,7 +57,7 @@ class LogisticsModel extends BaseModel {
   }
 
   // List of active / In Transir journeys
-  List<DeliveryJourney> _inTransitJourneys = List<DeliveryJourney>();
+  List<DeliveryJourney> _inTransitJourneys = <DeliveryJourney>[];
   List<DeliveryJourney> get inTransitJourneys {
     var result = _userJourneyList.where((DeliveryJourney d) {
       return d.status.toLowerCase().trim() == 'in transit';
@@ -73,7 +73,7 @@ class LogisticsModel extends BaseModel {
 
   // List of scheduled journeys
   List<DeliveryJourney> get scheduledJourneys {
-    List<DeliveryJourney> _scheduledJourneys = List<DeliveryJourney>();
+    List<DeliveryJourney> _scheduledJourneys = <DeliveryJourney>[];
     var result = userJourneyList.where((DeliveryJourney d) {
       return d.status.toLowerCase().trim() == 'scheduled';
     }).toList();
@@ -165,7 +165,7 @@ class LogisticsModel extends BaseModel {
   List<DeliveryJourney> _userJourneyList;
   List<DeliveryJourney> get userJourneyList {
     if (_userJourneyList == null) {
-      _userJourneyList = List<DeliveryJourney>();
+      _userJourneyList = <DeliveryJourney>[];
     }
     return _userJourneyList;
   }
@@ -205,7 +205,7 @@ class LogisticsModel extends BaseModel {
   List<DeliveryJourney> filterDeliveryJourneyByStatus(
       DeliveryJourneyStatus deliveryJourneyStatus) {
     String status = EnumToString.convertToString(deliveryJourneyStatus);
-    List<DeliveryJourney> _result = List<DeliveryJourney>();
+    List<DeliveryJourney> _result = <DeliveryJourney>[];
     //Loop through the results
     _result = _userJourneyList.where((DeliveryJourney j) {
       return j.status.trim().toLowerCase() == status.trim().toLowerCase();

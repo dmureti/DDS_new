@@ -95,7 +95,7 @@ class DeliveryJourneyMapViewModel extends FutureViewModel<UserLocation> {
   Map<PolylineId, Polyline> _polylines = {};
   List<LatLng> _polylineCoordinates = [];
 
-  List<Customer> _customers = List<Customer>();
+  List<Customer> _customers = <Customer>[];
   List<Customer> get customers => _customers;
   updateCustomers(Customer customer) {
     _customers.add(customer);

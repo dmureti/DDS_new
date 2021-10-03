@@ -1,7 +1,7 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/src/ui/common/transaction_viewmodel.dart';
-import 'package:stacked/stacked.dart';
+
 import 'package:stacked_services/stacked_services.dart';
 
 class VoucherDetailViewmodel extends TransactionViewmodel {

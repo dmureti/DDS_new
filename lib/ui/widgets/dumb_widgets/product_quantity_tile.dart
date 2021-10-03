@@ -1,5 +1,5 @@
 import 'package:distributor/src/ui/text_styles.dart';
-import 'package:distributor/ui/shared/brand_colors.dart';
+
 import 'package:distributor/ui/widgets/dumb_widgets/product_quantity_container.dart';
 import 'package:flutter/material.dart';
 import 'package:tripletriocore/tripletriocore.dart';

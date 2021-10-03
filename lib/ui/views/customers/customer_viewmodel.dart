@@ -40,7 +40,7 @@ class CustomerViewModel extends FutureViewModel<List<Customer>> {
         return _customerList;
       }
     } else {
-      return List<Customer>();
+      return <Customer>[];
     }
   }
 
@@ -68,8 +68,8 @@ class CustomerViewModel extends FutureViewModel<List<Customer>> {
     return result;
   }
 
-  List<String> _filters = List<String>();
-  List<String> get filters => _filters ?? List<String>();
+  List<String> _filters = <String>[];
+  List<String> get filters => _filters ?? <String>[];
 
   bool checkIfFilterExists(String val) {
     if (_filters.length == 0) {

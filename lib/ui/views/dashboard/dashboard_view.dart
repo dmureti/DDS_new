@@ -18,10 +18,11 @@ class DashboardView extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          colors: [Color(0xFF182848), Color(0xFF4B6CB7)],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter)),
+                    gradient: LinearGradient(
+                        colors: [Color(0xFF182848), Color(0xFF4B6CB7)],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter),
+                  ),
                   child: ListView(
                     shrinkWrap: true,
                     children: <Widget>[
@@ -73,7 +74,7 @@ class DashboardView extends StatelessWidget {
                                             "Today\'s Summary".toUpperCase(),
                                             style: TextStyle(
                                                 fontSize: 20.0,
-                                                fontWeight: FontWeight.w900,
+                                                fontWeight: FontWeight.w700,
                                                 color: Colors.pink),
                                           ),
                                         ),

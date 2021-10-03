@@ -80,10 +80,10 @@ class StopListTileViewModel extends BaseViewModel {
   /// When a user taps the corresponding listitem they will be redirected to the order detail view
   Future navigateToDeliveryDetailView(
       DeliveryJourney deliveryJourney, DeliveryStop deliveryStop) async {
-    var result = await _navigationService.navigateTo(Routes.deliveryNoteView,
+    await _navigationService.navigateTo(Routes.deliveryNoteView,
         arguments: DeliveryNoteViewArguments(
             deliveryJourney: deliveryJourney, deliveryStop: deliveryStop));
-    // _salesOrder = await fetchSalesOrder();
+
     await getDeliveryNote();
     notifyListeners();
   }

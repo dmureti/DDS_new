@@ -1,13 +1,8 @@
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/text_styles.dart';
-import 'package:distributor/ui/views/orders/create_order/sales_order_view_model.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/product_quantity_container.dart';
 import 'package:distributor/ui/widgets/smart_widgets/manual_input_widget/manual_input_widget.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_hooks/stacked_hooks.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 import 'package:flutter/material.dart';

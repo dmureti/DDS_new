@@ -80,16 +80,16 @@ class _LoginViewState extends State<LoginView> {
           height: MediaQuery.of(context).size.height,
           child: Stack(
             children: <Widget>[
-              Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    color: Colors.black,
-                    image: DecorationImage(
-                        colorFilter: ColorFilter.srgbToLinearGamma(),
-                        image: AssetImage(
-                            'assets/images/aromatic-board-bread-breakfast.jpg'),
-                        fit: BoxFit.fill)),
-              ),
+              // Container(
+              //   width: MediaQuery.of(context).size.width,
+              //   decoration: BoxDecoration(
+              //       color: Colors.black,
+              //       image: DecorationImage(
+              //           colorFilter: ColorFilter.srgbToLinearGamma(),
+              //           image: AssetImage(
+              //               'assets/images/aromatic-board-bread-breakfast.jpg'),
+              //           fit: BoxFit.fill)),
+              // ),
               Form(
                 key: _formKey,
                 child: SafeArea(
@@ -99,22 +99,16 @@ class _LoginViewState extends State<LoginView> {
                     // mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Expanded(
-                        flex: 1,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            // UIHelper.verticalSpace(5),
-                            LoginTextField(
-                              text: 'SIGN IN',
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
                         flex: 4,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
+                            LoginTextField(
+                              text: 'Sign In',
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
                             TextFormFieldPadding(
                               child: TextFormField(
                                 controller: _userIdController,
@@ -137,6 +131,9 @@ class _LoginViewState extends State<LoginView> {
                                   prefixIcon: Icon(Icons.person),
                                 ),
                               ),
+                            ),
+                            SizedBox(
+                              height: 10,
                             ),
                             TextFormFieldPadding(
                               child: TextFormField(

@@ -1,16 +1,13 @@
 import 'package:distributor/app/locator.dart';
-import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/customer_service.dart';
-import 'package:distributor/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 class AddIssueViewModel extends ReactiveViewModel {
-  ApiService _apiService = locator<ApiService>();
   NavigationService _navigationService = locator<NavigationService>();
   DialogService _dialogService = locator<DialogService>();
-  UserService _userService = locator<UserService>();
+
   SnackbarService _snackbarService = locator<SnackbarService>();
   CustomerService _customerService = locator<CustomerService>();
   final Customer customer;

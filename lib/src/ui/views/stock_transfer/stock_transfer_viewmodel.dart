@@ -27,7 +27,7 @@ class StockTransferViewmodel extends BaseViewModel with ContextualViewmodel {
       _productList = result;
       notifyListeners();
     } else if (result is CustomException) {
-      _productList = List<Product>();
+      _productList = <Product>[];
       notifyListeners();
       await _dialogService.showDialog(
           title: result.title, description: result.description);
