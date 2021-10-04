@@ -166,47 +166,6 @@ class ContactsTabView extends StatelessWidget {
                               SizedBox(
                                 height: 10.0,
                               ),
-                              Material(
-                                type: MaterialType.card,
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(5),
-                                elevation: 1.0,
-                                child: Container(
-                                  margin: EdgeInsets.only(bottom: 10.0),
-                                  padding: EdgeInsets.all(15.0),
-                                  width: double.infinity,
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text(
-                                        'App Users'.toUpperCase(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 18.0),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Center(
-                                          child: Container(
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: <Widget>[
-                                                CircleAvatar(),
-                                                CircleAvatar(),
-                                                CircleAvatar(),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10.0,
-                              ),
                             ],
                           ),
                         )
