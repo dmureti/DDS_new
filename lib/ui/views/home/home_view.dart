@@ -1,3 +1,4 @@
+import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
 import 'package:distributor/src/ui/views/adhoc_listing/adhoc_listing_view.dart';
 import 'package:distributor/ui/access_controllers/global/bottom_navbar/bottom_nav_bar.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
@@ -71,23 +72,53 @@ class HomeView extends StatelessWidget {
   _buildContent(int index) {
     switch (index) {
       case 0:
-        return DashboardView();
+        return Stack(
+          children: [
+            NetworkSensitiveWidget(),
+            DashboardView(),
+          ],
+        );
         break;
       case 1:
-        return RoutesListingView();
+        return Stack(
+          children: [
+            NetworkSensitiveWidget(),
+            RoutesListingView(),
+          ],
+        );
         break;
       case 2:
-        return AdhocListingView();
+        return Stack(
+          children: [
+            NetworkSensitiveWidget(),
+            AdhocListingView(),
+          ],
+        );
         // return AdhocSalesView();
         break;
       case 3:
-        return StockView();
+        return Column(
+          children: [
+            NetworkSensitiveWidget(),
+            Expanded(child: StockView()),
+          ],
+        );
         break;
       case 4:
-        return CustomerView();
+        return Column(
+          children: [
+            NetworkSensitiveWidget(),
+            Expanded(child: CustomerView()),
+          ],
+        );
         break;
       default:
-        return DashboardView();
+        return Column(
+          children: [
+            NetworkSensitiveWidget(),
+            DashboardView(),
+          ],
+        );
         break;
     }
   }

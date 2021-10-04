@@ -1,7 +1,10 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
+import 'package:distributor/core/enums.dart';
+import 'package:distributor/services/connectivity_service.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -10,14 +13,18 @@ import 'package:distributor/app/router.gr.dart' as app_router;
 class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      supportedLocales: const [Locale('en'), Locale('en_us')],
-      title: Globals.appName,
-      debugShowCheckedModeBanner: false,
-      theme: _kAppTheme,
-      initialRoute: Routes.startupView,
-      onGenerateRoute: app_router.Router().onGenerateRoute,
-      navigatorKey: locator<NavigationService>().navigatorKey,
+    return StreamProvider<ConnectivityStatus>(
+      create: (context) =>
+          ConnectivityService().connectionStatusController.stream,
+      child: MaterialApp(
+        supportedLocales: const [Locale('en'), Locale('en_us')],
+        title: Globals.appName,
+        debugShowCheckedModeBanner: false,
+        theme: _kAppTheme,
+        initialRoute: Routes.startupView,
+        onGenerateRoute: app_router.Router().onGenerateRoute,
+        navigatorKey: locator<NavigationService>().navigatorKey,
+      ),
     );
   }
 }

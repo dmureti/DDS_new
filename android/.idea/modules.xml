@@ -4,9 +4,13 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/android.iml" filepath="$PROJECT_DIR$/.idea/modules/android.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/android.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/android.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1910637564/android.connectivity_plus.iml" filepath="$PROJECT_DIR$/.idea/modules/1910637564/android.connectivity_plus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-2002149395/android.connectivity_plus_macos.iml" filepath="$PROJECT_DIR$/.idea/modules/-2002149395/android.connectivity_plus_macos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-674884720/android.connectivity_plus_web.iml" filepath="$PROJECT_DIR$/.idea/modules/-674884720/android.connectivity_plus_web.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-813428686/android.firebase_core.iml" filepath="$PROJECT_DIR$/.idea/modules/-813428686/android.firebase_core.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-624807445/android.firebase_core_web.iml" filepath="$PROJECT_DIR$/.idea/modules/-624807445/android.firebase_core_web.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-69525019/android.firebase_crashlytics.iml" filepath="$PROJECT_DIR$/.idea/modules/-69525019/android.firebase_crashlytics.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1209233539/android.firebase_performance.iml" filepath="$PROJECT_DIR$/.idea/modules/-1209233539/android.firebase_performance.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-273962524/android.flutter_plugin_android_lifecycle.iml" filepath="$PROJECT_DIR$/.idea/modules/-273962524/android.flutter_plugin_android_lifecycle.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/1814208048/android.geolocator.iml" filepath="$PROJECT_DIR$/.idea/modules/1814208048/android.geolocator.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-398459584/android.google_api_availability.iml" filepath="$PROJECT_DIR$/.idea/modules/-398459584/android.google_api_availability.iml" />

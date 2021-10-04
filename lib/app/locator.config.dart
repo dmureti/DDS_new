@@ -6,28 +6,29 @@
 
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
-import 'package:stacked_services/stacked_services.dart' as _i8;
-import 'package:tripletriocore/tripletriocore.dart' as _i11;
+import 'package:stacked_services/stacked_services.dart' as _i9;
+import 'package:tripletriocore/tripletriocore.dart' as _i12;
 
-import '../core/models/product_service.dart' as _i16;
-import '../core/models/search_service.dart' as _i18;
+import '../core/models/product_service.dart' as _i17;
+import '../core/models/search_service.dart' as _i19;
 import '../services/access_controller_service.dart' as _i3;
 import '../services/activity_service.dart' as _i4;
 import '../services/adhoc_cart_service.dart' as _i5;
 import '../services/api_service.dart' as _i6;
-import '../services/customer_service.dart' as _i7;
-import '../services/init_service.dart' as _i9;
-import '../services/journey_service.dart' as _i10;
-import '../services/logistics_service.dart' as _i12;
-import '../services/order_service.dart' as _i13;
-import '../services/payments_service.dart' as _i14;
-import '../services/permission_service.dart' as _i15;
-import '../services/return_stock_service.dart' as _i17;
-import '../services/stock_controller_service.dart' as _i19;
-import '../services/stop_service.dart' as _i20;
-import '../services/third_party_services_module.dart' as _i22;
+import '../services/connectivity_service.dart' as _i7;
+import '../services/customer_service.dart' as _i8;
+import '../services/init_service.dart' as _i10;
+import '../services/journey_service.dart' as _i11;
+import '../services/logistics_service.dart' as _i13;
+import '../services/order_service.dart' as _i14;
+import '../services/payments_service.dart' as _i15;
+import '../services/permission_service.dart' as _i16;
+import '../services/return_stock_service.dart' as _i18;
+import '../services/stock_controller_service.dart' as _i20;
+import '../services/stop_service.dart' as _i21;
+import '../services/third_party_services_module.dart' as _i23;
 import '../services/user_service.dart'
-    as _i21; // ignore_for_file: unnecessary_lambdas
+    as _i22; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -40,63 +41,65 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i4.ActivityService>(() => _i4.ActivityService());
   gh.lazySingleton<_i5.AdhocCartService>(() => _i5.AdhocCartService());
   gh.lazySingleton<_i6.ApiService>(() => thirdPartyServicesModule.appService);
-  gh.lazySingleton<_i7.CustomerService>(
+  gh.lazySingleton<_i7.ConnectivityService>(() => _i7.ConnectivityService());
+  gh.lazySingleton<_i8.CustomerService>(
       () => thirdPartyServicesModule.customerService);
-  gh.lazySingleton<_i8.DialogService>(
+  gh.lazySingleton<_i9.DialogService>(
       () => thirdPartyServicesModule.dialogService);
-  gh.lazySingleton<_i9.InitService>(() => thirdPartyServicesModule.initService);
-  gh.lazySingleton<_i10.JourneyService>(
+  gh.lazySingleton<_i10.InitService>(
+      () => thirdPartyServicesModule.initService);
+  gh.lazySingleton<_i11.JourneyService>(
       () => thirdPartyServicesModule.journeyService);
-  gh.lazySingleton<_i11.LocationService>(
+  gh.lazySingleton<_i12.LocationService>(
       () => thirdPartyServicesModule.locationService);
-  gh.lazySingleton<_i12.LogisticsService>(
+  gh.lazySingleton<_i13.LogisticsService>(
       () => thirdPartyServicesModule.logisticsService);
-  gh.lazySingleton<_i8.NavigationService>(
+  gh.lazySingleton<_i9.NavigationService>(
       () => thirdPartyServicesModule.navigationService);
-  gh.lazySingleton<_i13.OrderService>(
+  gh.lazySingleton<_i14.OrderService>(
       () => thirdPartyServicesModule.orderService);
-  gh.lazySingleton<_i14.PaymentsService>(() => _i14.PaymentsService());
-  gh.lazySingleton<_i15.PermissionService>(() => _i15.PermissionService());
-  gh.lazySingleton<_i16.ProductService>(() => _i16.ProductService());
-  gh.lazySingleton<_i17.ReturnStockService>(() => _i17.ReturnStockService());
-  gh.lazySingleton<_i18.SearchService>(() => _i18.SearchService());
-  gh.lazySingleton<_i8.SnackbarService>(
+  gh.lazySingleton<_i15.PaymentsService>(() => _i15.PaymentsService());
+  gh.lazySingleton<_i16.PermissionService>(() => _i16.PermissionService());
+  gh.lazySingleton<_i17.ProductService>(() => _i17.ProductService());
+  gh.lazySingleton<_i18.ReturnStockService>(() => _i18.ReturnStockService());
+  gh.lazySingleton<_i19.SearchService>(() => _i19.SearchService());
+  gh.lazySingleton<_i9.SnackbarService>(
       () => thirdPartyServicesModule.snackbarService);
-  gh.lazySingleton<_i19.StockControllerService>(
+  gh.lazySingleton<_i20.StockControllerService>(
       () => thirdPartyServicesModule.stockControlService);
-  gh.lazySingleton<_i20.StopService>(() => _i20.StopService());
-  gh.lazySingleton<_i21.UserService>(
+  gh.lazySingleton<_i21.StopService>(() => _i21.StopService());
+  gh.lazySingleton<_i22.UserService>(
       () => thirdPartyServicesModule.userService);
   return get;
 }
 
-class _$ThirdPartyServicesModule extends _i22.ThirdPartyServicesModule {
+class _$ThirdPartyServicesModule extends _i23.ThirdPartyServicesModule {
   @override
   _i3.AccessControlService get accessControlService =>
       _i3.AccessControlService();
   @override
   _i6.ApiService get appService => _i6.ApiService();
   @override
-  _i7.CustomerService get customerService => _i7.CustomerService();
+  _i8.CustomerService get customerService => _i8.CustomerService();
   @override
-  _i8.DialogService get dialogService => _i8.DialogService();
+  _i9.DialogService get dialogService => _i9.DialogService();
   @override
-  _i9.InitService get initService => _i9.InitService();
+  _i10.InitService get initService => _i10.InitService();
   @override
-  _i10.JourneyService get journeyService => _i10.JourneyService();
+  _i11.JourneyService get journeyService => _i11.JourneyService();
   @override
-  _i11.LocationService get locationService => _i11.LocationService();
+  _i12.LocationService get locationService => _i12.LocationService();
   @override
-  _i12.LogisticsService get logisticsService => _i12.LogisticsService();
+  _i13.LogisticsService get logisticsService => _i13.LogisticsService();
   @override
-  _i8.NavigationService get navigationService => _i8.NavigationService();
+  _i9.NavigationService get navigationService => _i9.NavigationService();
   @override
-  _i13.OrderService get orderService => _i13.OrderService();
+  _i14.OrderService get orderService => _i14.OrderService();
   @override
-  _i8.SnackbarService get snackbarService => _i8.SnackbarService();
+  _i9.SnackbarService get snackbarService => _i9.SnackbarService();
   @override
-  _i19.StockControllerService get stockControlService =>
-      _i19.StockControllerService();
+  _i20.StockControllerService get stockControlService =>
+      _i20.StockControllerService();
   @override
-  _i21.UserService get userService => _i21.UserService();
+  _i22.UserService get userService => _i22.UserService();
 }

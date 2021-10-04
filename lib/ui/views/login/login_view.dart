@@ -1,3 +1,4 @@
+import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
 import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/shared/text_styles.dart';
 import 'package:distributor/ui/shared/widgets.dart';
@@ -58,6 +59,7 @@ class _LoginViewState extends State<LoginView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              NetworkSensitiveWidget(),
               Form(
                 key: _formKey,
                 child: Column(
