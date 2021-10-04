@@ -69,14 +69,6 @@ flutter:
     - assets/images/no_journey.png
     - assets/images/mini_logo.png
   fonts:
-    - family: Proxima Nova Condensed
-      fonts:
-        - asset: assets/fonts/proxima_nova/condensed/ProximaNovaAltCondensedRegular.otf
-          weight: 400
-        - asset: assets/fonts/proxima_nova/condensed/ProximaNovaAltCondensedSemiBold.otf
-          weight: 600
-        - asset: assets/fonts/proxima_nova/condensed/ProximaNovaAltExtraCondensedBold.otf
-          weight: 700
     - family: Proxima Nova
       fonts:
         - asset: assets/fonts/proxima_nova/normal/ProximaNovaAltRegular.otf
