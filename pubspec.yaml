@@ -69,10 +69,12 @@ flutter:
     - assets/images/no_journey.png
     - assets/images/mini_logo.png
   fonts:
-    - family: Proxima Nova
+    - family: ProximaNovaRegular
       fonts:
         - asset: assets/fonts/proxima_nova/normal/ProximaNovaAltRegular.otf
+    - family: ProximaNova500
+      fonts:
         - asset: assets/fonts/proxima_nova/normal/ProximaNovaAltSemibold.otf
-          weight: 500
+    - family: ProximaNova700
+      fonts:
         - asset: assets/fonts/proxima_nova/normal/ProximaNovaAltExtrabold.otf
-          weight: 700

@@ -2,6 +2,7 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 import 'package:distributor/app/router.gr.dart' as app_router;
@@ -72,9 +73,7 @@ TextTheme _buildAppTextTheme(TextTheme base) {
       .copyWith(
         headline5: base.headline5.copyWith(
           color: Colors.pink,
-          fontWeight: FontWeight.w600,
-          fontFamily: 'Simpel',
-          fontSize: 18.0,
+          fontFamily: 'ProximaNova700',
         ),
         headline6: base.headline6.copyWith(fontSize: 18.0),
         caption: base.caption.copyWith(
@@ -82,13 +81,17 @@ TextTheme _buildAppTextTheme(TextTheme base) {
           fontSize: 14.0,
         ),
         bodyText1: base.bodyText1.copyWith(
-            fontWeight: FontWeight.w400, fontSize: 14.0, color: Colors.white),
+            fontFamily: 'ProximaNovaRegular',
+            fontSize: 14.0,
+            color: Colors.white),
         button: base.button.copyWith(color: Colors.pink),
         bodyText2: base.bodyText1.copyWith(
-            fontWeight: FontWeight.w500, fontSize: 14.0, color: Colors.white),
+            fontFamily: 'ProximaNovaRegular',
+            fontSize: 14.0,
+            color: Colors.white),
       )
       .apply(
-        fontFamily: 'Proxima Nova',
+        fontFamily: 'ProximaNovaRegular',
         displayColor: Colors.grey,
         bodyColor: Colors.black,
       );
