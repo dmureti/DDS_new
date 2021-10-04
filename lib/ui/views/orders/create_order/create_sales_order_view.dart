@@ -21,103 +21,80 @@ class CreateSalesOrderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SalesOrderViewModel>.reactive(
-      builder: (context, model, child) => DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              icon: Icon(FontAwesomeIcons.chevronLeft),
-              onPressed: () async {
-                Navigator.pop(context, false);
-              },
-            ),
-            title: AppBarColumnTitle(
-              mainTitle: 'Place Order',
-              subTitle: customer.name,
-            ),
-            actions: <Widget>[],
-            bottom: model.isBusy
-                ? TabBar(
-                    labelColor: Colors.pink,
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    unselectedLabelColor: Colors.white.withOpacity(0.5),
-                    tabs: [
-                      Tab(
-                        child: Text('Available'),
-                      ),
-                      Tab(
-                        child: Text('All'),
-                      ),
-                    ],
-                  )
-                : TabBar(
-                    labelColor: Colors.pink,
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    unselectedLabelColor: Colors.white.withOpacity(0.5),
-                    tabs: [
-                      Tab(
-                        child: Text('Available (${model.availableProducts})'),
-                      ),
-                      Tab(
-                        child: Text('All (${model.totalNoOfProducts})'),
-                      ),
-                    ],
-                  ),
+      builder: (context, model, child) => Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(FontAwesomeIcons.chevronLeft),
+            onPressed: () async {
+              Navigator.pop(context, false);
+            },
           ),
-          body: model.isBusy
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Column(
-                  children: [
-                    Expanded(
-                      child: TabBarView(
-                        children: [
-                          ListView(
-                            children: <Widget>[
-                              ListView.builder(
-                                  physics: ClampingScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: model.productList
-                                      .where((product) => product.itemPrice > 0)
-                                      .length,
-                                  itemBuilder: (context, index) {
-                                    if (model.productList[index].itemPrice >
-                                        0) {
-                                      return SalesOrderItemWidget(
-                                        item: model.productList[index],
-                                        salesOrderViewModel: model,
-                                      );
-                                    }
-                                    return Container();
-                                  }),
-                            ],
-                          ),
-                          ListView(
-                            children: <Widget>[
-                              ListView.builder(
-                                  physics: ClampingScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: model.productList.length,
-                                  itemBuilder: (context, index) {
-                                    return SalesOrderItemWidget<
-                                        SalesOrderViewModel>(
-                                      item: model.productList[index],
-                                      salesOrderViewModel: model,
-                                    );
-                                  }),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 200,
-                      child: SummaryDraggableSheet(model, customer),
-                    )
-                  ],
-                ),
+          title: AppBarColumnTitle(
+            mainTitle: 'Place Order',
+            subTitle: customer.name,
+          ),
+          actions: <Widget>[],
+          // bottom: model.isBusy
+          //     ? TabBar(
+          //         labelColor: Colors.pink,
+          //         indicatorSize: TabBarIndicatorSize.tab,
+          //         unselectedLabelColor: Colors.white.withOpacity(0.5),
+          //         tabs: [
+          //           Tab(
+          //             child: Text('Available'),
+          //           ),
+          //           Tab(
+          //             child: Text('All'),
+          //           ),
+          //         ],
+          //       )
+          //     : TabBar(
+          //         labelColor: Colors.pink,
+          //         indicatorSize: TabBarIndicatorSize.tab,
+          //         unselectedLabelColor: Colors.white.withOpacity(0.5),
+          //         tabs: [
+          //           Tab(
+          //             child: Text('Available (${model.availableProducts})'),
+          //           ),
+          //           Tab(
+          //             child: Text('All (${model.totalNoOfProducts})'),
+          //           ),
+          //         ],
+          //       ),
         ),
+        body: model.isBusy
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      children: <Widget>[
+                        ListView.builder(
+                            physics: ClampingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: model.productList
+                                .where((product) => product.itemPrice > 0)
+                                .length,
+                            itemBuilder: (context, index) {
+                              if (model.productList[index].itemPrice > 0) {
+                                return SalesOrderItemWidget(
+                                  item: model.productList[index],
+                                  salesOrderViewModel: model,
+                                );
+                              }
+                              return Container();
+                            }),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 200,
+                    child: SummaryDraggableSheet(model, customer),
+                  )
+                ],
+              ),
       ),
       viewModelBuilder: () => SalesOrderViewModel(customer: customer),
       onModelReady: (model) => model.fetchProducts(),
