@@ -55,6 +55,14 @@ class _LoginViewState extends State<LoginView> {
                 : Container()),
         extendBodyBehindAppBar: true,
         body: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                kDarkNeutral,
+                kDarkNeutral20,
+              ])),
           height: MediaQuery.of(context).size.height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -71,11 +79,11 @@ class _LoginViewState extends State<LoginView> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
-                            child: Image.asset('assets/images/mini_logo.png'),
-                            // width: 150,
-                            height: 100,
-                          ),
+                          // Container(
+                          //   child: Image.asset('assets/images/mini_logo.png'),
+                          //   // width: 150,
+                          //   height: 100,
+                          // ),
                           LoginTextField(
                             text: 'Sign In',
                           ),
@@ -86,7 +94,9 @@ class _LoginViewState extends State<LoginView> {
                             child: TextFormField(
                               controller: _userIdController,
                               style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 16),
+                                  fontFamily: 'ProximaNova500',
+                                  fontSize: 16,
+                                  color: kDarkNeutral20),
                               onChanged: (String val) {
                                 model.setUserId(val);
                               },
@@ -118,7 +128,9 @@ class _LoginViewState extends State<LoginView> {
                                 return null;
                               },
                               style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 16),
+                                  fontFamily: 'ProximaNova500',
+                                  fontSize: 16,
+                                  color: kDarkNeutral20),
                               onChanged: (String val) =>
                                   model.updatePassword(val),
                               keyboardType: TextInputType.text,
@@ -175,7 +187,7 @@ class _LoginViewState extends State<LoginView> {
                               )
                             ],
                           ),
-                          UIHelper.verticalSpace(30),
+                          UIHelper.verticalSpace(10),
                           model.isBusy
                               ? Center(
                                   child: CircularProgressIndicator(),
@@ -220,15 +232,22 @@ class _LoginViewState extends State<LoginView> {
   }
 
   Widget _buildLoginContainer({Widget child}) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 14.0),
-        child: child,
+    return SizedBox(
+      width: 400,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 14.0),
+          child: child,
+        ),
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
+              color: kDarkNeutral20,
+              offset: Offset(1, 1),
+              blurRadius: 6,
+              spreadRadius: 0.8)
+        ], borderRadius: BorderRadius.circular(4), color: Colors.white),
       ),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: kColorMutedNeutral.withOpacity(0.3)),
     );
   }
 

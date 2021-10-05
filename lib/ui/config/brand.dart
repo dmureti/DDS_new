@@ -29,8 +29,8 @@ final Color kDarkNeutral20 = Color(0xFF736D66);
 final Color kDarkNeutral = Color(0xFFF2F2F2);
 
 ///
-final Color kColorRed = Color(0xFF262A90);
+final Color kColorBlue = Color(0xFF262A90);
 final Color kColorYellow = Color(0xFFF8C225);
-final Color kColorBlue = Color(0xFFEE0B2C);
+final Color kColorRed = Color(0xFFEE0B2C);
 final Color kColorMutedNeutral = Color(0xFFC1C2D9);
 final Color kColorMutedNeutral2 = Color(0xFFF2F0D8);

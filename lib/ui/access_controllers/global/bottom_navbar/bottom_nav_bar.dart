@@ -1,4 +1,5 @@
 import 'package:distributor/ui/access_controllers/global/bottom_navbar/bottom_navbar_viewmodel.dart';
+import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/views/home/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -20,7 +21,7 @@ class BottomNavBar extends StatelessWidget {
           iconSize: 70,
           type: BottomNavigationBarType.fixed,
           currentIndex: model.index,
-          selectedIconTheme: IconThemeData(color: Colors.pink),
+          selectedIconTheme: IconThemeData(color: kMutedYellowDark),
           unselectedIconTheme: (IconThemeData(color: Colors.white)),
           showUnselectedLabels: false,
           showSelectedLabels: false,
@@ -31,7 +32,7 @@ class BottomNavBar extends StatelessWidget {
             BottomNavigationBarItem(
               backgroundColor: Color(0xFF182848),
               icon: IconButton(
-                splashColor: Colors.pink,
+                splashColor: kMutedYellowDark,
                 icon: Icon(Icons.home),
                 onPressed: model.onJourneyTabTap()
                     ? () {
@@ -46,7 +47,7 @@ class BottomNavBar extends StatelessWidget {
             BottomNavigationBarItem(
               backgroundColor: Color(0xFF182848),
               icon: IconButton(
-                splashColor: Colors.pink,
+                splashColor: kMutedYellowDark,
                 icon: Icon(Icons.swap_calls),
                 onPressed: model.isEnabled(1)
                     ? model.onJourneyTabTap()
@@ -63,7 +64,7 @@ class BottomNavBar extends StatelessWidget {
             BottomNavigationBarItem(
               backgroundColor: Color(0xFF182848),
               icon: IconButton(
-                splashColor: Colors.pink,
+                splashColor: kMutedYellowDark,
                 icon: Icon(Icons.add_shopping_cart),
                 onPressed: model.isEnabled(2)
                     ? model.onStockBalanceTap()
@@ -80,7 +81,7 @@ class BottomNavBar extends StatelessWidget {
             BottomNavigationBarItem(
               backgroundColor: Color(0xFF182848),
               icon: IconButton(
-                splashColor: Colors.pink,
+                splashColor: kMutedYellowDark,
                 icon: Icon(Icons.apps),
                 onPressed: model.isEnabled(3)
                     ? model.onStockBalanceTap()
@@ -97,7 +98,7 @@ class BottomNavBar extends StatelessWidget {
             BottomNavigationBarItem(
               backgroundColor: Color(0xFF182848),
               icon: IconButton(
-                splashColor: Colors.pink,
+                splashColor: kMutedYellowDark,
                 onPressed: model.isEnabled(4)
                     ? model.onCustomerTabTap()
                         ? () {

@@ -1,4 +1,5 @@
 import 'package:distributor/core/helper.dart';
+import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/shared/widgets.dart';
 import 'package:distributor/ui/views/customer_location.dart';
 import 'package:distributor/ui/views/customers/customer_detail/contacts_tab_view/contacts_tab_view_viewmodel.dart';
@@ -53,7 +54,7 @@ class ContactsTabView extends StatelessWidget {
                                           child: Container(
                                             width: 40.0,
                                             height: 2.0,
-                                            color: Colors.red,
+                                            color: kMutedPrimary,
                                           ),
                                         ),
                                       ),

@@ -2,6 +2,7 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/connectivity_service.dart';
+import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,18 +40,17 @@ ThemeData _buildAppTheme() {
     canvasColor: kCanvasColor,
     dialogTheme: DialogTheme(
         titleTextStyle:
-            TextStyle(fontWeight: FontWeight.w900, color: Colors.indigo)),
+            TextStyle(fontWeight: FontWeight.w700, color: Colors.indigo)),
     appBarTheme: AppBarTheme(
         elevation: 1.0,
         color: Color(0xFF303891),
         titleTextStyle: TextStyle(
-            color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w600),
+            color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.w500),
         iconTheme: IconThemeData(color: Colors.white)),
-    buttonColor: Colors.pink,
     buttonTheme: base.buttonTheme.copyWith(
-      buttonColor: Colors.pink,
+      buttonColor: kDeepDarkBlue,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(6),
       ),
       textTheme: ButtonTextTheme.normal,
     ),
@@ -84,7 +84,7 @@ TextTheme _buildAppTextTheme(TextTheme base) {
         ),
         headline6: base.headline6.copyWith(fontSize: 18.0),
         caption: base.caption.copyWith(
-          fontWeight: FontWeight.w400,
+          fontFamily: 'ProximaNova500',
           fontSize: 14.0,
         ),
         bodyText1: base.bodyText1.copyWith(

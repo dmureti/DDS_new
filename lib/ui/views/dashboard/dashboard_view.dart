@@ -1,3 +1,4 @@
+import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/views/dashboard/dashboard_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/shop_name.dart';
 
@@ -73,9 +74,9 @@ class DashboardView extends StatelessWidget {
                                           child: Text(
                                             "Today\'s Summary".toUpperCase(),
                                             style: TextStyle(
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.pink),
+                                                fontSize: 18,
+                                                fontFamily: 'ProximaNova500',
+                                                color: kColorRed),
                                           ),
                                         ),
                                         Spacer(),

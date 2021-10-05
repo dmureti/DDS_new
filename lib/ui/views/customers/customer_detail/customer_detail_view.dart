@@ -1,4 +1,5 @@
 import 'package:distributor/core/helper.dart';
+import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/views/customers/customer_detail/accounts_tab/accounts_tab.dart';
 import 'package:distributor/ui/views/customers/customer_detail/contacts_tab_view/contacts_tab_view.dart';
 import 'package:distributor/ui/views/customers/customer_detail/customer_detail_viewmodel.dart';
@@ -180,13 +181,13 @@ class _CustomerDetailViewState extends State<CustomerDetailView>
           ],
           bottom: TabBar(
             controller: _tabController,
-            indicatorColor: Colors.pink,
+            indicatorColor: kMutedYellowDark,
             indicatorWeight: 3.0,
             labelPadding: EdgeInsets.only(bottom: 10.0),
             labelStyle: TextStyle(
-                fontWeight: FontWeight.w500, color: Colors.pink, fontSize: 16),
+                fontFamily: 'ProximaNova500', color: Colors.pink, fontSize: 16),
             unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
-            labelColor: Colors.pink,
+            labelColor: kMutedYellowDark,
             unselectedLabelColor: Colors.white,
             onTap: (int) {
               //Check permission

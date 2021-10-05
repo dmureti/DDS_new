@@ -1,6 +1,7 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/helper.dart';
+import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/app_bar_column_title.dart';
 
 import 'package:distributor/ui/widgets/smart_widgets/sales_order_item/sales_order_item_widget.dart';
@@ -139,7 +140,7 @@ class _SummaryDraggableSheetState extends State<SummaryDraggableSheet> {
     return ViewModelBuilder<SummaryDraggableSheetViewModel>.reactive(
       viewModelBuilder: () => SummaryDraggableSheetViewModel(),
       builder: (context, model, child) => Container(
-        color: Colors.orange,
+        color: kMutedYellowDark,
         padding:
             EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0, bottom: 10.0),
         child: Column(
@@ -282,20 +283,21 @@ class _SummaryDraggableSheetState extends State<SummaryDraggableSheet> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 4,
             ),
             Container(
               alignment: Alignment.center,
               child: RaisedButton(
+                color: kColorfulMiniRed,
                 padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
+                    borderRadius: BorderRadius.circular(8)),
                 child: Text(
                   'Checkout'.toUpperCase(),
                   style: TextStyle(
-                      fontWeight: FontWeight.w700,
+                      fontFamily: 'ProximaNova500',
                       color: Colors.white,
-                      fontSize: 20),
+                      fontSize: 18),
                 ),
                 onPressed: () {
                   SalesOrderRequest salesOrderRequest = SalesOrderRequest(
