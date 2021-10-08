@@ -10,6 +10,7 @@ import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/permission_service.dart';
 import 'package:distributor/services/user_service.dart';
+import 'package:distributor/services/version_service.dart';
 import 'package:distributor/traits/contextual_viewmodel.dart';
 import 'package:distributor/ui/views/adhoc_sales/adhoc_sales_view.dart';
 
@@ -35,6 +36,10 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   InitService _initService = locator<InitService>();
   AccessControlService _accessControlService = locator<AccessControlService>();
 
+  final _versionService = locator<VersionService>();
+
+  String get version => _versionService.version;
+
   HomeViewModel(int index) : _currentIndex = index;
 
   String get noOfUpdates => _activityService.noOfUpdates.toString();
@@ -46,8 +51,6 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   get enableHomeTab => _accessControlService.enableHomeTab;
 
   get enableAdhocTab => _accessControlService.enableAdhocView;
-
-  String get version => null;
 
   refresh() async {
     setBusy(true);

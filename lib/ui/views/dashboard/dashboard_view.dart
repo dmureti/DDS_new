@@ -19,6 +19,7 @@ class DashboardView extends StatelessWidget {
         builder: (context, model, child) => model.isBusy
             ? Center(child: BusyWidget())
             : Container(
+                decoration: BoxDecoration(color: Colors.white),
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -77,9 +78,9 @@ class DashboardView extends StatelessWidget {
                                           child: Text(
                                             "Today\'s Summary".toUpperCase(),
                                             style: TextStyle(
-                                                fontSize: 18,
+                                                fontSize: 16,
                                                 fontFamily: 'ProximaNova500',
-                                                color: kColorRed),
+                                                color: Color(0xFFed1c24)),
                                           ),
                                         ),
                                         Spacer(),
@@ -87,9 +88,9 @@ class DashboardView extends StatelessWidget {
                                           child: Text(
                                             '${model.formattedDate}',
                                             style: TextStyle(
-                                                fontSize: 18.0,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.pink),
+                                                fontSize: 16.0,
+                                                fontFamily: 'ProximaNova500',
+                                                color: Color(0xFFed1c24)),
                                           ),
                                         ),
                                       ],
@@ -130,7 +131,7 @@ class DashboardView extends StatelessWidget {
                                                 DashboardButton(
                                                     onTap: model
                                                         .navigateToWalkInSale,
-                                                    title: 'New Walk in Sale'),
+                                                    title: 'New Walk In Sale'),
                                                 DashboardButton(
                                                     onTap: model
                                                         .navigateToPendingTransactionsView,
@@ -139,7 +140,8 @@ class DashboardView extends StatelessWidget {
                                                 DashboardButton(
                                                     onTap: model
                                                         .navigateToReturnStock,
-                                                    title: 'Return Stock'),
+                                                    title:
+                                                        'Return Stock To Branch'),
                                                 DashboardButton(
                                                     onTap: model
                                                         .navigateToReturnStock,

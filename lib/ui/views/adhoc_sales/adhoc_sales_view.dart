@@ -1,3 +1,4 @@
+import 'package:distributor/core/enums.dart';
 import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/ui/views/adhoc_sales/adhoc_sales_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,10 @@ import 'package:tripletriocore/tripletriocore.dart';
 
 class AdhocSalesView extends StatelessWidget {
   final Customer customer;
+  final CustomerType saleType;
 
-  const AdhocSalesView({Key key, this.customer}) : super(key: key);
+  const AdhocSalesView({Key key, this.customer, this.saleType})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<AdhocSalesViewModel>.reactive(
@@ -138,7 +141,8 @@ class AdhocSalesView extends StatelessWidget {
                   ),
           );
         },
-        viewModelBuilder: () => AdhocSalesViewModel(customer));
+        viewModelBuilder: () =>
+            AdhocSalesViewModel(customer, customerType: saleType));
   }
 }
 

@@ -43,7 +43,7 @@ class HomeView extends StatelessWidget {
                   )
                 : Container(),
 
-            MapIconButton(),
+            // MapIconButton(),
           ],
         ),
         bottomNavigationBar: Theme(
@@ -59,7 +59,8 @@ class HomeView extends StatelessWidget {
         drawer: Drawer(
           child: CustomDrawer(),
         ),
-        backgroundColor: backgroundColor,
+        backgroundColor:
+            model.currentIndex != 0 ? backgroundColor : Colors.white,
         body: model.isBusy
             ? Center(
                 child: CircularProgressIndicator(),

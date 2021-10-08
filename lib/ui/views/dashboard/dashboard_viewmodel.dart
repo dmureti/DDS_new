@@ -1,5 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
+import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/user_service.dart';
@@ -27,11 +28,13 @@ class DashboardViewModel extends FutureViewModel<List<DeliveryJourney>>
   }
 
   navigateToNewContractSale() async {
-    await _navigationService.navigateTo(Routes.adhocSalesView);
+    await _navigationService.navigateTo(Routes.adhocSalesView,
+        arguments: AdhocSalesViewArguments(saleType: CustomerType.Contract));
   }
 
   navigateToWalkInSale() async {
-    await _navigationService.navigateTo(Routes.adhocSalesView);
+    await _navigationService.navigateTo(Routes.adhocSalesView,
+        arguments: AdhocSalesViewArguments(saleType: CustomerType.Walk_In));
   }
 
   User get user => _userService.user;

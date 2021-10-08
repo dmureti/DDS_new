@@ -88,7 +88,7 @@ class _LoginViewState extends State<LoginView> {
                           //   height: 100,
                           // ),
                           LoginTextField(
-                            text: 'Sign In',
+                            text: 'DDS Sign In',
                           ),
                           SizedBox(
                             height: 10,
@@ -118,8 +118,9 @@ class _LoginViewState extends State<LoginView> {
                               decoration: InputDecoration(
                                 filled: false,
                                 hintText: 'Email Address / Phone ',
-                                hintStyle:
-                                    TextStyle(fontWeight: FontWeight.w600),
+                                hintStyle: TextStyle(
+                                    fontFamily: 'ProximaNovaRegular',
+                                    fontSize: 12),
                                 prefixIcon: Icon(Icons.person),
                               ),
                             ),
@@ -146,9 +147,9 @@ class _LoginViewState extends State<LoginView> {
                               obscureText: model.obscurePassword,
                               decoration: InputDecoration(
                                 filled: false,
-                                hintText: '*****',
+                                hintText: 'password',
                                 hintStyle:
-                                    TextStyle(fontWeight: FontWeight.w600),
+                                    TextStyle(fontFamily: 'ProximaNovaRegular'),
                                 prefixIcon: Icon(Icons.lock),
                                 suffixIcon: IconButton(
                                   onPressed: model.toggleObscurePassword,
@@ -156,12 +157,12 @@ class _LoginViewState extends State<LoginView> {
                                       ? Icon(
                                           FontAwesomeIcons.eye,
                                           size: 15,
-                                          color: Colors.white,
+                                          color: Colors.grey,
                                         )
                                       : Icon(
                                           FontAwesomeIcons.eyeSlash,
                                           size: 15,
-                                          color: Colors.white,
+                                          color: Colors.grey,
                                         ),
                                 ),
                               ),

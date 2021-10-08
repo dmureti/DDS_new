@@ -26,10 +26,11 @@ import '../services/permission_service.dart' as _i16;
 import '../services/return_stock_service.dart' as _i18;
 import '../services/stock_controller_service.dart' as _i20;
 import '../services/stop_service.dart' as _i21;
-import '../services/third_party_services_module.dart' as _i24;
-import '../services/user_service.dart' as _i22;
+import '../services/third_party_services_module.dart' as _i25;
+import '../services/update_service.dart' as _i22;
+import '../services/user_service.dart' as _i23;
 import '../services/version_service.dart'
-    as _i23; // ignore_for_file: unnecessary_lambdas
+    as _i24; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -69,13 +70,14 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i20.StockControllerService>(
       () => thirdPartyServicesModule.stockControlService);
   gh.lazySingleton<_i21.StopService>(() => _i21.StopService());
-  gh.lazySingleton<_i22.UserService>(
+  gh.lazySingleton<_i22.UpdateService>(() => _i22.UpdateService());
+  gh.lazySingleton<_i23.UserService>(
       () => thirdPartyServicesModule.userService);
-  gh.lazySingleton<_i23.VersionService>(() => _i23.VersionService());
+  gh.lazySingleton<_i24.VersionService>(() => _i24.VersionService());
   return get;
 }
 
-class _$ThirdPartyServicesModule extends _i24.ThirdPartyServicesModule {
+class _$ThirdPartyServicesModule extends _i25.ThirdPartyServicesModule {
   @override
   _i3.AccessControlService get accessControlService =>
       _i3.AccessControlService();
@@ -103,5 +105,5 @@ class _$ThirdPartyServicesModule extends _i24.ThirdPartyServicesModule {
   _i20.StockControllerService get stockControlService =>
       _i20.StockControllerService();
   @override
-  _i22.UserService get userService => _i22.UserService();
+  _i23.UserService get userService => _i23.UserService();
 }

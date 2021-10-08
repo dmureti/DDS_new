@@ -8,7 +8,7 @@ class FlatButtonWidget extends StatelessWidget {
   const FlatButtonWidget(
       {Key key,
       @required this.label,
-      this.color = Colors.pink,
+      this.color = const Color(0xFFed1c24),
       @required this.onTap})
       : super(key: key);
 

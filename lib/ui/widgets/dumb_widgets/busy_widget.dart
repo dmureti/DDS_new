@@ -11,11 +11,15 @@ class BusyWidget extends StatelessWidget {
       child: Center(
         child: Stack(
           children: [
-            CircularProgressIndicator(),
-            Image.asset(
-              'assets/images/mini_logo.png',
-              width: 20,
-              height: 20,
+            Center(
+              child: Image.asset(
+                'assets/images/mini_logo.png',
+                width: 18,
+                height: 18,
+              ),
+            ),
+            CircularProgressIndicator(
+              backgroundColor: Color(0xFFfff200),
             ),
           ],
         ),

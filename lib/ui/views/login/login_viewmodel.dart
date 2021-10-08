@@ -26,14 +26,6 @@ class LoginViewModel extends BaseViewModel {
 
   init() async {
     _rememberMe = _initService.rememberMe;
-    // if (rememberMe) {
-    //   await _initService.fetchUserCredentials();
-    //   _email = _initService.email;
-    //   _password = _initService.password;
-    //   print(_email);
-    //   notifyListeners();
-    //   // login();
-    // }
   }
 
   bool _rememberMe;

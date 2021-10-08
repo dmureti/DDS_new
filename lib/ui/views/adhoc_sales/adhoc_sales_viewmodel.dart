@@ -1,5 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
+import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/adhoc_cart_service.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/customer_service.dart';
@@ -48,7 +49,7 @@ class AdhocSalesViewModel extends ReactiveViewModel {
       locator<StockControllerService>();
 
   UserService _userService = locator<UserService>();
-  List<String> customerTypes = ['Walk-in', 'Contract'];
+  List<String> customerTypes = ['Walk_In', 'Contract'];
 
   List<String> get paymentModes =>
       ['MPESA', 'Equitel', 'CASH', "Invoice Later"];
@@ -76,6 +77,19 @@ class AdhocSalesViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
+  initCustomerType(CustomerType c) {
+    if (c != null) {
+      switch (c) {
+        case CustomerType.Contract:
+          _customerType = 'Contract';
+          break;
+        case CustomerType.Walk_In:
+          _customerType = 'Walk_In';
+          break;
+      }
+    }
+  }
+
   bool get isWalkInCustomer {
     if (customerType.toLowerCase() == 'walk-in') {
       return true;
@@ -84,7 +98,10 @@ class AdhocSalesViewModel extends ReactiveViewModel {
     }
   }
 
-  AdhocSalesViewModel(Customer customer) : _customer = customer;
+  AdhocSalesViewModel(Customer customer, {CustomerType customerType})
+      : _customer = customer {
+    initCustomerType(customerType);
+  }
 
   Customer _customer;
   Customer get customer => _customer;

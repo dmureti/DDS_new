@@ -388,6 +388,7 @@ class Router extends RouterBase {
         builder: (context) => AdhocSalesView(
           key: args.key,
           customer: args.customer,
+          saleType: args.saleType,
         ),
         settings: data,
       );
@@ -561,5 +562,6 @@ class VoucherDetailViewArguments {
 class AdhocSalesViewArguments {
   final Key key;
   final Customer customer;
-  AdhocSalesViewArguments({this.key, this.customer});
+  final CustomerType saleType;
+  AdhocSalesViewArguments({this.key, this.customer, this.saleType});
 }

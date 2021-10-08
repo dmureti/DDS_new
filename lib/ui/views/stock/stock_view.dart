@@ -26,7 +26,7 @@ class StockView extends StatelessWidget {
                           child: Material(
                             elevation: 1,
                             child: ButtonBar(
-                              alignment: MainAxisAlignment.end,
+                              alignment: MainAxisAlignment.spaceEvenly,
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 if (model.renderPendingStockTransactionsButton)
@@ -40,7 +40,7 @@ class StockView extends StatelessWidget {
                                     label: 'Pending Stock Transactions',
                                   ),
                                 FlatButtonWidget(
-                                    label: 'Return Stock',
+                                    label: 'Return Stock To Branch',
                                     onTap: () async {
                                       await model.navigateToReturnStockView();
                                       model.notifyListeners();
