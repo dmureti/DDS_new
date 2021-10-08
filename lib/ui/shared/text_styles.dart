@@ -28,3 +28,4 @@ const kLoginButtonTextStyle =
     TextStyle(fontWeight: FontWeight.w700, color: Colors.white, fontSize: 22);
 const kRadioListTileText = TextStyle(color: Colors.black);
 const kStepperTitleTextStyle = TextStyle(fontSize: 20);
+const kActiveButtonTextStyle = TextStyle(color: Color(0xFFfff200));
