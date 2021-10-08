@@ -1,5 +1,7 @@
+import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/src/ui/views/stock_transfer/stock_transfer_viewmodel.dart';
-import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
+
 import 'package:distributor/ui/widgets/smart_widgets/return_stock_tile/return_stock_tile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -26,7 +28,7 @@ class StockTransferView extends StatelessWidget {
             ),
             body: Container(
               child: model.productList == null
-                  ? BusyWidget()
+                  ? Center(child: BusyWidget())
                   : Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -51,9 +53,12 @@ class StockTransferView extends StatelessWidget {
                           width: MediaQuery.of(context).size.width,
                           height: 50,
                           child: model.isBusy
-                              ? BusyWidget()
+                              ? Center(child: BusyWidget())
                               : RaisedButton(
-                                  child: Text('Return to Branch'),
+                                  child: Text(
+                                    'Return to Branch',
+                                    style: kActiveButtonTextStyle,
+                                  ),
                                   onPressed: model.enableReturnToBranch
                                       ? () => model.transferStock()
                                       : null,

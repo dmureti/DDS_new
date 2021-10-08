@@ -16,22 +16,63 @@ class CustomerListWidget extends HookViewModelWidget<CustomerViewModel> {
   Widget buildViewModelWidget(BuildContext context, CustomerViewModel model) {
     return model.customerList.length == 0
         ? NoInfoFound(text: 'No customers found.')
-        : CustomerList(
-            customerList: model.listOfCustomers,
-            onTap: model.navigateToCustomer);
+        : Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Expanded(
+                    flex: 4,
+                    child: TextButton(
+                      onPressed: null,
+                      child: Icon(Icons.search),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: DropdownButton(
+                        isDense: true,
+                        dropdownColor: Colors.white,
+                        value: model.customerFilter,
+                        onChanged: (val) {
+                          model.customerFilter = val;
+                        },
+                        items: model.customerFilters
+                            .map((e) => DropdownMenuItem(
+                                  child: Text(
+                                    e['value'],
+                                  ),
+                                  value: e['name'],
+                                ))
+                            .toList()),
+                  ),
+                ],
+              ),
+              Divider(
+                height: 0.5,
+              ),
+              Expanded(
+                child: CustomerList(
+                    customerList: model.listOfCustomers,
+                    onTap: model.navigateToCustomer),
+              ),
+            ],
+          );
   }
 }
 
 Widget CustomerList({List<Customer> customerList, Function onTap}) {
-  return ListView.builder(
+  return ListView.separated(
+      separatorBuilder: (context, index) {
+        return Divider(
+          height: 0.5,
+        );
+      },
       itemCount: customerList.length,
       itemBuilder: (context, index) {
         Customer customer = customerList[index];
         return Container(
-          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
           child: Material(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
             elevation: 1,
             type: MaterialType.card,
             child: ListTile(
@@ -54,7 +95,7 @@ Widget CustomerList({List<Customer> customerList, Function onTap}) {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   IconButton(
-                                    color: kDarkBlue,
+                                    color: kColorMiniDarkBlue,
                                     iconSize: 25,
                                     onPressed: () {
                                       Navigator.pop(context);

@@ -1,4 +1,5 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/user_service.dart';
@@ -15,6 +16,23 @@ class DashboardViewModel extends FutureViewModel<List<DeliveryJourney>>
   UserService _userService = locator<UserService>();
   DialogService _dialogService = locator<DialogService>();
   AccessControlService _accessControlService = locator<AccessControlService>();
+  NavigationService _navigationService = locator<NavigationService>();
+
+  navigateToPendingStockTransactions() async {
+    _navigationService.navigateTo(Routes.stockTransactionListView);
+  }
+
+  navigateToReturnStock() async {
+    _navigationService.navigateTo(Routes.stockTransferView);
+  }
+
+  navigateToNewContractSale() async {
+    await _navigationService.navigateTo(Routes.adhocSalesView);
+  }
+
+  navigateToWalkInSale() async {
+    await _navigationService.navigateTo(Routes.adhocSalesView);
+  }
 
   User get user => _userService.user;
   bool get hasJourney => _logisticsService.hasJourney;

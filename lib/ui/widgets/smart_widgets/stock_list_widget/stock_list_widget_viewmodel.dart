@@ -1,4 +1,5 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/stock_controller_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -14,6 +15,17 @@ class StockListWidgetViewModel extends BaseViewModel {
   StockListWidgetViewModel(bool rebuildTree) : _rebuildTree = rebuildTree {
     if (rebuildTree) {
       fetchStockBalance();
+    }
+  }
+
+  final _accessControlService = locator<AccessControlService>();
+  User get user => _accessControlService.user;
+
+  bool get isMiniShop {
+    if (user.hasSalesChannel) {
+      return true;
+    } else {
+      return false;
     }
   }
 

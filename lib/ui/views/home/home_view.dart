@@ -9,6 +9,7 @@ import 'package:distributor/ui/views/home/home_viewmodel.dart';
 import 'package:distributor/ui/views/routes/route_listing_view.dart';
 import 'package:distributor/ui/views/stock/stock_view.dart';
 import 'package:distributor/ui/widgets/drawer.dart';
+import 'package:distributor/ui/widgets/fragments/master_detail_page.dart';
 import 'package:distributor/ui/widgets/reactive/map_icon_button/map_iconbutton.dart';
 import 'package:flutter/material.dart';
 

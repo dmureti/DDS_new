@@ -132,13 +132,19 @@ class AdhocSalesViewModel extends ReactiveViewModel {
 
   List<Customer> _customerList;
   List<Customer> get customerList {
-    if (_customerList.length > 0) {
-      return _customerList
-        ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+    if (_customerList != null) {
+      if (_customerList.length > 0) {
+        return _customerList
+          ..sort(
+              (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+      } else {
+        // print(_customerList.first.route);
+        return _customerList
+          ..sort(
+              (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+      }
     } else {
-      // print(_customerList.first.route);
-      return _customerList
-        ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+      return <Customer>[];
     }
   }
 

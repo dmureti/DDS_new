@@ -34,7 +34,10 @@ class ResetPasswordView extends StatelessWidget {
                               model.userId != null && model.userId.isNotEmpty
                                   ? model.resetPassword
                                   : null,
-                          child: Text('Reset Password'),
+                          child: Text(
+                            'Reset Password',
+                            style: TextStyle(color: Colors.white),
+                          ),
                         )
                 ],
               ),

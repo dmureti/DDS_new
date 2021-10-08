@@ -11,6 +11,13 @@ class CustomerViewModel extends FutureViewModel<List<Customer>> {
   CustomerService _customerService = locator<CustomerService>();
   NavigationService _navigationService = locator<NavigationService>();
 
+  bool _isLargeScreen;
+  set isLargeScreen(bool val) {
+    _isLargeScreen = val;
+  }
+
+  bool get isLargeScreen => _isLargeScreen;
+
   bool _isAsc = true;
   bool get isAsc => _isAsc;
 
@@ -82,6 +89,19 @@ class CustomerViewModel extends FutureViewModel<List<Customer>> {
     }
   }
 
+  List<Map<String, dynamic>> customerFilters = [
+    {"name": "All", "value": "All"},
+    {"name": "Date", "value": "Sort By Name"},
+    {"name": "Route", "value": "Sort By Route"},
+  ];
+
+  String _customerFilter = "All";
+  String get customerFilter => _customerFilter;
+  set customerFilter(String val) {
+    _customerFilter = val;
+    notifyListeners();
+  }
+
   addToFilters(String value) {
     _route.update(value, (value) => true);
     // _filters.add(value);
@@ -114,9 +134,21 @@ class CustomerViewModel extends FutureViewModel<List<Customer>> {
   Map _route = {};
   Map get route => _route;
 
-  void navigateToCustomer(Customer customer) async {
-    await _navigationService.navigateTo(Routes.customerDetailView,
-        arguments: CustomerDetailViewArguments(customer: customer));
+  Customer _customer;
+  Customer get customer => _customer;
+  set customer(var c) {
+    _customer = c;
+    notifyListeners();
+  }
+
+  void navigateToCustomer(Customer val) async {
+    if (isLargeScreen) {
+      customer = val;
+      notifyListeners();
+    } else {
+      await _navigationService.navigateTo(Routes.customerDetailView,
+          arguments: CustomerDetailViewArguments(customer: val));
+    }
   }
 
   @override

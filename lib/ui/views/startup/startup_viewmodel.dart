@@ -3,6 +3,7 @@ import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/init_service.dart';
 import 'package:distributor/services/user_service.dart';
+import 'package:distributor/services/version_service.dart';
 
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -14,6 +15,7 @@ class StartupViewModel extends BaseViewModel {
   UserService _userService = locator<UserService>();
   AuthenticationService get authenticationService => AuthenticationService(api);
   final ApiService _apiService = locator<ApiService>();
+  final _versionService = locator<VersionService>();
   Api get api => _apiService.api;
 
   AppEnv get appEnv => _initService.appEnv;
@@ -33,6 +35,7 @@ class StartupViewModel extends BaseViewModel {
 
   Future handleStartUpLogic() async {
     bool result = await _initService.init();
+    await _versionService.getVersion();
     String userId;
     String password;
     if (!result) {

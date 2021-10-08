@@ -5,19 +5,19 @@ const headerStyle = TextStyle(fontSize: 35, fontWeight: FontWeight.w900);
 const subHeaderStyle = TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500);
 const kModalBottomSheetTitle =
     TextStyle(fontSize: 20.0, fontWeight: FontWeight.w700);
-const kModalBottomSheetListTileTitle =
-    TextStyle(color: kDarkBlue, fontWeight: FontWeight.w700, fontSize: 22);
+const kModalBottomSheetListTileTitle = TextStyle(
+    color: kColorMiniDarkBlue, fontWeight: FontWeight.w700, fontSize: 22);
 const kValueTextStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
 
-const kJourneyIdTextStyle =
-    TextStyle(color: kDarkBlue, fontWeight: FontWeight.w700, fontSize: 20);
+const kJourneyIdTextStyle = TextStyle(
+    color: kColorMiniDarkBlue, fontWeight: FontWeight.w700, fontSize: 20);
 const kRouteTextStyle =
     TextStyle(color: kLightBlue, fontWeight: FontWeight.w700, fontSize: 18);
 const kJourneySecondaryTextStyle =
     TextStyle(color: kLightBlue, fontWeight: FontWeight.w400, fontSize: 18);
 
-const kSalesOrderIdTextStyle =
-    TextStyle(color: kDarkBlue, fontWeight: FontWeight.w700, fontSize: 18);
+const kSalesOrderIdTextStyle = TextStyle(
+    color: kColorMiniDarkBlue, fontWeight: FontWeight.w700, fontSize: 18);
 const kCustomerNameTextStyle =
     TextStyle(color: kLightBlue, fontWeight: FontWeight.w700, fontSize: 16);
 const kStopSecondaryTextStyle =

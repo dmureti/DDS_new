@@ -47,6 +47,8 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
 
   get enableAdhocTab => _accessControlService.enableAdhocView;
 
+  String get version => null;
+
   refresh() async {
     setBusy(true);
     await _logisticsService.fetchJourneys();

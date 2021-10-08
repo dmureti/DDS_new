@@ -49,7 +49,8 @@ class JourneyConsole extends StatelessWidget {
                                           height: 50,
                                           child: Center(
                                             child: CircularProgressIndicator(
-                                              backgroundColor: kDarkBlue,
+                                              backgroundColor:
+                                                  kColorMiniDarkBlue,
                                             ),
                                           ),
                                         )

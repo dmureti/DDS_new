@@ -43,7 +43,7 @@ class NotificationView extends StatelessWidget {
                   Text(
                     activity.activityTitle,
                     style: TextStyle(
-                        color: kDarkBlue,
+                        color: kColorMiniDarkBlue,
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),

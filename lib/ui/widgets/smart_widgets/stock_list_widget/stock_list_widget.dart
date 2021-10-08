@@ -1,4 +1,5 @@
 import 'package:distributor/src/strings.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/product_quantity_tile.dart';
 import 'package:distributor/ui/widgets/smart_widgets/stock_list_widget/stock_list_widget_viewmodel.dart';
@@ -19,23 +20,28 @@ class StockListWidget extends StatelessWidget {
         createNewModelOnInsert: true,
         builder: (context, model, child) =>
             model.productList == null || model.isBusy
-                ? CircularProgressIndicator()
-                : Expanded(
-                    child: model.productList.isEmpty
-                        ? EmptyContentContainer(label: kStringNoStock)
-                        : ListView.separated(
-                            itemBuilder: (context, index) {
-                              Product product = model.productList[index];
-                              return ProductQuantityTile(product: product);
-                            },
-                            itemCount: model.productList.length,
-                            separatorBuilder: (context, index) {
-                              return Divider(
-                                height: 1,
-                              );
-                            },
-                          ),
-                  ),
+                ? Expanded(child: Center(child: BusyWidget()))
+                : model.productList.isEmpty
+                    ? Expanded(
+                        child: Center(
+                            child: EmptyContentContainer(
+                                label: model.isMiniShop
+                                    ? kStringShopNoStock
+                                    : kStringNoStock)))
+                    : Expanded(
+                        child: ListView.separated(
+                          itemBuilder: (context, index) {
+                            Product product = model.productList[index];
+                            return ProductQuantityTile(product: product);
+                          },
+                          itemCount: model.productList.length,
+                          separatorBuilder: (context, index) {
+                            return Divider(
+                              height: 1,
+                            );
+                          },
+                        ),
+                      ),
         viewModelBuilder: () => StockListWidgetViewModel(rebuild));
   }
 }

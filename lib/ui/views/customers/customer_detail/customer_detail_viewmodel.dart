@@ -26,12 +26,14 @@ class CustomerDetailViewModel extends BaseViewModel {
   int _tabLength = 4;
   int get tabLength => _tabLength;
 
-  String get customerName => customer.name;
+  String _customerName;
+  String get customerName => _customerName ?? customer.name;
 
   int _initialIndex = 0;
   int get initialIndex => _initialIndex;
 
-  CustomerDetailViewModel({@required this.customer});
+  CustomerDetailViewModel({@required this.customer})
+      : _customerName = customer.name;
 
   List<double> get coordinates {
     List<double> _coordinates = <double>[];

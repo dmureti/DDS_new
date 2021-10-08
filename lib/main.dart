@@ -35,20 +35,21 @@ final ThemeData _kAppTheme = _buildAppTheme();
 ThemeData _buildAppTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
-    primaryColor: kDarkBlue,
+    primaryColor: kColorMiniDarkBlue,
     accentColor: Colors.pink,
     canvasColor: kCanvasColor,
     dialogTheme: DialogTheme(
         titleTextStyle:
             TextStyle(fontWeight: FontWeight.w700, color: Colors.indigo)),
     appBarTheme: AppBarTheme(
-        elevation: 1.0,
-        color: Color(0xFF303891),
-        titleTextStyle: TextStyle(
-            color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.w500),
-        iconTheme: IconThemeData(color: Colors.white)),
+      elevation: 1.0,
+      color: Color(0xFF303891),
+      titleTextStyle: TextStyle(
+          color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.w500),
+      iconTheme: IconThemeData(color: Colors.white),
+    ),
     buttonTheme: base.buttonTheme.copyWith(
-      buttonColor: kDeepDarkBlue,
+      buttonColor: kColorMiniDarkBlue,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(6),
       ),
@@ -59,8 +60,8 @@ ThemeData _buildAppTheme() {
       contentPadding: EdgeInsets.all(10.0),
       focusColor: Colors.grey,
       focusedBorder: UnderlineInputBorder(
-        borderSide:
-            BorderSide(color: kDarkBlue, style: BorderStyle.solid, width: 2),
+        borderSide: BorderSide(
+            color: kColorMiniDarkBlue, style: BorderStyle.solid, width: 2),
       ),
       border: UnderlineInputBorder(
         borderSide: BorderSide(

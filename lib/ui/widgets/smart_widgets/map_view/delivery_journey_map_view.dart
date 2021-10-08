@@ -69,7 +69,7 @@ class DeliveryJourneyMapView extends StatelessWidget {
                                         ),
                                       ),
                                       Material(
-                                        color: kDarkBlue,
+                                        color: kColorMiniDarkBlue,
                                         elevation: 4,
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),

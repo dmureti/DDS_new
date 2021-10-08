@@ -98,10 +98,11 @@ class _CustomerDetailViewState extends State<CustomerDetailView>
       viewModelBuilder: () =>
           CustomerDetailViewModel(customer: widget.customer),
       builder: (context, model, child) => Scaffold(
+        backgroundColor: kDarkNeutral,
         appBar: AppBar(
           actionsIconTheme: IconThemeData(color: Colors.white),
           title: Text(
-            '${model.customerName}',
+            '${widget.customer.name}',
             style: TextStyle(color: Colors.white),
           ),
           automaticallyImplyLeading: true,

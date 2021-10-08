@@ -1,6 +1,7 @@
 import 'package:distributor/src/ui/views/stock_transaction/stock_transaction_viewmodel.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
-import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
+
 import 'package:distributor/ui/widgets/dumb_widgets/transaction_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -21,7 +22,7 @@ class StockTransactionListView extends StatelessWidget {
             ),
             body: Container(
               child: model.stockTransactionList == null
-                  ? BusyWidget()
+                  ? Center(child: BusyWidget())
                   : model.stockTransactionList.isEmpty
                       ? Center(
                           child: EmptyContentContainer(

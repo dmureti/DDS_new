@@ -4,6 +4,7 @@ import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/activity_service.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/user_service.dart';
+import 'package:distributor/services/version_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -13,6 +14,9 @@ class LoginViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
   ActivityService _activityService = locator<ActivityService>();
   InitService _initService = locator<InitService>();
+  final _versionService = locator<VersionService>();
+
+  String get version => _versionService.version;
 
   List<AppEnv> get environments => _initService.availableEnvList;
 

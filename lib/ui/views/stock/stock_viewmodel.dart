@@ -1,4 +1,5 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/stock_controller_service.dart';
 import 'package:distributor/traits/contextual_viewmodel.dart';
@@ -12,6 +13,9 @@ class StockViewModel extends BaseViewModel with ContextualViewmodel {
       locator<StockControllerService>();
   List<DeliveryJourney> get userJourneyList =>
       _logisticsService.userJourneyList;
+
+  final _accessControlService = locator<AccessControlService>();
+  User get user => _accessControlService.user;
 
   List<Product> _productList;
   List<Product> get productList => _productList;

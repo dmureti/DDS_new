@@ -38,7 +38,7 @@ class OrderConfirmation extends StatelessWidget {
             children: <Widget>[
               Material(
                 elevation: 4,
-                color: kDarkBlue,
+                color: kColorMiniDarkBlue,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
@@ -152,7 +152,7 @@ class OrderConfirmation extends StatelessWidget {
                                   child: Text(
                                     '${salesOrderRequest.items[index].quantity}',
                                     style: TextStyle(
-                                        color: kDarkBlue,
+                                        color: kColorMiniDarkBlue,
                                         fontSize: 18,
                                         fontWeight: FontWeight.w700),
                                   ),
@@ -168,7 +168,7 @@ class OrderConfirmation extends StatelessWidget {
                               child: Text(
                                 '${salesOrderRequest.items[index].item.itemName}',
                                 style: TextStyle(
-                                    color: kDarkBlue,
+                                    color: kColorMiniDarkBlue,
                                     fontSize: 18,
                                     fontWeight: FontWeight.w700),
                               ),
@@ -183,7 +183,7 @@ class OrderConfirmation extends StatelessWidget {
                                 Text(
                                   '${Helper.formatCurrency((salesOrderRequest.items[index].quantity * salesOrderRequest.items[index].item.itemPrice))}',
                                   style: TextStyle(
-                                      color: kDarkBlue,
+                                      color: kColorMiniDarkBlue,
                                       fontSize: 20,
                                       fontWeight: FontWeight.w700),
                                 ),

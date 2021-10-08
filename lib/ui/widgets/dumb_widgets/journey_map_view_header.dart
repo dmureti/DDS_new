@@ -18,7 +18,7 @@ class JourneyMapViewHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      color: kDarkBlue,
+      color: kColorMiniDarkBlue,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(

@@ -3,6 +3,7 @@ import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/shared/text_styles.dart';
 import 'package:distributor/ui/shared/widgets.dart';
 import 'package:distributor/ui/views/login/login_viewmodel.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/smart_widgets/remember_me/remember_me_checkbox.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -56,13 +57,16 @@ class _LoginViewState extends State<LoginView> {
         extendBodyBehindAppBar: true,
         body: Container(
           decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/images/login_bg.jpg'),
+                  fit: BoxFit.cover),
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                kDarkNeutral,
-                kDarkNeutral20,
-              ])),
+                    kDarkNeutral,
+                    kDarkNeutral20,
+                  ])),
           height: MediaQuery.of(context).size.height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -189,9 +193,7 @@ class _LoginViewState extends State<LoginView> {
                           ),
                           UIHelper.verticalSpace(10),
                           model.isBusy
-                              ? Center(
-                                  child: CircularProgressIndicator(),
-                                )
+                              ? BusyWidget()
                               : RaisedButton(
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 14),
@@ -220,6 +222,7 @@ class _LoginViewState extends State<LoginView> {
                         ],
                       ),
                     ),
+                    Text('Version : ${model.version}')
                   ],
                 ),
               ),

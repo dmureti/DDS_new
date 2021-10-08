@@ -1,3 +1,4 @@
+import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/ui/views/adhoc_sales/adhoc_sales_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -114,13 +115,16 @@ class AdhocSalesView extends StatelessWidget {
                         width: double.infinity,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: RaisedButton(
+                          child: ElevatedButton(
                             onPressed: model.isCompleted
                                 ? () {
                                     model.navigateToCart();
                                   }
                                 : null,
-                            child: Text('CONTINUE TO CART'),
+                            child: Text(
+                              'CONTINUE TO CART',
+                              style: kActiveButtonTextStyle,
+                            ),
                           ),
                         ),
                       )

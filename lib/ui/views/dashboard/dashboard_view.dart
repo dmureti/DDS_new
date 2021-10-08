@@ -1,8 +1,11 @@
 import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/views/dashboard/dashboard_viewmodel.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/dashboard_button.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/shop_name.dart';
 
 import 'package:distributor/ui/widgets/smart_widgets/dashboard_controller/dashboard_view_controller_view.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -14,7 +17,7 @@ class DashboardView extends StatelessWidget {
     return ViewModelBuilder<DashboardViewModel>.reactive(
         onModelReady: (model) => model.init(),
         builder: (context, model, child) => model.isBusy
-            ? Center(child: CircularProgressIndicator())
+            ? Center(child: BusyWidget())
             : Container(
                 child: Container(
                   width: double.infinity,
@@ -109,7 +112,49 @@ class DashboardView extends StatelessWidget {
                                   /// Show the no deliveries widget
                                   ///
 
-                                  DashboardViewControllerView(),
+                                  model.showShop
+                                      ? Container(
+                                          margin: EdgeInsets.symmetric(
+                                              horizontal: 16, vertical: 16),
+                                          child: Center(
+                                            child: Wrap(
+                                              runAlignment:
+                                                  WrapAlignment.spaceEvenly,
+                                              runSpacing: 10,
+                                              spacing: 10,
+                                              children: [
+                                                DashboardButton(
+                                                    onTap: model
+                                                        .navigateToNewContractSale,
+                                                    title: 'New Contract Sale'),
+                                                DashboardButton(
+                                                    onTap: model
+                                                        .navigateToWalkInSale,
+                                                    title: 'New Walk in Sale'),
+                                                DashboardButton(
+                                                    onTap: model
+                                                        .navigateToPendingTransactionsView,
+                                                    title:
+                                                        'Pending Stock Transactions'),
+                                                DashboardButton(
+                                                    onTap: model
+                                                        .navigateToReturnStock,
+                                                    title: 'Return Stock'),
+                                                DashboardButton(
+                                                    onTap: model
+                                                        .navigateToReturnStock,
+                                                    title:
+                                                        'Receive Finished Goods'),
+                                                DashboardButton(
+                                                    onTap: model
+                                                        .navigateToReturnStock,
+                                                    title:
+                                                        'Receive Purchased Goods'),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      : DashboardViewControllerView(),
                                 ],
                               ),
                             ),

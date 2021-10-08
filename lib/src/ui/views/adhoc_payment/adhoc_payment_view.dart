@@ -1,4 +1,6 @@
+import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/src/ui/views/adhoc_payment/adhoc_payment_viewmodel.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:stacked/stacked.dart';
@@ -21,6 +23,9 @@ class AdhocPaymentView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Amount Due : Kshs ${model.total.toStringAsFixed(2)}'),
+                  SizedBox(
+                    height: 8,
+                  ),
                   DropdownButton(
                       key: Key('paymentmodes'),
                       items: model.paymentModes
@@ -48,9 +53,7 @@ class AdhocPaymentView extends StatelessWidget {
                     width: 24,
                   ),
                   model.isBusy
-                      ? Center(
-                          child: CircularProgressIndicator(),
-                        )
+                      ? BusyWidget()
                       : Container(
                           width: MediaQuery.of(context).size.width,
                           child: ElevatedButton(
@@ -59,7 +62,10 @@ class AdhocPaymentView extends StatelessWidget {
                                     model.completeAdhoc();
                                   }
                                 : null,
-                            child: Text('COMPLETE'),
+                            child: Text(
+                              'COMPLETE',
+                              style: kActiveButtonTextStyle,
+                            ),
                           ),
                         ),
                 ],

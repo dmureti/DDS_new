@@ -106,6 +106,13 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
               child: Text(model.appEnv.name),
             ),
           ),
+
+          Center(
+            child: Padding(
+              child: Text('Version : ${model.version}'),
+              padding: const EdgeInsets.all(8.0),
+            ),
+          ),
         ],
       ),
     );

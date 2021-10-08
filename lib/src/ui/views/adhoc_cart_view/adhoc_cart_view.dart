@@ -1,5 +1,7 @@
+import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/src/ui/views/adhoc_cart_view/adhoc_cart_viewmodel.dart';
 import 'package:distributor/ui/views/orders/create_order/sales_order_view_model.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/smart_widgets/sales_order_item/sales_order_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -22,7 +24,7 @@ class AdhocCartView extends StatelessWidget {
             ),
             body: Container(
               child: model.customerProductList == null
-                  ? Center(child: CircularProgressIndicator())
+                  ? Center(child: BusyWidget())
                   : Column(
                       children: [
                         Expanded(
@@ -60,7 +62,10 @@ class AdhocCartView extends StatelessWidget {
                           height: 50,
                           width: MediaQuery.of(context).size.width,
                           child: RaisedButton(
-                            child: Text('CONTINUE TO PAYMENT'),
+                            child: Text(
+                              'CONTINUE TO PAYMENT',
+                              style: kActiveButtonTextStyle,
+                            ),
                             onPressed: () {
                               model.navigateToAdhocPaymentView();
                             },

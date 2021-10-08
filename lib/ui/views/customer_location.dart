@@ -33,7 +33,7 @@ class CustomerLocation extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Container(
-                            color: kDarkBlue,
+                            color: kColorMiniDarkBlue,
                             child: ExpansionTile(
                               initiallyExpanded: true,
                               title: Padding(
@@ -166,7 +166,7 @@ class _StartTextField extends HookViewModelWidget<CustomerLocationViewModel> {
       BuildContext context, CustomerLocationViewModel model) {
     var startAddress = useTextEditingController(text: model.currentAddress);
     return TextField(
-      style: TextStyle(color: kDarkBlue),
+      style: TextStyle(color: kColorMiniDarkBlue),
       controller: startAddress,
       decoration: InputDecoration(filled: true, fillColor: Colors.white),
     );
@@ -180,7 +180,7 @@ class _DestinationTextField
       BuildContext context, CustomerLocationViewModel model) {
     var stopAddress = useTextEditingController(text: model.destinationAddress);
     return TextField(
-      style: TextStyle(color: kDarkBlue),
+      style: TextStyle(color: kColorMiniDarkBlue),
       controller: stopAddress,
       decoration: InputDecoration(filled: true, fillColor: Colors.white),
     );
