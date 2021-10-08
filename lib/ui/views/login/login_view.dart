@@ -1,16 +1,15 @@
 import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
+import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/shared/text_styles.dart';
 import 'package:distributor/ui/shared/widgets.dart';
 import 'package:distributor/ui/views/login/login_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/smart_widgets/remember_me/remember_me_checkbox.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
-// import 'login.i18n.dart';
 
 class LoginView extends StatefulWidget {
   final String userId;
@@ -104,6 +103,11 @@ class _LoginViewState extends State<LoginView> {
                               onChanged: (String val) {
                                 model.setUserId(val);
                               },
+                              onFieldSubmitted: (value) {
+                                FocusScope.of(context).nextFocus();
+                              },
+                              onEditingComplete: () =>
+                                  FocusScope.of(context).nextFocus(),
                               validator: (String value) {
                                 if (value != null) {
                                   return 'Please enter a valid email address or phone number';
@@ -198,13 +202,13 @@ class _LoginViewState extends State<LoginView> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 14),
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(9)),
+                                      borderRadius: BorderRadius.circular(6)),
                                   child: Container(
                                     width: 250,
                                     child: Center(
                                       child: Text(
                                         'Sign in'.toUpperCase(),
-                                        style: kLoginButtonTextStyle,
+                                        style: kActiveButtonTextStyle,
                                       ),
                                     ),
                                   ),
@@ -222,8 +226,14 @@ class _LoginViewState extends State<LoginView> {
                         ],
                       ),
                     ),
-                    Text('Version : ${model.version}')
                   ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Text(
+                  'Version : ${model.version}',
+                  style: TextStyle(fontSize: 14),
                 ),
               ),
             ],
