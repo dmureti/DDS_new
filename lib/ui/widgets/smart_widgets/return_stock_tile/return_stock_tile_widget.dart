@@ -88,7 +88,8 @@ class ReturnStockTileWidget extends StatelessWidget {
                                             onChanged: (val) {
                                               model.updateProduct(val);
                                             },
-                                            decoration: InputDecoration(),
+                                            decoration:
+                                                InputDecoration(filled: false),
                                             onSubmitted: (val) {
                                               model.updateProduct(val);
                                             },
@@ -103,7 +104,10 @@ class ReturnStockTileWidget extends StatelessWidget {
                                               Navigator.pop(
                                                   context, model.product);
                                             },
-                                            child: Text('Submit'),
+                                            child: Text(
+                                              'Submit',
+                                              style: kActiveButtonTextStyle,
+                                            ),
                                           ),
                                         ),
                                       ],

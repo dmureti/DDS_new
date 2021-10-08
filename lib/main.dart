@@ -67,7 +67,7 @@ ThemeData _buildAppTheme() {
             color: Colors.green, style: BorderStyle.solid, width: 2.0),
       ),
       floatingLabelBehavior: FloatingLabelBehavior.auto,
-      filled: true,
+      filled: false,
     ),
     textTheme: _buildAppTextTheme(base.textTheme),
     primaryTextTheme: _buildAppTextTheme(base.primaryTextTheme),

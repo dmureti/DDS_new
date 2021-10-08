@@ -20,10 +20,10 @@ class StockTransferView extends StatelessWidget {
             appBar: AppBar(
               title: Text('Return Stock To Branch'),
               actions: [
-                IconButton(
-                  icon: Icon(Icons.clear),
-                  onPressed: model.enableReturnToBranch ? model.reset : null,
-                )
+                // IconButton(
+                //   icon: Icon(Icons.clear),
+                //   onPressed: model.enableReturnToBranch ? model.reset : null,
+                // )
               ],
             ),
             body: Container(
