@@ -1,5 +1,5 @@
 import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
-import 'package:distributor/src/ui/text_styles.dart';
+
 import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/shared/text_styles.dart';
 import 'package:distributor/ui/shared/widgets.dart';

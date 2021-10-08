@@ -12,6 +12,7 @@ import 'package:distributor/ui/widgets/drawer.dart';
 import 'package:distributor/ui/widgets/fragments/master_detail_page.dart';
 import 'package:distributor/ui/widgets/reactive/map_icon_button/map_iconbutton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import 'package:stacked/stacked.dart';
 
@@ -46,6 +47,26 @@ class HomeView extends StatelessWidget {
             // MapIconButton(),
           ],
         ),
+        // floatingActionButton: model.currentIndex == 2
+        //     ? SpeedDial(
+        //         icon: Icons.shopping_cart_outlined,
+        //         children: [
+        //           SpeedDialChild(
+        //             child: Icon(Icons.face),
+        //             label: 'Walk In Customer',
+        //             backgroundColor: Colors.amberAccent,
+        //             onTap: () {/* Do someting */},
+        //           ),
+        //           SpeedDialChild(
+        //             child: Icon(Icons.email),
+        //             label: 'Contract Customer',
+        //             backgroundColor: Colors.amberAccent,
+        //             onTap: () {/* Do something */},
+        //           ),
+        //         ],
+        //       )
+        //     : Container(),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: Theme(
           data: Theme.of(context).copyWith(
             canvasColor: Color(0xFF303891),
