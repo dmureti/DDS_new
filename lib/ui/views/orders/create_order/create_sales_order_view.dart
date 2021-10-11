@@ -71,9 +71,15 @@ class CreateSalesOrderView extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ListView(
+                      padding: EdgeInsets.zero,
                       children: <Widget>[
-                        ListView.builder(
+                        ListView.separated(
                             physics: ClampingScrollPhysics(),
+                            separatorBuilder: (context, index) {
+                              return Divider(
+                                height: 1,
+                              );
+                            },
                             shrinkWrap: true,
                             itemCount: model.productList
                                 .where((product) => product.itemPrice > 0)
