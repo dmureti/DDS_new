@@ -1,6 +1,7 @@
 import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/src/ui/views/stock_transfer/stock_transfer_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
 
 import 'package:distributor/ui/widgets/smart_widgets/return_stock_tile/return_stock_tile_widget.dart';
 import 'package:flutter/material.dart';
@@ -29,43 +30,50 @@ class StockTransferView extends StatelessWidget {
             body: Container(
               child: model.productList == null
                   ? Center(child: BusyWidget())
-                  : Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: ListView.separated(
-                            itemBuilder: (context, index) {
-                              Product product = model.productList[index];
-                              return ReturnStockTileWidget(
-                                product: product,
-                                onChange: model.onChange,
-                              );
-                            },
-                            itemCount: model.productList.length,
-                            separatorBuilder: (context, index) {
-                              return Divider(
-                                height: 5,
-                              );
-                            },
+                  : model.productList.isNotEmpty
+                      ? Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: ListView.separated(
+                                itemBuilder: (context, index) {
+                                  Product product = model.productList[index];
+                                  return ReturnStockTileWidget(
+                                    product: product,
+                                    onChange: model.onChange,
+                                  );
+                                },
+                                itemCount: model.productList.length,
+                                separatorBuilder: (context, index) {
+                                  return Divider(
+                                    height: 5,
+                                  );
+                                },
+                              ),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 50,
+                              child: model.isBusy
+                                  ? Center(child: BusyWidget())
+                                  : RaisedButton(
+                                      child: Text(
+                                        'Return to Branch',
+                                        style: kActiveButtonTextStyle,
+                                      ),
+                                      onPressed: model.enableReturnToBranch
+                                          ? () => model.transferStock()
+                                          : null,
+                                    ),
+                            )
+                          ],
+                        )
+                      : Center(
+                          child: EmptyContentContainer(
+                            label:
+                                'You currently have no stock to return to the branch.',
                           ),
                         ),
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 50,
-                          child: model.isBusy
-                              ? Center(child: BusyWidget())
-                              : RaisedButton(
-                                  child: Text(
-                                    'Return to Branch',
-                                    style: kActiveButtonTextStyle,
-                                  ),
-                                  onPressed: model.enableReturnToBranch
-                                      ? () => model.transferStock()
-                                      : null,
-                                ),
-                        )
-                      ],
-                    ),
             ),
           );
         },
