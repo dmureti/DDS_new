@@ -73,7 +73,11 @@ class JourneyConsole extends StatelessWidget {
                                                             .toLowerCase()
                                                             .contains(
                                                                 'completed')
-                                                        ? Container()
+                                                        ? Icon(
+                                                            Icons.check,
+                                                            color:
+                                                                kStartControl,
+                                                          )
                                                         : Icon(
                                                             Icons.stop,
                                                             color: kStopControl,

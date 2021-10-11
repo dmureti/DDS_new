@@ -23,7 +23,7 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
       viewModelBuilder: () =>
           SalesOrderItemModel(product: item, maxQuantity: quantity),
       builder: (context, model, child) => Container(
-        margin: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 4.0, top: 4.0),
+        margin: EdgeInsets.only(left: 5.0, right: 5.0, bottom: 0.0, top: 0.0),
         child: Material(
           type: MaterialType.card,
           elevation: model.isEnabled ? 1.0 : 0.0,
@@ -69,7 +69,7 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
                       : 'NA'),
                   Spacer(),
                   Container(
-                    width: 150,
+                    width: 180,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(32),
                       border: Border.all(color: Colors.black12, width: 2),
@@ -80,6 +80,7 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
                         child: Row(
                           children: [
                             IconButton(
+                              padding: EdgeInsets.zero,
                               onPressed: model.isEnabled
                                   ? model.quantity == 0
                                       ? null
@@ -138,6 +139,7 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
                               ),
                             ),
                             IconButton(
+                              padding: EdgeInsets.zero,
                               onPressed: model.isEnabled
                                   ? model.maxQuantity != null &&
                                           model.quantity < model.maxQuantity

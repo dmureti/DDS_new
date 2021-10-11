@@ -26,26 +26,43 @@ class CustomerViewModel extends FutureViewModel<List<Customer>> {
     notifyListeners();
   }
 
-  sortAsc() {
-    if (_isAsc == true) {
-      _customerList.sort((a, b) => a.name.compareTo(b.name));
-      return _customerList;
-    } else {
-      _customerList.sort((a, b) => b.name.compareTo(a.name));
-      return _customerList;
-    }
+  bool _sortAscending = false;
+  bool get sortAscending => _sortAscending;
+  toggleSortAscending() {
+    _sortAscending = !sortAscending;
+    notifyListeners();
   }
 
+  List<Customer> _unorderedList;
+  List<Customer> get unorderedList => _unorderedList;
   List<Customer> _customerList;
   List<Customer> get customerList {
     if (_customerList != null) {
-      if (_isAsc == true) {
-        _customerList.sort((a, b) => a.name.compareTo(b.name));
-        return _customerList;
-      } else {
-        _customerList.sort((a, b) => b.name.compareTo(a.name));
-        return _customerList;
+      //Check if the customer filters are set
+      switch (customerFilter.toLowerCase()) {
+        case 'all':
+          _customerList = unorderedList;
+          print(unorderedList.first.name);
+          break;
+        case 'name':
+          if (sortAscending) {
+            _customerList.sort((a, b) => a.name.compareTo(b.name));
+          } else {
+            _customerList.sort((a, b) => b.name.compareTo(a.name));
+          }
+          break;
+        case 'route':
+          if (sortAscending) {
+            _customerList.sort((a, b) => a.route.compareTo(b.route));
+          } else {
+            _customerList.sort((a, b) => b.route.compareTo(a.route));
+          }
+          break;
+        default:
+          _customerList = unorderedList;
+          break;
       }
+      return _customerList;
     } else {
       return <Customer>[];
     }
@@ -91,7 +108,7 @@ class CustomerViewModel extends FutureViewModel<List<Customer>> {
 
   List<Map<String, dynamic>> customerFilters = [
     {"name": "All", "value": "All"},
-    {"name": "Date", "value": "Sort By Name"},
+    {"name": "Name", "value": "Sort By Name"},
     {"name": "Route", "value": "Sort By Route"},
   ];
 
@@ -154,6 +171,7 @@ class CustomerViewModel extends FutureViewModel<List<Customer>> {
   @override
   void onData(List<Customer> data) {
     _customerList = data;
+    _unorderedList = _customerList;
     data.forEach((customer) {
       _branches.add(customer.route);
       _route.putIfAbsent(customer.route, () => false);

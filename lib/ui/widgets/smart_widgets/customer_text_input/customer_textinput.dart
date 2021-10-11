@@ -11,16 +11,22 @@ class CustomerTextInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Autocomplete<Customer>(
+      displayStringForOption: (customer) => customer.name,
+      // initialValue: initialValue,
       optionsBuilder: (TextEditingValue textEditingValue) {
         if (textEditingValue.text == '') {
           return const Iterable<Customer>.empty();
         }
         return customerList.where((Customer customer) {
-          return customer.name.contains(textEditingValue.text.toLowerCase());
+          return customer.name
+              .toLowerCase()
+              .contains(textEditingValue.text.toLowerCase());
         });
       },
+
       onSelected: (Customer customer) {
         onSelected(customer);
+        Focus.of(context).unfocus();
       },
     );
   }

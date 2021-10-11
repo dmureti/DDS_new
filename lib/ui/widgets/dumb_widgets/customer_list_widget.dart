@@ -3,6 +3,7 @@ import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:distributor/ui/views/customer_location.dart';
 import 'package:distributor/ui/views/customers/customer_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
+import 'package:distributor/ui/widgets/smart_widgets/customer_text_input/customer_textinput.dart';
 
 import 'package:flutter/material.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
@@ -23,10 +24,16 @@ class CustomerListWidget extends HookViewModelWidget<CustomerViewModel> {
                 children: [
                   Expanded(
                     flex: 4,
-                    child: TextButton(
-                      onPressed: null,
-                      child: Icon(Icons.search),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CustomerTextInput(
+                        customerList: model.customerList,
+                        onSelected: model.navigateToCustomer,
+                      ),
                     ),
+                  ),
+                  SizedBox(
+                    width: 5,
                   ),
                   Expanded(
                     flex: 2,
@@ -35,6 +42,7 @@ class CustomerListWidget extends HookViewModelWidget<CustomerViewModel> {
                         dropdownColor: Colors.white,
                         value: model.customerFilter,
                         onChanged: (val) {
+                          model.toggleSortAscending();
                           model.customerFilter = val;
                         },
                         items: model.customerFilters
