@@ -1,6 +1,8 @@
 import 'package:distributor/core/enums.dart';
 import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/ui/views/adhoc_sales/adhoc_sales_viewmodel.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/customer_list_widget.dart';
+import 'package:distributor/ui/widgets/smart_widgets/customer_text_input/customer_textinput.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:stacked/stacked.dart';
@@ -85,26 +87,31 @@ class AdhocSalesView extends StatelessWidget {
                                                       CircularProgressIndicator(),
                                                 )
                                               : model.customerList.length > 0
-                                                  ? DropdownButton(
-                                                      key: Key(
-                                                          'selectCustomerKey'),
-                                                      dropdownColor:
-                                                          Colors.white,
-                                                      isExpanded: true,
-                                                      hint: Text(
-                                                          'Select customer'),
-                                                      value: model.customer,
-                                                      onChanged:
-                                                          model.updateCustomer,
-                                                      items: model.customerList
-                                                          .map((e) =>
-                                                              DropdownMenuItem(
-                                                                child: Text(
-                                                                    e.name),
-                                                                value: e,
-                                                              ))
-                                                          .toList(),
-                                                    )
+                                                  // ? DropdownButton(
+                                                  //     key: Key(
+                                                  //         'selectCustomerKey'),
+                                                  //     dropdownColor:
+                                                  //         Colors.white,
+                                                  //     isExpanded: true,
+                                                  //     hint: Text(
+                                                  //         'Select customer'),
+                                                  //     value: model.customer,
+                                                  //     onChanged:
+                                                  //         model.updateCustomer,
+                                                  //     items: model.customerList
+                                                  //         .map((e) =>
+                                                  //             DropdownMenuItem(
+                                                  //               child: Text(
+                                                  //                   e.name),
+                                                  //               value: e,
+                                                  //             ))
+                                                  //         .toList(),
+                                                  //   )
+                                                  ? CustomerTextInput(
+                                                      customerList:
+                                                          model.customerList,
+                                                      onSelected:
+                                                          model.updateCustomer)
                                                   : Text('No customers found')
                                           : _CustomerNameTextField()
                                       : Text('Select a customer type'),
