@@ -280,4 +280,8 @@ class AdhocCartService with ReactiveServiceMixin {
     }
     return <AdhocSale>[];
   }
+
+  fetchAdhocDetail(String referenceNo, String token) async {
+    return _apiService.api.adhocSaleDetails(referenceNo, token);
+  }
 }

@@ -7,6 +7,7 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
@@ -16,6 +17,7 @@ import '../src/ui/views/add_adhoc_sale/add_adhoc_sale_view.dart';
 import '../src/ui/views/add_issue/add_issue_view.dart';
 import '../src/ui/views/add_payment/add_payment_view.dart';
 import '../src/ui/views/adhoc_cart_view/adhoc_cart_view.dart';
+import '../src/ui/views/adhoc_detail/adhoc_detail_view.dart';
 import '../src/ui/views/adhoc_payment/adhoc_payment_view.dart';
 import '../src/ui/views/change_password/change_password.dart';
 import '../src/ui/views/delivery_note/delivery_note_view.dart';
@@ -43,6 +45,7 @@ class Routes {
   static const String homeView = '/home-view';
   static const String startupView = '/';
   static const String loginView = '/login-view';
+  static const String adhocDetailView = '/adhoc-detail-view';
   static const String journeyView = '/journey-view';
   static const String customerDetailView = '/customer-detail-view';
   static const String createSalesOrderView = '/create-sales-order-view';
@@ -70,6 +73,7 @@ class Routes {
     homeView,
     startupView,
     loginView,
+    adhocDetailView,
     journeyView,
     customerDetailView,
     createSalesOrderView,
@@ -103,6 +107,7 @@ class Router extends RouterBase {
     RouteDef(Routes.homeView, page: HomeView),
     RouteDef(Routes.startupView, page: StartupView),
     RouteDef(Routes.loginView, page: LoginView),
+    RouteDef(Routes.adhocDetailView, page: AdhocDetailView),
     RouteDef(Routes.journeyView, page: JourneyView),
     RouteDef(Routes.customerDetailView, page: CustomerDetailView),
     RouteDef(Routes.createSalesOrderView, page: CreateSalesOrderView),
@@ -157,6 +162,18 @@ class Router extends RouterBase {
           key: args.key,
           userId: args.userId,
           password: args.password,
+        ),
+        settings: data,
+      );
+    },
+    AdhocDetailView: (data) {
+      final args = data.getArgs<AdhocDetailViewArguments>(
+        orElse: () => AdhocDetailViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => AdhocDetailView(
+          key: args.key,
+          referenceNo: args.referenceNo,
         ),
         settings: data,
       );
@@ -413,6 +430,13 @@ class LoginViewArguments {
   final String userId;
   final String password;
   LoginViewArguments({this.key, this.userId, this.password});
+}
+
+/// AdhocDetailView arguments holder class
+class AdhocDetailViewArguments {
+  final Key key;
+  final String referenceNo;
+  AdhocDetailViewArguments({this.key, this.referenceNo});
 }
 
 /// CustomerDetailView arguments holder class

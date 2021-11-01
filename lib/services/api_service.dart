@@ -9,4 +9,6 @@ class ApiService {
   InitService _initService = locator<InitService>();
   AppEnv get appEnv => _initService.appEnv;
   Api get api => Api(appEnv: appEnv);
+
+  adhocSaleDetails(String referenceNo, String token) {}
 }

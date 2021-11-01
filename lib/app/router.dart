@@ -4,6 +4,7 @@ import 'package:distributor/src/ui/views/add_adhoc_sale/add_adhoc_sale_view.dart
 import 'package:distributor/src/ui/views/add_issue/add_issue_view.dart';
 import 'package:distributor/src/ui/views/add_payment/add_payment_view.dart';
 import 'package:distributor/src/ui/views/adhoc_cart_view/adhoc_cart_view.dart';
+import 'package:distributor/src/ui/views/adhoc_detail/adhoc_detail_view.dart';
 import 'package:distributor/src/ui/views/adhoc_payment/adhoc_payment_view.dart';
 import 'package:distributor/src/ui/views/partial_delivery/partial_delivery_view.dart';
 import 'package:distributor/src/ui/views/delivery_note/delivery_note_view.dart';
@@ -37,6 +38,7 @@ import '../ui/views/login/login_view.dart';
     MaterialRoute(page: HomeView),
     MaterialRoute(page: StartupView, initial: true),
     MaterialRoute(page: LoginView),
+    MaterialRoute(page: AdhocDetailView),
     MaterialRoute(page: JourneyView),
     MaterialRoute(page: CustomerDetailView),
     MaterialRoute(page: CreateSalesOrderView),
