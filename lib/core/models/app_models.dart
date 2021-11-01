@@ -53,3 +53,48 @@ class StockTransferRequest {
         "toWarehouse": toWarehouse
       };
 }
+
+//[{
+// referenceNo: PK-21-03138,
+// baseType: Pickup,
+// transactionWarehouse: Likoni:Minishop Likoni,
+// customerId: Zacharia Maghanga Mwasaru,
+// customerName: Zacharia Maghanga Mwasaru,
+// total: 88.0,
+// transactionStatus: To Bill,
+// sellingPriceList: BICYCLE VENDORS -45,
+// saleItems: []}
+class AdhocSale {
+  String referenceNo;
+  String baseType;
+  String transactionWarehouse;
+  String customerId;
+  String customerName;
+  num total;
+  String transactionStatus;
+  String sellingPriceList;
+  List saleItems;
+
+  AdhocSale(
+      {this.referenceNo,
+      this.baseType,
+      this.transactionWarehouse,
+      this.customerId,
+      this.customerName,
+      this.total,
+      this.transactionStatus,
+      this.saleItems,
+      this.sellingPriceList});
+
+  factory AdhocSale.fromResponse(Map<String, dynamic> data) {
+    return AdhocSale(
+      referenceNo: data['referenceNo'],
+      baseType: data['baseType'],
+      transactionStatus: data['transactionStatus'],
+      customerId: data['customerId'],
+      customerName: data['customerName'],
+      total: data['total'],
+      transactionWarehouse: data['transactionWarehouse'],
+    );
+  }
+}

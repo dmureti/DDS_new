@@ -24,6 +24,9 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
       onModelReady: (model) => model.init(),
+      fireOnModelReadyOnce: false,
+      disposeViewModel: true,
+      createNewModelOnInsert: true,
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           actionsIconTheme: IconThemeData(color: Colors.white),

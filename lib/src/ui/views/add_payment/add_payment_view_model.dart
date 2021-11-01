@@ -72,7 +72,7 @@ class AddPaymentViewModel extends BaseViewModel {
     'MPESA',
     'Equitel',
     'Cash',
-    'Invoice Later'
+    'Invoice'
   ];
 
   num _amount;

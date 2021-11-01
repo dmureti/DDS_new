@@ -100,7 +100,7 @@ class JourneyConsole extends StatelessWidget {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                model.currentJourney.journeyId,
+                                                model.currentJourney?.journeyId,
                                                 style: TextStyle(
                                                     color: Colors.black54,
                                                     fontSize: 20,

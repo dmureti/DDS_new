@@ -18,7 +18,9 @@ class AdhocListingView extends HookViewModelWidget<HomeViewModel> {
           : model.adhocSalesList.isNotEmpty
               ? ListView.builder(
                   itemBuilder: (context, index) {
-                    return AdhocSaleListTile();
+                    return AdhocSaleListTile(
+                      adhocSale: model.adhocSalesList[index],
+                    );
                   },
                   itemCount: model.adhocSalesList.length,
                 )

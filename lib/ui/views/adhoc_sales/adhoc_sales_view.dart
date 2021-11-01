@@ -156,14 +156,8 @@ class AdhocSalesView extends StatelessWidget {
 class _CustomerNameTextField extends HookViewModelWidget<AdhocSalesViewModel> {
   @override
   Widget buildViewModelWidget(BuildContext context, AdhocSalesViewModel model) {
-    var controller = useTextEditingController();
-    return TextFormField(
-      controller: controller,
-      onChanged: model.updateCustomerName,
-      keyboardType: TextInputType.name,
-      decoration: InputDecoration(
-        hintText: 'Name of customer',
-      ),
-    );
+    // var controller = useTextEditingController();
+    return CustomerTextInput(
+        customerList: model.customerList, onSelected: model.updateCustomerName);
   }
 }

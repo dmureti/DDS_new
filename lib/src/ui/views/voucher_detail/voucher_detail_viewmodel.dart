@@ -1,5 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/app_models.dart';
+import 'package:distributor/services/user_service.dart';
 import 'package:distributor/src/ui/common/transaction_viewmodel.dart';
 
 import 'package:stacked_services/stacked_services.dart';
@@ -7,10 +8,12 @@ import 'package:stacked_services/stacked_services.dart';
 class VoucherDetailViewmodel extends TransactionViewmodel {
   final _dialogService = locator<DialogService>();
   final _navigationService = locator<NavigationService>();
+  final _userService = locator<UserService>();
+
   final String transactionId;
   final String voucherType;
 
-  List<String> statusStrings = ["Approve", "Cancel"];
+  List<String> statusStrings = ["Accept", "Cancel"];
 
   Transaction _stockTransaction;
   Transaction get stockTransaction => _stockTransaction;
@@ -19,6 +22,17 @@ class VoucherDetailViewmodel extends TransactionViewmodel {
 
   init() async {
     await getTransaction();
+  }
+
+  //@TODO Check if this really works
+
+  bool get originIsSelf {
+    if (_userService.user.salesChannel.toLowerCase() !=
+        _stockTransaction.sourceWarehouse.toLowerCase()) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   getTransaction() async {
@@ -65,7 +79,7 @@ class VoucherDetailViewmodel extends TransactionViewmodel {
 
   commitStatusChange(String val) async {
     switch (status.toLowerCase()) {
-      case 'approve':
+      case 'accept':
         approveTransaction(stockTransaction);
         return;
         break;

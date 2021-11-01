@@ -46,13 +46,15 @@ class AddPaymentView extends StatelessWidget {
                     child: Text('Select Payment mode'),
                   ),
                   items: model.paymentModes
-                      .map((e) => DropdownMenuItem(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(e.toString().split(".").last),
-                            ),
-                            value: e,
-                          ))
+                      .map(
+                        (e) => DropdownMenuItem(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(e.toString().split(".").last),
+                          ),
+                          value: e,
+                        ),
+                      )
                       .toList(),
                   onChanged: (val) {
                     model.setPaymentMode(val);

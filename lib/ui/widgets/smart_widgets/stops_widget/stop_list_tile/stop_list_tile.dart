@@ -1,4 +1,5 @@
 import 'package:distributor/ui/shared/text_styles.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 
 import 'package:distributor/ui/widgets/smart_widgets/stops_widget/stop_list_tile/stop_list_tile_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -23,9 +24,9 @@ class StopListTile extends StatelessWidget {
       viewModelBuilder: () => StopListTileViewModel(deliveryJourney.journeyId,
           salesOrderId: salesOrderId, deliveryStop: deliveryStop),
       builder: (context, model, child) => model.deliveryNote == null
-          ? CircularProgressIndicator()
+          ? Center(child: BusyWidget())
           : Container(
-              margin: EdgeInsets.all(8),
+              margin: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               child: Material(
                 type: MaterialType.card,
                 elevation: 1,

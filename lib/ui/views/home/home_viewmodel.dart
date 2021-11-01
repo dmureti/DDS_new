@@ -1,6 +1,7 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
+import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/activity_service.dart';
 import 'package:distributor/services/adhoc_cart_service.dart';
@@ -146,7 +147,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
     await _logisticsService.fetchJourneys();
     await _permissionService.init();
     //Check if the user has permissions before enabling this
-    // await fetchAdhocSales();
+    await fetchAdhocSales();
     return;
   }
 
@@ -219,10 +220,18 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   }
 
   fetchAdhocSales() async {
-    // _adhocSalesList = await _adhocCartService.fetchAdhocSalesList();
-    // notifyListeners();
+    _adhocSalesList = await _adhocCartService.fetchAdhocSalesList();
+    notifyListeners();
   }
 
-  List _adhocSalesList = [];
-  List get adhocSalesList => _adhocSalesList;
+  List<AdhocSale> _adhocSalesList = <AdhocSale>[];
+  List<AdhocSale> get adhocSalesList {
+    if (_adhocSalesList.isNotEmpty) {
+      _adhocSalesList.sort((a, b) {
+        return a.referenceNo.compareTo(b.referenceNo);
+      });
+      return _adhocSalesList;
+    }
+    return _adhocSalesList;
+  }
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/logistics_service.dart';
@@ -40,7 +41,9 @@ class AdhocCartService with ReactiveServiceMixin {
       if (showAirtel) {
         _modes.add('EQUITEL');
       }
-      _modes.addAll(['CASH', 'INVOICE LATER']);
+      _modes.addAll(
+        ['CASH', 'INVOICE'],
+      );
       return _modes;
     } else {
       if (showMPesa) {
@@ -50,7 +53,6 @@ class AdhocCartService with ReactiveServiceMixin {
         _modes.add('EQUITEL');
       }
       _modes.add('CASH');
-      print(_modes);
       return _modes;
     }
   }
@@ -248,16 +250,16 @@ class AdhocCartService with ReactiveServiceMixin {
         "paymentMode": paymentMode == 'INVOICE LATER' ? 'ACCOUNT' : paymentMode,
         "userTxnNarrative": "string"
       },
-      "deliveryLocation": "${userLocation.latitude},${userLocation.longitude}",
+      "deliveryLocation":
+          "${userLocation?.latitude},${userLocation?.longitude}",
       "remarks": remarks,
       "sellingPriceList": sellingPriceList,
       "warehouseId":
           _journeyService.currentJourney.route ?? _userService.user.salesChannel
     };
-    print(json.encode(data));
-    // print(_journeyService.currentJourney.route);
+
     var result = await api.createPOSPayment(
-        modeOfPayment: paymentMode == 'INVOICE LATER' ? 'ACCOUNT' : paymentMode,
+        modeOfPayment: paymentMode == 'INVOICE' ? 'ACCOUNT' : paymentMode,
         data: data,
         token: token);
     if (result is bool) {
@@ -270,7 +272,12 @@ class AdhocCartService with ReactiveServiceMixin {
     _warehouse.value = branch;
   }
 
-  fetchAdhocSalesList() {
-    return [];
+  fetchAdhocSalesList() async {
+    List result = await _apiService.api.getAdhocSales(_userService.user.token);
+    print(result);
+    if (result.isNotEmpty) {
+      return result.map<AdhocSale>((e) => AdhocSale.fromResponse(e)).toList();
+    }
+    return <AdhocSale>[];
   }
 }

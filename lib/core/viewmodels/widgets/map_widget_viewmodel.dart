@@ -121,6 +121,9 @@ class MapViewmodel extends FutureViewModel<UserLocation> {
   @override
   Stream<UserLocation> get stream => _locationService.locationStream;
 
+  /**
+   * Get coordinates
+   */
   getCoordinates(Customer customer) {
     UserLocation _customerLocation;
     if (customer.gpsLocation != null) {

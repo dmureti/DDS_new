@@ -1,3 +1,4 @@
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/smart_widgets/stops_widget/stop_list_tile/stop_list_tile.dart';
 import 'package:distributor/ui/widgets/smart_widgets/stops_widget/stops_list_widget_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,9 @@ class StopsListWidget extends StatelessWidget {
         builder: (context, model, child) => model.deliveryJourney == null
             ? Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: CircularProgressIndicator(),
+                child: Center(
+                  child: BusyWidget(),
+                ),
               )
             : Column(
                 mainAxisSize: MainAxisSize.min,

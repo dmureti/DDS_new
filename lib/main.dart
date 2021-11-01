@@ -2,7 +2,6 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/connectivity_service.dart';
-
 import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
