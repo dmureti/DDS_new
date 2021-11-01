@@ -42,7 +42,7 @@ class ReturnStockTileWidget extends StatelessWidget {
                 ),
                 Spacer(),
                 Container(
-                  width: 150,
+                  width: 180,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(32),
                     border: Border.all(color: Colors.black12, width: 2),
