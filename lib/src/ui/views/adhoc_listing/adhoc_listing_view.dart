@@ -19,6 +19,7 @@ class AdhocListingView extends HookViewModelWidget<HomeViewModel> {
               ? ListView.builder(
                   itemBuilder: (context, index) {
                     return AdhocSaleListTile(
+                      onTap: model.navigateToAdhocDetail,
                       adhocSale: model.adhocSalesList[index],
                     );
                   },

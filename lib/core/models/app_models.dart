@@ -98,3 +98,52 @@ class AdhocSale {
     );
   }
 }
+
+// {deliveryNoteId: PK-21-03141,
+// deliveryType: Pickup,
+// isReturn: 0,
+// deliveryWarehouse: Likoni:Minishop Likoni,
+// customerName: Abdull Lucky Karisa,
+// deliveryDate: 2021-11-02,
+// total: 90.0,
+// deliveryStatus: To Bill,
+// sellingPriceList: BICYCLE VENDORS -45,
+// deliveryItems: [{dnItemId: 46d5fe67d7, deliveryNoteId: PK-21-03141, itemCode: FG004, itemName: 400g Brown Bread, unitOfMeasure: Nos, index: 1, quantity: 1, itemRate: 45.0, lineAmount: 45.0, warehouseId: Likoni:Minishop Likoni}, {dnItemId: a1b33e6517, deliveryNoteId: PK-21-03141, itemCode: FG005, itemName: 400g White Bread, unitOfMeasure: Nos, index: 2, quantity: 1, itemRate: 45.0, lineAmount: 45.0, warehouseId: Likoni:Minishop Likoni}]}
+class AdhocDetail {
+  final String deliveryNoteId;
+  final String deliveryType;
+  num isReturn;
+  String deliveryWarehouse;
+  String customerName;
+  String deliveryDate;
+  num total;
+  String deliveryStatus;
+  String sellingPriceList;
+  List deliveryItems;
+
+  AdhocDetail(
+      {this.deliveryNoteId,
+      this.deliveryType,
+      this.isReturn,
+      this.deliveryWarehouse,
+      this.customerName,
+      this.deliveryDate,
+      this.total,
+      this.deliveryStatus,
+      this.sellingPriceList,
+      this.deliveryItems});
+
+  factory AdhocDetail.fromResponse(Map<String, dynamic> data) {
+    return AdhocDetail(
+        deliveryNoteId: data['deliveryNoteId'],
+        deliveryType: data['deliveryType'],
+        isReturn: data['isReturn'],
+        deliveryWarehouse: data['deliveryWarehouse'],
+        customerName: data['customerName'],
+        deliveryDate: data['deliveryDate'],
+        total: data['total'],
+        deliveryStatus: data['deliveryStatus'],
+        sellingPriceList: data['sellingPriceList'],
+        deliveryItems: data['deliveryItems']);
+  }
+}

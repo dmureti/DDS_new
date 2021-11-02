@@ -234,4 +234,9 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
     }
     return _adhocSalesList;
   }
+
+  navigateToAdhocDetail(String referenceNo) async {
+    await _navigationService.navigateTo(Routes.adhocDetailView,
+        arguments: AdhocDetailViewArguments(referenceNo: referenceNo));
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/services/adhoc_cart_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:stacked/stacked.dart';
@@ -15,8 +16,8 @@ class AdhocDetailViewModel extends BaseViewModel {
   bool _fetched = false;
   bool get fetched => _fetched;
 
-  var _adhocDetail;
-  get adhocDetail => _adhocDetail;
+  AdhocDetail _adhocDetail;
+  AdhocDetail get adhocDetail => _adhocDetail;
 
   getAdhocDetail() async {
     _adhocDetail = await _adhocService.fetchAdhocDetail(referenceNo, token);

@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 
 class AdhocSaleListTile extends StatelessWidget {
   final AdhocSale adhocSale;
-  const AdhocSaleListTile({Key key, @required this.adhocSale})
+  final Function onTap;
+  const AdhocSaleListTile(
+      {Key key, @required this.adhocSale, @required this.onTap})
       : super(key: key);
 
   @override
@@ -15,7 +17,9 @@ class AdhocSaleListTile extends StatelessWidget {
         type: MaterialType.card,
         elevation: 1.0,
         child: ListTile(
-          onTap: () {},
+          onTap: () {
+            onTap(adhocSale.referenceNo);
+          },
           isThreeLine: true,
           subtitle: Padding(
             padding: EdgeInsets.only(bottom: 8),

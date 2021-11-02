@@ -274,7 +274,6 @@ class AdhocCartService with ReactiveServiceMixin {
 
   fetchAdhocSalesList() async {
     List result = await _apiService.api.getAdhocSales(_userService.user.token);
-    print(result);
     if (result.isNotEmpty) {
       return result.map<AdhocSale>((e) => AdhocSale.fromResponse(e)).toList();
     }
@@ -282,6 +281,10 @@ class AdhocCartService with ReactiveServiceMixin {
   }
 
   fetchAdhocDetail(String referenceNo, String token) async {
-    return _apiService.api.adhocSaleDetails(referenceNo, token);
+    var result = await _apiService.api.adhocSaleDetails(referenceNo, token);
+    if (result != null) {
+      return AdhocDetail.fromResponse(result);
+    }
+    return result;
   }
 }

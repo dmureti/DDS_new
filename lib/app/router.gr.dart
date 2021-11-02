@@ -17,7 +17,7 @@ import '../src/ui/views/add_adhoc_sale/add_adhoc_sale_view.dart';
 import '../src/ui/views/add_issue/add_issue_view.dart';
 import '../src/ui/views/add_payment/add_payment_view.dart';
 import '../src/ui/views/adhoc_cart_view/adhoc_cart_view.dart';
-import '../src/ui/views/adhoc_detail/adhoc_detail_view.dart';
+import '../src/ui/views/adhoc_detail/adhoc_detail.dart';
 import '../src/ui/views/adhoc_payment/adhoc_payment_view.dart';
 import '../src/ui/views/change_password/change_password.dart';
 import '../src/ui/views/delivery_note/delivery_note_view.dart';
@@ -167,9 +167,7 @@ class Router extends RouterBase {
       );
     },
     AdhocDetailView: (data) {
-      final args = data.getArgs<AdhocDetailViewArguments>(
-        orElse: () => AdhocDetailViewArguments(),
-      );
+      final args = data.getArgs<AdhocDetailViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
         builder: (context) => AdhocDetailView(
           key: args.key,
@@ -436,7 +434,7 @@ class LoginViewArguments {
 class AdhocDetailViewArguments {
   final Key key;
   final String referenceNo;
-  AdhocDetailViewArguments({this.key, this.referenceNo});
+  AdhocDetailViewArguments({this.key, @required this.referenceNo});
 }
 
 /// CustomerDetailView arguments holder class
