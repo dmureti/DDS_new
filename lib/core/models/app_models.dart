@@ -54,21 +54,17 @@ class StockTransferRequest {
       };
 }
 
-//[{
-// referenceNo: PK-21-03138,
-// baseType: Pickup,
-// transactionWarehouse: Likoni:Minishop Likoni,
-// customerId: Zacharia Maghanga Mwasaru,
-// customerName: Zacharia Maghanga Mwasaru,
-// total: 88.0,
-// transactionStatus: To Bill,
-// sellingPriceList: BICYCLE VENDORS -45,
-// saleItems: []}
+// {
+// referenceNo: SIAS-21-00001,
+// baseType: Cash Invoice,
+// customerId: Eric Mwangi Njuguna,
+// transactionDate: 2021-11-03 02:22:16, total: 67.5, transactionStatus: Unpaid, saleItems: []
 class AdhocSale {
   String referenceNo;
   String baseType;
   String transactionWarehouse;
   String customerId;
+  String transactionDate;
   String customerName;
   num total;
   String transactionStatus;
@@ -79,6 +75,7 @@ class AdhocSale {
       {this.referenceNo,
       this.baseType,
       this.transactionWarehouse,
+      this.transactionDate,
       this.customerId,
       this.customerName,
       this.total,
@@ -92,7 +89,8 @@ class AdhocSale {
       baseType: data['baseType'],
       transactionStatus: data['transactionStatus'],
       customerId: data['customerId'],
-      customerName: data['customerName'],
+      customerName: data['customerName'] ?? data['customerName'],
+      transactionDate: data['transactionDate'],
       total: data['total'],
       transactionWarehouse: data['transactionWarehouse'],
     );
