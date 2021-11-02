@@ -8,7 +8,7 @@ class GenericContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: child,
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
     );
   }
 }
