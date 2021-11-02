@@ -1,6 +1,7 @@
 import 'package:distributor/src/ui/views/adhoc_detail/adhoc_detail_viewmodel.dart';
 import 'package:distributor/ui/shared/widgets.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/generic_container.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -8,112 +9,123 @@ import 'package:tripletriocore/tripletriocore.dart';
 
 class AdhocDetailView extends StatelessWidget {
   final String referenceNo;
-  const AdhocDetailView({Key key, @required this.referenceNo})
+  final String customerId;
+  final String baseType;
+  const AdhocDetailView(
+      {Key key,
+      @required this.referenceNo,
+      @required this.customerId,
+      @required this.baseType})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<AdhocDetailViewModel>.reactive(
-        onModelReady: (model) => model.getAdhocDetail(),
-        builder: (context, model, child) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(referenceNo),
-              actions: [
-                PopupMenuButton(
-                    onSelected: (x) {
-                      // model.navigateToPage(x);
-                    },
-                    itemBuilder: (context) => <PopupMenuEntry<Object>>[
-                          PopupMenuItem(
-                            child: Text(
-                              'Edit Adhoc Sale',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            value: 'edit_adhoc_sale',
+      onModelReady: (model) => model.getAdhocDetail(),
+      builder: (context, model, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(referenceNo),
+            actions: [
+              PopupMenuButton(
+                  onSelected: (x) {
+                    // model.navigateToPage(x);
+                    model.confirmAction(x);
+                  },
+                  itemBuilder: (context) => <PopupMenuEntry<Object>>[
+                        PopupMenuItem(
+                          child: Text(
+                            'Edit Adhoc Sale',
+                            style: TextStyle(color: Colors.black),
                           ),
-                          PopupMenuItem(
-                            child: Text(
-                              'Reverse Adhoc Sale',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            value: 'reverse_adhoc_sale',
-                          ),
-                          PopupMenuDivider(),
-                          PopupMenuItem(
-                            child: Text(
-                              'Cancel Adhoc Sale',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            ),
-                            value: 'cancel',
-                          ),
-                        ]),
-              ],
-            ),
-            body: GenericContainer(
-              child: !model.fetched
-                  ? Center(child: BusyWidget())
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                            '${model.adhocDetail.deliveryStatus.toUpperCase()}'),
-                        ReportFieldRow(
-                            field: 'Delivery Date',
-                            value: model.adhocDetail.deliveryDate),
-                        ReportFieldRow(
-                            field: 'Customer Name',
-                            value: model.adhocDetail.customerName),
-                        ReportFieldRow(
-                            field: 'Delivery Note Id',
-                            value: model.adhocDetail.deliveryNoteId),
-                        ReportFieldRow(
-                            field: 'Delivery Type',
-                            value: model.adhocDetail.deliveryType),
-                        ReportFieldRow(
-                            field: 'Delivery Warehouse',
-                            value: model.adhocDetail.deliveryWarehouse),
-                        ReportFieldRow(
-                            field: 'Total',
-                            value:
-                                'Kshs ${model.adhocDetail.total.toStringAsFixed(2)}'),
-                        Divider(),
-                        Row(
-                          children: [
-                            Text('Delivery Items'.toUpperCase()),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.edit),
-                            ),
-                          ],
+                          value: 'edit_adhoc_sale',
                         ),
-                        model.adhocDetail.deliveryItems != null
-                            ? Expanded(
-                                child: ListView.separated(
-                                    itemBuilder: (context, index) {
-                                      DeliveryItem deliveryItem =
-                                          DeliveryItem.fromMap(model.adhocDetail
-                                              .deliveryItems[index]);
-                                      return buildDeliveryItemContainer(
-                                          deliveryItem);
-                                    },
-                                    separatorBuilder: (context, int) {
-                                      return Divider(
-                                        height: 1,
-                                      );
-                                    },
-                                    itemCount:
-                                        model.adhocDetail.deliveryItems.length),
-                              )
-                            : Container()
-                      ],
-                    ),
-            ),
-          );
-        },
-        viewModelBuilder: () => AdhocDetailViewModel(referenceNo));
+                        PopupMenuDivider(),
+                        PopupMenuItem(
+                          child: Text(
+                            'Cancel Adhoc Sale',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                          value: 'cancel_adhoc_sale',
+                        ),
+                      ]),
+            ],
+          ),
+          body: GenericContainer(
+            child: !model.fetched
+                ? Center(child: BusyWidget())
+                : model.adhocDetail != null
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                              '${model.adhocDetail.transactionStatus.toUpperCase()}'),
+                          ReportFieldRow(
+                              field: 'Delivery Date',
+                              value: model.adhocDetail.transactionDate),
+                          ReportFieldRow(
+                              field: 'Customer Id', value: model.customerId),
+                          ReportFieldRow(
+                              field: 'Customer Name',
+                              value: model.adhocDetail.customerName),
+                          ReportFieldRow(
+                              field: 'Delivery Note Id',
+                              value: model.adhocDetail.referenceNo),
+                          ReportFieldRow(
+                              field: 'Delivery Type',
+                              value: model.adhocDetail.baseType),
+                          ReportFieldRow(
+                              field: 'Warehouse',
+                              value: model.adhocDetail.transactionWarehouse),
+                          ReportFieldRow(
+                              field: 'Total',
+                              value:
+                                  'Kshs ${model.adhocDetail.total.toStringAsFixed(2)}'),
+                          Divider(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Delivery Items'.toUpperCase()),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(Icons.edit),
+                              ),
+                            ],
+                          ),
+                          model.adhocDetail.saleItems != null
+                              ? Expanded(
+                                  child: ListView.separated(
+                                      itemBuilder: (context, index) {
+                                        DeliveryItem deliveryItem =
+                                            DeliveryItem.fromMap(model
+                                                .adhocDetail.saleItems[index]);
+                                        return buildDeliveryItemContainer(
+                                            deliveryItem);
+                                      },
+                                      separatorBuilder: (context, int) {
+                                        return Divider(
+                                          height: 1,
+                                        );
+                                      },
+                                      itemCount:
+                                          model.adhocDetail.saleItems.length),
+                                )
+                              : Container()
+                        ],
+                      )
+                    : Center(
+                        child: EmptyContentContainer(
+                            label:
+                                'There was no information found for this sale.'),
+                      ),
+          ),
+        );
+      },
+      viewModelBuilder: () =>
+          AdhocDetailViewModel(referenceNo, customerId, baseType),
+    );
   }
 
   buildDeliveryItemContainer(DeliveryItem deliveryItem) {

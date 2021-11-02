@@ -16,7 +16,7 @@ class AdhocListingView extends HookViewModelWidget<HomeViewModel> {
       child: model.adhocSalesList == null
           ? BusyWidget()
           : model.adhocSalesList.isNotEmpty
-              ? ListView.builder(
+              ? ListView.separated(
                   itemBuilder: (context, index) {
                     return AdhocSaleListTile(
                       onTap: model.navigateToAdhocDetail,
@@ -24,6 +24,11 @@ class AdhocListingView extends HookViewModelWidget<HomeViewModel> {
                     );
                   },
                   itemCount: model.adhocSalesList.length,
+                  separatorBuilder: (context, index) {
+                    return Divider(
+                      height: 1,
+                    );
+                  },
                 )
               : Center(child: EmptyContentContainer(label: kStringNoSales)),
     );

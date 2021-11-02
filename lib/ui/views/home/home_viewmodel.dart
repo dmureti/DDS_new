@@ -211,12 +211,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
 
   void navigateToAddAdhocSale() async {
     var result = await _navigationService.navigateTo(Routes.adhocSalesView);
-    if (result is bool) {
-      if (result) {
-        //If successful
-        await fetchAdhocSales();
-      }
-    }
+    await fetchAdhocSales();
   }
 
   fetchAdhocSales() async {
@@ -235,8 +230,12 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
     return _adhocSalesList;
   }
 
-  navigateToAdhocDetail(String referenceNo) async {
-    await _navigationService.navigateTo(Routes.adhocDetailView,
-        arguments: AdhocDetailViewArguments(referenceNo: referenceNo));
+  navigateToAdhocDetail(String referenceNo, String customerId, String baseType) async {
+    var result = await _navigationService.navigateTo(
+      Routes.adhocDetailView,
+      arguments: AdhocDetailViewArguments(
+          referenceNo: referenceNo, customerId: customerId, baseType: baseType),
+    );
+    await fetchAdhocSales();
   }
 }

@@ -62,16 +62,16 @@ class AdhocCartViewModel extends ReactiveViewModel {
 
   Future fetchProductsByPrice() async {
     setBusy(true);
+    print(_adhocCartService.sellingPriceList);
     var result = await _productService.fetchProductsByDefaultPriceList(
         defaultStock: _adhocCartService.sellingPriceList);
+
     setBusy(false);
     if (result is List<Product>) {
       _customerProductList = result;
       notifyListeners();
     } else {
       _customerProductList = <Product>[];
-      await _dialogService.showDialog(
-          title: 'Error', description: 'An error occurred.');
     }
   }
 
@@ -91,6 +91,7 @@ class AdhocCartViewModel extends ReactiveViewModel {
 
   fetchStockBalance() async {
     var result = await _stockControllerService.getStockBalance();
+    print(result);
     if (result is List<Product>) {
       _stockBalanceList = result;
       notifyListeners();

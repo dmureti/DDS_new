@@ -172,6 +172,8 @@ class Router extends RouterBase {
         builder: (context) => AdhocDetailView(
           key: args.key,
           referenceNo: args.referenceNo,
+          customerId: args.customerId,
+          baseType: args.baseType,
         ),
         settings: data,
       );
@@ -434,7 +436,13 @@ class LoginViewArguments {
 class AdhocDetailViewArguments {
   final Key key;
   final String referenceNo;
-  AdhocDetailViewArguments({this.key, @required this.referenceNo});
+  final String customerId;
+  final String baseType;
+  AdhocDetailViewArguments(
+      {this.key,
+      @required this.referenceNo,
+      @required this.customerId,
+      @required this.baseType});
 }
 
 /// CustomerDetailView arguments holder class

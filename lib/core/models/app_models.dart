@@ -99,51 +99,130 @@ class AdhocSale {
   }
 }
 
-// {deliveryNoteId: PK-21-03141,
-// deliveryType: Pickup,
-// isReturn: 0,
-// deliveryWarehouse: Likoni:Minishop Likoni,
-// customerName: Abdull Lucky Karisa,
-// deliveryDate: 2021-11-02,
-// total: 90.0,
-// deliveryStatus: To Bill,
-// sellingPriceList: BICYCLE VENDORS -45,
-// deliveryItems: [{dnItemId: 46d5fe67d7, deliveryNoteId: PK-21-03141, itemCode: FG004, itemName: 400g Brown Bread, unitOfMeasure: Nos, index: 1, quantity: 1, itemRate: 45.0, lineAmount: 45.0, warehouseId: Likoni:Minishop Likoni}, {dnItemId: a1b33e6517, deliveryNoteId: PK-21-03141, itemCode: FG005, itemName: 400g White Bread, unitOfMeasure: Nos, index: 2, quantity: 1, itemRate: 45.0, lineAmount: 45.0, warehouseId: Likoni:Minishop Likoni}]}
+// {"referenceNo":"PK-21-03161",
+// "baseType":"Pickup",
+// "transactionWarehouse":"Likoni",
+// "customerId":"Moi Forces Academy Likoni",
+// "customerName":"Moi Forces Academy Likoni",
+// "transactionDate":"2021-11-03 00:44:46",
+// "total":135.0,
+// "transactionStatus":"To Bill",
+// "sellingPriceList":"BICYCLE VENDORS -45",
+// "saleItems":[{"erpId":"8ca79f04aa","parentId":"PK-21-03161","itemCode":"FG003","itemName":"200g White Bread","unitOfMeasure":"Nos","index":1,"quantity":6,"itemRate":22.5,"lineAmount":135.0,"warehouseId":"Likoni:Minishop Likoni"}]}
 class AdhocDetail {
-  final String deliveryNoteId;
+  final String referenceNo;
+  final String baseType;
   final String deliveryType;
-  num isReturn;
-  String deliveryWarehouse;
+  String customerId;
   String customerName;
-  String deliveryDate;
+  String transactionDate;
+  String transactionWarehouse;
   num total;
-  String deliveryStatus;
+  String transactionStatus;
   String sellingPriceList;
-  List deliveryItems;
+  List saleItems;
 
   AdhocDetail(
-      {this.deliveryNoteId,
+      {this.referenceNo,
+      this.customerId,
+      this.transactionWarehouse,
+      this.baseType,
       this.deliveryType,
-      this.isReturn,
-      this.deliveryWarehouse,
       this.customerName,
-      this.deliveryDate,
+      this.transactionDate,
       this.total,
-      this.deliveryStatus,
+      this.transactionStatus,
       this.sellingPriceList,
-      this.deliveryItems});
+      this.saleItems});
 
   factory AdhocDetail.fromResponse(Map<String, dynamic> data) {
     return AdhocDetail(
-        deliveryNoteId: data['deliveryNoteId'],
-        deliveryType: data['deliveryType'],
-        isReturn: data['isReturn'],
-        deliveryWarehouse: data['deliveryWarehouse'],
-        customerName: data['customerName'],
-        deliveryDate: data['deliveryDate'],
-        total: data['total'],
-        deliveryStatus: data['deliveryStatus'],
-        sellingPriceList: data['sellingPriceList'],
-        deliveryItems: data['deliveryItems']);
+      baseType: data['baseType'],
+      referenceNo: data['referenceNo'],
+      transactionWarehouse: data['transactionWarehouse'],
+      deliveryType: data['deliveryType'],
+      customerName: data['customerName'],
+      transactionDate: data['transactionDate'],
+      customerId: data['customerId'],
+      total: data['total'],
+      transactionStatus: data['transactionStatus'],
+      sellingPriceList: data['sellingPriceList'],
+      saleItems: data['saleItems'],
+    );
+  }
+}
+
+// {"message":"Success","payload":{"referenceNo":"PK-21-02789","baseType":"Pickup","transactionWarehouse":"Likoni:Minishop Likoni","customerId":"Bernard Kyalo Mwongela","customerName":"Bernard Kyalo Mwongela","transactionDate":"2021-10-24 06:02:25","total":9450.0,"transactionStatus":"Completed","sellingPriceList":"BICYCLE VENDORS -45","saleItems":[{"erpId":"3da287074a","parentId":"PK-21-02789","itemCode":"FG004","itemName":"400g Brown Bread","unitOfMeasure":"Nos","index":1,"quantity":4,"itemRate":45.0,"lineAmount":180.0,"warehouseId":"Likoni:Minishop Likoni"},{"erpId":"9b017ffe08","parentId":"PK-21-02789","itemCode":"FG014","itemName":"Butter Toast 400g","unitOfMeasure":"Nos","index":2,"quantity":25,"itemRate":45.0,"lineAmount":1125.0,"warehouseId":"Likoni:Minishop Likoni"},{"erpId":"239f51830c","parentId":"PK-21-02789","itemCode":"FG005","itemName":"400g White Bread","unitOfMeasure":"Nos","index":3,"quantity":110,"itemRate":45.0,"lineAmount":4950.0,"warehouseId":"Likoni:Minishop Likoni"},{"erpId":"65998c0f6a",
+
+// "customerId": "string",
+// "customerName": "string",
+// "deliveryLocation": "string",
+// "items": [
+// {
+// "itemCode": "string",
+// "itemName": "string",
+// "itemRate": 0,
+// "quantity": 0
+// }
+// ],
+// "payment": {
+// "amount": 0,
+// "externalAccountId": "string",
+// "externalTxnID": "string",
+// "externalTxnNarrative": "string",
+// "payerAccount": "string",
+// "payerName": "string",
+// "paymentMode": "string",
+// "userTxnNarrative": "string"
+// },
+// "remarks": "string",
+// "sellingPriceList": "string",
+// "warehouseId": "string"
+class POSSaleRequest {
+  String customerId;
+  String customerName;
+  String deliveryLocation;
+  List items;
+  Map<String, dynamic> payment;
+  String remarks;
+  String sellingPriceList;
+  String warehouseId;
+
+  POSSaleRequest(
+      {this.customerName,
+      this.customerId,
+      this.deliveryLocation,
+      this.items,
+      this.payment,
+      this.remarks,
+      this.sellingPriceList,
+      this.warehouseId});
+
+  factory POSSaleRequest.fromMap() {
+    return POSSaleRequest();
+  }
+
+  factory POSSaleRequest.fromSale(
+      AdhocDetail adhocDetail, String customerId, String location) {
+    return POSSaleRequest(
+        customerName: adhocDetail.customerName,
+        customerId: customerId,
+        items: adhocDetail.saleItems,
+        sellingPriceList: adhocDetail.sellingPriceList,
+        deliveryLocation: location,
+        warehouseId: adhocDetail.transactionWarehouse);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "customerId": customerId,
+      "customerName": customerName,
+      "deliveryLocation": deliveryLocation,
+      "items": items.map((e) => e).toList(),
+      "payment": payment,
+      "remarks": remarks,
+      "sellingPriceList": sellingPriceList,
+      "warehouseId": warehouseId
+    };
   }
 }

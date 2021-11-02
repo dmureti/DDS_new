@@ -18,7 +18,8 @@ class AdhocSaleListTile extends StatelessWidget {
         elevation: 1.0,
         child: ListTile(
           onTap: () {
-            onTap(adhocSale.referenceNo);
+            onTap(adhocSale.referenceNo, adhocSale.customerId,
+                adhocSale.baseType);
           },
           isThreeLine: true,
           subtitle: Padding(

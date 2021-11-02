@@ -16,6 +16,7 @@ class AdhocCartView extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
+    print(customer.defaultPriceList);
     return ViewModelBuilder<AdhocCartViewModel>.reactive(
         onModelReady: (model) => model.init(),
         builder: (context, model, child) {

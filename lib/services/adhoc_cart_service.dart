@@ -247,7 +247,7 @@ class AdhocCartService with ReactiveServiceMixin {
         "externalTxnNarrative": "string",
         "payerAccount": "string",
         "payerName": "string",
-        "paymentMode": paymentMode == 'INVOICE LATER' ? 'ACCOUNT' : paymentMode,
+        "paymentMode": paymentMode == 'INVOICE' ? 'ACCOUNT' : paymentMode,
         "userTxnNarrative": "string"
       },
       "deliveryLocation":
@@ -280,11 +280,18 @@ class AdhocCartService with ReactiveServiceMixin {
     return <AdhocSale>[];
   }
 
-  fetchAdhocDetail(String referenceNo, String token) async {
-    var result = await _apiService.api.adhocSaleDetails(referenceNo, token);
+  fetchAdhocDetail(String referenceNo, String token, String baseType) async {
+    var result =
+        await _apiService.api.adhocSaleDetails(referenceNo, token, baseType);
+
     if (result != null) {
       return AdhocDetail.fromResponse(result);
     }
     return result;
+  }
+
+  cancelAdhocSale(String referenceNo, String token, AdhocDetail adhocDetail,
+      String baseType, String customerId) async {
+    return await _apiService.api.reverseSale(referenceNo, token, baseType);
   }
 }

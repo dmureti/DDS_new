@@ -51,7 +51,10 @@ class AdhocPaymentViewmodel extends ReactiveViewModel {
     if (result is bool) {
       await _dialogService.showDialog(
           title: 'Success', description: 'The adhoc sale was successful');
-      _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
+      _navigationService.pushNamedAndRemoveUntil(
+        Routes.homeView,
+        arguments: HomeViewArguments(index: 2),
+      );
     } else if (result is CustomException) {
       await _dialogService.showDialog(
           title: 'Error', description: result.description);
