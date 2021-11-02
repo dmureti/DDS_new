@@ -223,14 +223,15 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   List<AdhocSale> get adhocSalesList {
     if (_adhocSalesList.isNotEmpty) {
       _adhocSalesList.sort((a, b) {
-        return a.referenceNo.compareTo(b.referenceNo);
+        return b.referenceNo.compareTo(a.referenceNo);
       });
       return _adhocSalesList;
     }
     return _adhocSalesList;
   }
 
-  navigateToAdhocDetail(String referenceNo, String customerId, String baseType) async {
+  navigateToAdhocDetail(
+      String referenceNo, String customerId, String baseType) async {
     var result = await _navigationService.navigateTo(
       Routes.adhocDetailView,
       arguments: AdhocDetailViewArguments(
