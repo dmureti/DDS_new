@@ -37,7 +37,7 @@ class AdhocSaleListTile extends StatelessWidget {
                 //     border: Border.all(color: Colors.black26),
                 //     borderRadius: BorderRadius.circular(2),
                 //   ),
-                //   child: Padding(
+                //   ch ild: Padding(
                 //     padding: const EdgeInsets.all(4.0),
                 //     child: Text(
                 //       '${adhocSale.transactionStatus.toUpperCase()}',
@@ -45,7 +45,10 @@ class AdhocSaleListTile extends StatelessWidget {
                 //     ),
                 //   ),
                 // ),
-                Text('Kshs ${adhocSale.total.toStringAsFixed(2)}'),
+                Text(
+                  'Kshs ${adhocSale.total.toStringAsFixed(2)}',
+                  style: TextStyle(),
+                ),
               ],
             ),
           ),
@@ -53,9 +56,10 @@ class AdhocSaleListTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                width: 90,
+                width: 70,
                 child: Text(
                   '${adhocSale.referenceNo}',
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: 13, color: Colors.grey),
                 ),
               ),
@@ -68,11 +72,9 @@ class AdhocSaleListTile extends StatelessWidget {
                 ),
               ),
               Container(
+                alignment: Alignment.topRight,
                 child: Text(
                     '${Helper.formatDateShort(DateTime.parse(adhocSale.transactionDate))}'),
-              ),
-              SizedBox(
-                width: 5,
               ),
             ],
           ),

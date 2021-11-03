@@ -89,7 +89,7 @@ class AdhocSale {
       baseType: data['baseType'],
       transactionStatus: data['transactionStatus'],
       customerId: data['customerId'],
-      customerName: data['customerName'] ?? data['customerName'],
+      customerName: data['customerName'] ?? data['customerId'],
       transactionDate: data['transactionDate'],
       total: data['total'],
       transactionWarehouse: data['transactionWarehouse'],
@@ -114,7 +114,7 @@ class AdhocDetail {
   String customerId;
   String customerName;
   String transactionDate;
-  String transactionWarehouse;
+  String warehouseId;
   num total;
   String transactionStatus;
   String sellingPriceList;
@@ -123,7 +123,7 @@ class AdhocDetail {
   AdhocDetail(
       {this.referenceNo,
       this.customerId,
-      this.transactionWarehouse,
+      this.warehouseId,
       this.baseType,
       this.deliveryType,
       this.customerName,
@@ -137,11 +137,11 @@ class AdhocDetail {
     return AdhocDetail(
       baseType: data['baseType'],
       referenceNo: data['referenceNo'],
-      transactionWarehouse: data['transactionWarehouse'],
+      warehouseId: data['warehouseId'],
       deliveryType: data['deliveryType'],
-      customerName: data['customerName'],
+      customerName: data['customerName'] ?? data['customerId'],
       transactionDate: data['transactionDate'],
-      customerId: data['customerId'],
+      customerId: data['customerId'] ?? data['customerName'],
       total: data['total'],
       transactionStatus: data['transactionStatus'],
       sellingPriceList: data['sellingPriceList'],
@@ -208,7 +208,7 @@ class POSSaleRequest {
         items: adhocDetail.saleItems,
         sellingPriceList: adhocDetail.sellingPriceList,
         deliveryLocation: location,
-        warehouseId: adhocDetail.transactionWarehouse);
+        warehouseId: adhocDetail.warehouseId);
   }
 
   Map<String, dynamic> toJson() {

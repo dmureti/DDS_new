@@ -43,7 +43,10 @@ class AdhocDetailViewModel extends BaseViewModel {
         }
         break;
       case 'edit_adhoc_sale':
-        editTransaction();
+        toggleEditState();
+        break;
+      case 'edit_adhoc_sale':
+        toggleEditState();
         break;
     }
   }
@@ -57,8 +60,17 @@ class AdhocDetailViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  editTransaction() {
-    toggleEditState();
+  editTransaction() async {
+    var dialogResponse = await _dialogService.showConfirmationDialog(
+        title: 'Update Transaction',
+        description:
+            'Are you sure you want to update this transaction ? You cannot undo this action.',
+        cancelTitle: 'NO',
+        confirmationTitle: 'Yes, I am sure');
+    if (dialogResponse.confirmed) {
+      await cancelTransaction();
+    }
+    // toggleEditState();
   }
 
   cancelTransaction() async {

@@ -274,6 +274,7 @@ class AdhocCartService with ReactiveServiceMixin {
 
   fetchAdhocSalesList() async {
     List result = await _apiService.api.getAdhocSales(_userService.user.token);
+
     if (result.isNotEmpty) {
       return result.map<AdhocSale>((e) => AdhocSale.fromResponse(e)).toList();
     }

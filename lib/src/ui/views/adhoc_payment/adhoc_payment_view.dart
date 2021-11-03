@@ -48,12 +48,12 @@ class AdhocPaymentView extends StatelessWidget {
                   SizedBox(
                     height: 8,
                   ),
-                  _RemarksTextField(),
+                  // _RemarksTextField(),
                   SizedBox(
                     width: 24,
                   ),
                   model.isBusy
-                      ? BusyWidget()
+                      ? Center(child: BusyWidget())
                       : Container(
                           width: MediaQuery.of(context).size.width,
                           child: ElevatedButton(

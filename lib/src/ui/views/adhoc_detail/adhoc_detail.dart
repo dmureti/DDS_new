@@ -1,7 +1,9 @@
+import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/views/adhoc_detail/adhoc_detail_viewmodel.dart';
 import 'package:distributor/ui/shared/widgets.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/flat_button_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/generic_container.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -60,13 +62,29 @@ class AdhocDetailView extends StatelessWidget {
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                              '${model.adhocDetail.transactionStatus.toUpperCase()}'),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black26),
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                    '${model.adhocDetail.transactionStatus.toUpperCase()}'),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 4,
+                          ),
                           ReportFieldRow(
                               field: 'Delivery Date',
-                              value: model.adhocDetail.transactionDate),
-                          ReportFieldRow(
-                              field: 'Customer Id', value: model.customerId),
+                              value: Helper.formatDate(DateTime.parse(
+                                  model.adhocDetail.transactionDate))),
+                          // ReportFieldRow(
+                          //     field: 'Customer Id', value: model.customerId),
                           ReportFieldRow(
                               field: 'Customer Name',
                               value: model.adhocDetail.customerName),
@@ -76,21 +94,24 @@ class AdhocDetailView extends StatelessWidget {
                           ReportFieldRow(
                               field: 'Delivery Type',
                               value: model.adhocDetail.baseType),
-                          ReportFieldRow(
-                              field: 'Warehouse',
-                              value: model.adhocDetail.transactionWarehouse),
+                          // ReportFieldRow(
+                          //     field: 'Warehouse',
+                          //     value: model.adhocDetail.warehouseId),
                           ReportFieldRow(
                               field: 'Total',
                               value:
                                   'Kshs ${model.adhocDetail.total.toStringAsFixed(2)}'),
-                          Divider(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Delivery Items'.toUpperCase()),
                               IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.edit),
+                                onPressed: () {
+                                  model.toggleEditState();
+                                },
+                                icon: model.inEditState
+                                    ? Icon(Icons.cancel)
+                                    : Icon(Icons.edit),
                               ),
                             ],
                           ),
@@ -106,11 +127,19 @@ class AdhocDetailView extends StatelessWidget {
                                       },
                                       separatorBuilder: (context, int) {
                                         return Divider(
-                                          height: 1,
+                                          height: 0.2,
                                         );
                                       },
                                       itemCount:
                                           model.adhocDetail.saleItems.length),
+                                )
+                              : Container(),
+                          model.inEditState
+                              ? Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  child: FlatButtonWidget(
+                                      label: 'Commit Changes',
+                                      onTap: model.editTransaction),
                                 )
                               : Container()
                         ],
@@ -130,10 +159,11 @@ class AdhocDetailView extends StatelessWidget {
 
   buildDeliveryItemContainer(DeliveryItem deliveryItem) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 4),
+      // margin: EdgeInsets.symmetric(vertical: 4),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: ListTile(
+          contentPadding: EdgeInsets.zero,
           leading: Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -141,11 +171,14 @@ class AdhocDetailView extends StatelessWidget {
               children: [
                 Text(
                   '${deliveryItem.itemCode}',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                ),
+                SizedBox(
+                  height: 4,
                 ),
                 Text(
                   '${deliveryItem.quantity}',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                   // textAlign: TextAlign.center,
                 ),
               ],
@@ -165,7 +198,7 @@ class AdhocDetailView extends StatelessWidget {
                       child: Text(
                         '${deliveryItem.itemName}',
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 14, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],

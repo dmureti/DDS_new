@@ -223,7 +223,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   List<AdhocSale> get adhocSalesList {
     if (_adhocSalesList.isNotEmpty) {
       _adhocSalesList.sort((a, b) {
-        return b.referenceNo.compareTo(a.referenceNo);
+        return b.transactionDate.compareTo(a.transactionDate);
       });
       return _adhocSalesList;
     }

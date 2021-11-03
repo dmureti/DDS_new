@@ -15,7 +15,7 @@ class ProductQuantityContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 80,
+      width: 60,
       child: Text(
         quantity.toStringAsFixed(0),
         style: quantity > 0 ? secondaryStyle : style,
