@@ -80,7 +80,7 @@ class AdhocDetailView extends StatelessWidget {
                             height: 4,
                           ),
                           ReportFieldRow(
-                              field: 'Delivery Date',
+                              field: 'Transaction Date',
                               value: Helper.formatDate(DateTime.parse(
                                   model.adhocDetail.transactionDate))),
                           // ReportFieldRow(
@@ -89,10 +89,10 @@ class AdhocDetailView extends StatelessWidget {
                               field: 'Customer Name',
                               value: model.adhocDetail.customerName),
                           ReportFieldRow(
-                              field: 'Delivery Note Id',
+                              field: 'Reference No',
                               value: model.adhocDetail.referenceNo),
                           ReportFieldRow(
-                              field: 'Delivery Type',
+                              field: 'Transaction Type',
                               value: model.adhocDetail.baseType),
                           // ReportFieldRow(
                           //     field: 'Warehouse',
@@ -104,7 +104,7 @@ class AdhocDetailView extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Delivery Items'.toUpperCase()),
+                              Text('Items In Transaction'.toUpperCase()),
                               IconButton(
                                 onPressed: () {
                                   model.toggleEditState();

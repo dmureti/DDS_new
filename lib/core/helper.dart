@@ -19,6 +19,12 @@ class Helper {
     return formatted;
   }
 
+  static formatToTime(DateTime dateTime) {
+    var formatter = DateFormat('HH:m');
+    String formatted = formatter.format(dateTime);
+    return formatted;
+  }
+
   static String formatDateForAccounts(var valToFormat) {
     var formatter = DateFormat('dd MMM yyyy');
     String formatted = formatter.format(DateTime.parse(valToFormat));

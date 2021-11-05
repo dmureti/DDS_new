@@ -1,5 +1,6 @@
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/core/models/app_models.dart';
+import 'package:distributor/src/ui/common/sale_format.dart';
 import 'package:distributor/src/ui/text_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,7 @@ class AdhocSaleListTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  child: Text('${adhocSale.baseType}'),
+                  child: Text('${adhocSale.transactionStatus.toUpperCase()}'),
                   width: 100,
                 ),
                 // Container(
@@ -60,7 +61,8 @@ class AdhocSaleListTile extends StatelessWidget {
                 child: Text(
                   '${adhocSale.referenceNo}',
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 13, color: Colors.grey),
+                  style: TextStyle(
+                      fontSize: 13, color: formatSale(adhocSale.baseType)),
                 ),
               ),
               Container(
@@ -74,7 +76,7 @@ class AdhocSaleListTile extends StatelessWidget {
               Container(
                 alignment: Alignment.topRight,
                 child: Text(
-                    '${Helper.formatDateShort(DateTime.parse(adhocSale.transactionDate))}'),
+                    '${Helper.formatToTime(DateTime.parse(adhocSale.transactionDate))}'),
               ),
             ],
           ),

@@ -114,10 +114,17 @@ class HomeView extends StatelessWidget {
         );
         break;
       case 2:
-        return Stack(
+        return Column(
           children: [
             NetworkSensitiveWidget(),
-            AdhocListingView(),
+            Container(
+              height: 30,
+              child: IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.filter),
+              ),
+            ),
+            Expanded(child: AdhocListingView()),
           ],
         );
         // return AdhocSalesView();
