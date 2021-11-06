@@ -150,7 +150,13 @@ class AdhocDetail {
   }
 }
 
-// {"message":"Success","payload":{"referenceNo":"PK-21-02789","baseType":"Pickup","transactionWarehouse":"Likoni:Minishop Likoni","customerId":"Bernard Kyalo Mwongela","customerName":"Bernard Kyalo Mwongela","transactionDate":"2021-10-24 06:02:25","total":9450.0,"transactionStatus":"Completed","sellingPriceList":"BICYCLE VENDORS -45","saleItems":[{"erpId":"3da287074a","parentId":"PK-21-02789","itemCode":"FG004","itemName":"400g Brown Bread","unitOfMeasure":"Nos","index":1,"quantity":4,"itemRate":45.0,"lineAmount":180.0,"warehouseId":"Likoni:Minishop Likoni"},{"erpId":"9b017ffe08","parentId":"PK-21-02789","itemCode":"FG014","itemName":"Butter Toast 400g","unitOfMeasure":"Nos","index":2,"quantity":25,"itemRate":45.0,"lineAmount":1125.0,"warehouseId":"Likoni:Minishop Likoni"},{"erpId":"239f51830c","parentId":"PK-21-02789","itemCode":"FG005","itemName":"400g White Bread","unitOfMeasure":"Nos","index":3,"quantity":110,"itemRate":45.0,"lineAmount":4950.0,"warehouseId":"Likoni:Minishop Likoni"},{"erpId":"65998c0f6a",
+// {"message":"Success",
+// "payload":{"referenceNo":"PK-21-02789",
+// "baseType":"Pickup",
+// "transactionWarehouse":"Likoni:Minishop Likoni",
+// "customerId":"Bernard Kyalo Mwongela",
+// "customerName":"Bernard Kyalo Mwongela",
+// "transactionDate":"2021-10-24 06:02:25","total":9450.0,"transactionStatus":"Completed","sellingPriceList":"BICYCLE VENDORS -45","saleItems":[{"erpId":"3da287074a","parentId":"PK-21-02789","itemCode":"FG004","itemName":"400g Brown Bread","unitOfMeasure":"Nos","index":1,"quantity":4,"itemRate":45.0,"lineAmount":180.0,"warehouseId":"Likoni:Minishop Likoni"},{"erpId":"9b017ffe08","parentId":"PK-21-02789","itemCode":"FG014","itemName":"Butter Toast 400g","unitOfMeasure":"Nos","index":2,"quantity":25,"itemRate":45.0,"lineAmount":1125.0,"warehouseId":"Likoni:Minishop Likoni"},{"erpId":"239f51830c","parentId":"PK-21-02789","itemCode":"FG005","itemName":"400g White Bread","unitOfMeasure":"Nos","index":3,"quantity":110,"itemRate":45.0,"lineAmount":4950.0,"warehouseId":"Likoni:Minishop Likoni"},{"erpId":"65998c0f6a",
 
 // "customerId": "string",
 // "customerName": "string",
@@ -223,4 +229,71 @@ class POSSaleRequest {
       "warehouseId": warehouseId
     };
   }
+}
+
+// [{"erpId":"a4f2440142",
+// "parentId":"PK-21-03174",
+// "itemCode":"FG014",
+// "itemName":"Butter Toast 400g",
+// "unitOfMeasure":"Nos",
+// "index":1,
+// "quantity":1,
+// "itemRate":45.0,
+// "lineAmount":45.0,
+// "warehouseId":"Likoni:Minishop Likoni"}]}
+class SaleItem {
+  String erpId;
+  String parentId;
+  String itemCode;
+  String itemName;
+  String unitOfMeasure;
+  num index;
+  num quantity;
+  num itemRate;
+  num lineAmount;
+  String warehouseId;
+
+  SaleItem(
+      {this.erpId,
+      this.parentId,
+      this.itemCode,
+      this.itemName,
+      this.unitOfMeasure,
+      this.index,
+      this.quantity,
+      this.itemRate,
+      this.lineAmount,
+      this.warehouseId});
+
+  factory SaleItem.fromMap(var data) {
+    return SaleItem(
+      erpId: data['erpId'],
+      parentId: data['erpId'],
+      itemCode: data['itemCode'],
+      itemName: data['itemName'],
+      index: data['index'],
+      quantity: data['quantity'],
+      itemRate: data['itemRate'],
+      lineAmount: data['lineAmount'],
+      warehouseId: data['warehouseId'],
+      unitOfMeasure: data['unitOfMeasure'],
+    );
+  }
+
+  factory SaleItem.fromOriginator(var data) {
+    return SaleItem(
+      erpId: data['erpId'],
+      parentId: data['erpId'],
+      itemCode: data['itemCode'],
+      itemName: data['itemName'],
+      index: data['index'],
+      quantity: 0,
+      itemRate: data['itemRate'],
+      lineAmount: data['lineAmount'],
+      warehouseId: data['warehouseId'],
+      unitOfMeasure: data['unitOfMeasure'],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {};
 }

@@ -272,8 +272,9 @@ class AdhocCartService with ReactiveServiceMixin {
     _warehouse.value = branch;
   }
 
-  fetchAdhocSalesList() async {
-    List result = await _apiService.api.getAdhocSales(_userService.user.token);
+  fetchAdhocSalesList({DateTime postingDate}) async {
+    List result = await _apiService.api.getAdhocSales(_userService.user.token,
+        postingDate: postingDate ?? DateTime.now());
 
     if (result.isNotEmpty) {
       return result.map<AdhocSale>((e) => AdhocSale.fromResponse(e)).toList();
@@ -294,5 +295,11 @@ class AdhocCartService with ReactiveServiceMixin {
   cancelAdhocSale(String referenceNo, String token, AdhocDetail adhocDetail,
       String baseType, String customerId) async {
     return await _apiService.api.reverseSale(referenceNo, token, baseType);
+  }
+
+  editTransaction(String baseType, String referenceNo,
+      Map<String, dynamic> POSSaleRequest) async {
+    return await _apiService.api.reverseSale(referenceNo, token, baseType,
+        POSSaleRequest: POSSaleRequest);
   }
 }

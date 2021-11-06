@@ -1,4 +1,4 @@
-const String kStringNoSales = "You have not made any adhoc sales";
+const String kStringNoSales = "There are no transactions for this date.";
 const String kStringNoJourney =
     "You have not been assigned any deliveries today.";
 const String kStringNoStock = "The vehicle has no stock.";

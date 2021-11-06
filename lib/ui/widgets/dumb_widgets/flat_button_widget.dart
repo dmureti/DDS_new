@@ -25,6 +25,7 @@ class FlatButtonWidget extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
               child: Text(
                 label,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.white,

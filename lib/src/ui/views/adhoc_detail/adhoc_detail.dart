@@ -1,12 +1,17 @@
 import 'package:distributor/core/helper.dart';
+import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/src/ui/views/adhoc_detail/adhoc_detail_viewmodel.dart';
+import 'package:distributor/ui/shared/text_styles.dart';
 import 'package:distributor/ui/shared/widgets.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/flat_button_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/generic_container.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/product_quantity_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_hooks/stacked_hooks.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 class AdhocDetailView extends StatelessWidget {
@@ -23,7 +28,7 @@ class AdhocDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<AdhocDetailViewModel>.reactive(
-      onModelReady: (model) => model.getAdhocDetail(),
+      onModelReady: (model) => model.init(),
       builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
@@ -43,15 +48,16 @@ class AdhocDetailView extends StatelessWidget {
                           value: 'edit_adhoc_sale',
                         ),
                         PopupMenuDivider(),
-                        PopupMenuItem(
-                          child: Text(
-                            'Cancel Adhoc Sale',
-                            style: TextStyle(
-                              color: Colors.black,
+                        if (model.adhocDetail != null && !model.isCancelled)
+                          PopupMenuItem(
+                            child: Text(
+                              'Cancel Adhoc Sale',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
                             ),
+                            value: 'cancel_adhoc_sale',
                           ),
-                          value: 'cancel_adhoc_sale',
-                        ),
                       ]),
             ],
           ),
@@ -115,23 +121,23 @@ class AdhocDetailView extends StatelessWidget {
                               ),
                             ],
                           ),
-                          model.adhocDetail.saleItems != null
+                          model.memento != null
                               ? Expanded(
                                   child: ListView.separated(
                                       itemBuilder: (context, index) {
-                                        DeliveryItem deliveryItem =
-                                            DeliveryItem.fromMap(model
-                                                .adhocDetail.saleItems[index]);
-                                        return buildDeliveryItemContainer(
-                                            deliveryItem);
+                                        SaleItem saleItem =
+                                            model.memento[index];
+                                        return SaleItemWidget(
+                                          saleItem: saleItem,
+                                          index: index,
+                                        );
                                       },
                                       separatorBuilder: (context, int) {
                                         return Divider(
                                           height: 0.2,
                                         );
                                       },
-                                      itemCount:
-                                          model.adhocDetail.saleItems.length),
+                                      itemCount: model.memento.length),
                                 )
                               : Container(),
                           model.inEditState
@@ -156,8 +162,20 @@ class AdhocDetailView extends StatelessWidget {
           AdhocDetailViewModel(referenceNo, customerId, baseType),
     );
   }
+}
 
-  buildDeliveryItemContainer(DeliveryItem deliveryItem) {
+class SaleItemWidget extends HookViewModelWidget<AdhocDetailViewModel> {
+  final SaleItem saleItem;
+  final int index;
+
+  const SaleItemWidget({Key key, @required this.saleItem, @required this.index})
+      : super(key: key);
+
+  @override
+  Widget buildViewModelWidget(
+      BuildContext context, AdhocDetailViewModel model) {
+    var textEditingController =
+        useTextEditingController(text: saleItem.quantity.toString());
     return Container(
       // margin: EdgeInsets.symmetric(vertical: 4),
       child: Padding(
@@ -170,16 +188,95 @@ class AdhocDetailView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  '${deliveryItem.itemCode}',
+                  '${saleItem.itemCode}',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                 ),
                 SizedBox(
                   height: 4,
                 ),
-                Text(
-                  '${deliveryItem.quantity}',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                  // textAlign: TextAlign.center,
+                GestureDetector(
+                  onTap: model.inEditState
+                      ? () async {
+                          var result = await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return SimpleDialog(
+                                  insetPadding:
+                                      EdgeInsets.symmetric(horizontal: 12),
+                                  title: Text(
+                                      'How many pieces would you like to reverse for  ${saleItem.itemName}'),
+                                  children: [
+                                    Divider(),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                          'Allowed range is 0 to ${model.getMax(saleItem)}'),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        controller: textEditingController,
+                                        onChanged: (val) {
+                                          model.updateProduct(val);
+                                        },
+                                        decoration:
+                                            InputDecoration(filled: false),
+                                        onFieldSubmitted: (val) {
+                                          model.updateMemento(
+                                              saleItem, val, index);
+                                        },
+                                        // onSubmitted: (val) {
+                                        //   model.updateProduct(val);
+                                        // },
+                                        keyboardType: TextInputType.number,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: RaisedButton(
+                                        onPressed: () {
+                                          model.updateMemento(
+                                              saleItem,
+                                              textEditingController.text,
+                                              index);
+                                          Navigator.pop(context);
+                                          // onChange(model.delive);
+                                          // Navigator.pop(context, model.product);
+                                        },
+                                        child: Text(
+                                          'Submit',
+                                          style: kActiveButtonTextStyle,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              });
+
+                          if (result is Product) {
+                            model.updateProduct(
+                                result.quantity.toStringAsFixed(0));
+                            // onChange(result);
+                            model.notifyListeners();
+                          }
+                        }
+                      : () {},
+                  child: model.inEditState
+                      ? Container(
+                          width: 50,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Icon(
+                                Icons.edit,
+                                size: 18,
+                              ),
+                              Text(saleItem.quantity.toString()),
+                            ],
+                          ),
+                        )
+                      : Text(model.adhocDetail.saleItems[index]['quantity']
+                          .toString()),
                 ),
               ],
             ),
@@ -196,7 +293,7 @@ class AdhocDetailView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        '${deliveryItem.itemName}',
+                        '${saleItem.itemName}',
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold),
                       ),
@@ -208,7 +305,8 @@ class AdhocDetailView extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Text('Delivered : ${deliveryItem.quantity}'),
+                    Text(
+                        'Delivered : ${model.adhocDetail.saleItems[index]['quantity']}'),
                   ],
                 ),
               ],
@@ -220,7 +318,7 @@ class AdhocDetailView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  deliveryItem.itemRate.toStringAsFixed(2),
+                  saleItem.itemRate.toStringAsFixed(2),
                   // textAlign: TextAlign.center,
                   style: TextStyle(),
                 ),

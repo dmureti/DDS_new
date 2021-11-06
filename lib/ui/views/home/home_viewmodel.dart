@@ -1,6 +1,7 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
+import 'package:distributor/core/helper.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/activity_service.dart';
@@ -21,6 +22,7 @@ import 'package:distributor/ui/views/routes/route_listing_view.dart';
 import 'package:distributor/ui/views/stock/stock_view.dart';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -52,6 +54,21 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   get enableHomeTab => _accessControlService.enableHomeTab;
 
   get enableAdhocTab => _accessControlService.enableAdhocView;
+
+  DateTime _startDate = DateTime.now();
+  DateTime _endDate = DateTime.now();
+  DateTime get endDate => _endDate;
+  DateTime get startDate => _startDate;
+
+  setStartDate(DateTime dt) {
+    _startDate = dt;
+    notifyListeners();
+  }
+
+  setEndDate(DateTime dt) {
+    _endDate = dt;
+    notifyListeners();
+  }
 
   refresh() async {
     setBusy(true);
@@ -214,17 +231,43 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
     await fetchAdhocSales();
   }
 
-  fetchAdhocSales() async {
-    _adhocSalesList = await _adhocCartService.fetchAdhocSalesList();
+  fetchAdhocSales({DateTime postingDate}) async {
+    _adhocSalesList =
+        await _adhocCartService.fetchAdhocSalesList(postingDate: postingDate);
+    notifyListeners();
+  }
+
+  bool _sortAsc = true;
+  bool get sortAsc => _sortAsc;
+  toggleSortAsc() {
+    _sortAsc = !_sortAsc;
+    notifyListeners();
+  }
+
+  bool _hasFilter = false;
+  bool get hasFilter => _hasFilter;
+  toggleHasFilter() {
+    _hasFilter = !_hasFilter;
     notifyListeners();
   }
 
   List<AdhocSale> _adhocSalesList = <AdhocSale>[];
+
+  List<AdhocSale> _memento;
+  List<AdhocSale> get memento => _memento;
+
   List<AdhocSale> get adhocSalesList {
     if (_adhocSalesList.isNotEmpty) {
-      _adhocSalesList.sort((a, b) {
-        return b.transactionDate.compareTo(a.transactionDate);
-      });
+      if (sortAsc) {
+        _adhocSalesList.sort((a, b) {
+          return b.transactionDate.compareTo(a.transactionDate);
+        });
+      } else {
+        _adhocSalesList.sort((a, b) {
+          return a.transactionDate.compareTo(b.transactionDate);
+        });
+      }
+      _memento = _adhocSalesList;
       return _adhocSalesList;
     }
     return _adhocSalesList;
@@ -239,4 +282,11 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
     );
     await fetchAdhocSales();
   }
+
+  commitDateSelection() async {
+    await fetchAdhocSales(postingDate: startDate);
+    _navigationService.popRepeated(1);
+  }
+
+  final formatter = DateFormat('yyyy-MM-dd');
 }
