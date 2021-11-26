@@ -228,6 +228,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
 
   void navigateToAddAdhocSale() async {
     var result = await _navigationService.navigateTo(Routes.adhocSalesView);
+    _startDate = DateTime.now();
     await fetchAdhocSales();
   }
 
@@ -280,6 +281,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
       arguments: AdhocDetailViewArguments(
           referenceNo: referenceNo, customerId: customerId, baseType: baseType),
     );
+    _startDate = DateTime.now();
     await fetchAdhocSales();
   }
 

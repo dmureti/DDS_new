@@ -162,6 +162,10 @@ class AdhocDetailViewModel extends BaseViewModel {
           title: 'Success',
           description: 'The transaction was cancelled successfully.');
       _navigationService.back(result: true);
+    } else {
+      await _dialogService.showDialog(
+          title: 'Cancellation Error',
+          description: 'The transaction could not be cancelled.');
     }
     return;
   }
@@ -195,13 +199,17 @@ class AdhocDetailViewModel extends BaseViewModel {
       "sellingPriceList": adhocDetail.sellingPriceList,
       "warehouseId": adhocDetail.warehouseId
     };
-    print(POSSaleRequest);
+
     bool result = await _adhocService.editTransaction(
         adhocDetail.baseType, referenceNo, POSSaleRequest);
     if (result) {
       await _dialogService.showDialog(
           title: 'Success', description: 'The reversal was successful.');
       _navigationService.back(result: true);
+    } else {
+      await _dialogService.showDialog(
+          title: 'Reversal Error',
+          description: 'The transaction could not be reversed.');
     }
     return;
   }
