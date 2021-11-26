@@ -13,9 +13,13 @@ import 'package:tripletriocore/tripletriocore.dart';
 class VoucherDetailView extends StatelessWidget {
   final String transactionId;
   final String voucherType;
+  final String transactionStatus;
 
   const VoucherDetailView(
-      {Key key, @required this.transactionId, @required this.voucherType})
+      {Key key,
+      @required this.transactionId,
+      @required this.voucherType,
+      @required this.transactionStatus})
       : super(key: key);
 
   @override
