@@ -84,8 +84,8 @@ class LoginViewModel extends BaseViewModel {
     setBusy(false);
     if (result is User) {
       // Update the user
+
       _userService.updateUser(result);
-      print(result.hasSalesChannel);
 
       // Update the activity Service
       _activityService.addActivity(Activity(
@@ -96,6 +96,11 @@ class LoginViewModel extends BaseViewModel {
             arguments: ChangePasswordViewArguments(
                 passwordChangeType: PasswordChangeType.initial));
       } else {
+        await _dialogService.showDialog(
+            title: '',
+            description:
+                'DDS collects location data to enable verification of deliveries at the respective client destinations even when the app is closed or not in use.”');
+
         //Navigate to the home page
         _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
       }
