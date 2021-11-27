@@ -27,22 +27,28 @@ class TransactionTile extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            child: Text(
-                              'FR0M : ',
-                              style: TextStyle(fontWeight: FontWeight.w600),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        child: Row(
+                          children: [
+                            Container(
+                              child: Text(
+                                'FR0M : ',
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                              width: 60,
                             ),
-                            width: 60,
-                          ),
-                          Text(
-                            transaction.sourceWarehouse,
-                          ),
-                        ],
+                            Text(
+                              transaction.sourceWarehouse,
+                            ),
+                          ],
+                        ),
                       ),
-                      Text(transaction.stockTransactionId,
-                          style: kListStyleTitle1),
+                      Container(
+                        child: Text(transaction.stockTransactionId,
+                            textAlign: TextAlign.right,
+                            style: kListStyleTitle1),
+                      ),
                     ],
                   ),
                   SizedBox(
