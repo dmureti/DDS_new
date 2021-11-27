@@ -6,19 +6,24 @@ import 'package:distributor/src/ui/common/transaction_viewmodel.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class VoucherDetailViewmodel extends TransactionViewmodel {
+  //Transaction status
+  static const String kTransactionStatusNotCreated = 'STN Not Created';
+
   final _dialogService = locator<DialogService>();
   final _navigationService = locator<NavigationService>();
   final _userService = locator<UserService>();
 
   final String transactionId;
   final String voucherType;
+  final String transactionStatus;
 
   List<String> statusStrings = ["Accept", "Cancel"];
 
   Transaction _stockTransaction;
   Transaction get stockTransaction => _stockTransaction;
 
-  VoucherDetailViewmodel(this.transactionId, this.voucherType);
+  VoucherDetailViewmodel(
+      this.transactionId, this.voucherType, this.transactionStatus);
 
   init() async {
     await getTransaction();
@@ -26,9 +31,16 @@ class VoucherDetailViewmodel extends TransactionViewmodel {
 
   //@TODO Check if this really works
 
-  bool get originIsSelf {
-    if (_userService.user.salesChannel.toLowerCase() !=
-        _stockTransaction.sourceWarehouse.toLowerCase()) {
+  /**
+   * if the source and origin is same &&
+   * the status of the transaction is STN Not Created
+   * do not display
+   */
+  bool get displayUserTransactionDropdown {
+
+    if (_userService.user.salesChannel.toLowerCase() ==
+            _stockTransaction.sourceWarehouse.toLowerCase() &&
+        this.transactionStatus == kTransactionStatusNotCreated) {
       return false;
     } else {
       return true;
