@@ -32,15 +32,13 @@ class VoucherDetailViewmodel extends TransactionViewmodel {
   //@TODO Check if this really works
 
   /**
-   * if the source and origin is same &&
-   * the status of the transaction is STN Not Created
-   * do not display
+   * If the source warehouse is the same os the users warehouse do not display toggle
+   * If the transaction status contains STN Do not display 
    */
   bool get displayUserTransactionDropdown {
-
     if (_userService.user.salesChannel.toLowerCase() ==
-            _stockTransaction.sourceWarehouse.toLowerCase() &&
-        this.transactionStatus == kTransactionStatusNotCreated) {
+            _stockTransaction.sourceWarehouse.toLowerCase() ||
+        this.transactionStatus.toLowerCase().contains('stn')) {
       return false;
     } else {
       return true;

@@ -80,7 +80,7 @@ class ManualInputWidget extends StatelessWidget {
                           controller: model.textEditingController,
                           // onChanged: (val) => model.checkInputWithinRange(val),
                           inputFormatters: [
-                            WhitelistingTextInputFormatter.digitsOnly
+                            // WhitelistingTextInputFormatter.digitsOnly
                           ],
                           decoration: InputDecoration(
                               suffixIcon: !model.isValidInput

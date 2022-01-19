@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/views/voucher_detail/voucher_detail_viewmodel.dart';
 
 import 'package:distributor/ui/shared/widgets.dart';
@@ -40,7 +41,7 @@ class VoucherDetailView extends StatelessWidget {
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                          model.originIsSelf
+                          !model.displayUserTransactionDropdown
                               ? Container()
                               : Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -85,8 +86,7 @@ class VoucherDetailView extends StatelessWidget {
                                   children: [
                                     ReportFieldRow(
                                         field: 'Status',
-                                        value: model.stockTransaction
-                                            .transactionStatus),
+                                        value: transactionStatus),
                                     ReportFieldRow(
                                         field: 'Voucher Type',
                                         value:
@@ -96,9 +96,10 @@ class VoucherDetailView extends StatelessWidget {
                                         value: model
                                             .stockTransaction.voucherSubType),
                                     ReportFieldRow(
-                                        field: 'Entry Date',
-                                        value:
-                                            model.stockTransaction.entryDate),
+                                      field: 'Entry Date',
+                                      value: Helper.formatDate(DateTime.parse(
+                                          model.stockTransaction.entryDate)),
+                                    ),
                                     Text('Remarks'),
                                   ],
                                 ),
@@ -176,7 +177,7 @@ class VoucherDetailView extends StatelessWidget {
             ),
           );
         },
-        viewModelBuilder: () =>
-            VoucherDetailViewmodel(transactionId, voucherType));
+        viewModelBuilder: () => VoucherDetailViewmodel(
+            transactionId, voucherType, transactionStatus));
   }
 }

@@ -26,6 +26,7 @@ mixin ContextualViewmodel {
   navigateToVoucherDetail(Transaction transaction) async {
     var result = await _navigationService.replaceWith(Routes.voucherDetailView,
         arguments: VoucherDetailViewArguments(
+            transactionStatus: transaction.transactionStatus,
             transactionId: transaction.stockTransactionId,
             voucherType: transaction.voucherType));
     if (result is bool) {

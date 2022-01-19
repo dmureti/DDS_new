@@ -393,6 +393,7 @@ class Router extends RouterBase {
           key: args.key,
           transactionId: args.transactionId,
           voucherType: args.voucherType,
+          transactionStatus: args.transactionStatus,
         ),
         settings: data,
       );
@@ -584,8 +585,12 @@ class VoucherDetailViewArguments {
   final Key key;
   final String transactionId;
   final String voucherType;
+  final String transactionStatus;
   VoucherDetailViewArguments(
-      {this.key, @required this.transactionId, @required this.voucherType});
+      {this.key,
+      @required this.transactionId,
+      @required this.voucherType,
+      @required this.transactionStatus});
 }
 
 /// AdhocSalesView arguments holder class
