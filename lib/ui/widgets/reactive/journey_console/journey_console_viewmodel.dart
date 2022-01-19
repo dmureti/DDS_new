@@ -42,7 +42,10 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
 
   updateJourneyStatus() async {
     if (journeyStatus.toLowerCase() == 'scheduled') {
-      var dialogResponse = await _dialogService.showConfirmationDialog();
+      var dialogResponse = await _dialogService.showConfirmationDialog(
+          title: 'Confirm Journey',
+          description: 'Are you sure you want to start this journey ? ',
+          confirmationTitle: 'YES');
       //Check if user has confirmed that the journey should start
       if (dialogResponse.confirmed) {
         setBusy(true);
