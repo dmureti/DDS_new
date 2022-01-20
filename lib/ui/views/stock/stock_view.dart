@@ -1,3 +1,4 @@
+import 'package:distributor/ui/views/crate/crate_view.dart';
 import 'package:distributor/ui/views/stock/stock_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/flat_button_widget.dart';
 import 'package:distributor/ui/widgets/smart_widgets/info_bar_controller/info_bar_controller_view.dart';
@@ -49,10 +50,35 @@ class StockView extends StatelessWidget {
                             ),
                           ),
                         )
-                      : Container(),
-                  StockControllerWidget(
-                    rebuildWidgetTree: model.rebuildTree,
-                  )
+                      : DefaultTabController(
+                          length: 2,
+                          child: Expanded(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 50,
+                                  child: TabBar(
+                                    tabs: [
+                                      Tab(
+                                        child: Text('Stocks'),
+                                      ),
+                                      Tab(
+                                        child: Text('Crates'),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: TabBarView(children: [
+                                    StockControllerWidget(
+                                      rebuildWidgetTree: model.rebuildTree,
+                                    ),
+                                    CrateView()
+                                  ]),
+                                )
+                              ],
+                            ),
+                          )),
                 ],
               ),
             ),

@@ -1,6 +1,7 @@
 import 'package:distributor/services/access_controller_service.dart';
 
 import 'package:distributor/services/api_service.dart';
+import 'package:distributor/services/crate_,management_service.dart';
 
 import 'package:distributor/services/customer_service.dart';
 import 'package:distributor/services/init_service.dart';
@@ -37,7 +38,8 @@ abstract class ThirdPartyServicesModule {
   LogisticsService get logisticsService;
   @lazySingleton
   JourneyService get journeyService;
-
+  @lazySingleton
+  CrateManagementService get crateManagementService;
   @lazySingleton
   OrderService get orderService;
   @lazySingleton

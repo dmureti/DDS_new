@@ -33,6 +33,7 @@ import '../ui/views/home/home_view.dart';
 import '../ui/views/journey/journey_view.dart';
 import '../ui/views/link_payment/link_payment_view.dart';
 import '../ui/views/login/login_view.dart';
+import '../ui/views/manage_crate/manage_crate_view.dart';
 import '../ui/views/notifications/notification_view.dart';
 import '../ui/views/orders/create_order/create_sales_order_view.dart';
 import '../ui/views/orders/order_confirmation/order_confirmation.dart';
@@ -69,6 +70,7 @@ class Routes {
   static const String stockTransferView = '/stock-transfer-view';
   static const String voucherDetailView = '/voucher-detail-view';
   static const String adhocSalesView = '/adhoc-sales-view';
+  static const String manageCrateView = '/manage-crate-view';
   static const all = <String>{
     homeView,
     startupView,
@@ -97,6 +99,7 @@ class Routes {
     stockTransferView,
     voucherDetailView,
     adhocSalesView,
+    manageCrateView,
   };
 }
 
@@ -131,6 +134,7 @@ class Router extends RouterBase {
     RouteDef(Routes.stockTransferView, page: StockTransferView),
     RouteDef(Routes.voucherDetailView, page: VoucherDetailView),
     RouteDef(Routes.adhocSalesView, page: AdhocSalesView),
+    RouteDef(Routes.manageCrateView, page: ManageCrateView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -411,6 +415,20 @@ class Router extends RouterBase {
         settings: data,
       );
     },
+    ManageCrateView: (data) {
+      final args = data.getArgs<ManageCrateViewArguments>(
+        orElse: () => ManageCrateViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ManageCrateView(
+          key: args.key,
+          crateTxnType: args.crateTxnType,
+          crateType: args.crateType,
+          customer: args.customer,
+        ),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -599,4 +617,14 @@ class AdhocSalesViewArguments {
   final Customer customer;
   final CustomerType saleType;
   AdhocSalesViewArguments({this.key, this.customer, this.saleType});
+}
+
+/// ManageCrateView arguments holder class
+class ManageCrateViewArguments {
+  final Key key;
+  final String crateTxnType;
+  final String crateType;
+  final Customer customer;
+  ManageCrateViewArguments(
+      {this.key, this.crateTxnType, this.crateType, this.customer});
 }

@@ -23,6 +23,7 @@ import 'package:distributor/ui/views/journey/journey_view.dart';
 import 'package:distributor/ui/views/link_payment/link_payment_view.dart';
 
 import 'package:distributor/ui/views/login/login_view.dart';
+import 'package:distributor/ui/views/manage_crate/manage_crate_view.dart';
 import 'package:distributor/ui/views/notifications/notification_view.dart';
 import 'package:distributor/ui/views/orders/create_order/create_sales_order_view.dart';
 import 'package:distributor/ui/views/orders/order_confirmation/order_confirmation.dart';
@@ -62,7 +63,8 @@ import '../ui/views/login/login_view.dart';
     MaterialRoute(page: ChangePasswordView),
     MaterialRoute(page: StockTransferView),
     MaterialRoute(page: VoucherDetailView),
-    MaterialRoute(page: AdhocSalesView)
+    MaterialRoute(page: AdhocSalesView),
+    MaterialRoute(page: ManageCrateView)
   ],
 )
 class $Router {}

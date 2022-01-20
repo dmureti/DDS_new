@@ -40,6 +40,8 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
   ///Select a journey
   selectJourney() {}
 
+  confirmStockQuantities() {}
+
   updateJourneyStatus() async {
     if (journeyStatus.toLowerCase() == 'scheduled') {
       var dialogResponse = await _dialogService.showConfirmationDialog(
