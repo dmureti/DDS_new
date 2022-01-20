@@ -29,7 +29,24 @@ class CrateView extends StatelessWidget {
                           title: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(crate.name),
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 15,
+                                    height: 15,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color:
+                                            crate.name.toLowerCase() == 'yellow'
+                                                ? Colors.yellow
+                                                : Colors.green),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(crate.name),
+                                ],
+                              ),
                               Text(crate.count.toString())
                             ],
                           ),

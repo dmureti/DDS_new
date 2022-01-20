@@ -1,11 +1,42 @@
+import 'package:distributor/app/crate_lib/crate_lib_models.dart';
 import 'package:distributor/core/enums.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 class ManageCrateViewModel extends BaseViewModel {
   List _customerList;
-  List<String> crateTypes = ['Orange', 'Green'];
-  List<String> crateTxnTypes = ['Leave', 'Collect'];
+
+  List<CrateMovement> _crateMovement = <CrateMovement>[];
+  List<CrateMovement> get crateMovement => _crateMovement;
+
+  List<String> crateTypes = ['Yellow', 'Orange'];
+
+  toggleElement(String crateColor) {
+    if (crateMovement.isEmpty) {
+      _crateMovement.add(CrateMovement(crateColor: crateColor));
+      notifyListeners();
+      return;
+    } else {
+      //Loop through the array
+      crateMovement.firstWhere(
+          (element) => element.color.toLowerCase() == crateColor.toLowerCase(),
+          orElse: () {
+        return CrateMovement(crateColor: crateColor);
+      });
+    }
+  }
+
+  checkIfElementExists(String crateColor) {
+    for (var crateCol in crateMovement) {
+      if (crateCol.color.toLowerCase().contains(crateColor.toLowerCase())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  removeElement() {}
+  changeElementStatus() {}
 
   String _crateTxnType;
   Customer _customer;

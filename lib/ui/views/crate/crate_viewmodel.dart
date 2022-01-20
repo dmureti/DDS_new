@@ -12,7 +12,7 @@ class CrateViewModel extends BaseViewModel {
 
   List<Crate> crates = <Crate>[
     Crate(name: 'Yellow', count: 10),
-    Crate(name: 'Red', count: 20),
+    Crate(name: 'Green', count: 20),
   ];
 
   init() async {

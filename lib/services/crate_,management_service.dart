@@ -7,6 +7,8 @@ class CrateManagementService with ReactiveServiceMixin {
   bool _hasConfirmedStock = false;
   bool get hasConfirmedStock => _hasConfirmedStock;
 
+  receiveCratesFromCustomer() async {}
+
   List<Crate> _crates = <Crate>[
     Crate(name: 'Yellow', count: 10),
     Crate(name: 'Red', count: 20),
