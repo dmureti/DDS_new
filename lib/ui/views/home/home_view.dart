@@ -49,7 +49,9 @@ class HomeView extends StatelessWidget {
                     icon: Icon(Icons.add_circle_outline),
                     tooltip: 'Add Adhoc Sale',
                   )
-                : Container(),
+                : model.currentIndex == 3
+                    ? IconButton(onPressed: () {}, icon: Icon(Icons.more_vert))
+                    : Container(),
 
             // MapIconButton(),
           ],

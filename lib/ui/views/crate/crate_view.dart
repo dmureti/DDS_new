@@ -14,11 +14,11 @@ class CrateView extends StatelessWidget {
         fireOnModelReadyOnce: false,
         builder: (context, model, child) {
           return model.isBusy
-              ? BusyWidget()
+              ? Center(child: BusyWidget())
               : model.crates.isEmpty
                   ? Center(
-                      child:
-                          EmptyContentContainer(label: 'You have no crates.'))
+                      child: EmptyContentContainer(
+                          label: 'There are no crates available'))
                   : ListView.builder(
                       itemBuilder: (context, index) {
                         var crate = model.crates[index];
@@ -31,23 +31,13 @@ class CrateView extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  Container(
-                                    width: 15,
-                                    height: 15,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color:
-                                            crate.name.toLowerCase() == 'yellow'
-                                                ? Colors.yellow
-                                                : Colors.green),
-                                  ),
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  Text(crate.name),
+                                  Text(crate.itemCode),
                                 ],
                               ),
-                              Text(crate.count.toString())
+                              Text(crate.quantity.toString())
                             ],
                           ),
                           trailing: IconButton(
