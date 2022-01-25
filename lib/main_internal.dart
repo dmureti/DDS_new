@@ -33,6 +33,12 @@ void main() async {
       flavorValues: FlavorValues(
           baseUrl: 'https://testdds.ddsolutions.tech/alpha-backend/api/v1'),
     ),
+    AppEnv(
+      flavor: Flavor.internal,
+      name: 'Crates',
+      flavorValues: FlavorValues(
+          baseUrl: 'http://54.228.169.28:8686/spvcrates-backend/api/v1'),
+    ),
   ];
   _initService.setAvailableEnvList(_appEnv);
   runApp(MainApp());
