@@ -3,6 +3,8 @@ import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
 import 'package:distributor/core/models/crate.dart';
 import 'package:distributor/services/crate_,management_service.dart';
+import 'package:distributor/services/logistics_service.dart';
+import 'package:distributor/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -10,12 +12,37 @@ import 'package:tripletriocore/tripletriocore.dart';
 class CrateViewModel extends BaseViewModel {
   final _crateService = locator<CrateManagementService>();
   final _navigationService = locator<NavigationService>();
+  final _logisticsService = locator<LogisticsService>();
+  final _userService = locator<UserService>();
+
+  User get user => _userService.user;
+
+  bool get hasJourneys {
+    if (_logisticsService.userJourneyList.length > 0 || user.hasSalesChannel) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   List<Product> _crates;
   List<Product> get crates => _crates;
 
+  bool get hasSelectedJourney {
+    if (_logisticsService.userJourneyList.length > 0 &&
+            _logisticsService.currentJourney.journeyId != null ||
+        user.hasSalesChannel) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   init() async {
-    await _getCrates();
+    if (hasSelectedJourney) {
+      await _getCrates();
+    }
+    return;
   }
 
   _getCrates() async {
@@ -48,5 +75,33 @@ class CrateViewModel extends BaseViewModel {
         received: 10,
         dropped: 2,
         items: items);
+  }
+
+  void handleOrderAction(x) async {
+    switch (x) {
+      case 'drop_crates': //Drop the crates at a customer
+        var result =
+            await _navigationService.navigateTo(Routes.crateMovementView,
+                arguments: CrateMovementViewArguments(
+                  crateTxnType: CrateTxnType.Drop,
+                ));
+        if (result is bool) {
+          await _getCrates();
+          return;
+        }
+        break;
+      case 'receive_crates': // Receive crates from a customer
+        var result = await _navigationService.navigateTo(
+          Routes.crateMovementView,
+          arguments: CrateMovementViewArguments(
+            crateTxnType: CrateTxnType.Pickup,
+          ),
+        );
+        if (result is bool) {
+          await _getCrates();
+          return;
+        }
+        break;
+    }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
+import 'package:distributor/core/enums.dart';
 
 import 'package:distributor/services/journey_service.dart';
 import 'package:stacked/stacked.dart';
@@ -91,5 +92,14 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
 
   navigateToMakeAdhoc() async {
     var result = await _navigationService.navigateTo(Routes.addAdhocSaleView);
+  }
+
+  navigateToCrateView() async {
+    await _navigationService.navigateTo(
+      Routes.crateMovementView,
+      arguments: CrateMovementViewArguments(
+        crateTxnType: CrateTxnType.Return,
+      ),
+    );
   }
 }

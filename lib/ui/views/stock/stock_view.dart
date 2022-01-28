@@ -69,12 +69,15 @@ class StockView extends StatelessWidget {
                                   ),
                                 ),
                                 Expanded(
-                                  child: TabBarView(children: [
-                                    StockControllerWidget(
-                                      rebuildWidgetTree: model.rebuildTree,
-                                    ),
-                                    CrateView()
-                                  ]),
+                                  child: TabBarView(
+                                    children: [
+                                      StockControllerWidget(
+                                        rebuildWidgetTree: model.rebuildTree,
+                                      ),
+                                      // Container(),
+                                      CrateView(),
+                                    ],
+                                  ),
                                 )
                               ],
                             ),

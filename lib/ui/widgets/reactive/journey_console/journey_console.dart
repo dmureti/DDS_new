@@ -174,17 +174,16 @@ class JourneyConsole extends StatelessWidget {
                                                   ),
                                                 ],
                                               ),
-                                              // ListTile(
-                                              //   leading:
-                                              //       Icon(Icons.shopping_cart),
-                                              //   title:
-                                              //       Text('Make Adhoc Sale'),
-                                              //   onTap: () async {
-                                              //     await model
-                                              //         .navigateToMakeAdhoc();
-                                              //     Navigator.pop(context);
-                                              //   },
-                                              // ),
+                                              ListTile(
+                                                leading: Icon(Icons.read_more),
+                                                title: Text(
+                                                    'Return Crates To Warehouse'),
+                                                onTap: () async {
+                                                  await model
+                                                      .navigateToCrateView();
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
                                               ListTile(
                                                 leading:
                                                     Icon(Icons.location_on),

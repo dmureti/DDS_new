@@ -27,6 +27,7 @@ import '../src/ui/views/stock_transaction/stock_transaction_list_view.dart';
 import '../src/ui/views/stock_transfer/stock_transfer_view.dart';
 import '../src/ui/views/voucher_detail/voucher_detail_view.dart';
 import '../ui/views/adhoc_sales/adhoc_sales_view.dart';
+import '../ui/views/crate_movement/crate_movement_view.dart';
 import '../ui/views/customer_location.dart';
 import '../ui/views/customers/customer_detail/customer_detail_view.dart';
 import '../ui/views/home/home_view.dart';
@@ -66,6 +67,7 @@ class Routes {
   static const String adhocPaymentView = '/adhoc-payment-view';
   static const String deliveryNoteView = '/delivery-note-view';
   static const String resetPasswordView = '/reset-password-view';
+  static const String crateMovementView = '/crate-movement-view';
   static const String changePasswordView = '/change-password-view';
   static const String stockTransferView = '/stock-transfer-view';
   static const String voucherDetailView = '/voucher-detail-view';
@@ -95,6 +97,7 @@ class Routes {
     adhocPaymentView,
     deliveryNoteView,
     resetPasswordView,
+    crateMovementView,
     changePasswordView,
     stockTransferView,
     voucherDetailView,
@@ -130,6 +133,7 @@ class Router extends RouterBase {
     RouteDef(Routes.adhocPaymentView, page: AdhocPaymentView),
     RouteDef(Routes.deliveryNoteView, page: DeliveryNoteView),
     RouteDef(Routes.resetPasswordView, page: ResetPasswordView),
+    RouteDef(Routes.crateMovementView, page: CrateMovementView),
     RouteDef(Routes.changePasswordView, page: ChangePasswordView),
     RouteDef(Routes.stockTransferView, page: StockTransferView),
     RouteDef(Routes.voucherDetailView, page: VoucherDetailView),
@@ -372,6 +376,20 @@ class Router extends RouterBase {
         settings: data,
       );
     },
+    CrateMovementView: (data) {
+      final args = data.getArgs<CrateMovementViewArguments>(
+        orElse: () => CrateMovementViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => CrateMovementView(
+          key: args.key,
+          crateTxnType: args.crateTxnType,
+          customer: args.customer,
+          deliveryStop: args.deliveryStop,
+        ),
+        settings: data,
+      );
+    },
     ChangePasswordView: (data) {
       final args = data.getArgs<ChangePasswordViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
@@ -583,6 +601,16 @@ class DeliveryNoteViewArguments {
   final Customer customer;
   DeliveryNoteViewArguments(
       {this.key, this.deliveryJourney, this.deliveryStop, this.customer});
+}
+
+/// CrateMovementView arguments holder class
+class CrateMovementViewArguments {
+  final Key key;
+  final CrateTxnType crateTxnType;
+  final Customer customer;
+  final DeliveryStop deliveryStop;
+  CrateMovementViewArguments(
+      {this.key, this.crateTxnType, this.customer, this.deliveryStop});
 }
 
 /// ChangePasswordView arguments holder class
