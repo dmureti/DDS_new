@@ -40,6 +40,7 @@ import '../ui/views/orders/order_confirmation/order_confirmation.dart';
 import '../ui/views/orders/order_detail/order_detail_view.dart';
 import '../ui/views/payment_reference/payment_reference_view.dart';
 import '../ui/views/startup/startup_view.dart';
+import '../ui/views/stock_collection/stock_collection_view.dart';
 import '../ui/widgets/smart_widgets/map_view/delivery_journey_map_view.dart';
 
 class Routes {
@@ -69,6 +70,7 @@ class Routes {
   static const String changePasswordView = '/change-password-view';
   static const String stockTransferView = '/stock-transfer-view';
   static const String voucherDetailView = '/voucher-detail-view';
+  static const String stockCollectionView = '/stock-collection-view';
   static const String adhocSalesView = '/adhoc-sales-view';
   static const String manageCrateView = '/manage-crate-view';
   static const all = <String>{
@@ -98,6 +100,7 @@ class Routes {
     changePasswordView,
     stockTransferView,
     voucherDetailView,
+    stockCollectionView,
     adhocSalesView,
     manageCrateView,
   };
@@ -133,6 +136,7 @@ class Router extends RouterBase {
     RouteDef(Routes.changePasswordView, page: ChangePasswordView),
     RouteDef(Routes.stockTransferView, page: StockTransferView),
     RouteDef(Routes.voucherDetailView, page: VoucherDetailView),
+    RouteDef(Routes.stockCollectionView, page: StockCollectionView),
     RouteDef(Routes.adhocSalesView, page: AdhocSalesView),
     RouteDef(Routes.manageCrateView, page: ManageCrateView),
   ];
@@ -402,6 +406,16 @@ class Router extends RouterBase {
         settings: data,
       );
     },
+    StockCollectionView: (data) {
+      final args = data.getArgs<StockCollectionViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => StockCollectionView(
+          key: args.key,
+          deliveryStop: args.deliveryStop,
+        ),
+        settings: data,
+      );
+    },
     AdhocSalesView: (data) {
       final args = data.getArgs<AdhocSalesViewArguments>(
         orElse: () => AdhocSalesViewArguments(),
@@ -609,6 +623,13 @@ class VoucherDetailViewArguments {
       @required this.transactionId,
       @required this.voucherType,
       @required this.transactionStatus});
+}
+
+/// StockCollectionView arguments holder class
+class StockCollectionViewArguments {
+  final Key key;
+  final DeliveryStop deliveryStop;
+  StockCollectionViewArguments({this.key, @required this.deliveryStop});
 }
 
 /// AdhocSalesView arguments holder class

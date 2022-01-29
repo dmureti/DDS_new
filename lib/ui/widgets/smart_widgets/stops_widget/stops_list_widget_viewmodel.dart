@@ -1,4 +1,5 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/customer_service.dart';
 import 'package:distributor/services/user_service.dart';
@@ -11,6 +12,7 @@ class StopsListWidgetViewModel extends BaseViewModel {
   UserService _userService = locator<UserService>();
   DialogService _dialogService = locator<DialogService>();
   CustomerService _customerService = locator<CustomerService>();
+  final _navigationService = locator<NavigationService>();
 
   DeliveryJourney _deliveryJourney;
   DeliveryJourney get deliveryJourney => _deliveryJourney;
@@ -49,5 +51,11 @@ class StopsListWidgetViewModel extends BaseViewModel {
 
   init() async {
     await getJourneyDetails();
+  }
+
+  void navigateToTechnicalStop(DeliveryStop deliveryStop) async {
+    print('here');
+    await _navigationService.navigateTo(Routes.stockCollectionView,
+        arguments: StockCollectionViewArguments(deliveryStop: deliveryStop));
   }
 }

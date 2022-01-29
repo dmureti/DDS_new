@@ -10,11 +10,11 @@ const kModalBottomSheetListTileTitle = TextStyle(
 const kValueTextStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
 
 const kJourneyIdTextStyle = TextStyle(
-    color: kColorMiniDarkBlue, fontWeight: FontWeight.w700, fontSize: 20);
+    color: kColorMiniDarkBlue, fontWeight: FontWeight.w700, fontSize: 14);
 const kRouteTextStyle =
-    TextStyle(color: kLightBlue, fontWeight: FontWeight.w700, fontSize: 18);
+    TextStyle(color: kLightBlue, fontWeight: FontWeight.w700, fontSize: 14);
 const kJourneySecondaryTextStyle =
-    TextStyle(color: kLightBlue, fontWeight: FontWeight.w400, fontSize: 18);
+    TextStyle(color: kLightBlue, fontWeight: FontWeight.w400, fontSize: 12);
 
 const kSalesOrderIdTextStyle = TextStyle(
     color: kColorMiniDarkBlue, fontWeight: FontWeight.w700, fontSize: 18);
