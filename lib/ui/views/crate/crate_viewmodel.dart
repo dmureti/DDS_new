@@ -41,8 +41,8 @@ class CrateViewModel extends BaseViewModel {
   init() async {
     if (hasSelectedJourney) {
       await _getCrates();
+      await _getCrateListing();
     }
-    return;
   }
 
   _getCrates() async {
@@ -52,29 +52,31 @@ class CrateViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  List<Product> _crateList = <Product>[];
+  List<Product> get crateList => _crateList;
+
+  _getCrateListing() async {
+    setBusy(true);
+    List<Item> _result = await _crateService.listCrates();
+    _crateList = _result.map((item) {
+      if (crates.isNotEmpty) {
+        return crates.firstWhere((product) => product.itemCode == item.itemCode,
+            orElse: () => Product(
+                id: item.id,
+                itemName: item.itemName,
+                itemCode: item.itemCode,
+                itemPrice: item.itemPrice,
+                quantity: 0));
+      }
+    }).toList();
+    setBusy(false);
+  }
+
   void navigateToManageCrateView(
       {String crateTxnType, String crateType}) async {
     await _navigationService.navigateTo(Routes.manageCrateView,
         arguments: ManageCrateViewArguments(
             crateType: crateType, crateTxnType: crateTxnType));
-  }
-
-  void testReturn() {
-    List<SalesOrderItem> items = [
-      SalesOrderItem(
-          item: Product(
-              id: 'OC003',
-              itemCode: 'OC003',
-              itemName: 'Crates',
-              itemPrice: 0,
-              quantity: 8))
-    ];
-    _crateService.collectDropCrates(
-        customer: "Naivas Group",
-        dnId: "DN-22-00026",
-        received: 10,
-        dropped: 2,
-        items: items);
   }
 
   void handleOrderAction(x) async {
@@ -87,6 +89,7 @@ class CrateViewModel extends BaseViewModel {
                 ));
         if (result is bool) {
           await _getCrates();
+          await _getCrateListing();
           return;
         }
         break;
@@ -99,6 +102,7 @@ class CrateViewModel extends BaseViewModel {
         );
         if (result is bool) {
           await _getCrates();
+          await _getCrateListing();
           return;
         }
         break;

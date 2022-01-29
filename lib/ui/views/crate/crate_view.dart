@@ -22,13 +22,13 @@ class CrateView extends StatelessWidget {
                   ? _buildCenterContainer(kStringNoJourney)
                   : model.isBusy
                       ? Center(child: BusyWidget())
-                      : model.crates.isEmpty
+                      : model.crateList.isEmpty
                           ? Center(
                               child: EmptyContentContainer(
                                   label: 'There are no crates available'))
                           : ListView.builder(
                               itemBuilder: (context, index) {
-                                var crate = model.crates[index];
+                                var crate = model.crateList[index];
                                 return Container(
                                   margin: EdgeInsets.symmetric(horizontal: 10),
                                   child: ListTile(
@@ -76,9 +76,11 @@ class CrateView extends StatelessWidget {
                                   ),
                                 );
                               },
-                              itemCount: model.crates.length,
+                              itemCount: model.crateList.length,
                             )
-              : EmptyContentContainer(label: kStringNoJourneySelected);
+              : Center(
+                  child:
+                      EmptyContentContainer(label: kStringNoJourneySelected));
         },
         viewModelBuilder: () => CrateViewModel());
   }

@@ -28,7 +28,7 @@ class CrateMovementViewModel extends BaseViewModel {
         _dnId = _deliveryStop?.deliveryNoteId,
         _isValid = _crateTxnType == CrateTxnType.Return;
 
-  List<Product> _crateList;
+  List<Product> _crateList = <Product>[];
   List<Product> get crateList => _crateList;
   String _customerId;
   String _journeyId;
@@ -44,8 +44,33 @@ class CrateMovementViewModel extends BaseViewModel {
 
   bool get isValid => _isValid;
 
+  listCrates() async {
+    setBusy(true);
+    List<Item> result = await _crateManagementService.listCrates();
+    _crateList = result
+        .map((e) => Product(
+            itemPrice: e.itemPrice,
+            id: e.id,
+            itemCode: e.itemCode,
+            itemName: e.itemName,
+            quantity: 0))
+        .toList();
+    setBusy(false);
+    notifyListeners();
+  }
+
   init() async {
-    await _getCrates();
+    switch (crateTxnType) {
+      case CrateTxnType.Return:
+        await _getCrates();
+        break;
+      case CrateTxnType.Pickup:
+        await listCrates();
+        break;
+      case CrateTxnType.Drop:
+        await listCrates();
+        break;
+    }
     if (_deliveryStop == null && crateTxnType != CrateTxnType.Return) {
       await _fetchCustomers();
     }

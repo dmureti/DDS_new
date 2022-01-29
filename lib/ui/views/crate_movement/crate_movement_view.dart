@@ -5,6 +5,7 @@ import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart
 import 'package:distributor/ui/widgets/dumb_widgets/generic_container.dart';
 import 'package:distributor/ui/widgets/smart_widgets/customer_text_input/customer_textinput.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
@@ -114,6 +115,11 @@ class CrateMovementView extends StatelessWidget {
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 8.0),
                                               child: TextFormField(
+                                                inputFormatters: <
+                                                    TextInputFormatter>[
+                                                  FilteringTextInputFormatter
+                                                      .allow(RegExp("[0-9]")),
+                                                ],
                                                 style: TextStyle(fontSize: 16),
                                                 textAlign: TextAlign.center,
                                                 initialValue:

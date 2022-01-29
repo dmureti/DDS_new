@@ -56,6 +56,15 @@ class CrateManagementService with ReactiveServiceMixin {
   //Transfer crates
   transferCrates() async {}
 
+  Future<List<Item>> listCrates() async {
+    var result = await _apiService.api.listCrates(token: userToken);
+    if (result is List<Item>) {
+      return result;
+    } else {
+      return <Item>[];
+    }
+  }
+
   /// Fetch the products
   /// Filtered by the string
   fetchCrates() async {
