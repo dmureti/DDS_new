@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/services/access_controller_service.dart';
@@ -88,5 +89,19 @@ class StockControllerService {
         voucherNo: t.stockTransactionId,
         voucherType: t.voucherType,
         status: status);
+  }
+
+  confirmStockCollection(
+      {@required String journeyId,
+      @required String stopId,
+      String deliveryLocation}) async {
+    Map<String, dynamic> data = {
+      "deliveryLocation": "string",
+      "orderId": "string",
+      "stopId": stopId
+    };
+    var result = await _apiService.api
+        .completeTechStop(token: _user.token, journeyId: journeyId, data: data);
+    return result;
   }
 }

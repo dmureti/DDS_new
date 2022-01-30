@@ -24,14 +24,19 @@ class StockCollectionView extends StatelessWidget {
                 subTitle: deliveryStop.dependentJourneyId,
               ),
               actions: [
-                PopupMenuButton(itemBuilder: (context) {
-                  return [
-                    PopupMenuItem(
-                      child: Text('Confirm Collection'),
-                      value: 'collect_goods',
-                    )
-                  ];
-                })
+                PopupMenuButton(
+                  itemBuilder: (context) {
+                    return [
+                      PopupMenuItem(
+                        child: Text('Confirm Collection'),
+                        value: 'collect_goods',
+                      )
+                    ];
+                  },
+                  onSelected: (x) {
+                    model.confirmCollection();
+                  },
+                )
               ],
             ),
             body: GenericContainer(
@@ -54,6 +59,6 @@ class StockCollectionView extends StatelessWidget {
             ),
           );
         },
-        viewModelBuilder: () => StockCollectionViewModel());
+        viewModelBuilder: () => StockCollectionViewModel(deliveryStop));
   }
 }
