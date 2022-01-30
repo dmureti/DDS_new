@@ -59,7 +59,7 @@ class CrateViewModel extends BaseViewModel {
     setBusy(true);
     List<Item> _result = await _crateService.listCrates();
     _crateList = _result.map((item) {
-      if (crates.isNotEmpty) {
+      if (crates.isNotEmpty || crates != null) {
         return crates.firstWhere((product) => product.itemCode == item.itemCode,
             orElse: () => Product(
                 id: item.id,

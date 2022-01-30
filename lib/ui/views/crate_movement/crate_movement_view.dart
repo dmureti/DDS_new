@@ -42,7 +42,7 @@ class CrateMovementView extends StatelessWidget {
                         ),
                         Divider(),
                         deliveryStop != null &&
-                                crateTxnType == CrateTxnType.Return
+                                crateTxnType != CrateTxnType.Return
                             ? Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 8.0),
@@ -163,7 +163,8 @@ class CrateMovementView extends StatelessWidget {
                                 color: Colors.orange,
                                 onPressed: !model.isReturn
                                     ? model.commitReturnCrates
-                                    : model.isValid == true
+                                    : model.isValid == true ||
+                                            model.customerId != null
                                         ? model.commitChanges
                                         : null,
                                 child: Text(
