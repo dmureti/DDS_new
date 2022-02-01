@@ -54,7 +54,6 @@ class StopsListWidgetViewModel extends BaseViewModel {
   }
 
   void navigateToTechnicalStop(DeliveryStop deliveryStop) async {
-    print('here');
     await _navigationService.navigateTo(Routes.stockCollectionView,
         arguments: StockCollectionViewArguments(deliveryStop: deliveryStop));
   }

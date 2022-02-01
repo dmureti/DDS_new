@@ -54,7 +54,7 @@ class StopsListWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'TECHNICAL',
+                  'ADDITIONAL',
                   style: kSalesOrderIdTextStyle,
                 ),
                 Text(
