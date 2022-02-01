@@ -50,35 +50,9 @@ class StockView extends StatelessWidget {
                             ),
                           ),
                         )
-                      : DefaultTabController(
-                          length: 2,
-                          child: Expanded(
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 50,
-                                  child: TabBar(
-                                    tabs: [
-                                      Tab(
-                                        child: Text('Stocks'),
-                                      ),
-                                      Tab(
-                                        child: Text('Crates'),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: TabBarView(children: [
-                                    StockControllerWidget(
-                                      rebuildWidgetTree: model.rebuildTree,
-                                    ),
-                                    CrateView()
-                                  ]),
-                                )
-                              ],
-                            ),
-                          )),
+                      : StockControllerWidget(
+                          rebuildWidgetTree: model.rebuildTree,
+                        ),
                 ],
               ),
             ),
