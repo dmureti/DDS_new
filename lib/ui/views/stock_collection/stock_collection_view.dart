@@ -51,8 +51,31 @@ class StockCollectionView extends StatelessWidget {
                         )
                       : ListView.builder(
                           itemBuilder: (context, index) {
-                            var item = model.itemsToDeliver[index];
-                            return ListTile();
+                            var deliveryItem = model.itemsToDeliver[index];
+                            return Material(
+                              type: MaterialType.card,
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      deliveryItem['itemName'],
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18),
+                                    ),
+                                    Text(
+                                      deliveryItem['quantity'].toString(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
                           },
                           itemCount: model.itemsToDeliver.length,
                         ),
