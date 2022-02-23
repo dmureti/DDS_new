@@ -20,20 +20,27 @@ class StockListWidget extends StatelessWidget {
         createNewModelOnInsert: true,
         builder: (context, model, child) =>
             model.productList == null || model.isBusy
-                ? Center(child: BusyWidget())
+                ? Expanded(child: Center(child: BusyWidget()))
                 : model.productList.isEmpty
-                    ? Center(
-                        child: EmptyContentContainer(
-                            label: model.isMiniShop
-                                ? kStringShopNoStock
-                                : kStringNoStock),
-                      )
-                    : ListView.builder(
-                        itemBuilder: (context, index) {
-                          Product product = model.productList[index];
-                          return ProductQuantityTile(product: product);
-                        },
-                        itemCount: model.productList.length,
+                    ? Expanded(
+                        child: Center(
+                            child: EmptyContentContainer(
+                                label: model.isMiniShop
+                                    ? kStringShopNoStock
+                                    : kStringNoStock)))
+                    : Expanded(
+                        child: ListView.separated(
+                          itemBuilder: (context, index) {
+                            Product product = model.productList[index];
+                            return ProductQuantityTile(product: product);
+                          },
+                          itemCount: model.productList.length,
+                          separatorBuilder: (context, index) {
+                            return Divider(
+                              height: 1,
+                            );
+                          },
+                        ),
                       ),
         viewModelBuilder: () => StockListWidgetViewModel(rebuild));
   }
