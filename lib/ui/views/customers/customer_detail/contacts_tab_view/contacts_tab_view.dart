@@ -90,6 +90,11 @@ class ContactsTabView extends StatelessWidget {
                                       ReportFieldRow(
                                           field: 'Price List',
                                           value: customer.defaultPriceList),
+                                      ReportFieldRow(
+                                        field: 'Credit Limit',
+                                        value:
+                                            'Kshs ${Helper.formatCurrency(customer.creditLimit)}',
+                                      ),
 
                                       Row(
                                         children: [
