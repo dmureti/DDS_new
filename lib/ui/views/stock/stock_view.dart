@@ -21,38 +21,78 @@ class StockView extends StatelessWidget {
                 children: <Widget>[
                   InfoBarController(),
                   model.user.hasSalesChannel
-                      ? Container(
-                          height: 50,
-                          margin: EdgeInsets.only(bottom: 5),
-                          child: Material(
-                            elevation: 1,
-                            child: ButtonBar(
-                              alignment: MainAxisAlignment.spaceEvenly,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                if (model.renderPendingStockTransactionsButton)
-                                  FlatButtonWidget(
-                                    onTap: () async {
-                                      await model
-                                          .navigateToPendingTransactionsView();
-                                      model.setRebuildTree(true);
-                                      model.notifyListeners();
-                                    },
-                                    label: 'Pending Transactions',
+                      ? Expanded(
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 50,
+                                margin: EdgeInsets.only(bottom: 5),
+                                child: Material(
+                                  elevation: 1,
+                                  child: ButtonBar(
+                                    alignment: MainAxisAlignment.spaceEvenly,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      if (model
+                                          .renderPendingStockTransactionsButton)
+                                        FlatButtonWidget(
+                                          onTap: () async {
+                                            await model
+                                                .navigateToPendingTransactionsView();
+                                            model.setRebuildTree(true);
+                                            model.notifyListeners();
+                                          },
+                                          label: 'Pending Transactions',
+                                        ),
+                                      FlatButtonWidget(
+                                          label: 'Return Stock',
+                                          onTap: () async {
+                                            await model
+                                                .navigateToReturnStockView();
+                                            model.notifyListeners();
+                                          })
+                                    ],
                                   ),
-                                FlatButtonWidget(
-                                    label: 'Return Stock',
-                                    onTap: () async {
-                                      await model.navigateToReturnStockView();
-                                      model.notifyListeners();
-                                    })
-                              ],
-                            ),
+                                ),
+                              ),
+                              StockControllerWidget(
+                                rebuildWidgetTree: model.rebuildTree,
+                              ),
+                            ],
                           ),
                         )
-                      : StockControllerWidget(
-                          rebuildWidgetTree: model.rebuildTree,
-                        ),
+                      : DefaultTabController(
+                          length: 2,
+                          child: Expanded(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 50,
+                                  child: TabBar(
+                                    tabs: [
+                                      Tab(
+                                        child: Text('Stocks'),
+                                      ),
+                                      Tab(
+                                        child: Text('Crates'),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: TabBarView(
+                                    children: [
+                                      StockControllerWidget(
+                                        rebuildWidgetTree: model.rebuildTree,
+                                      ),
+                                      // Container(),
+                                      CrateView(),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          )),
                 ],
               ),
             ),

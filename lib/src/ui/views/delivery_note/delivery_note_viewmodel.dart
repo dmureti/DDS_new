@@ -1,5 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
+import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/user_service.dart';
@@ -103,7 +104,6 @@ class DeliveryNoteViewModel extends BaseViewModel {
         }
         break;
       case 'add_payment':
-        print(customer.name);
         var result = await _navigationService.navigateTo(Routes.addPaymentView,
             arguments: AddPaymentViewArguments(customer: customer));
         if (result) {
@@ -115,6 +115,31 @@ class DeliveryNoteViewModel extends BaseViewModel {
         await _dialogService.showDialog(
             title: 'Operation not possible',
             description: 'You cannot perform this action.');
+        break;
+      case 'drop_crates': //Drop the crates at a customer
+        _navigationService.navigateTo(Routes.crateMovementView,
+            arguments: CrateMovementViewArguments(
+                crateTxnType: CrateTxnType.Drop,
+                customer: customer,
+                deliveryStop: deliveryStop));
+        break;
+      case 'receive_crates': // Receive crates from a customer
+        _navigationService.navigateTo(
+          Routes.crateMovementView,
+          arguments: CrateMovementViewArguments(
+              crateTxnType: CrateTxnType.Pickup,
+              customer: customer,
+              deliveryStop: deliveryStop),
+        );
+        break;
+      case 'crates_return':
+        _navigationService.navigateTo(
+          Routes.crateMovementView,
+          arguments: CrateMovementViewArguments(
+              crateTxnType: CrateTxnType.Return,
+              customer: customer,
+              deliveryStop: deliveryStop),
+        );
         break;
     }
   }

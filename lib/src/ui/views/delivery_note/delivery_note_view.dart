@@ -69,9 +69,18 @@ class DeliveryNoteView extends StatelessWidget {
                         ),
                         PopupMenuDivider(),
                         PopupMenuItem(
-                          child: Text('Receive Returns'),
-                          value: 'receive_return',
-                        ),
+                            child: Text('Collect Crates'),
+                            value: 'receive_crates'),
+                        PopupMenuItem(
+                            child: Text('Drop Crates'), value: 'drop_crates'),
+                        // PopupMenuItem(
+                        //     child: Text('Return Crates'),
+                        //     value: 'crates_return'),
+                        // PopupMenuDivider(),
+                        // PopupMenuItem(
+                        //   child: Text('Receive Returns'),
+                        //   value: 'receive_return',
+                        // ),
                         PopupMenuDivider(),
                         // PopupMenuItem(
                         //   child: Text('Add Payment'),

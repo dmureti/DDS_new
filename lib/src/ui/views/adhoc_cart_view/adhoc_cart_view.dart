@@ -1,3 +1,4 @@
+import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/text_styles.dart';
 
 import 'package:distributor/src/ui/views/adhoc_cart_view/adhoc_cart_viewmodel.dart';
@@ -16,7 +17,6 @@ class AdhocCartView extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    print(customer.defaultPriceList);
     return ViewModelBuilder<AdhocCartViewModel>.reactive(
         onModelReady: (model) => model.init(),
         builder: (context, model, child) {
@@ -28,7 +28,40 @@ class AdhocCartView extends StatelessWidget {
               child: model.customerProductList == null
                   ? Center(child: BusyWidget())
                   : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        isWalkin
+                            ? Container()
+                            : Container(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0, vertical: 10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Credit Limit : Kshs ${Helper.formatCurrency(customer.creditLimit)}',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      Text(
+                                        'Available Credit : Kshs ${Helper.formatCurrency(customer.creditLimit - model.total)}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: (customer.creditLimit -
+                                                      model.total)
+                                                  .isNegative
+                                              ? Colors.red
+                                              : Colors.green,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                         Expanded(
                           child: ListView.builder(
                             itemBuilder: (context, index) {

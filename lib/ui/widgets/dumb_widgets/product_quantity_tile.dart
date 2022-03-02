@@ -14,6 +14,7 @@ class ProductQuantityTile extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),
       child: ListTile(
+        visualDensity: VisualDensity.compact,
         title: Text(
           product.itemName,
           style: kListStyleTitle1,

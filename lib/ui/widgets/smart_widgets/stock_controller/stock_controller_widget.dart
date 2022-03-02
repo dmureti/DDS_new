@@ -1,4 +1,5 @@
 import 'package:distributor/src/strings.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/no_journey_container.dart';
 import 'package:distributor/ui/widgets/smart_widgets/stock_controller/stock_controller_widget_viewmodel.dart';
 import 'package:distributor/ui/widgets/smart_widgets/stock_list_widget/stock_list_widget.dart';
@@ -14,7 +15,9 @@ class StockControllerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<StockControllerWidgetViewModel>.reactive(
         builder: (context, model, child) => model.hasJourneys == false
-            ? NoJourneyContainer()
+            ? Center(
+                child: EmptyContentContainer(label: kStringNoJourney),
+              )
             : model.hasSelectedJourney == true
                 ? StockListWidget(
                     rebuild: rebuildWidgetTree,
@@ -24,16 +27,14 @@ class StockControllerWidget extends StatelessWidget {
   }
 
   _buildCenterContainer(String text) {
-    return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Center(
-            child: (Text(text)),
-          ),
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Center(
+          child: (Text(text)),
+        ),
+      ],
     );
   }
 }
