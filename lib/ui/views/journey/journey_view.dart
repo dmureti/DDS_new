@@ -60,15 +60,12 @@ class DeliveryJourneyExpansionPanel
                 type: MaterialType.card,
                 borderOnForeground: true,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(5),
                 ),
-                elevation: 3,
+                elevation: 0,
                 child: ExpansionTile(
                   backgroundColor: kLightestBlue,
                   initiallyExpanded: false,
-                  leading: ViewMapButton(
-                    deliveryJourneyId: deliveryJourney.journeyId,
-                  ),
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -93,22 +90,21 @@ class DeliveryJourneyExpansionPanel
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              Text(
-                                deliveryJourney.vehicle,
-                                style: kJourneySecondaryTextStyle,
-                              ),
-                            ],
-                          ),
                           Text(
                             model.selectedJourney.journeyId ==
                                     deliveryJourney.journeyId
                                 ? model.selectedJourney.status
-                                : deliveryJourney.status,
+                                : deliveryJourney.status.toUpperCase(),
                             style: kJourneySecondaryTextStyle,
                             textAlign: TextAlign.right,
                           ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          deliveryJourney.dependentRoutes.isNotEmpty
+                              ? Text('M')
+                              : Text(deliveryJourney.dependentRoutes.length
+                                  .toString()),
                           model.selectedJourney.journeyId ==
                                   deliveryJourney.journeyId
                               ? Icon(Icons.star)

@@ -31,6 +31,7 @@ import 'package:distributor/ui/views/orders/order_confirmation/order_confirmatio
 import 'package:distributor/ui/views/orders/order_detail/order_detail_view.dart';
 import 'package:distributor/ui/views/payment_reference/payment_reference_view.dart';
 import 'package:distributor/ui/views/startup/startup_view.dart';
+import 'package:distributor/ui/views/stock_collection/stock_collection_view.dart';
 import 'package:distributor/ui/widgets/smart_widgets/map_view/delivery_journey_map_view.dart';
 
 import '../ui/views/link_payment/link_payment_view.dart';
@@ -65,6 +66,7 @@ import '../ui/views/login/login_view.dart';
     MaterialRoute(page: ChangePasswordView),
     MaterialRoute(page: StockTransferView),
     MaterialRoute(page: VoucherDetailView),
+    MaterialRoute(page: StockCollectionView),
     MaterialRoute(page: AdhocSalesView),
     MaterialRoute(page: ManageCrateView)
   ],

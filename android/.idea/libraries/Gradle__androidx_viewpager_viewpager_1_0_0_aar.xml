@@ -11,10 +11,13 @@
       <root url="file://C:/gradle/caches/transforms-2/files-2.1/dfe1e0645042e6473a61fd81a7810664/viewpager-1.0.0/res" />
       <root url="jar://C:/gradle/caches/transforms-2/files-2.1/dfe1e0645042e6473a61fd81a7810664/viewpager-1.0.0/jars/classes.jar!/" />
       <root url="file://C:/gradle/caches/transforms-2/files-2.1/dfe1e0645042e6473a61fd81a7810664/viewpager-1.0.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/dfe1e0645042e6473a61fd81a7810664/viewpager-1.0.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/dfe1e0645042e6473a61fd81a7810664/viewpager-1.0.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/dfe1e0645042e6473a61fd81a7810664/viewpager-1.0.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://C:/gradle/caches/modules-2/files-2.1/androidx.viewpager/viewpager/1.0.0/db045f92188b9d247d5f556866f8861ab68528f0/viewpager-1.0.0-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.android/manual-offline-m2/gmaven_stable/androidx/viewpager/viewpager/1.0.0/viewpager-1.0.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
