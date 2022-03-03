@@ -9,7 +9,8 @@ class CustomerSummaryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<CustomerSummaryViewModel>.reactive(
-        builder: (context, model, child) => model.data != null
+        onModelReady: (model) => model.init(),
+        builder: (context, model, child) => model.customer != null
             ? Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

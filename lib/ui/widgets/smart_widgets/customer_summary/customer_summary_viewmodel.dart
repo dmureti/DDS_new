@@ -6,7 +6,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class CustomerSummaryViewModel extends FutureViewModel {
+class CustomerSummaryViewModel extends BaseViewModel {
   CustomerService _customerService = locator<CustomerService>();
   DialogService _dialogService = locator<DialogService>();
   final String _customerId;
@@ -16,8 +16,17 @@ class CustomerSummaryViewModel extends FutureViewModel {
   Customer _customer;
   Customer get customer => _customer;
 
+  init() async {
+    await fetchCustomer();
+  }
+
   Future<Customer> fetchCustomer() async {
     var result = await _customerService.getCustomerDetailById(_customerId);
+    if (result is Customer) {
+      _customer = result;
+      notifyListeners();
+    }
+    print(result);
     return result;
   }
 
@@ -31,22 +40,22 @@ class CustomerSummaryViewModel extends FutureViewModel {
     return result;
   }
 
-  @override
-  void onError(error) async {
-    await _dialogService.showDialog(
-        title: 'Could not fetch customer', description: error.toString());
-    super.onError(error);
-  }
+  // @override
+  // void onError(error) async {
+  //   await _dialogService.showDialog(
+  //       title: 'Could not fetch customer', description: error.toString());
+  //   super.onError(error);
+  // }
 
-  @override
-  Future futureToRun() async {
-    var result = await fetchCustomer();
-
-    if (result is Customer) {
-      _customer = result;
-      return _customer;
-    } else {
-      onError(result);
-    }
-  }
+  // @override
+  // Future futureToRun() async {
+  //   var result = await fetchCustomer();
+  //
+  //   if (result is Customer) {
+  //     _customer = result;
+  //     return _customer;
+  //   } else {
+  //     onError(result);
+  //   }
+  // }
 }
