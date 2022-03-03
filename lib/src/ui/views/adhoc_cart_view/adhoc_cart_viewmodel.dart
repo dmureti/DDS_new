@@ -3,6 +3,7 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/models/product_service.dart';
 import 'package:distributor/services/adhoc_cart_service.dart';
+import 'package:distributor/services/customer_service.dart';
 import 'package:distributor/services/stock_controller_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -15,6 +16,7 @@ class AdhocCartViewModel extends ReactiveViewModel {
   DialogService _dialogService = locator<DialogService>();
   ProductService _productService = locator<ProductService>();
   NavigationService _navigationService = locator<NavigationService>();
+  final _customerService = locator<CustomerService>();
 
   num get total => _adhocCartService.total;
 
@@ -59,6 +61,8 @@ class AdhocCartViewModel extends ReactiveViewModel {
     _customerProductList.removeWhere((item) => stockBalanceList.contains(item));
     notifyListeners();
   }
+
+  getCustomerPending() async {}
 
   Future fetchProductsByPrice() async {
     setBusy(true);
@@ -105,4 +109,11 @@ class AdhocCartViewModel extends ReactiveViewModel {
 
   @override
   List<ReactiveServiceMixin> get reactiveServices => [_adhocCartService];
+
+  displayCreditLimitExceedDialog() async {
+    await _dialogService.showDialog(
+        title: 'Credit Limit Exceeded',
+        description:
+            'The order exceeds the customer credit limit. Please remove some items');
+  }
 }

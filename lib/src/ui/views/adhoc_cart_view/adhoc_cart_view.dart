@@ -41,12 +41,6 @@ class AdhocCartView extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Credit Limit : Kshs ${Helper.formatCurrency(customer.creditLimit)}',
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      Text(
                                         'Available Credit : Kshs ${Helper.formatCurrency(customer.creditLimit - model.total)}',
                                         style: TextStyle(
                                           fontWeight: FontWeight.w500,
@@ -101,9 +95,15 @@ class AdhocCartView extends StatelessWidget {
                               'CONTINUE TO PAYMENT',
                               style: kActiveButtonTextStyle,
                             ),
-                            onPressed: () {
-                              model.navigateToAdhocPaymentView();
-                            },
+                            onPressed: model.customer.creditLimit.isNegative ||
+                                    model.total == 0
+                                ? null
+                                : model.total > model.customer.creditLimit
+                                    ? () =>
+                                        model.displayCreditLimitExceedDialog()
+                                    : () {
+                                        model.navigateToAdhocPaymentView();
+                                      },
                           ),
                         ),
                       ],
