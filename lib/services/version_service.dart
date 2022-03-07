@@ -16,12 +16,13 @@ class VersionService {
 
   // PackageInfo get packageInfo => _packageInfo;
   //
+
   // String get appName => packageInfo.appName;
   // String get packageName => packageInfo.packageName;
   // String get version => packageInfo.version;
   // String get buildNumber => packageInfo.buildNumber;
 
-  String get version => '8.28.7';
+  String get version => '8.28.8';
 
   getVersion() async {
     // _packageInfo = await PackageInfo.fromPlatform();
