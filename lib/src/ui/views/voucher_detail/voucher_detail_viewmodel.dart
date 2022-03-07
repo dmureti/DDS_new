@@ -72,7 +72,7 @@ class VoucherDetailViewmodel extends TransactionViewmodel {
       _disableDropdown = true;
       await _dialogService.showDialog(
           title: 'Success',
-          description: 'The transaction has been ${val}d successfully');
+          description: 'The transaction has been ${val}ed successfully');
       getTransaction();
       _navigationService.back(result: true);
     } else {
