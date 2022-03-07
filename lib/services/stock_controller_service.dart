@@ -5,6 +5,7 @@ import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/user_service.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import 'package:tripletriocore/tripletriocore.dart';
 
@@ -12,6 +13,7 @@ class StockControllerService {
   AccessControlService _accessControlService = locator<AccessControlService>();
   JourneyService _journeyService = locator<JourneyService>();
   DeliveryJourney get currentJourney => _journeyService.currentJourney;
+  final dialogService = locator<DialogService>();
 
   ApiService _apiService = locator<ApiService>();
   Api get _api => _apiService.api;

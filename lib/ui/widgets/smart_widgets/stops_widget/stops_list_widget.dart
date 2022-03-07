@@ -50,6 +50,9 @@ class StopsListWidget extends StatelessWidget {
             onTap: () {
               model.navigateToTechnicalStop(deliveryStop);
             },
+            subtitle: deliveryStop.isVisited == 1
+                ? Text('Completed')
+                : Text('Pending'),
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

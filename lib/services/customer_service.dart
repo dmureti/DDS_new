@@ -130,7 +130,7 @@ class CustomerService with ReactiveServiceMixin {
     }
   }
 
-  Future<Customer> getCustomerDetailById(String customerId) async {
+  getCustomerDetailById(String customerId) async {
     var result = await api.customerDetails(customerId, user.token);
     return result;
   }
