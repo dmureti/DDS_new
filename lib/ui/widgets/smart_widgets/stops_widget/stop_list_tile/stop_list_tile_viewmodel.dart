@@ -86,6 +86,7 @@ class StopListTileViewModel extends BaseViewModel {
 
     await getDeliveryNote();
     notifyListeners();
+    return;
   }
 
   DeliveryNote _deliveryNote;

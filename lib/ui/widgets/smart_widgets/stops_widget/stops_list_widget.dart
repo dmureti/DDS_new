@@ -47,8 +47,10 @@ class StopsListWidget extends StatelessWidget {
         child: Material(
           elevation: 1,
           child: ListTile(
-            onTap: () {
-              model.navigateToTechnicalStop(deliveryStop);
+            onTap: () async {
+              await model.navigateToTechnicalStop(deliveryStop);
+              await model.getJourneyDetails();
+              model.notifyListeners();
             },
             subtitle: deliveryStop.isVisited == 1
                 ? Text('Completed')

@@ -13,6 +13,7 @@ class StopsListWidgetViewModel extends BaseViewModel {
   DialogService _dialogService = locator<DialogService>();
   CustomerService _customerService = locator<CustomerService>();
   final _navigationService = locator<NavigationService>();
+  User get user => _userService.user;
 
   DeliveryJourney _deliveryJourney;
   DeliveryJourney get deliveryJourney => _deliveryJourney;
@@ -56,5 +57,8 @@ class StopsListWidgetViewModel extends BaseViewModel {
   void navigateToTechnicalStop(DeliveryStop deliveryStop) async {
     await _navigationService.navigateTo(Routes.stockCollectionView,
         arguments: StockCollectionViewArguments(deliveryStop: deliveryStop));
+    await getJourneyDetails();
+    notifyListeners();
+    print('refreshed');
   }
 }
