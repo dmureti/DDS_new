@@ -22,7 +22,7 @@ class VersionService {
   // String get version => packageInfo.version;
   // String get buildNumber => packageInfo.buildNumber;
 
-  String get version => '8.28.9';
+  String get version => '8.28.11';
 
   getVersion() async {
     // _packageInfo = await PackageInfo.fromPlatform();

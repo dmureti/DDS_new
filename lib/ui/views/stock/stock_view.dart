@@ -55,8 +55,10 @@ class StockView extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              StockControllerWidget(
-                                rebuildWidgetTree: model.rebuildTree,
+                              Expanded(
+                                child: StockControllerWidget(
+                                  rebuildWidgetTree: model.rebuildTree,
+                                ),
                               ),
                             ],
                           ),

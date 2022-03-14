@@ -69,6 +69,8 @@ ThemeData _buildAppTheme() {
     ),
     textTheme: _buildAppTextTheme(base.textTheme),
     primaryTextTheme: _buildAppTextTheme(base.primaryTextTheme),
+    snackBarTheme: SnackBarThemeData(
+        backgroundColor: Colors.pink, actionTextColor: Colors.black),
     accentTextTheme: _buildAppTextTheme(base.accentTextTheme),
   );
 }
