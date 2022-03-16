@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/crate.dart';
 import 'package:distributor/services/api_service.dart';
@@ -34,17 +36,18 @@ class CrateManagementService with ReactiveServiceMixin {
       {@required List<Product> expectedCrates,
       @required List<SalesOrderItem> actualReturnedCrates,
       String reason}) async {
+    var details = {
+      "jnId": currentJourney.journeyId,
+      "expectedCrates": expectedCrates
+          .map((e) => {"itemCode": e.itemCode, "quantity": e.quantity})
+          .toList(),
+      "actualReturnedCrates": actualReturnedCrates
+          .map(
+              (e) => {"itemCode": e.item.itemCode, "quantity": e.item.quantity})
+          .toList(),
+    };
     Map<String, dynamic> data = {
-      "details": {
-        "jnId": currentJourney.journeyId,
-        "expectedCrates": expectedCrates
-            .map((e) => {"itemCode": e.itemCode, "quantity": e.quantity})
-            .toList(),
-        "actualReturnedCrates": actualReturnedCrates
-            .map((e) =>
-                {"itemCode": e.item.itemCode, "quantity": e.item.quantity})
-            .toList(),
-      },
+      "details": json.encode(details),
       "fromWarehouse": _journeyService.currentJourney.route ??
           _userService.user.salesChannel,
       "toWarehouse": _userService.user.branch,

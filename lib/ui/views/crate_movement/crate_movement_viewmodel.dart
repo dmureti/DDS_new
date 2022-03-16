@@ -29,8 +29,13 @@ class CrateMovementViewModel extends BaseViewModel {
         _dnId = _deliveryStop?.deliveryNoteId,
         _isValid = _crateTxnType == CrateTxnType.Return;
 
-  toggleDisableTextFormField() {
+  toggleDisableTextFormField() async {
     _disableTextFormField = !disableTextFormField;
+    if (disableTextFormField) {
+      await _getCrates();
+    } else {
+      await listCrates();
+    }
     notifyListeners();
   }
 
@@ -120,7 +125,6 @@ class CrateMovementViewModel extends BaseViewModel {
         _itemSet.addAll({item: int.parse(val)});
       }
     }
-    print(itemSet.length);
   }
 
   Map<Item, int> _itemSet = Map<Item, int>();
@@ -137,13 +141,14 @@ class CrateMovementViewModel extends BaseViewModel {
 
   commitReturnCrates() async {
     var dialogResponse = await _dialogService.showConfirmationDialog(
-        title: 'Return Crates Confirmations',
+        title: 'Return Crates Confirmation',
         cancelTitle: 'NO',
         confirmationTitle: 'YES, I AM SURE',
         description:
             'Are you sure you want to return the crates to the warehouse? ');
     if (dialogResponse.confirmed) {
       List<SalesOrderItem> actualReturned = <SalesOrderItem>[];
+
       //Check if the user has edited
       if (itemSet.isNotEmpty) {
         itemSet.forEach((key, value) {
@@ -152,12 +157,10 @@ class CrateMovementViewModel extends BaseViewModel {
                 quantity: value,
                 itemName: key.itemName,
                 itemPrice: key.itemPrice,
-                id: key.id,
+                id: key.itemCode,
                 itemCode: key.itemCode,
               ),
-              quantity: crateTxnType == CrateTxnType.Drop ? value * -1 : value);
-          //Update the sums
-          // computeTotal(value);
+              quantity: value);
           actualReturned.add(s);
         });
       } else {
@@ -167,11 +170,31 @@ class CrateMovementViewModel extends BaseViewModel {
           actualReturned.add(s);
         });
       }
+      //Compare the length of the lists
+      if (crateList.length > actualReturned.length) {
+        //Iterate through elements and add elements that dont exit to actual returned
+        crateList.forEach((product) {
+          if (!actualReturned.contains(product.itemCode)) {
+            actualReturned.add(SalesOrderItem(
+                quantity: product.quantity.toInt(),
+                item: Product(
+                    quantity: product.quantity,
+                    itemName: product.itemName,
+                    itemPrice: product.itemPrice,
+                    id: product.itemCode,
+                    itemCode: product.itemCode)));
+          } else {
+            print('---');
+          }
+        });
+      }
+
       var result = await _crateManagementService.cratesReturn(
           expectedCrates: _crateList,
           reason: reason,
           actualReturnedCrates: actualReturned);
       if (result) {
+        //@TODO Close Keyboard
         await _dialogService.showDialog(
             title: 'Crate Return Success',
             description:

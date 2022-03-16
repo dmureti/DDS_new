@@ -20,7 +20,7 @@ class CustomerSummaryViewModel extends BaseViewModel {
     await fetchCustomer();
   }
 
-  Future<Customer> fetchCustomer() async {
+  fetchCustomer() async {
     var result = await _customerService.getCustomerDetailById(_customerId);
     if (result is Customer) {
       _customer = result;
