@@ -40,6 +40,48 @@ class CrateMovementView extends StatelessWidget {
                               fontWeight: FontWeight.w600,
                               color: Colors.grey),
                         ),
+                        crateTxnType == CrateTxnType.Return &&
+                                model.crateList.isNotEmpty
+                            ? CheckboxListTile(
+                                controlAffinity:
+                                    ListTileControlAffinity.leading,
+                                value: model.disableTextFormField,
+                                onChanged: (_) =>
+                                    model.toggleDisableTextFormField(),
+                                title: Text(
+                                    'Would you like to edit the quantity of crates ? '),
+                              )
+                            : Container(),
+                        crateTxnType == CrateTxnType.Return &&
+                                model.crateList.isNotEmpty
+                            ? Row(
+                                children: [
+                                  Text(
+                                    'Reason For Editing : ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Expanded(
+                                    child: DropdownButton(
+                                      isExpanded: true,
+                                      hint: Text('Reason for difference'),
+                                      items: model.editReasons
+                                          .map((e) => DropdownMenuItem(
+                                                child: Text(e),
+                                                value: e,
+                                              ))
+                                          .toList(),
+                                      onChanged: model.setReason,
+                                      value: model.reason,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Container(),
                         Divider(),
                         deliveryStop != null &&
                                 crateTxnType != CrateTxnType.Return
@@ -81,7 +123,8 @@ class CrateMovementView extends StatelessWidget {
                                   ),
                         Divider(),
                         model.crateList.isEmpty
-                            ? EmptyContentContainer(label: 'No items found')
+                            ? EmptyContentContainer(
+                                label: 'There are no crates.')
                             : Expanded(
                                 child: ListView.builder(
                                   itemBuilder: (context, index) {
@@ -159,21 +202,23 @@ class CrateMovementView extends StatelessWidget {
                             ? Center(
                                 child: BusyWidget(),
                               )
-                            : RaisedButton(
-                                color: Colors.orange,
-                                onPressed: !model.isReturn
-                                    ? model.commitReturnCrates
-                                    : model.isValid == true ||
-                                            model.customerId != null
-                                        ? model.commitChanges
-                                        : null,
-                                child: Text(
-                                  'UPDATE',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ),
+                            : model.crateList.isNotEmpty
+                                ? RaisedButton(
+                                    color: Colors.orange,
+                                    onPressed: !model.isReturn
+                                        ? model.commitReturnCrates
+                                        : model.isValid == true ||
+                                                model.customerId != null
+                                            ? model.commitChanges
+                                            : null,
+                                    child: Text(
+                                      'UPDATE',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  )
+                                : Container(),
                       ],
                     ),
             ),
@@ -207,7 +252,7 @@ class CrateMovementView extends StatelessWidget {
         return 'Enter the number of crates that you have collected from the customer.';
 
       case CrateTxnType.Return:
-        return 'Confirm that these are the number of crates you have in stock. You cannot edit the quantity.';
+        return 'Confirm that these are the number of crates you have in stock. Edit the quantities and select a reason for editing.';
       default:
         return 'Select the crate, action and the quantity.';
     }
