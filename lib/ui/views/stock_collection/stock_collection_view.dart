@@ -44,14 +44,15 @@ class StockCollectionView extends StatelessWidget {
                   ? Center(
                       child: BusyWidget(),
                     )
-                  : model.itemsToDeliver.isEmpty
+                  : model.deliveryStop.deliveryItems.isEmpty
                       ? Center(
                           child: EmptyContentContainer(
                               label: 'No items found for this stop'),
                         )
                       : ListView.builder(
                           itemBuilder: (context, index) {
-                            var deliveryItem = model.itemsToDeliver[index];
+                            var deliveryItem =
+                                model.deliveryStop.deliveryItems[index];
                             return Material(
                               type: MaterialType.card,
                               child: Padding(
@@ -77,7 +78,7 @@ class StockCollectionView extends StatelessWidget {
                               ),
                             );
                           },
-                          itemCount: model.itemsToDeliver.length,
+                          itemCount: model.deliveryStop.deliveryItems.length,
                         ),
             ),
           );
