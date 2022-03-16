@@ -109,9 +109,9 @@ class CrateManagementService with ReactiveServiceMixin {
     final String purpose = "Material Receipt";
     const String warehouseType = "Virtual Warehouse";
     final Map<String, dynamic> details = {
-      "jnId": currentJourney.journeyId ?? journeyId,
-      "customer": customer,
-      "dnId": dnId,
+      "jnId": "${currentJourney.journeyId}" ?? "${journeyId}",
+      "customer": "${customer}",
+      "dnId": "${dnId}",
       "received": received,
       "dropped": dropped
     };
