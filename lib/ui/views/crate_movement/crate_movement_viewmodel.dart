@@ -19,14 +19,29 @@ class CrateMovementViewModel extends BaseViewModel {
 
   final DeliveryStop _deliveryStop;
   final CrateTxnType _crateTxnType;
-  final bool disableTextFormField;
+  bool _disableTextFormField;
+  bool get disableTextFormField => _disableTextFormField;
 
   CrateMovementViewModel(this._deliveryStop, this._crateTxnType)
-      : disableTextFormField = _crateTxnType != CrateTxnType.Return,
+      : _disableTextFormField = _crateTxnType != CrateTxnType.Return,
         _customerId = _deliveryStop?.customerId,
         _journeyId = _deliveryStop?.journeyId,
         _dnId = _deliveryStop?.deliveryNoteId,
         _isValid = _crateTxnType == CrateTxnType.Return;
+
+  toggleDisableTextFormField() {
+    _disableTextFormField = !disableTextFormField;
+    notifyListeners();
+  }
+
+  List<String> editReasons = ["Stolen", "Missing", "Other"];
+
+  String _reason;
+  String get reason => _reason ?? editReasons.last;
+  setReason(String reason) {
+    _reason = reason;
+    notifyListeners();
+  }
 
   List<Product> _crateList = <Product>[];
   List<Product> get crateList => _crateList;
@@ -122,17 +137,45 @@ class CrateMovementViewModel extends BaseViewModel {
 
   commitReturnCrates() async {
     var dialogResponse = await _dialogService.showConfirmationDialog(
-        title: 'Return Stock',
+        title: 'Return Crates Confirmation',
         cancelTitle: 'NO',
         confirmationTitle: 'YES, I AM SURE',
-        description: 'Are you sure you want to return the stock ? ');
+        description:
+            'Are you sure you want to return the crates to the warehouse? ');
     if (dialogResponse.confirmed) {
-      var result =
-          await _crateManagementService.cratesReturn(items: _crateList);
+      List<SalesOrderItem> actualReturned = <SalesOrderItem>[];
+      //Check if the user has edited
+      if (itemSet.isNotEmpty) {
+        itemSet.forEach((key, value) {
+          SalesOrderItem s = SalesOrderItem(
+              item: Product(
+                quantity: value,
+                itemName: key.itemName,
+                itemPrice: key.itemPrice,
+                id: key.id,
+                itemCode: key.itemCode,
+              ),
+              quantity: crateTxnType == CrateTxnType.Drop ? value * -1 : value);
+          //Update the sums
+          // computeTotal(value);
+          actualReturned.add(s);
+        });
+      } else {
+        crateList.forEach((product) {
+          SalesOrderItem s =
+              SalesOrderItem(item: product, quantity: product.quantity);
+          actualReturned.add(s);
+        });
+      }
+      var result = await _crateManagementService.cratesReturn(
+          expectedCrates: _crateList,
+          reason: reason,
+          actualReturnedCrates: actualReturned);
       if (result) {
         await _dialogService.showDialog(
-            title: 'Transaction Success',
-            description: 'The action was performed successfully');
+            title: 'Crate Return Success',
+            description:
+                'You have successfully returned the crates to the warehouse.');
         _navigationService.back(result: true);
       }
     }
