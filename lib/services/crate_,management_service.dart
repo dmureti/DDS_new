@@ -30,19 +30,32 @@ class CrateManagementService with ReactiveServiceMixin {
   // For crates transfer and return the details property shall be filled with the journey ID.
   // e.g. For crates return
   // Return crates
-  cratesReturn({@required List<Product> items}) async {
+  cratesReturn(
+      {@required List<Product> expectedCrates,
+      @required List<SalesOrderItem> actualReturnedCrates,
+      String reason}) async {
     Map<String, dynamic> data = {
-      "details": currentJourney.journeyId,
+      "details": {
+        "jnId": currentJourney.journeyId,
+        "expectedCrates": expectedCrates
+            .map((e) => {"itemCode": e.itemCode, "quantity": e.quantity})
+            .toList(),
+        "actualReturnedCrates": actualReturnedCrates
+            .map((e) =>
+                {"itemCode": e.item.itemCode, "quantity": e.item.quantity})
+            .toList(),
+      },
       "fromWarehouse": _journeyService.currentJourney.route ??
           _userService.user.salesChannel,
       "toWarehouse": _userService.user.branch,
-      "items": items
+      "reason": reason ?? "",
+      "items": actualReturnedCrates
           .map((e) => {
                 "item": {
-                  "id": e.id,
-                  "itemCode": e.itemCode,
-                  "itemName": e.itemName,
-                  "itemPrice": e.itemPrice
+                  "id": e.item.id,
+                  "itemCode": e.item.itemCode,
+                  "itemName": e.item.itemName,
+                  "itemPrice": e.item.itemPrice
                 },
                 "quantity": e.quantity
               })
