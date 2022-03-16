@@ -53,7 +53,8 @@ class CrateMovementView extends StatelessWidget {
                               )
                             : Container(),
                         crateTxnType == CrateTxnType.Return &&
-                                model.crateList.isNotEmpty
+                                model.crateList.isNotEmpty &&
+                                model.disableTextFormField
                             ? Row(
                                 children: [
                                   Text(
@@ -205,12 +206,13 @@ class CrateMovementView extends StatelessWidget {
                             : model.crateList.isNotEmpty
                                 ? RaisedButton(
                                     color: Colors.orange,
-                                    onPressed: !model.isReturn
-                                        ? model.commitReturnCrates
-                                        : model.isValid == true ||
-                                                model.customerId != null
-                                            ? model.commitChanges
-                                            : null,
+                                    onPressed:
+                                        crateTxnType == CrateTxnType.Return
+                                            ? model.commitReturnCrates
+                                            : model.isValid == true ||
+                                                    model.customerId != null
+                                                ? model.commitChanges
+                                                : null,
                                     child: Text(
                                       'UPDATE',
                                       style: TextStyle(
