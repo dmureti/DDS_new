@@ -64,7 +64,7 @@ class StockView extends StatelessWidget {
                           ),
                         )
                       : DefaultTabController(
-                          length: 2,
+                          length: 3,
                           child: Expanded(
                             child: Column(
                               children: [
@@ -77,7 +77,15 @@ class StockView extends StatelessWidget {
                                       ),
                                       Tab(
                                         child: Text('Crates'),
-                                      )
+                                      ),
+                                      Tab(
+                                        child: Text(
+                                          'Crates Movement',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -89,6 +97,7 @@ class StockView extends StatelessWidget {
                                       ),
                                       // Container(),
                                       CrateView(),
+                                      Container(),
                                     ],
                                   ),
                                 )
