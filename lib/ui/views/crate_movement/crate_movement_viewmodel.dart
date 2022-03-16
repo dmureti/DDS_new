@@ -137,7 +137,7 @@ class CrateMovementViewModel extends BaseViewModel {
 
   commitReturnCrates() async {
     var dialogResponse = await _dialogService.showConfirmationDialog(
-        title: 'Return Crates Confirmation',
+        title: 'Return Crates Confirmations',
         cancelTitle: 'NO',
         confirmationTitle: 'YES, I AM SURE',
         description:
@@ -163,7 +163,7 @@ class CrateMovementViewModel extends BaseViewModel {
       } else {
         crateList.forEach((product) {
           SalesOrderItem s =
-              SalesOrderItem(item: product, quantity: product.quantity);
+              SalesOrderItem(item: product, quantity: product.quantity.toInt());
           actualReturned.add(s);
         });
       }
