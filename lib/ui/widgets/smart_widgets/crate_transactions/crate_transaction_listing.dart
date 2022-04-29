@@ -1,0 +1,65 @@
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
+import 'package:distributor/ui/widgets/smart_widgets/crate_transactions/crate_transaction_listing_viewmodel.dart';
+import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
+
+class CrateTransactionListingView extends StatelessWidget {
+  CrateTransactionListingView({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<CrateTransactionListingViewModel>.reactive(
+      onModelReady: (model) => model.init(),
+      fireOnModelReadyOnce: false,
+      disposeViewModel: true,
+      builder: (context, model, child) {
+        return model.hasSelectedJourney == true
+            ? model.isBusy
+                ? Center(child: BusyWidget())
+                : model.crateTransactionListings.isNotEmpty
+                    ? RefreshIndicator(
+                        child: ListView.builder(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            var crateTxn =
+                                model.crateTransactionListings[index];
+                            return ListTile(
+                              title: Row(
+                                children: [
+                                  Text(
+                                    crateTxn['cust_name'],
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                              subtitle: Row(
+                                children: [
+                                  Expanded(child: Text(crateTxn['item_name'])),
+                                  Text(
+                                      "Received : ${crateTxn['received']} | Dropped : ${crateTxn['dropped']}"),
+                                ],
+                              ),
+                            );
+                          },
+                          itemCount: model.crateTransactionListings.length,
+                        ),
+                        onRefresh: () => model.getCrateTransactions())
+                    : Container(
+                        child: EmptyContentContainer(
+                          label: 'There are no crate transactions',
+                        ),
+                      )
+            : Container(
+                child: Center(
+                  child: EmptyContentContainer(
+                    label: 'You have not been assigned any deliveries today.',
+                  ),
+                ),
+              );
+      },
+      viewModelBuilder: () => CrateTransactionListingViewModel(),
+    );
+  }
+}
