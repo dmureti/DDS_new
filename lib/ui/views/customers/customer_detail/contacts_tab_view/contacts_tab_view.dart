@@ -84,9 +84,10 @@ class ContactsTabView extends StatelessWidget {
                                       ReportFieldRow(
                                           field: 'Branch',
                                           value: customer.branch),
+                                      //@TODO : Fix the route
                                       ReportFieldRow(
                                           field: 'Route',
-                                          value: customer.route),
+                                          value: customer.route.toString()),
                                       ReportFieldRow(
                                           field: 'Price List',
                                           value: customer.defaultPriceList),

@@ -93,7 +93,7 @@ class DeliveryJourneyExpansionPanel
                           Text(
                             model.selectedJourney.journeyId ==
                                     deliveryJourney.journeyId
-                                ? model.selectedJourney.status
+                                ? model.selectedJourney.status.toUpperCase()
                                 : deliveryJourney.status.toUpperCase(),
                             style: kJourneySecondaryTextStyle,
                             textAlign: TextAlign.right,

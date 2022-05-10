@@ -50,7 +50,20 @@ class HomeView extends StatelessWidget {
                     tooltip: 'Add Adhoc Sale',
                   )
                 : model.currentIndex == 3
-                    ? IconButton(onPressed: () {}, icon: Icon(Icons.more_vert))
+                    ? PopupMenuButton(
+                        onSelected: (value) =>
+                            model.onStockBalancePopupSelected(value),
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                            child: Text('Pending Transactions'),
+                            value: 0,
+                          ),
+                          PopupMenuItem(
+                            child: Text('Return Stock'),
+                            value: 1,
+                          )
+                        ],
+                      )
                     : Container(),
 
             // MapIconButton(),

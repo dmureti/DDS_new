@@ -164,7 +164,9 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
     await _logisticsService.fetchJourneys();
     await _permissionService.init();
     //Check if the user has permissions before enabling this
-    await fetchAdhocSales();
+    if (user.hasSalesChannel) {
+      await fetchAdhocSales();
+    }
     return;
   }
 
@@ -291,4 +293,15 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   }
 
   final formatter = DateFormat('yyyy-MM-dd');
+
+  onStockBalancePopupSelected(value) {
+    switch (value) {
+      case 0:
+        navigateToPendingTransactionsView();
+        break;
+      case 1:
+        navigateToReturnStockView();
+        break;
+    }
+  }
 }

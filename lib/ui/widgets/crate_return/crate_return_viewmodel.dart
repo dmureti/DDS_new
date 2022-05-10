@@ -1,6 +1,12 @@
+import 'package:distributor/app/locator.dart';
+import 'package:distributor/services/api_service.dart';
+import 'package:distributor/services/journey_service.dart';
+import 'package:distributor/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 
 class CrateReturnViewModel extends BaseViewModel {
+  final _userService = locator<UserService>();
+
   bool _showElement = false;
 
   List<String> crateTxnTypes = ['Leave', 'Collect'];

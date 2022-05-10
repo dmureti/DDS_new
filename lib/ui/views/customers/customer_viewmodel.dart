@@ -52,9 +52,9 @@ class CustomerViewModel extends FutureViewModel<List<Customer>> {
           break;
         case 'route':
           if (sortAscending) {
-            _customerList.sort((a, b) => a.route.compareTo(b.route));
+            // _customerList.sort((a, b) => a.route.compareTo(b.route));
           } else {
-            _customerList.sort((a, b) => b.route.compareTo(a.route));
+            // _customerList.sort((a, b) => b.route.compareTo(a.route));
           }
           break;
         default:
@@ -68,22 +68,23 @@ class CustomerViewModel extends FutureViewModel<List<Customer>> {
   }
 
   List<Customer> get listOfCustomers {
-    List<Customer> result = customerList;
-    if (route == null) {
-      return result;
-    } else {
-      route.forEach((key, value) {
-        if (value == true) {
-          result.removeWhere((customer) =>
-              customer.route.toLowerCase().contains(key.toLowerCase()));
-        }
-        // } else {
-        //   result.addAll(_customerList.where((customer) =>
-        //       customer.route.toLowerCase().contains(key.toLowerCase())));
-        // }
-      });
-      return result;
-    }
+    // List<Customer> result = customerList;
+    // if (route == null) {
+    //   return result;
+    // } else {
+    //   route.forEach((key, value) {
+    //     if (value == true) {
+    //       result.removeWhere((customer) =>
+    //           customer.route.toLowerCase().contains(key.toLowerCase()));
+    //     }
+    //     // } else {
+    //     //   result.addAll(_customerList.where((customer) =>
+    //     //       customer.route.toLowerCase().contains(key.toLowerCase())));
+    //     // }
+    //   });
+    //   return result;
+    // }
+    return customerList;
   }
 
   Future<List<Customer>> fetchCustomers() async {
@@ -172,7 +173,7 @@ class CustomerViewModel extends FutureViewModel<List<Customer>> {
     _customerList = data;
     _unorderedList = _customerList;
     data.forEach((customer) {
-      _branches.add(customer.route);
+      // _branches.add(customer.route);
       _route.putIfAbsent(customer.route, () => false);
     });
     super.onData(data);

@@ -57,18 +57,19 @@ class CrateViewModel extends BaseViewModel {
 
   _getCrateListing() async {
     setBusy(true);
-    List<Item> _result = await _crateService.listCrates();
-    _crateList = _result.map((item) {
-      if (crates.isNotEmpty || crates != null) {
-        return crates.firstWhere((product) => product.itemCode == item.itemCode,
-            orElse: () => Product(
-                id: item.id,
-                itemName: item.itemName,
-                itemCode: item.itemCode,
-                itemPrice: item.itemPrice,
-                quantity: 0));
-      }
-    }).toList();
+    _crateList = await _crateService.fetchCrates();
+    print(_crateList);
+    // _crateList = _result.map((item) {
+    //   if (crates.isNotEmpty || crates != null) {
+    //     return crates.firstWhere((product) => product.itemCode == item.itemCode,
+    //         orElse: () => Product(
+    //             id: item.id,
+    //             itemName: item.name,
+    //             itemCode: item.itemCode,
+    //             itemPrice: item.itemPrice,
+    //             quantity: 0));
+    //   }
+    // }).toList();
     setBusy(false);
   }
 

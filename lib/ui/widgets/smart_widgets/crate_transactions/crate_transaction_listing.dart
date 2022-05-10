@@ -47,8 +47,10 @@ class CrateTransactionListingView extends StatelessWidget {
                         ),
                         onRefresh: () => model.getCrateTransactions())
                     : Container(
-                        child: EmptyContentContainer(
-                          label: 'There are no crate transactions',
+                        child: Center(
+                          child: EmptyContentContainer(
+                            label: 'There are no crate transactions',
+                          ),
                         ),
                       )
             : Container(

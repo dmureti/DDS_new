@@ -61,7 +61,7 @@ class JourneyConsole extends StatelessWidget {
                                               ? Container()
                                               : model.journeyStatus
                                                       .toLowerCase()
-                                                      .contains('scheduled')
+                                                      .contains('dispatched')
                                                   ? Icon(
                                                       Icons.play_arrow,
                                                       color: kStartControl,

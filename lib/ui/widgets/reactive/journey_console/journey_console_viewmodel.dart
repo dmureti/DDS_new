@@ -44,7 +44,7 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
   confirmStockQuantities() {}
 
   updateJourneyStatus() async {
-    if (journeyStatus.toLowerCase() == 'scheduled') {
+    if (journeyStatus.toLowerCase() == 'dispatched') {
       var dialogResponse = await _dialogService.showConfirmationDialog(
           title: 'Confirm Journey Start',
           description:
@@ -69,11 +69,10 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
       if (result is bool) {
         notifyListeners();
         return true;
+      } else {
+        await _dialogService.showDialog(
+            title: 'Could not stop trip', description: result.toString());
       }
-      // else {
-      //   await _dialogService.showDialog(
-      //       title: 'Could not stop trip', description: result.toString());
-      // }
     } else {
       return null;
     }

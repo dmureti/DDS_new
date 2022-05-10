@@ -1,7 +1,9 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/enums.dart';
+import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/crate_,management_service.dart';
 import 'package:distributor/services/customer_service.dart';
+import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:stacked/stacked.dart';
@@ -14,6 +16,34 @@ class CrateMovementViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _customerService = locator<CustomerService>();
   final _userService = locator<UserService>();
+  final _apiService = locator<ApiService>();
+  final _journeyService = locator<JourneyService>();
+
+  get token => _userService.user.token;
+
+  List _branches;
+  List get branches => _branches;
+
+  getBranches() async {
+    setBusy(true);
+    var response = await _apiService.api
+        .getDeliveryJourneyBranches(token, _journeyService.journeyId);
+    if (response is String) {
+      await _dialogService.showDialog(title: 'Error', description: response);
+      _navigationService.back(result: false);
+      _branches = [];
+    } else {
+      _branches = response;
+    }
+    setBusy(false);
+  }
+
+  String _branch;
+  String get branch => _branch ?? _userService.user.branch;
+  setBranch(var s) {
+    _branch = s;
+    notifyListeners();
+  }
 
   User get user => _userService.user;
 
@@ -83,6 +113,7 @@ class CrateMovementViewModel extends BaseViewModel {
     switch (crateTxnType) {
       case CrateTxnType.Return:
         await _getCrates();
+        await getBranches();
         break;
       case CrateTxnType.Pickup:
         await listCrates();
@@ -192,7 +223,8 @@ class CrateMovementViewModel extends BaseViewModel {
       var result = await _crateManagementService.cratesReturn(
           expectedCrates: _crateList,
           reason: reason,
-          actualReturnedCrates: actualReturned);
+          actualReturnedCrates: actualReturned,
+          branch: branch);
       if (result) {
         //@TODO Close Keyboard
         await _dialogService.showDialog(

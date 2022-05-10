@@ -83,12 +83,41 @@ class CrateMovementView extends StatelessWidget {
                                 ],
                               )
                             : Container(),
-                        Divider(),
+                        // Divider(),
+                        model.branches != null && model.branches.isNotEmpty
+                            ? Row(
+                                children: [
+                                  Text(
+                                    'Branch : ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Expanded(
+                                    child: DropdownButton(
+                                        isExpanded: true,
+                                        hint: Text('Select Branch'),
+                                        value: model.branch,
+                                        items: model.branches
+                                            .map((e) => DropdownMenuItem(
+                                                  child: Text(e['name']),
+                                                  value: e['name'],
+                                                ))
+                                            .toList(),
+                                        onChanged: (s) => model.setBranch(s)),
+                                  ),
+                                ],
+                              )
+                            : Container(),
+                        // Divider(),
                         deliveryStop != null &&
                                 crateTxnType != CrateTxnType.Return
                             ? Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                    const EdgeInsets.symmetric(vertical: 4.0),
                                 child: Row(
                                   children: [
                                     Text(
@@ -168,7 +197,8 @@ class CrateMovementView extends StatelessWidget {
                                                 textAlign: TextAlign.center,
                                                 initialValue:
                                                     model.disableTextFormField
-                                                        ? '0'
+                                                        ? crate.quantity
+                                                            .toStringAsFixed(0)
                                                         : crate.quantity
                                                             .toStringAsFixed(0),
                                                 enabled:

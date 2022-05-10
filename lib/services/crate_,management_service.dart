@@ -35,6 +35,7 @@ class CrateManagementService with ReactiveServiceMixin {
   cratesReturn(
       {@required List<Product> expectedCrates,
       @required List<SalesOrderItem> actualReturnedCrates,
+      @required String branch,
       String reason}) async {
     var details = {
       "jnId": currentJourney.journeyId,
@@ -50,7 +51,7 @@ class CrateManagementService with ReactiveServiceMixin {
       "details": json.encode(details),
       "fromWarehouse": _journeyService.currentJourney.route ??
           _userService.user.salesChannel,
-      "toWarehouse": _userService.user.branch,
+      "toWarehouse": branch,
       "reason": reason ?? "",
       "items": actualReturnedCrates
           .map((e) => {
@@ -86,9 +87,13 @@ class CrateManagementService with ReactiveServiceMixin {
   fetchCrates() async {
     var productList = await _apiService.api.getStockBalance(
         token: userToken, branchId: currentJourney.route ?? _user.salesChannel);
+    print(productList);
     if (productList is List<Product>) {
       if (productList.isNotEmpty) {
-        return productList.where((product) => product.isCrate == true).toList();
+        return productList
+            .where((product) =>
+                product.itemName.toLowerCase().contains('crates') == true)
+            .toList();
       } else {
         return <Product>[];
       }
@@ -108,7 +113,7 @@ class CrateManagementService with ReactiveServiceMixin {
       @required dropped,
       @required List<SalesOrderItem> items,
       String journeyId}) async {
-    final String company = "Mini Bakeries (Mombasa) Limited";
+    final int company = 4;
     final String purpose = "Material Receipt";
     const String warehouseType = "Virtual Warehouse";
     final Map<String, dynamic> details = {
