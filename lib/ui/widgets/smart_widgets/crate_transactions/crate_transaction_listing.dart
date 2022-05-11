@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
 import 'package:distributor/ui/widgets/smart_widgets/crate_transactions/crate_transaction_listing_viewmodel.dart';
@@ -24,11 +26,13 @@ class CrateTransactionListingView extends StatelessWidget {
                           itemBuilder: (context, index) {
                             var crateTxn =
                                 model.crateTransactionListings[index];
+                            var description =
+                                json.decode(crateTxn['description']);
                             return ListTile(
                               title: Row(
                                 children: [
                                   Text(
-                                    crateTxn['cust_name'],
+                                    description['customer'],
                                     style:
                                         TextStyle(fontWeight: FontWeight.w600),
                                   ),
@@ -36,9 +40,9 @@ class CrateTransactionListingView extends StatelessWidget {
                               ),
                               subtitle: Row(
                                 children: [
-                                  Expanded(child: Text(crateTxn['item_name'])),
+                                  Expanded(child: Text(crateTxn['itemName'])),
                                   Text(
-                                      "Received : ${crateTxn['received']} | Dropped : ${crateTxn['dropped']}"),
+                                      "Received : ${description['received']} | Dropped : ${description['dropped']}"),
                                 ],
                               ),
                             );

@@ -51,7 +51,11 @@ class CrateTransactionListingViewModel extends BaseViewModel {
           title: 'Error', description: result.description);
       return;
     } else {
-      _crateTransactionListings = result;
+      List temp = result;
+      _crateTransactionListings = temp
+          .where((element) =>
+              element['voucherType'].toString().toLowerCase() != 'dispatch')
+          .toList();
       notifyListeners();
     }
   }

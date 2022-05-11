@@ -136,7 +136,7 @@ class CrateManagementService with ReactiveServiceMixin {
               })
           .toList(),
       "purpose": purpose,
-      "details": details.toString(),
+      "details": json.encode(details),
       "toWarehouse": {
         "company": company,
         "id": _journeyService.currentJourney.route ??
