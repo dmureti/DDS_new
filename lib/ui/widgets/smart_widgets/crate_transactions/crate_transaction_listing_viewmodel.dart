@@ -54,7 +54,8 @@ class CrateTransactionListingViewModel extends BaseViewModel {
       List temp = result;
       _crateTransactionListings = temp
           .where((element) =>
-              element['voucherType'].toString().toLowerCase() != 'dispatch')
+              element['voucherType'].toString().toLowerCase() ==
+              'finished goods')
           .toList();
       notifyListeners();
     }
