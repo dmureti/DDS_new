@@ -76,7 +76,7 @@ class AdhocSaleListTile extends StatelessWidget {
               Container(
                 alignment: Alignment.topRight,
                 child: Text(
-                    '${Helper.formatToTime(DateTime.parse(adhocSale.transactionDate))}'),
+                    '${Helper.formatDate(DateTime.parse(adhocSale.transactionDate))}'),
               ),
             ],
           ),

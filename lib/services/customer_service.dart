@@ -29,6 +29,15 @@ class CustomerService with ReactiveServiceMixin {
 
   List<Issue> get issueList => _customerIssues.value;
 
+  getCustomerLimit(var customerId) async {
+    var result = await _apiService.api.getCustomerLimit(user.token, customerId);
+    if (result is Map<String, dynamic>) {
+      return double.parse(result['balance_amount']) ?? 0.00;
+    } else {
+      return 0.00;
+    }
+  }
+
   getCustomerIssues(String customerId) async {
     var result = await _apiService.api
         .getCustomersIssuesByCustomer(customerId, user.token);
@@ -130,7 +139,7 @@ class CustomerService with ReactiveServiceMixin {
     }
   }
 
-  getCustomerDetailById(String customerId) async {
+  getCustomerDetailById(var customerId) async {
     var result = await api.customerDetails(customerId, user.token);
     return result;
   }

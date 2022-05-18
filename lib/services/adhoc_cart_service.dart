@@ -273,7 +273,8 @@ class AdhocCartService with ReactiveServiceMixin {
   }
 
   fetchAdhocSalesList({DateTime postingDate}) async {
-    List result = await _apiService.api.getAdhocSales(_userService.user.token,
+    List result = await _apiService.api.getAdhocSales(
+        _userService.user.token, warehouse,
         postingDate: postingDate ?? DateTime.now());
 
     if (result.isNotEmpty) {

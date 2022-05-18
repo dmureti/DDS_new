@@ -73,15 +73,21 @@ class StockControllerService {
   }
 
   getStockBalance() async {
-    var result = await _api.getStockBalance(
-        token: _user.token,
-        branchId: currentJourney.route ?? _user.salesChannel);
+    String branchId;
+    if (_user.hasSalesChannel) {
+      branchId = _user.salesChannel;
+    } else {
+      branchId = currentJourney.route;
+    }
+    var result =
+        await _api.getStockBalance(token: _user.token, branchId: branchId);
     return result;
   }
 
   getUserPOSProfile() async {
     var result =
         await _api.getUserPOSProfile(token: _user.token, userId: _user.id);
+
     return result;
   }
 

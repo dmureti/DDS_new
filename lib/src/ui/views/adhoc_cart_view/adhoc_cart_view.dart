@@ -41,7 +41,7 @@ class AdhocCartView extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Available Credit : Kshs ${Helper.formatCurrency(customer.creditLimit - model.total)}',
+                                        'Available Credit : Kshs ${Helper.formatCurrency(model.creditLimit)}',
                                         style: TextStyle(
                                           fontWeight: FontWeight.w500,
                                           color: (customer.creditLimit -

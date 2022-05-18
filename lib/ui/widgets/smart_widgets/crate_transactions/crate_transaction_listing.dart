@@ -32,7 +32,8 @@ class CrateTransactionListingView extends StatelessWidget {
                               title: Row(
                                 children: [
                                   Text(
-                                    description['customer'],
+                                    description['customer'] ??
+                                        "Unknown Customer",
                                     style:
                                         TextStyle(fontWeight: FontWeight.w600),
                                   ),
@@ -42,7 +43,7 @@ class CrateTransactionListingView extends StatelessWidget {
                                 children: [
                                   Expanded(child: Text(crateTxn['itemName'])),
                                   Text(
-                                      "Received : ${description['received']} | Dropped : ${description['dropped']}"),
+                                      "Received : ${description['received'] ?? "-"} | Dropped : ${description['dropped'] ?? "-"}"),
                                 ],
                               ),
                             );

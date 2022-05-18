@@ -43,7 +43,7 @@ class JourneySummaryWidgetViewModel extends ReactiveViewModel {
   int get ongoingJourney =>
       _logisticsService.userJourneyList
           .where((deliveryJourney) =>
-              deliveryJourney.status.toLowerCase().contains('in transit'))
+              deliveryJourney.status.toLowerCase().contains('dispatched'))
           .length ??
       0;
 

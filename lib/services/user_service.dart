@@ -71,3 +71,4 @@ class UserService {
     return await _apiService.api.getUserSummary(user.token, user: user);
   }
 }
+  

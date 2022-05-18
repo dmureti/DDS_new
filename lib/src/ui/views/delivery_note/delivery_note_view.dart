@@ -171,8 +171,8 @@ class DeliveryNoteView extends StatelessWidget {
 
                                         Divider(),
 
-                                        CustomerSummaryWidget(
-                                            model.deliveryStop.customerId),
+                                        // CustomerSummaryWidget(
+                                        //     model.deliveryStop.customerId),
 
                                         //@TODO: Add mobile number
                                       ],

@@ -13,7 +13,7 @@ class AdhocListingView extends HookViewModelWidget<HomeViewModel> {
   @override
   Widget buildViewModelWidget(BuildContext context, HomeViewModel model) {
     return GenericContainer(
-      child: model.adhocSalesList == null
+      child: model.adhocSalesList == null || model.isBusy == true
           ? BusyWidget()
           : model.adhocSalesList.isNotEmpty
               ? ListView.separated(

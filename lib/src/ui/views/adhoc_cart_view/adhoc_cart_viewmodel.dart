@@ -11,6 +11,7 @@ import 'package:tripletriocore/tripletriocore.dart';
 
 class AdhocCartViewModel extends ReactiveViewModel {
   AdhocCartService _adhocCartService = locator<AdhocCartService>();
+
   StockControllerService _stockControllerService =
       locator<StockControllerService>();
   DialogService _dialogService = locator<DialogService>();
@@ -38,6 +39,9 @@ class AdhocCartViewModel extends ReactiveViewModel {
   List<Product> _stockBalanceList;
   List<Product> get stockBalanceList => _stockBalanceList;
 
+  double _creditLimit;
+  double get creditLimit => _creditLimit ?? 0;
+
   checkIfStockExists(Product product) {
     Product p = _stockBalanceList.firstWhere(
         (element) => element.itemCode == product.itemCode,
@@ -57,6 +61,7 @@ class AdhocCartViewModel extends ReactiveViewModel {
 
   init() async {
     await fetchStockBalance();
+    _creditLimit = await _customerService.getCustomerLimit(customer.id);
     isWalkin ? await fetchProductsByPrice() : await fetchProducts();
     _customerProductList.removeWhere((item) => stockBalanceList.contains(item));
     notifyListeners();

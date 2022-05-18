@@ -40,7 +40,7 @@ class StopsListWidgetViewModel extends BaseViewModel {
     try {} catch (e) {}
   }
 
-  Future fetchCustomerDetails(String customerId) async {
+  Future fetchCustomerDetails(var customerId) async {
     var result = await _customerService.getCustomerDetailById(customerId);
     if (result is Customer) {
       return result;

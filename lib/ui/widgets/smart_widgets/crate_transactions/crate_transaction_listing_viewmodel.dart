@@ -36,7 +36,8 @@ class CrateTransactionListingViewModel extends BaseViewModel {
   User get user => _userService.user;
 
   init() async {
-    if (_journeyService.hasJourney) {
+    if (_journeyService.hasJourney && _journeyService.journeyId.isNotEmpty) {
+      print(_journeyService.journeyId);
       await getCrateTransactions();
     }
   }
