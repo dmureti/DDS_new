@@ -1,8 +1,6 @@
-import 'package:distributor/core/models/customer_search_delegate.dart';
 import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/views/customers/customer_detail/customer_detail_view.dart';
 import 'package:distributor/ui/views/customers/customer_viewmodel.dart';
-import 'package:distributor/ui/widgets/dumb_widgets/app_bar_search.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/customer_list_widget.dart';
 
