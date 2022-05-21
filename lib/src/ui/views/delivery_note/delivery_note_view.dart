@@ -1,7 +1,6 @@
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/app_bar_column_title.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
-import 'package:distributor/ui/widgets/smart_widgets/customer_summary/customer_summary_view.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
