@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/services/adhoc_cart_service.dart';
@@ -7,7 +5,6 @@ import 'package:distributor/services/stock_controller_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:tripletriocore/src/core/models/delivery_item.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 class AdhocDetailViewModel extends BaseViewModel {
@@ -70,12 +67,15 @@ class AdhocDetailViewModel extends BaseViewModel {
   AdhocDetail get adhocDetail => _adhocDetail;
 
   getAdhocDetail() async {
+    setBusy(true);
+
     _adhocDetail =
         await _adhocService.fetchAdhocDetail(referenceNo, token, baseType);
     if (_adhocDetail.saleItems != null || _adhocDetail.saleItems.isNotEmpty) {
       _memento =
           _adhocDetail.saleItems.map((e) => SaleItem.fromMap(e)).toList();
     }
+    setBusy(false);
     _fetched = true;
     notifyListeners();
   }
