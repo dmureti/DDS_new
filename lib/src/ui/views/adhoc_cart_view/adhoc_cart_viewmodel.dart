@@ -61,7 +61,7 @@ class AdhocCartViewModel extends ReactiveViewModel {
 
   init() async {
     await fetchStockBalance();
-    _creditLimit = await _customerService.getCustomerLimit(customer.id);
+    _creditLimit = await _customerService.getCustomerLimit(customer.name);
     isWalkin ? await fetchProductsByPrice() : await fetchProducts();
     _customerProductList.removeWhere((item) => stockBalanceList.contains(item));
     notifyListeners();
