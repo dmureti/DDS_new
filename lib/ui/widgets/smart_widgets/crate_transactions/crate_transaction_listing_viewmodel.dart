@@ -45,18 +45,20 @@ class CrateTransactionListingViewModel extends BaseViewModel {
   getCrateTransactions() async {
     setBusy(true);
     var result = await _apiService.api.getJourneyCratesTransactions(
-        token: token, journeryId: _journeyService.journeyId);
+        token: token, journeyId: _journeyService.journeyId);
     setBusy(false);
     if (result is CustomException) {
       await _dialogService.showDialog(
           title: 'Error', description: result.description);
       return;
     } else {
+      print(result);
       List temp = result;
       _crateTransactionListings = temp
-          .where((element) =>
-              element['voucherType'].toString().toLowerCase() ==
-              'finished goods')
+          .where((element) => element['transactionItemId']
+              .toString()
+              .toLowerCase()
+              .contains("cc"))
           .toList();
       notifyListeners();
     }
