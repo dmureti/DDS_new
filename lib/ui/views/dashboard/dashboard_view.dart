@@ -1,11 +1,8 @@
-import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/views/dashboard/dashboard_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
-import 'package:distributor/ui/widgets/dumb_widgets/dashboard_button.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/shop_name.dart';
 
 import 'package:distributor/ui/widgets/smart_widgets/dashboard_controller/dashboard_view_controller_view.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
