@@ -1,7 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
-import 'package:distributor/core/models/crate.dart';
 import 'package:distributor/services/crate_,management_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/user_service.dart';
