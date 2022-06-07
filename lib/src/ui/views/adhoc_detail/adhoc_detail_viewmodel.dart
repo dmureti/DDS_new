@@ -204,12 +204,12 @@ class AdhocDetailViewModel extends BaseViewModel {
         adhocDetail.baseType, referenceNo, POSSaleRequest);
     if (result) {
       await _dialogService.showDialog(
-          title: 'Success', description: 'The reversal was successful.');
+          title: 'Success', description: 'The action was successful.');
       _navigationService.back(result: true);
     } else {
       await _dialogService.showDialog(
           title: 'Reversal Error',
-          description: 'The transaction could not be reversed.');
+          description: 'The action was not successful.');
     }
     return;
   }

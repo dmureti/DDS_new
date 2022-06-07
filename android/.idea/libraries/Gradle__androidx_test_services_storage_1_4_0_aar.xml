@@ -1,18 +1,13 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.test.services:storage:1.4.0@aar">
     <CLASSES>
-      <root url="file://C:/gradle/caches/transforms-2/files-2.1/91330ea40125e3223e2f5b108cde98e4/jetified-storage-1.4.0/res" />
-      <root url="file://C:/gradle/caches/transforms-2/files-2.1/006d487d296a0b943a188596c1250c0d/jetified-storage-1.4.0/res" />
-      <root url="file://C:/gradle/caches/transforms-2/files-2.1/8cf22f13f812d00dafcd47c46890bb99/jetified-storage-1.4.0/res" />
-      <root url="file://C:/gradle/caches/transforms-2/files-2.1/8cf22f13f812d00dafcd47c46890bb99/jetified-storage-1.4.0/AndroidManifest.xml" />
-      <root url="jar://C:/gradle/caches/transforms-2/files-2.1/8cf22f13f812d00dafcd47c46890bb99/jetified-storage-1.4.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8cf22f13f812d00dafcd47c46890bb99/jetified-storage-1.4.0/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8cf22f13f812d00dafcd47c46890bb99/jetified-storage-1.4.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8cf22f13f812d00dafcd47c46890bb99/jetified-storage-1.4.0/res" />
+      <root url="jar://C:/gradle/caches/transforms-2/files-2.1/f8da5f483b9370ec0ddf4e118c7d3924/jetified-storage-1.4.0/jars/classes.jar!/" />
+      <root url="file://C:/gradle/caches/transforms-2/files-2.1/f8da5f483b9370ec0ddf4e118c7d3924/jetified-storage-1.4.0/res" />
+      <root url="file://C:/gradle/caches/transforms-2/files-2.1/f8da5f483b9370ec0ddf4e118c7d3924/jetified-storage-1.4.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.test.services/storage/1.4.0/27088f46bc0ab94523a20ccc56aa27e142662396/storage-1.4.0-sources.jar!/" />
+      <root url="jar://C:/gradle/caches/modules-2/files-2.1/androidx.test.services/storage/1.4.0/27088f46bc0ab94523a20ccc56aa27e142662396/storage-1.4.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

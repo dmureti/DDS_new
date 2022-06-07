@@ -1,6 +1,5 @@
 import 'package:distributor/ui/views/orders/order_detail/order_detail_viewmodel.dart';
 import 'package:distributor/ui/views/orders/sales_order_item_list/sales_order_item_list.dart';
-import 'package:distributor/ui/widgets/smart_widgets/confirm_dialog/confirm_dialog.dart';
 import 'package:distributor/ui/widgets/smart_widgets/customer_summary/customer_summary_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';

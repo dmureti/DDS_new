@@ -51,7 +51,14 @@ class StockView extends StatelessWidget {
                                             await model
                                                 .navigateToReturnStockView();
                                             model.notifyListeners();
-                                          })
+                                          }),
+                                      // FlatButtonWidget(
+                                      //     label: 'Return Crates',
+                                      //     onTap: () async {
+                                      //       await model
+                                      //           .navigateToReturnCrateView();
+                                      //       model.notifyListeners();
+                                      //     })
                                     ],
                                   ),
                                 ),
@@ -104,7 +111,7 @@ class StockView extends StatelessWidget {
                                 )
                               ],
                             ),
-                          )),
+                          ),),
                 ],
               ),
             ),

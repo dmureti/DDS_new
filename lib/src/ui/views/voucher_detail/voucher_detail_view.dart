@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/views/voucher_detail/voucher_detail_viewmodel.dart';
 

@@ -1,7 +1,6 @@
 import 'package:distributor/ui/shared/ui_helpers.dart';
 import 'package:distributor/ui/views/payment_reference/payment_reference_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/app_bar_column_title.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';

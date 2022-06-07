@@ -55,7 +55,7 @@ class RouteListItem extends StatelessWidget {
                                     children: <Widget>[
                                       InkWell(
                                         splashColor:
-                                            Theme.of(context).accentColor,
+                                            Theme.of(context).colorScheme.secondary,
                                         onTap: () {
                                           Navigator.of(context).push(
                                             MaterialPageRoute(

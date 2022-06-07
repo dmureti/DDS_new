@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:distributor/app/locator.dart';
-import 'package:distributor/core/models/crate.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/user_service.dart';
@@ -67,7 +66,12 @@ class CrateManagementService with ReactiveServiceMixin {
     };
     var result =
         await _apiService.api.returnCrates(token: userToken, data: data);
-    return result;
+    if (result is String) {
+      await _dialogService.showDialog(
+          title: 'Crate Return Error', description: result.toString());
+      return false;
+    }
+    return true;
   }
 
   //Transfer crates
@@ -85,6 +89,7 @@ class CrateManagementService with ReactiveServiceMixin {
   /// Fetch the products
   /// Filtered by the string
   fetchCrates() async {
+    // print(currentJourney.route);
     var productList = await _apiService.api.getStockBalance(
         token: userToken, branchId: currentJourney.route ?? _user.salesChannel);
     print(productList);

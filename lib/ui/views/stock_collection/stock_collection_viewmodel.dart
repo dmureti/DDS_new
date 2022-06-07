@@ -1,5 +1,4 @@
 import 'package:distributor/app/locator.dart';
-import 'package:distributor/app/router.gr.dart';
 
 import 'package:distributor/services/stock_controller_service.dart';
 import 'package:stacked/stacked.dart';

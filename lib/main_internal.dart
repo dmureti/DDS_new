@@ -1,12 +1,14 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/main.dart';
 import 'package:distributor/services/init_service.dart';
+import 'package:distributor/ui/setup_snackbar_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
+  setupSnackbarUi();
   InitService _initService = locator<InitService>();
   List<AppEnv> _appEnv = [
     AppEnv(

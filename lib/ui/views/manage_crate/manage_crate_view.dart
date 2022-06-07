@@ -1,4 +1,3 @@
-import 'package:distributor/core/enums.dart';
 import 'package:distributor/ui/views/manage_crate/manage_crate_viewmodel.dart';
 import 'package:distributor/ui/widgets/crate_return/crate_return_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/generic_container.dart';

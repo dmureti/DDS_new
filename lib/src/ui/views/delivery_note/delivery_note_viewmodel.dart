@@ -77,6 +77,7 @@ class DeliveryNoteViewModel extends BaseViewModel {
                 title: result.title, description: result.description);
           } else {
             await getDeliveryNote();
+            //@TODO change snackbar
             _snackbarService.showSnackbar(
                 message: 'The delivery was closed successfully');
           }

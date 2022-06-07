@@ -5,10 +5,8 @@ import 'package:distributor/ui/widgets/reactive/journey_console/journey_console.
 import 'package:distributor/ui/widgets/smart_widgets/control/select_control/select_control_widget.dart';
 
 import 'package:distributor/ui/widgets/smart_widgets/stops_widget/stops_list_widget.dart';
-import 'package:distributor/ui/widgets/smart_widgets/view_map_button/view_map_button.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 import 'package:tripletriocore/tripletriocore.dart';

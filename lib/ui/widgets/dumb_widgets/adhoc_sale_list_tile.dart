@@ -73,11 +73,11 @@ class AdhocSaleListTile extends StatelessWidget {
                   style: kListStyleTitle1,
                 ),
               ),
-              Container(
-                alignment: Alignment.topRight,
-                child: Text(
-                    '${Helper.formatDate(DateTime.parse(adhocSale.transactionDate))}'),
-              ),
+              // Container(
+              //   alignment: Alignment.topRight,
+              //   child: Text(
+              //       '${Helper.formatDate(DateTime.parse(adhocSale.transactionDate))}'),
+              // ),
             ],
           ),
         ),

@@ -37,8 +37,9 @@ class VoucherDetailViewmodel extends TransactionViewmodel {
    */
   bool get displayUserTransactionDropdown {
     if (_userService.user.salesChannel.toLowerCase() ==
-            _stockTransaction.sourceWarehouse.toLowerCase() ||
-        this.transactionStatus.toLowerCase().contains('stn')) {
+            _stockTransaction.sourceWarehouse.toLowerCase()
+        // || this.transactionStatus.toLowerCase().contains('stn')
+        ) {
       return false;
     } else {
       return true;

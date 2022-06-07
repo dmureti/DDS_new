@@ -4,7 +4,6 @@ import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/crate_,management_service.dart';
 import 'package:distributor/services/customer_service.dart';
 import 'package:distributor/services/journey_service.dart';
-import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -113,7 +112,9 @@ class CrateMovementViewModel extends BaseViewModel {
     switch (crateTxnType) {
       case CrateTxnType.Return:
         await _getCrates();
-        await getBranches();
+        if (!user.hasSalesChannel) {
+          await getBranches();
+        }
         break;
       case CrateTxnType.Pickup:
         await listCrates();
@@ -219,20 +220,20 @@ class CrateMovementViewModel extends BaseViewModel {
           }
         });
       }
-
+      setBusy(true);
       var result = await _crateManagementService.cratesReturn(
           expectedCrates: _crateList,
           reason: reason,
           actualReturnedCrates: actualReturned,
           branch: branch);
+      setBusy(false);
       if (result) {
-        //@TODO Close Keyboard
         await _dialogService.showDialog(
             title: 'Crate Return Success',
             description:
                 'You have successfully returned the crates to the warehouse.');
         _navigationService.back(result: true);
-      }
+      } else {}
     }
   }
 
@@ -259,6 +260,7 @@ class CrateMovementViewModel extends BaseViewModel {
         computeTotal(value);
         salesOrderItems.add(s);
       });
+      setBusy(true);
       var result = await _crateManagementService.collectDropCrates(
           customer: customerId,
           dnId: dnId,
@@ -266,6 +268,7 @@ class CrateMovementViewModel extends BaseViewModel {
           dropped: dropped,
           items: salesOrderItems,
           journeyId: journeyId);
+      setBusy(false);
       if (result) {
         await _dialogService.showDialog(
             title: 'Transaction Success',

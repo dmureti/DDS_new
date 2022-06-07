@@ -1,5 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
+import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/access_controller_service.dart';
 
 import 'package:stacked_services/stacked_services.dart';
@@ -38,6 +39,20 @@ mixin ContextualViewmodel {
 
   navigateToReturnStockView() async {
     var result = await _navigationService.navigateTo(Routes.stockTransferView);
+    if (result is bool) {
+      if (result) {
+        //Fetch the stock items
+      }
+    }
+  }
+
+  navigateToReturnCrateView() async {
+    var result = await _navigationService.navigateTo(
+      Routes.crateMovementView,
+      arguments: CrateMovementViewArguments(
+        crateTxnType: CrateTxnType.Return,
+      ),
+    );
     if (result is bool) {
       if (result) {
         //Fetch the stock items

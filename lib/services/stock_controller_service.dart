@@ -37,8 +37,9 @@ class StockControllerService {
 //	should only be displayed if the user has "virtual_stock_balance.view_cog" permission;
 //	otherwise, hide this column
 
-  getTransactionsPendingAuth() async {
-    var result = await _api.getPendingAuthStockTransactions(_user.token);
+  getTransactionsPendingAuth(String branchId) async {
+    var result = await _api.getPendingAuthStockTransactions(_user.token,
+        branchId: branchId);
     if (result is List) {
       return result.map((e) => Transaction.fromMap(e)).toList();
     } else {

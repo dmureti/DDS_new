@@ -146,7 +146,6 @@ class JourneyService with ReactiveServiceMixin {
     if (result is! CustomException) {
       _noOfCompletedStops.value++;
     }
-
     return result;
   }
 

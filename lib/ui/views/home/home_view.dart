@@ -1,4 +1,3 @@
-import 'package:badges/badges.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
 import 'package:distributor/src/ui/views/adhoc_listing/adhoc_listing_view.dart';
@@ -11,11 +10,7 @@ import 'package:distributor/ui/views/home/home_viewmodel.dart';
 import 'package:distributor/ui/views/routes/route_listing_view.dart';
 import 'package:distributor/ui/views/stock/stock_view.dart';
 import 'package:distributor/ui/widgets/drawer.dart';
-import 'package:distributor/ui/widgets/dumb_widgets/flat_button_widget.dart';
-import 'package:distributor/ui/widgets/fragments/master_detail_page.dart';
-import 'package:distributor/ui/widgets/reactive/map_icon_button/map_iconbutton.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
@@ -61,6 +56,10 @@ class HomeView extends StatelessWidget {
                           PopupMenuItem(
                             child: Text('Return Stock'),
                             value: 1,
+                          ),
+                          PopupMenuItem(
+                            child: Text('Return Crates'),
+                            value: 2,
                           )
                         ],
                       )

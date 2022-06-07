@@ -1,5 +1,4 @@
 import 'package:distributor/app/crate_lib/crate_lib_models.dart';
-import 'package:distributor/core/enums.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 

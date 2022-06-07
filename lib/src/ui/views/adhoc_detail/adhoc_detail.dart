@@ -7,7 +7,6 @@ import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/flat_button_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/generic_container.dart';
-import 'package:distributor/ui/widgets/dumb_widgets/product_quantity_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:stacked/stacked.dart';
@@ -85,12 +84,15 @@ class AdhocDetailView extends StatelessWidget {
                           SizedBox(
                             height: 4,
                           ),
+                          model.adhocDetail.transactionDate != null
+                              ? ReportFieldRow(
+                                  field: 'Transaction Date',
+                                  value: model.adhocDetail.transactionDate)
+                              : Container(
+                                  child: Text('Transaction Date'),
+                                ),
                           ReportFieldRow(
-                              field: 'Transaction Date',
-                              value: Helper.formatDate(DateTime.parse(
-                                  model.adhocDetail.transactionDate))),
-                          // ReportFieldRow(
-                          //     field: 'Customer Id', value: model.customerId),
+                              field: 'Customer Id', value: model.customerId),
                           ReportFieldRow(
                               field: 'Customer Name',
                               value: model.adhocDetail.customerName),

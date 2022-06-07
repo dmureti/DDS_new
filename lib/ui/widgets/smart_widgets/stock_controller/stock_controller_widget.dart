@@ -1,6 +1,5 @@
 import 'package:distributor/src/strings.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
-import 'package:distributor/ui/widgets/dumb_widgets/no_journey_container.dart';
 import 'package:distributor/ui/widgets/smart_widgets/stock_controller/stock_controller_widget_viewmodel.dart';
 import 'package:distributor/ui/widgets/smart_widgets/stock_list_widget/stock_list_widget.dart';
 import 'package:flutter/material.dart';

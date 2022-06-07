@@ -25,7 +25,7 @@ class ReturnStockTileWidget extends StatelessWidget {
                   secondaryStyle: kListStyleItemCount,
                 ),
                 SizedBox(
-                  width: 5,
+                  width: 1,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,6 +33,7 @@ class ReturnStockTileWidget extends StatelessWidget {
                     Text(
                       product.itemName,
                       style: kListStyleTitle1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Text(
                       product.itemCode,

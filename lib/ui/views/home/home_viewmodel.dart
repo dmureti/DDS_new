@@ -1,7 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
-import 'package:distributor/core/helper.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/activity_service.dart';
@@ -307,6 +306,9 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
         break;
       case 1:
         navigateToReturnStockView();
+        break;
+      case 2:
+        navigateToReturnCrateView();
         break;
     }
   }

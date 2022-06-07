@@ -1,6 +1,5 @@
 import 'package:distributor/ui/widgets/smart_widgets/manual_input_widget/manual_input_widget_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
