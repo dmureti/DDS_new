@@ -79,25 +79,21 @@ TextTheme _buildAppTextTheme(TextTheme base) {
       .copyWith(
         headline5: base.headline5.copyWith(
           color: Colors.pink,
-          fontFamily: 'ProximaNova700',
+          fontFamily: 'BenderBold',
         ),
         headline6: base.headline6.copyWith(fontSize: 18.0),
         caption: base.caption.copyWith(
-          fontFamily: 'ProximaNova500',
+          fontFamily: 'BenderBold',
           fontSize: 14.0,
         ),
         bodyText1: base.bodyText1.copyWith(
-            fontFamily: 'ProximaNovaRegular',
-            fontSize: 14.0,
-            color: Colors.white),
+            fontFamily: 'NerisLight', fontSize: 14.0, color: Colors.white),
         button: base.button.copyWith(color: Colors.pink),
         bodyText2: base.bodyText1.copyWith(
-            fontFamily: 'ProximaNovaRegular',
-            fontSize: 14.0,
-            color: Colors.white),
+            fontFamily: 'NerisLight', fontSize: 14.0, color: Colors.white),
       )
       .apply(
-        fontFamily: 'ProximaNovaRegular',
+        fontFamily: 'NerisLight',
         displayColor: Colors.grey,
         bodyColor: Colors.black,
       );

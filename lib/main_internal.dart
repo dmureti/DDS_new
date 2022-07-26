@@ -1,12 +1,16 @@
+import 'dart:io';
+
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/main.dart';
 import 'package:distributor/services/init_service.dart';
 import 'package:distributor/ui/setup_snackbar_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   setupLocator();
   setupSnackbarUi();
   InitService _initService = locator<InitService>();
@@ -38,11 +42,14 @@ void main() async {
     AppEnv(
       flavor: Flavor.internal,
       name: 'Demo',
-      flavorValues: FlavorValues(
-          baseUrl: 'http://54.228.169.28:8888/dds-backend/api/v1/'),
+      flavorValues:
+          FlavorValues(baseUrl: 'http://54.228.169.28:8888/dds-backend/api/v1'),
     ),
-
   ];
   _initService.setAvailableEnvList(_appEnv);
+  ByteData data =
+      await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
+  SecurityContext.defaultContext
+      .setTrustedCertificatesBytes(data.buffer.asUint8List());
   runApp(MainApp());
 }

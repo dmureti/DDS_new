@@ -23,7 +23,7 @@ class PartialDeliveryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(deliveryStop.stopId);
+    print(deliveryStop.isTechnicalStop.toString());
     return ViewModelBuilder<PartialDeliveryViewModel>.reactive(
         onModelReady: (model) => model.init(),
         builder: (context, model, child) {
@@ -132,7 +132,12 @@ class PartialDeliveryView extends StatelessWidget {
                                   child: BusyWidget(),
                                 )
                               : RaisedButton(
-                                  child: Text('Make Delivery'),
+                                  child: Text(
+                                    'Make Partial Delivery',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500),
+                                  ),
                                   onPressed: () {
                                     model.makePartialDelivery();
                                   },

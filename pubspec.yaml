@@ -1,6 +1,6 @@
 name: distributor
 description: Digital Distribution System
-version: 9.0.18+9
+version: 9.0.21+9
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
@@ -66,11 +66,32 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/images/logo.png
+    - assets/images/dds_logo.png
     - assets/images/minibakeries-logo.jpg
     - assets/images/no_journey.png
     - assets/images/mini_logo.png
     - assets/images/login_bg.jpg
+    - assets/ca/
   fonts:
+    - family: BenderRegular
+      fonts:
+          - asset: assets/fonts/bender/Bender_regular.ttf
+    - family: BenderBold
+      fonts:
+          - asset: assets/fonts/bender/Bender_bold.ttf
+    - family: BenderLight
+      fonts:
+          - asset: assets/fonts/bender/Bender_light.ttf
+    - family: NerisLight
+      fonts:
+        - asset: assets/fonts/neris/neris-light.ttf
+    - family: NerisThin
+      fonts:
+        - asset: assets/fonts/neris/neris-thin.ttf
+    - family: NerisBlack
+      fonts:
+        - asset: assets/fonts/neris/neris-black.ttf
     - family: ProximaNovaRegular
       fonts:
         - asset: assets/fonts/proxima_nova/normal/ProximaNovaAltRegular.otf

@@ -13,7 +13,7 @@ class BusyWidget extends StatelessWidget {
           children: [
             Center(
               child: Image.asset(
-                'assets/images/mini_logo.png',
+                'assets/images/dds_logo.png',
                 width: 18,
                 height: 18,
               ),

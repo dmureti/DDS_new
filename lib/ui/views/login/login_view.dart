@@ -56,16 +56,19 @@ class _LoginViewState extends State<LoginView> {
         extendBodyBehindAppBar: true,
         body: Container(
           decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/images/login_bg.jpg'),
-                  fit: BoxFit.cover),
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    kDarkNeutral,
-                    kDarkNeutral20,
-                  ])),
+              // image: DecorationImage(
+              //     image: AssetImage('assets/images/login_bg.jpg'),
+              //     fit: BoxFit.cover),
+              color: Color(0xFF022065)
+              // gradient: LinearGradient(
+              //   begin: Alignment.topCenter,
+              //   end: Alignment.bottomCenter,
+              //   colors: [
+              //     kDarkNeutral,
+              //     kDarkNeutral20,
+              //   ],
+              // ),
+              ),
           height: MediaQuery.of(context).size.height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -87,9 +90,16 @@ class _LoginViewState extends State<LoginView> {
                           //   // width: 150,
                           //   height: 100,
                           // ),
-                          LoginTextField(
-                            text: 'DDS Sign In',
+                          Container(
+                            child: Image.asset('assets/images/logo.png'),
+                            // width: 150,
+                            height: 100,
                           ),
+                          // Image.asset('asset/images/login.png'),
+
+                          // LoginTextField(
+                          //   text: 'DDS Sign In',
+                          // ),
                           SizedBox(
                             height: 10,
                           ),
@@ -234,7 +244,7 @@ class _LoginViewState extends State<LoginView> {
                 alignment: Alignment.bottomCenter,
                 child: Text(
                   'Version : ${model.version}',
-                  style: TextStyle(fontSize: 14),
+                  style: TextStyle(fontSize: 14, color: Colors.white),
                 ),
               ),
             ],
@@ -272,7 +282,7 @@ class _LoginViewState extends State<LoginView> {
       children: [
         Expanded(
           child: DropdownButton(
-            dropdownColor: Colors.white,
+            dropdownColor: Color(0xFF022065),
             isExpanded: true,
             onChanged: (AppEnv val) {
               model.updateEnv(val);
@@ -282,7 +292,7 @@ class _LoginViewState extends State<LoginView> {
                 .map((e) => DropdownMenuItem(
                       child: Text(
                         e.name,
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.white),
                       ),
                       value: e,
                     ))
