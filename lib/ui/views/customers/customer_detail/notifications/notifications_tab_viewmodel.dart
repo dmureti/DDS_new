@@ -27,7 +27,7 @@ class NotificationsTabViewModel extends ReactiveViewModel {
 
   getIssues() async {
     setBusy(true);
-    await _customerService.getCustomerIssues(customer.id);
+    await _customerService.getCustomerIssues(customer.customerCode);
     setBusy(false);
     notifyListeners();
   }
@@ -70,7 +70,8 @@ class NotificationsTabViewModel extends ReactiveViewModel {
         issueType: "Request",
         subject: subject);
     setBusy(true);
-    var result = await _customerService.addCustomerIssue(issue, customer.id);
+    var result =
+        await _customerService.addCustomerIssue(issue.toJson(), customer.id);
     setBusy(false);
     if (result is bool) {
       await getIssues();
