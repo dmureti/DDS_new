@@ -1,4 +1,5 @@
 import 'package:distributor/conf/dds_brand_guide.dart';
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
 
 import 'package:distributor/ui/config/brand.dart';
@@ -60,7 +61,7 @@ class _LoginViewState extends State<LoginView> {
               // image: DecorationImage(
               //     image: AssetImage('assets/images/login_bg.jpg'),
               //     fit: BoxFit.cover),
-              color: Color(0xFF022065)
+              color: kColDDSPrimaryDark
               // gradient: LinearGradient(
               //   begin: Alignment.topCenter,
               //   end: Alignment.bottomCenter,
@@ -98,7 +99,7 @@ class _LoginViewState extends State<LoginView> {
                                   'assets/images/dds_logo_horizontal.png'),
                             ),
                             // width: 150,
-                            height: 100,
+                            height: 80,
                           ),
                           // Image.asset('asset/images/login.png'),
 
@@ -111,10 +112,7 @@ class _LoginViewState extends State<LoginView> {
                           TextFormFieldPadding(
                             child: TextFormField(
                               controller: _userIdController,
-                              style: TextStyle(
-                                  fontFamily: 'ProximaNova500',
-                                  fontSize: 16,
-                                  color: kDarkNeutral20),
+                              style: kFormInputTextStyle,
                               onChanged: (String val) {
                                 model.setUserId(val);
                               },
@@ -133,10 +131,11 @@ class _LoginViewState extends State<LoginView> {
                               decoration: InputDecoration(
                                 filled: false,
                                 hintText: 'Email Address / Phone ',
-                                hintStyle: TextStyle(
-                                    fontFamily: 'ProximaNovaRegular',
-                                    fontSize: 12),
-                                prefixIcon: Icon(Icons.person),
+                                hintStyle: kFormHintTextStyle,
+                                prefixIcon: Icon(
+                                  Icons.person,
+                                  size: 24,
+                                ),
                               ),
                             ),
                           ),
@@ -151,10 +150,7 @@ class _LoginViewState extends State<LoginView> {
                                 }
                                 return null;
                               },
-                              style: TextStyle(
-                                  fontFamily: 'ProximaNova500',
-                                  fontSize: 16,
-                                  color: kDarkNeutral20),
+                              style: kFormInputTextStyle,
                               onChanged: (String val) =>
                                   model.updatePassword(val),
                               keyboardType: TextInputType.text,
@@ -163,9 +159,11 @@ class _LoginViewState extends State<LoginView> {
                               decoration: InputDecoration(
                                 filled: false,
                                 hintText: 'password',
-                                hintStyle:
-                                    TextStyle(fontFamily: 'ProximaNovaRegular'),
-                                prefixIcon: Icon(Icons.lock),
+                                hintStyle: kFormHintTextStyle,
+                                prefixIcon: Icon(
+                                  Icons.lock,
+                                  size: 20,
+                                ),
                                 suffixIcon: IconButton(
                                   onPressed: model.toggleObscurePassword,
                                   icon: model.obscurePassword
@@ -241,6 +239,7 @@ class _LoginViewState extends State<LoginView> {
                                           model.login();
                                           // }
                                         },
+                                  color: kColDDSPrimaryDark,
                                 ),
                         ],
                       ),
@@ -272,13 +271,16 @@ class _LoginViewState extends State<LoginView> {
           padding: const EdgeInsets.symmetric(vertical: 14.0),
           child: child,
         ),
-        decoration: BoxDecoration(boxShadow: [
-          BoxShadow(
-              color: kDarkNeutral20,
-              offset: Offset(1, 1),
-              blurRadius: 6,
-              spreadRadius: 0.8)
-        ], borderRadius: BorderRadius.circular(4), color: Colors.white),
+        decoration: BoxDecoration(
+            boxShadow: [
+              // BoxShadow(
+              //     color: kDarkNeutral20,
+              //     offset: Offset(1, 1),
+              //     blurRadius: 6,
+              //     spreadRadius: 0.8)
+            ],
+            // borderRadius: BorderRadius.circular(4),
+            color: Colors.white),
       ),
     );
   }
