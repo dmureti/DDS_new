@@ -1,3 +1,4 @@
+import 'package:distributor/conf/dds_brand_guide.dart';
 import 'package:flutter/material.dart';
 
 class DrawerListTile extends StatelessWidget {
@@ -14,11 +15,17 @@ class DrawerListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       enabled: enabled,
-      title: Text(label),
+      title: Text(
+        label.toUpperCase(),
+        style: TextStyle(fontFamily: 'NerisBlack', color: kColDDSPrimaryDark),
+      ),
       onTap: () {
         onTap();
       },
-      trailing: Icon(iconData),
+      trailing: Icon(
+        iconData,
+        color: kColDDSPrimaryDark,
+      ),
     );
   }
 }

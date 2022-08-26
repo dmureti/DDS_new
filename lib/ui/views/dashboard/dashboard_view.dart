@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
+import '../../../conf/dds_brand_guide.dart';
+
 class DashboardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class DashboardView extends StatelessWidget {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                        colors: [Color(0xFF303891), Color(0xFF4B6CB7)],
+                        colors: [kColDDSPrimaryDark, Color(0xFF4B6CB7)],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter),
                   ),
@@ -76,8 +78,8 @@ class DashboardView extends StatelessWidget {
                                             "Today\'s Summary".toUpperCase(),
                                             style: TextStyle(
                                                 fontSize: 16,
-                                                fontFamily: 'ProximaNova500',
-                                                color: Color(0xFFed1c24)),
+                                                fontFamily: 'NerisBlack',
+                                                color: kColDDSPrimaryLight),
                                           ),
                                         ),
                                         Spacer(),
@@ -86,8 +88,8 @@ class DashboardView extends StatelessWidget {
                                             '${model.formattedDate}',
                                             style: TextStyle(
                                                 fontSize: 16.0,
-                                                fontFamily: 'ProximaNova500',
-                                                color: Color(0xFFed1c24)),
+                                                fontFamily: 'NerisBlack',
+                                                color: kColDDSPrimaryDark),
                                           ),
                                         ),
                                       ],

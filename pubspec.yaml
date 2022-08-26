@@ -67,6 +67,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/logo.png
+    - assets/images/dds_logo_horizontal.png
     - assets/images/dds_logo.png
     - assets/images/minibakeries-logo.jpg
     - assets/images/no_journey.png

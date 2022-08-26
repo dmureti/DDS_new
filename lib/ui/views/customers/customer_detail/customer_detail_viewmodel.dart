@@ -110,7 +110,7 @@ class CustomerDetailViewModel extends BaseViewModel {
 
   fetchIssues() async {
     setBusy(true);
-    await _customerService.getCustomerIssues(customer.id);
+    await _customerService.getCustomerIssues(customer.customerCode);
     setBusy(false);
     notifyListeners();
   }

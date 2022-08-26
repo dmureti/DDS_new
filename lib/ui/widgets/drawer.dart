@@ -3,6 +3,8 @@ import 'package:distributor/ui/widgets/dumb_widgets/drawer_listTile.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 
+import '../../conf/dds_brand_guide.dart';
+
 class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
   @override
   Widget buildViewModelWidget(BuildContext context, HomeViewModel model) {
@@ -88,14 +90,22 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
           Divider(),
 
           ListTile(
-            title: Text('Change Password'),
+            title: Text(
+              'Change Password',
+              style: TextStyle(
+                  fontFamily: 'NerisBlack', color: kColDDSPrimaryDark),
+            ),
             onTap: () async {
               model.navigateToChangePassword();
             },
           ),
 
           ListTile(
-            title: Text('Log out'),
+            title: Text(
+              'Log out',
+              style: TextStyle(
+                  fontFamily: 'NerisBlack', color: kColDDSPrimaryDark),
+            ),
             onTap: () async {
               model.logout();
             },

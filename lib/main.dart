@@ -9,6 +9,8 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 import 'package:distributor/app/router.gr.dart' as app_router;
 
+import 'conf/dds_brand_guide.dart';
+
 class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -33,22 +35,25 @@ final ThemeData _kAppTheme = _buildAppTheme();
 ThemeData _buildAppTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
-    primaryColor: kColorMiniDarkBlue,
+    primaryColor: kColDDSPrimaryDark,
     // canvasColor: kCanvasColor,
     dialogTheme: DialogTheme(
         titleTextStyle:
             TextStyle(fontWeight: FontWeight.w700, color: Colors.indigo)),
     appBarTheme: AppBarTheme(
       elevation: 1.0,
-      color: Color(0xFF303891),
+      color: kColDDSPrimaryDark,
       titleTextStyle: TextStyle(
-          color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.w500),
+          color: Colors.white,
+          fontSize: 18.0,
+          fontWeight: FontWeight.w500,
+          fontFamily: 'NerisBold'),
       iconTheme: IconThemeData(color: Colors.white),
     ),
     buttonTheme: base.buttonTheme.copyWith(
-      buttonColor: kColorMiniDarkBlue,
+      buttonColor: kColDDSPrimaryLight,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: BorderRadius.circular(8),
       ),
       textTheme: ButtonTextTheme.normal,
     ),
@@ -87,10 +92,10 @@ TextTheme _buildAppTextTheme(TextTheme base) {
           fontSize: 14.0,
         ),
         bodyText1: base.bodyText1.copyWith(
-            fontFamily: 'NerisLight', fontSize: 14.0, color: Colors.white),
-        button: base.button.copyWith(color: Colors.pink),
+            fontFamily: 'NerisBlack', fontSize: 14.0, color: Colors.white),
+        button: base.button.copyWith(color: kColDDSPrimaryLight),
         bodyText2: base.bodyText1.copyWith(
-            fontFamily: 'NerisLight', fontSize: 14.0, color: Colors.white),
+            fontFamily: 'NerisBlack', fontSize: 14.0, color: Colors.white),
       )
       .apply(
         fontFamily: 'NerisLight',

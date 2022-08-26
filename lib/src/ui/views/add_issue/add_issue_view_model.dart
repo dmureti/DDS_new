@@ -11,6 +11,7 @@ class AddIssueViewModel extends ReactiveViewModel {
   SnackbarService _snackbarService = locator<SnackbarService>();
   CustomerService _customerService = locator<CustomerService>();
   final Customer customer;
+  User get user => _customerService.user;
 
   AddIssueViewModel(this.customer);
 
@@ -38,19 +39,32 @@ class AddIssueViewModel extends ReactiveViewModel {
   List<String> get issues => ['Feedback', 'Request', 'Problem'];
 
   addIssue() async {
-    Issue issue = Issue(
-        customerId: customer.id,
-        description: description,
-        dateReported: DateTime.now().toUtc().toIso8601String(),
-        issueType: "Request",
-        subject: subject);
+    Map<String, dynamic> data = {
+      "date_reported": DateTime.now().toUtc().toIso8601String(),
+      "created_by": user.full_name,
+      "created_by_user_id": user.id,
+      "subject": subject,
+      "description": description,
+      "issue_type": issueType,
+      "customer_code": customer.customerCode,
+      "customer_id": customer.id,
+      "customer_name": customer.name,
+      "branch": customer.branch
+    };
+    // Issue issue = Issue(
+    //     customerId: customer.id,
+    //     description: description,
+    //     dateReported: DateTime.now().toUtc().toIso8601String(),
+    //     issueType: "Request",
+    //     subject: subject);
     setBusy(true);
-    var result = await _customerService.addCustomerIssue(issue, customer.id);
+    var result =
+        await _customerService.addCustomerIssue(data, customer.customerCode);
     setBusy(false);
     if (result) {
       _snackbarService.showSnackbar(
           message: 'The issue was added successfully.');
-      await _customerService.getCustomerIssues(customer.id);
+      await _customerService.getCustomerIssues(customer.customerCode);
       _navigationService.back(result: true);
     } else if (result is CustomException) {
       await _dialogService.showDialog(

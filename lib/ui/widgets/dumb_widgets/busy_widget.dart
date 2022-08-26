@@ -14,12 +14,12 @@ class BusyWidget extends StatelessWidget {
             Center(
               child: Image.asset(
                 'assets/images/dds_logo.png',
-                width: 18,
-                height: 18,
+                width: 15,
+                height: 15,
               ),
             ),
             CircularProgressIndicator(
-              backgroundColor: Color(0xFFfff200),
+              backgroundColor: Color(0xFFFFA000),
             ),
           ],
         ),

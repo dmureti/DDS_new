@@ -29,57 +29,71 @@ class JourneyConsole extends StatelessWidget {
                       ),
                     ),
                     Material(
-                      color: Colors.pink.withOpacity(0.9),
+                      color: Colors.pink,
                       shadowColor: Colors.black38,
                       type: MaterialType.card,
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Row(
                           children: [
-                            ClipOval(
-                              child: InkWell(
-                                onTap: model.showJourneyControls
-                                    ? model.updateJourneyStatus
-                                    : null,
-                                child: model.isBusy
-                                    ? SizedBox(
-                                        width: 50,
-                                        height: 50,
-                                        child: Center(
-                                          child: CircularProgressIndicator(
-                                            backgroundColor: kColorMiniDarkBlue,
-                                          ),
-                                        ),
-                                      )
-                                    : SizedBox(
-                                        width: 50,
-                                        height: 50,
-                                        child: Material(
-                                          color: Colors.white,
-                                          elevation: 5,
-                                          child: model.journeyStatus == null
-                                              ? Container()
-                                              : model.journeyStatus
-                                                      .toLowerCase()
-                                                      .contains('dispatched')
-                                                  ? Icon(
-                                                      Icons.play_arrow,
-                                                      color: kStartControl,
-                                                    )
-                                                  : model.journeyStatus
-                                                          .toLowerCase()
-                                                          .contains('completed')
-                                                      ? Icon(
-                                                          Icons.check,
-                                                          color: kStartControl,
-                                                        )
-                                                      : Icon(
-                                                          Icons.stop,
-                                                          color: kStopControl,
-                                                        ),
+                            InkWell(
+                              onTap: model.showJourneyControls
+                                  ? model.updateJourneyStatus
+                                  : null,
+                              child: model.isBusy
+                                  ? SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          backgroundColor: kColorMiniDarkBlue,
                                         ),
                                       ),
-                              ),
+                                    )
+                                  : SizedBox(
+                                      width: 70,
+                                      height: 50,
+                                      child: model.journeyStatus == null
+                                          ? Container()
+                                          : model.journeyStatus
+                                                  .toLowerCase()
+                                                  .contains('dispatched')
+                                              ? RaisedButton(
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  padding: EdgeInsets.zero,
+                                                  child: Text(
+                                                    'START',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14,
+                                                        fontFamily:
+                                                            'BenderBold'),
+                                                  ),
+                                                  color: Colors.green,
+                                                )
+                                              : model.journeyStatus
+                                                      .toLowerCase()
+                                                      .contains('completed')
+                                                  ? Icon(
+                                                      Icons.check,
+                                                      color: kStartControl,
+                                                    )
+                                                  : RaisedButton(
+                                                      visualDensity:
+                                                          VisualDensity.compact,
+                                                      padding: EdgeInsets.zero,
+                                                      child: Text(
+                                                        'Stop',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 14,
+                                                            fontFamily:
+                                                                'BenderBold'),
+                                                      ),
+                                                      color: kStopControl,
+                                                    ),
+                                    ),
                             ),
                             SizedBox(
                               width: 10,
@@ -98,15 +112,15 @@ class JourneyConsole extends StatelessWidget {
                                               model.currentJourney?.journeyId,
                                               style: TextStyle(
                                                   color: Colors.black54,
-                                                  fontSize: 18,
+                                                  fontSize: 16,
                                                   fontWeight: FontWeight.w700),
                                             ),
                                             Text(
                                               model.journeyStatus.toUpperCase(),
                                               overflow: TextOverflow.clip,
                                               style: TextStyle(
+                                                fontFamily: 'BenderBold',
                                                 fontSize: 15,
-                                                fontWeight: FontWeight.w700,
                                                 color: Colors.black54,
                                               ),
                                             ),

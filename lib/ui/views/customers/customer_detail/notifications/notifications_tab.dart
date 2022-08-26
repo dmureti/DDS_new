@@ -27,10 +27,11 @@ class NotificationsTab extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 Issue issue = model.issueList[index];
                                 return Container(
-                                  margin: EdgeInsets.symmetric(vertical: 4),
+                                  margin: EdgeInsets.symmetric(vertical: 3),
                                   child: Material(
                                     elevation: 2,
                                     child: ListTile(
+                                      visualDensity: VisualDensity.compact,
                                       onTap: () {
                                         model.showDetailedIssueDialog(issue);
                                       },
@@ -39,7 +40,11 @@ class NotificationsTab extends StatelessWidget {
                                               issue.dateReported)),
                                       title: Row(
                                         children: [
-                                          Text(issue.referenceNo),
+                                          Text(
+                                            issue.issue_code,
+                                            style: TextStyle(
+                                                fontFamily: 'NerisBlack'),
+                                          ),
                                           SizedBox(
                                             width: 8,
                                           ),

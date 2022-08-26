@@ -1,3 +1,4 @@
+import 'package:distributor/conf/dds_brand_guide.dart';
 import 'package:distributor/ui/access_controllers/global/bottom_navbar/bottom_navbar_viewmodel.dart';
 import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/views/home/home_viewmodel.dart';
@@ -18,10 +19,10 @@ class BottomNavBar extends StatelessWidget {
       onModelReady: (model) => model.init(),
       builder: (context, model, child) => BottomNavigationBar(
           fixedColor: Colors.pink,
-          iconSize: 20,
+          iconSize: 25,
           type: BottomNavigationBarType.fixed,
           currentIndex: model.index,
-          selectedIconTheme: IconThemeData(color: kMutedYellowDark),
+          selectedIconTheme: IconThemeData(color: kColDDSPrimaryDark),
           unselectedIconTheme: (IconThemeData(color: Colors.white)),
           showUnselectedLabels: false,
           showSelectedLabels: false,

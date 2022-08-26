@@ -38,9 +38,9 @@ class CustomerService with ReactiveServiceMixin {
     }
   }
 
-  getCustomerIssues(String customerId) async {
+  getCustomerIssues(String customerCode) async {
     var result = await _apiService.api
-        .getCustomersIssuesByCustomer(customerId, user.token);
+        .getCustomersIssuesByCustomer(customerCode, user.token);
     if (result is List<Issue>) {
       _customerIssues.value = result;
       notifyListeners();
@@ -119,11 +119,11 @@ class CustomerService with ReactiveServiceMixin {
     return true;
   }
 
-  addCustomerIssue(Issue issue, String customerId) async {
-    var result = await _apiService.api
-        .createIssue(issue.toJson(), _userService.user.token);
+  addCustomerIssue(Map<String, dynamic> data, String customerCode) async {
+    var result =
+        await _apiService.api.createIssue(data, _userService.user.token);
     if (result is bool) {
-      await getCustomerIssues(customerId);
+      await getCustomerIssues(customerCode);
       notifyListeners();
       return true;
     }

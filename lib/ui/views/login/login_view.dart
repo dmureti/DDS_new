@@ -1,3 +1,4 @@
+import 'package:distributor/conf/dds_brand_guide.dart';
 import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
 
 import 'package:distributor/ui/config/brand.dart';
@@ -91,7 +92,11 @@ class _LoginViewState extends State<LoginView> {
                           //   height: 100,
                           // ),
                           Container(
-                            child: Image.asset('assets/images/logo.png'),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(
+                                  'assets/images/dds_logo_horizontal.png'),
+                            ),
                             // width: 150,
                             height: 100,
                           ),
@@ -219,7 +224,10 @@ class _LoginViewState extends State<LoginView> {
                                     child: Center(
                                       child: Text(
                                         'Sign in'.toUpperCase(),
-                                        style: kActiveButtonTextStyle,
+                                        style: TextStyle(
+                                          fontFamily: 'NerisBlack',
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   ),

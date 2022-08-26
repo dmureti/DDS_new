@@ -31,27 +31,6 @@ class AddIssueView extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: ListView(
               children: [
-                TextField(
-                  onChanged: model.updateSubject,
-                  decoration: InputDecoration(
-                      hintText: 'Ticket Subject',
-                      labelText: 'Give your issue a subject'),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                TextField(
-                  onChanged: model.updateDesc,
-                  keyboardType: TextInputType.multiline,
-                  minLines: 3, //Normal textInputField will be displayed
-                  maxLines: 5, // when user presses enter it will adapt to it
-                  decoration: InputDecoration(
-                      hintText: 'Ticket Description',
-                      labelText: 'Give us more information about the issue'),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
                 DropdownButton(
                     dropdownColor: Colors.white,
                     isExpanded: true,
@@ -68,6 +47,27 @@ class AddIssueView extends StatelessWidget {
                     onChanged: (String val) {
                       model.setIssueType(val);
                     }),
+                // TextField(
+                //   onChanged: model.updateSubject,
+                //   decoration: InputDecoration(
+                //       hintText: 'Ticket Subject',
+                //       labelText: 'Give your issue a subject'),
+                // ),
+                SizedBox(
+                  height: 8,
+                ),
+                TextField(
+                  onChanged: model.updateDesc,
+                  keyboardType: TextInputType.multiline,
+                  minLines: 3, //Normal textInputField will be displayed
+                  maxLines: 5, // when user presses enter it will adapt to it
+                  decoration: InputDecoration(
+                      hintText: 'Ticket Description',
+                      labelText: 'Give us more information about the issue'),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
                 SizedBox(
                   height: 24,
                 ),
@@ -80,7 +80,11 @@ class AddIssueView extends StatelessWidget {
                             await model.addIssue();
                             Navigator.pop(context);
                           },
-                          child: Text('ADD ISSUE'),
+                          child: Text(
+                            'ADD ISSUE',
+                            style: TextStyle(
+                                color: Colors.white, fontFamily: 'NerisBlack'),
+                          ),
                         ),
                       )
               ],
