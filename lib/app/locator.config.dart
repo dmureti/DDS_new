@@ -27,11 +27,12 @@ import '../services/permission_service.dart' as _i17;
 import '../services/return_stock_service.dart' as _i19;
 import '../services/stock_controller_service.dart' as _i21;
 import '../services/stop_service.dart' as _i22;
-import '../services/third_party_services_module.dart' as _i26;
-import '../services/update_service.dart' as _i23;
-import '../services/user_service.dart' as _i24;
+import '../services/third_party_services_module.dart' as _i27;
+import '../services/timeout_service.dart' as _i23;
+import '../services/update_service.dart' as _i24;
+import '../services/user_service.dart' as _i25;
 import '../services/version_service.dart'
-    as _i25; // ignore_for_file: unnecessary_lambdas
+    as _i26; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -73,14 +74,15 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i21.StockControllerService>(
       () => thirdPartyServicesModule.stockControlService);
   gh.lazySingleton<_i22.StopService>(() => _i22.StopService());
-  gh.lazySingleton<_i23.UpdateService>(() => _i23.UpdateService());
-  gh.lazySingleton<_i24.UserService>(
+  gh.lazySingleton<_i23.TimeoutService>(() => _i23.TimeoutService());
+  gh.lazySingleton<_i24.UpdateService>(() => _i24.UpdateService());
+  gh.lazySingleton<_i25.UserService>(
       () => thirdPartyServicesModule.userService);
-  gh.lazySingleton<_i25.VersionService>(() => _i25.VersionService());
+  gh.lazySingleton<_i26.VersionService>(() => _i26.VersionService());
   return get;
 }
 
-class _$ThirdPartyServicesModule extends _i26.ThirdPartyServicesModule {
+class _$ThirdPartyServicesModule extends _i27.ThirdPartyServicesModule {
   @override
   _i3.AccessControlService get accessControlService =>
       _i3.AccessControlService();
@@ -111,5 +113,5 @@ class _$ThirdPartyServicesModule extends _i26.ThirdPartyServicesModule {
   _i21.StockControllerService get stockControlService =>
       _i21.StockControllerService();
   @override
-  _i24.UserService get userService => _i24.UserService();
+  _i25.UserService get userService => _i25.UserService();
 }

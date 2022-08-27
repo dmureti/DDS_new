@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
@@ -10,6 +12,7 @@ import 'package:distributor/services/journey_service.dart';
 
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/permission_service.dart';
+import 'package:distributor/services/timeout_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:distributor/services/version_service.dart';
 import 'package:distributor/traits/contextual_viewmodel.dart';
@@ -32,6 +35,8 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   ActivityService _activityService = locator<ActivityService>();
   JourneyService _journeyService = locator<JourneyService>();
   AdhocCartService _adhocCartService = locator<AdhocCartService>();
+  final _timeoutService = locator<TimeoutService>();
+  Timer get timer => _timeoutService.timer;
 
   UserService _userService = locator<UserService>();
   NavigationService _navigationService = locator<NavigationService>();
@@ -105,6 +110,8 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   User get user => _userService.user;
 
   logout() async {
+    //Stop the timer
+    timer.cancel();
     await _navigationService.pushNamedAndRemoveUntil(Routes.loginView);
   }
 

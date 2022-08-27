@@ -3,6 +3,7 @@ import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/activity_service.dart';
 import 'package:distributor/services/api_service.dart';
+import 'package:distributor/services/timeout_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:distributor/services/version_service.dart';
 import 'package:stacked/stacked.dart';
@@ -14,6 +15,7 @@ class LoginViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
   ActivityService _activityService = locator<ActivityService>();
   InitService _initService = locator<InitService>();
+  TimeoutService _timerService = locator<TimeoutService>();
   final _versionService = locator<VersionService>();
 
   String get version => _versionService.version;
@@ -86,6 +88,8 @@ class LoginViewModel extends BaseViewModel {
       // Update the user
 
       _userService.updateUser(result);
+      //Initialize the timer
+      _timerService.init();
 
       // Update the activity Service
       _activityService.addActivity(Activity(
