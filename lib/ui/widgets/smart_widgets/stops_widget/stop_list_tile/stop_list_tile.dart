@@ -1,3 +1,4 @@
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/ui/shared/text_styles.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 
@@ -26,11 +27,12 @@ class StopListTile extends StatelessWidget {
       builder: (context, model, child) => model.deliveryNote == null
           ? Center(child: BusyWidget())
           : Container(
-              margin: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              // margin: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               child: Material(
                 type: MaterialType.card,
-                elevation: 1,
+                // elevation: 1,
                 child: ListTile(
+                  visualDensity: VisualDensity.compact,
                   onTap: () async {
                     await model.navigateToDeliveryDetailView(
                         deliveryJourney, deliveryStop);
@@ -41,7 +43,7 @@ class StopListTile extends StatelessWidget {
                     children: [
                       Text(
                         model.deliveryStop.deliveryNoteId,
-                        style: kSalesOrderIdTextStyle,
+                        style: kTileLeadingTextStyle,
                       ),
                       SizedBox(
                         width: 10,
@@ -49,7 +51,7 @@ class StopListTile extends StatelessWidget {
                       Expanded(
                         child: Text(
                           model.deliveryStop.customerId,
-                          style: kCustomerNameTextStyle,
+                          style: kTileLeadingSecondaryTextStyle,
                           textAlign: TextAlign.right,
                         ),
                       )
@@ -58,7 +60,10 @@ class StopListTile extends StatelessWidget {
                   subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('${model.deliveryNote.deliveryStatus}'),
+                      Text(
+                        '${model.deliveryNote.deliveryStatus}'.toUpperCase(),
+                        style: kTileSubtitleTextStyle,
+                      ),
                       Spacer(),
                     ],
                   ),

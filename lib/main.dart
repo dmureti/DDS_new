@@ -36,6 +36,7 @@ ThemeData _buildAppTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
     primaryColor: kColDDSPrimaryDark,
+    visualDensity: VisualDensity.adaptivePlatformDensity,
     // canvasColor: kCanvasColor,
     dialogTheme: DialogTheme(
         titleTextStyle:

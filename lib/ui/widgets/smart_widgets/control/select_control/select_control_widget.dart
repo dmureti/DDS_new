@@ -26,9 +26,9 @@ class SelectControlWidget extends StatelessWidget {
                             ? kStopControl
                             : kSelectControl,
                         padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25)),
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                        // shape: RoundedRectangleBorder(
+                        //     borderRadius: BorderRadius.circular(25)),
                         onPressed: () {
                           model.toggleSelectedJourney(deliveryJourney);
                         },
@@ -38,14 +38,14 @@ class SelectControlWidget extends StatelessWidget {
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     color: Colors.white,
-                                    fontSize: 20),
+                                    fontSize: 16),
                               )
                             : Text(
                                 'SELECT',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     color: Colors.white,
-                                    fontSize: 20),
+                                    fontSize: 16),
                               ),
                       ),
               ),

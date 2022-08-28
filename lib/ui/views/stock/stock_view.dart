@@ -1,3 +1,4 @@
+import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/ui/views/crate/crate_view.dart';
 import 'package:distributor/ui/views/stock/stock_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/flat_button_widget.dart';
@@ -81,17 +82,22 @@ class StockView extends StatelessWidget {
                                   child: TabBar(
                                     tabs: [
                                       Tab(
-                                        child: Text('Stocks'),
+                                        child: Text(
+                                          'Stocks',
+                                          style: kTabTextStyleActive,
+                                        ),
                                       ),
                                       Tab(
-                                        child: Text('Crates'),
+                                        child: Text(
+                                          'Crates',
+                                          style: kTabTextStyleActive,
+                                        ),
                                       ),
                                       Tab(
                                         child: Text(
                                           'Crates Movement',
                                           textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500),
+                                          style: kTabTextStyleActive,
                                         ),
                                       ),
                                     ],
@@ -111,7 +117,8 @@ class StockView extends StatelessWidget {
                                 )
                               ],
                             ),
-                          ),),
+                          ),
+                        ),
                 ],
               ),
             ),

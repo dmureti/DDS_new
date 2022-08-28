@@ -1,3 +1,4 @@
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:distributor/ui/shared/text_styles.dart';
 import 'package:distributor/ui/views/journey/journey_view_viewmodel.dart';
@@ -53,13 +54,13 @@ class DeliveryJourneyExpansionPanel
   Widget buildViewModelWidget(BuildContext context, JourneyViewModel model) {
     return ViewModelBuilder<JourneyViewModel>.reactive(
         builder: (context, model, child) => Container(
-              margin: EdgeInsets.only(left: 10, right: 10, top: 5),
+              // margin: EdgeInsets.only(left: 10, right: 10, top: 5),
               child: Material(
                 type: MaterialType.card,
                 borderOnForeground: true,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
+                // shape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(5),
+                // ),
                 elevation: 0,
                 child: ExpansionTile(
                   backgroundColor: kLightestBlue,
@@ -67,18 +68,15 @@ class DeliveryJourneyExpansionPanel
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(deliveryJourney.journeyId,
-                          style: kJourneyIdTextStyle),
-                      SizedBox(
-                        width: 8,
-                      ),
                       Expanded(
                         child: Text(
                           '${deliveryJourney.route}',
-                          style: kRouteTextStyle,
+                          style: kTileLeadingTextStyle,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
+                      Text(deliveryJourney.journeyId,
+                          style: kTileLeadingSecondaryTextStyle),
                     ],
                   ),
                   subtitle: Column(
@@ -93,16 +91,16 @@ class DeliveryJourneyExpansionPanel
                                     deliveryJourney.journeyId
                                 ? model.selectedJourney.status.toUpperCase()
                                 : deliveryJourney.status.toUpperCase(),
-                            style: kJourneySecondaryTextStyle,
+                            style: kTileSubtitleTextStyle,
                             textAlign: TextAlign.right,
                           ),
                           SizedBox(
                             width: 8,
                           ),
-                          deliveryJourney.dependentRoutes.isNotEmpty
-                              ? Text('M')
-                              : Text(deliveryJourney.dependentRoutes.length
-                                  .toString()),
+                          // deliveryJourney.dependentRoutes.isNotEmpty
+                          //     ? Text('M')
+                          //     : Text(deliveryJourney.dependentRoutes.length
+                          //         .toString()),
                           model.selectedJourney.journeyId ==
                                   deliveryJourney.journeyId
                               ? Icon(Icons.star)

@@ -4,9 +4,9 @@ const kFontLightHeading = "BenderLight";
 const kFontRegularHeading = "BenderRegular";
 const kFontBoldHeading = "BenderBold";
 
-const kFontLightBody = "NerisLight";
-const kFontThinBody = "NerisThin";
-const kFontBoldBody = "NerisBlack";
+const kFontLightBody = "ProximaNovaRegular";
+const kFontThinBody = "ProximaNova500";
+const kFontBoldBody = "ProximaNova700";
 
 const kLargeTextSize = 26.0;
 const kMediumTextSize = 20.0;

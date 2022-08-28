@@ -1,3 +1,4 @@
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/src/strings.dart';
 import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/ui/views/crate/crate_viewmodel.dart';
@@ -29,51 +30,48 @@ class CrateView extends StatelessWidget {
                           : ListView.builder(
                               itemBuilder: (context, index) {
                                 var crate = model.crateList[index];
-                                return Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 10),
-                                  child: ListTile(
-                                    title: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              crate.itemName,
-                                              style: kListStyleTitle1,
-                                            ),
-                                          ],
-                                        ),
-                                        ProductQuantityContainer(
-                                          quantity: crate.quantity.toInt(),
-                                        ),
-                                      ],
-                                    ),
-                                    trailing: PopupMenuButton(
-                                      itemBuilder: (context) {
-                                        return <PopupMenuEntry<Object>>[
-                                          PopupMenuItem(
-                                            child: Text('Collect Crates'),
-                                            value: 'receive_crates',
+                                return ListTile(
+                                  title: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            crate.itemName,
+                                            style: kTileLeadingTextStyle,
                                           ),
-                                          PopupMenuItem(
-                                              child: Text('Drop Crates'),
-                                              value: 'drop_crates'),
-                                        ];
-                                      },
-                                      onSelected: (x) {
-                                        model.handleOrderAction(x);
-                                      },
-                                    ),
-                                    subtitle: Text(
-                                      crate.itemCode,
-                                      style: kListStyleSubTitle1,
-                                    ),
-                                    // trailing: IconButton(
-                                    //   onPressed: () {},
-                                    //   icon: Icon(Icons.more_vert),
-                                    // ),
+                                        ],
+                                      ),
+                                      ProductQuantityContainer(
+                                        quantity: crate.quantity.toInt(),
+                                      ),
+                                    ],
                                   ),
+                                  trailing: PopupMenuButton(
+                                    itemBuilder: (context) {
+                                      return <PopupMenuEntry<Object>>[
+                                        PopupMenuItem(
+                                          child: Text('Collect Crates'),
+                                          value: 'receive_crates',
+                                        ),
+                                        PopupMenuItem(
+                                            child: Text('Drop Crates'),
+                                            value: 'drop_crates'),
+                                      ];
+                                    },
+                                    onSelected: (x) {
+                                      model.handleOrderAction(x);
+                                    },
+                                  ),
+                                  subtitle: Text(
+                                    crate.itemCode,
+                                    style: kTileSubtitleTextStyle,
+                                  ),
+                                  // trailing: IconButton(
+                                  //   onPressed: () {},
+                                  //   icon: Icon(Icons.more_vert),
+                                  // ),
                                 );
                               },
                               itemCount: model.crateList.length,

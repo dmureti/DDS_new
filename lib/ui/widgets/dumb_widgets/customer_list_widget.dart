@@ -1,3 +1,4 @@
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:distributor/ui/views/customer_location.dart';
@@ -80,117 +81,113 @@ Widget CustomerList({List<Customer> customerList, Function onTap}) {
       itemBuilder: (context, index) {
         Customer customer = customerList[index];
         return Container(
-          child: Material(
-            elevation: 1,
-            type: MaterialType.card,
-            child: ListTile(
-              trailing: Container(
-                width: 60,
-                height: 60,
-                child: ClipOval(
-                  child: InkWell(
-                    onTap: () async {
-                      await showModalBottomSheet(
-                        context: (context),
-                        builder: (context) => Container(
-                          color: Colors.white,
-                          padding:
-                              EdgeInsets.only(bottom: 40, left: 20, right: 20),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  IconButton(
-                                    color: kColorMiniDarkBlue,
-                                    iconSize: 25,
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    icon: Icon(Icons.close),
-                                  ),
-                                ],
-                              ),
-                              ListTile(
-                                leading: Icon(Icons.phone),
-                                title: Text('Call'),
-                                onTap: () async {
-                                  var result =
-                                      await launch('tel:${customer.telephone}');
-                                  Navigator.pop(context, result);
-                                },
-                              ),
-                              ListTile(
-                                leading: Icon(Icons.message),
-                                title: Text('Send SMS'),
-                                onTap: () async {
-                                  var result =
-                                      await launch('sms:${customer.telephone}');
-                                  Navigator.pop(context, result);
-                                },
-                              ),
-                              ListTile(
-                                leading: Icon(Icons.location_on),
-                                title: Text('Location'),
-                                onTap: () async {
-                                  await Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (context) => CustomerLocation(
-                                              customer: customer,
-                                            ),
-                                        fullscreenDialog: false),
-                                  );
-                                  Navigator.pop(context);
-                                },
-                              )
-                            ],
-                          ),
+          child: ListTile(
+            trailing: Container(
+              width: 60,
+              height: 60,
+              child: ClipOval(
+                child: InkWell(
+                  onTap: () async {
+                    await showModalBottomSheet(
+                      context: (context),
+                      builder: (context) => Container(
+                        color: Colors.white,
+                        padding:
+                            EdgeInsets.only(bottom: 40, left: 20, right: 20),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                  color: kColorMiniDarkBlue,
+                                  iconSize: 25,
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  icon: Icon(Icons.close),
+                                ),
+                              ],
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.phone),
+                              title: Text('Call'),
+                              onTap: () async {
+                                var result =
+                                    await launch('tel:${customer.telephone}');
+                                Navigator.pop(context, result);
+                              },
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.message),
+                              title: Text('Send SMS'),
+                              onTap: () async {
+                                var result =
+                                    await launch('sms:${customer.telephone}');
+                                Navigator.pop(context, result);
+                              },
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.location_on),
+                              title: Text('Location'),
+                              onTap: () async {
+                                await Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) => CustomerLocation(
+                                            customer: customer,
+                                          ),
+                                      fullscreenDialog: false),
+                                );
+                                Navigator.pop(context);
+                              },
+                            )
+                          ],
                         ),
-                      );
-                    },
-                    splashColor: Colors.pink,
-                    child: Material(
-                      color: kLightestBlue,
-                      type: MaterialType.button,
-                      elevation: 4,
-                      shadowColor: kLightBlue,
-                      child: SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: Icon(Icons.contacts),
                       ),
+                    );
+                  },
+                  splashColor: Colors.pink,
+                  child: Material(
+                    color: kLightestBlue,
+                    type: MaterialType.button,
+                    elevation: 4,
+                    shadowColor: kLightBlue,
+                    child: SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: Icon(Icons.contacts),
                     ),
                   ),
                 ),
               ),
-              onTap: () {
-                onTap(customer);
-              },
-              title: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2.0),
-                child: Text(
-                  '${customer.name}',
-                  style: kListStyleTitle1,
-                ),
+            ),
+            onTap: () {
+              onTap(customer);
+            },
+            title: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 2.0),
+              child: Text(
+                '${customer.name}',
+                style: kTileLeadingTextStyle,
               ),
-              subtitle: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2.0),
-                child: Row(
-                  children: [
-                    Text(
-                      'ROUTE',
-                      style: kListStyleSubTitle2,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      '${customer.route}'.toUpperCase(),
-                      style: kListStyleSubTitle1,
-                    ),
-                  ],
-                ),
+            ),
+            subtitle: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 2.0),
+              child: Row(
+                children: [
+                  // Text(
+                  //   'ROUTE',
+                  //   style: kTileSubtitleTextStyle,
+                  // ),
+                  // SizedBox(
+                  //   width: 5,
+                  // ),
+                  Text(
+                    '${customer.branch}'.toUpperCase(),
+                    style: kTileSubtitleTextStyle,
+                  ),
+                ],
               ),
             ),
           ),

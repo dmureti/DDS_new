@@ -90,8 +90,8 @@ class HomeView extends StatelessWidget {
         // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: Theme(
           data: Theme.of(context).copyWith(
-            canvasColor: Color(0xFF303891),
-          ),
+              canvasColor: Color(0xFF303891),
+              visualDensity: VisualDensity.compact),
           child: BottomNavBar(
             homeViewModel: model,
             onTap: model.updateCurrentIndex,

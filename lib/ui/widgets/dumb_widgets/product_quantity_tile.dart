@@ -1,3 +1,4 @@
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/src/ui/text_styles.dart';
 
 import 'package:distributor/ui/widgets/dumb_widgets/product_quantity_container.dart';
@@ -12,16 +13,17 @@ class ProductQuantityTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
+      // margin: EdgeInsets.symmetric(horizontal: 10),
       child: ListTile(
-        visualDensity: VisualDensity.compact,
+        dense: true,
+        // visualDensity: VisualDensity.compact,
         title: Text(
           product.itemName,
-          style: kListStyleTitle1,
+          style: kTileLeadingTextStyle,
         ),
         subtitle: Text(
           product.itemCode,
-          style: kListStyleSubTitle1,
+          style: kTileSubtitleTextStyle,
         ),
         trailing: ProductQuantityContainer(
           quantity: product.quantity.toInt(),

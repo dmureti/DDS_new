@@ -16,11 +16,11 @@ class TimeoutService {
   Timer get timer => _timer;
 
   //Timeout in seconds
-  final int duration = 14;
+  final int duration = 8;
 
   //Initialize the timer
   init() {
-    _timer = Timer(Duration(minutes: duration), handleTimeout);
+    _timer = Timer(Duration(hours: duration), handleTimeout);
   }
 
   void handleTimeout() async {

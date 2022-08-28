@@ -19,7 +19,7 @@ class BottomNavBar extends StatelessWidget {
       onModelReady: (model) => model.init(),
       builder: (context, model, child) => BottomNavigationBar(
           fixedColor: Colors.pink,
-          iconSize: 25,
+          iconSize: 20,
           type: BottomNavigationBarType.fixed,
           currentIndex: model.index,
           selectedIconTheme: IconThemeData(color: kColDDSPrimaryDark),

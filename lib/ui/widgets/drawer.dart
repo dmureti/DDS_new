@@ -1,3 +1,4 @@
+import 'package:distributor/conf/style/lib/colors.dart';
 import 'package:distributor/ui/views/home/home_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/drawer_listTile.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,14 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
   @override
   Widget buildViewModelWidget(BuildContext context, HomeViewModel model) {
     return Container(
-      decoration: BoxDecoration(color: Colors.white),
+      decoration: BoxDecoration(
+        color: kColorNeutral,
+        image: DecorationImage(
+          image: AssetImage('assets/images/dds_logo.png'),
+          opacity: 0.2,
+          alignment: Alignment.bottomCenter,
+        ),
+      ),
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
@@ -91,7 +99,7 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
 
           ListTile(
             title: Text(
-              'Change Password',
+              'CHANGE PASSWORD',
               style: TextStyle(
                   fontFamily: 'NerisBlack', color: kColDDSPrimaryDark),
             ),
@@ -102,7 +110,7 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
 
           ListTile(
             title: Text(
-              'Log out',
+              'LOG OUT',
               style: TextStyle(
                   fontFamily: 'NerisBlack', color: kColDDSPrimaryDark),
             ),
