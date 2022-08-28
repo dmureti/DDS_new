@@ -1,3 +1,4 @@
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/src/ui/text_styles.dart';
 import 'package:flutter/material.dart';
 

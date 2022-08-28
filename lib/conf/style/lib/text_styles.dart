@@ -25,9 +25,10 @@ const kTileLeadingSecondaryTextStyle = TextStyle(
 const kTileSubtitleTextStyle = TextStyle(
     fontFamily: kFontLightBody,
     color: kColDDSPrimaryLight,
-    fontSize: kHintTextSize);
+    fontSize: kLabelTextSize);
 
-const kTabTextStyle = TextStyle();
+const TextStyle kTabTextStyleActive =
+    TextStyle(fontFamily: kFontBoldBody, fontSize: kLabelTextSize);
 
 const kTitleTextStyle = TextStyle();
 const kSubheadingTextStyle1 =
@@ -60,3 +61,9 @@ const kJourneyConsoleStops =
 
 // Use for leading text
 const kLeadingBodyText = TextStyle();
+
+const TextStyle kCartQuantity =
+    TextStyle(fontSize: kBodyTextSize, fontFamily: kFontLightBody);
+
+const TextStyle kCartSecondaryStyle =
+    TextStyle(fontSize: kBodyTextSize, fontFamily: kFontThinBody);

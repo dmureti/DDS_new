@@ -1,3 +1,5 @@
+import 'package:distributor/conf/style/lib/colors.dart';
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/ui/views/crate/crate_view.dart';
 import 'package:distributor/ui/views/stock/stock_viewmodel.dart';
@@ -77,9 +79,13 @@ class StockView extends StatelessWidget {
                           child: Expanded(
                             child: Column(
                               children: [
-                                Container(
-                                  height: 50,
+                                Material(
+                                  color: kColorNeutral,
+                                  elevation: 3,
                                   child: TabBar(
+                                    unselectedLabelColor: kColorLabelColor1,
+                                    indicatorColor: kColorDDSPrimaryDark,
+                                    indicatorWeight: 2,
                                     tabs: [
                                       Tab(
                                         child: Text(
