@@ -1,3 +1,4 @@
+import 'package:distributor/conf/style/lib/colors.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
 import 'package:distributor/src/ui/views/adhoc_listing/adhoc_listing_view.dart';
@@ -90,8 +91,7 @@ class HomeView extends StatelessWidget {
         // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: Theme(
           data: Theme.of(context).copyWith(
-              canvasColor: Color(0xFF303891),
-              visualDensity: VisualDensity.compact),
+              canvasColor: kHeroColor, visualDensity: VisualDensity.compact),
           child: BottomNavBar(
             homeViewModel: model,
             onTap: model.updateCurrentIndex,

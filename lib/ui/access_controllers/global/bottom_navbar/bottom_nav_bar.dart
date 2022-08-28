@@ -1,4 +1,5 @@
 import 'package:distributor/conf/dds_brand_guide.dart';
+import 'package:distributor/conf/style/lib/colors.dart';
 import 'package:distributor/ui/access_controllers/global/bottom_navbar/bottom_navbar_viewmodel.dart';
 import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/views/home/home_viewmodel.dart';
@@ -18,12 +19,14 @@ class BottomNavBar extends StatelessWidget {
     return ViewModelBuilder<BottomNavBarViewModel>.reactive(
       onModelReady: (model) => model.init(),
       builder: (context, model, child) => BottomNavigationBar(
-          fixedColor: Colors.pink,
+          elevation: 3,
+          // fixedColor: Colors.pink,
           iconSize: 20,
           type: BottomNavigationBarType.fixed,
           currentIndex: model.index,
-          selectedIconTheme: IconThemeData(color: kColDDSPrimaryDark),
-          unselectedIconTheme: (IconThemeData(color: Colors.white)),
+          selectedIconTheme: IconThemeData(color: kColDDSPrimaryDark, size: 28),
+          unselectedIconTheme:
+              (IconThemeData(color: kColorLabelColor1.withOpacity(0.6))),
           showUnselectedLabels: false,
           showSelectedLabels: false,
           selectedLabelStyle:
@@ -33,7 +36,7 @@ class BottomNavBar extends StatelessWidget {
             BottomNavigationBarItem(
               backgroundColor: Color(0xFF182848),
               icon: IconButton(
-                splashColor: kMutedYellowDark,
+                splashColor: kColorDDSPrimaryDark,
                 icon: Icon(Icons.home),
                 onPressed: model.onJourneyTabTap()
                     ? () {
@@ -48,7 +51,7 @@ class BottomNavBar extends StatelessWidget {
             BottomNavigationBarItem(
               backgroundColor: Color(0xFF182848),
               icon: IconButton(
-                splashColor: kMutedYellowDark,
+                splashColor: kColorDDSPrimaryDark,
                 icon: Icon(Icons.swap_calls),
                 onPressed: model.isEnabled(1)
                     ? model.onJourneyTabTap()
@@ -65,7 +68,7 @@ class BottomNavBar extends StatelessWidget {
             BottomNavigationBarItem(
               backgroundColor: Color(0xFF182848),
               icon: IconButton(
-                splashColor: kMutedYellowDark,
+                splashColor: kColorDDSPrimaryDark,
                 icon: Icon(Icons.add_shopping_cart),
                 onPressed: model.isEnabled(2)
                     ? model.onStockBalanceTap()
@@ -82,7 +85,7 @@ class BottomNavBar extends StatelessWidget {
             BottomNavigationBarItem(
               backgroundColor: Color(0xFF182848),
               icon: IconButton(
-                splashColor: kMutedYellowDark,
+                splashColor: kColorDDSPrimaryDark,
                 icon: Icon(Icons.apps),
                 onPressed: model.isEnabled(3)
                     ? model.onStockBalanceTap()
@@ -99,7 +102,7 @@ class BottomNavBar extends StatelessWidget {
             BottomNavigationBarItem(
               backgroundColor: Color(0xFF182848),
               icon: IconButton(
-                splashColor: kMutedYellowDark,
+                splashColor: kColorDDSPrimaryDark,
                 onPressed: model.isEnabled(4)
                     ? model.onCustomerTabTap()
                         ? () {
