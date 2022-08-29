@@ -41,8 +41,9 @@ ThemeData _buildAppTheme() {
     visualDensity: VisualDensity.adaptivePlatformDensity,
     // canvasColor: kCanvasColor,
     dialogTheme: DialogTheme(
+        contentTextStyle: TextStyle(fontFamily: kFontThinBody),
         titleTextStyle:
-            TextStyle(fontWeight: FontWeight.w700, color: Colors.indigo)),
+            TextStyle(color: kColorDDSPrimaryDark, fontFamily: kFontBoldBody)),
     appBarTheme: AppBarTheme(
       elevation: 1.0,
       color: kColDDSPrimaryDark,

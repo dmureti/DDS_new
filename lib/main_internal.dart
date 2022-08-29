@@ -10,7 +10,6 @@ import 'package:tripletriocore/tripletriocore.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   setupLocator();
   setupSnackbarUi();
   InitService _initService = locator<InitService>();
