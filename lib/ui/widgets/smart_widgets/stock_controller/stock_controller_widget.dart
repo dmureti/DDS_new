@@ -21,7 +21,9 @@ class StockControllerWidget extends StatelessWidget {
                 ? StockListWidget(
                     rebuild: rebuildWidgetTree,
                   )
-                : _buildCenterContainer(kStringNoJourneySelected),
+                : Center(
+                    child:
+                        EmptyContentContainer(label: kStringNoJourneySelected)),
         viewModelBuilder: () => StockControllerWidgetViewModel());
   }
 

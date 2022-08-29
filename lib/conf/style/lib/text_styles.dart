@@ -60,10 +60,16 @@ const kJourneyConsoleStops =
     TextStyle(fontSize: 12, fontFamily: kFontBoldBody, color: Colors.black54);
 
 // Use for leading text
-const kLeadingBodyText = TextStyle();
+const kLeadingBodyText = TextStyle(
+    fontSize: kBodyTextSize * 1.2,
+    fontFamily: kFontThinBody,
+    color: kColorDDSColorDark);
 
 const TextStyle kCartQuantity =
     TextStyle(fontSize: kBodyTextSize, fontFamily: kFontLightBody);
 
 const TextStyle kCartSecondaryStyle =
     TextStyle(fontSize: kBodyTextSize, fontFamily: kFontThinBody);
+
+TextStyle kCommentTextStyle = TextStyle(
+    fontSize: kBodyTextSize, fontFamily: kFontThinBody, color: Colors.black87);

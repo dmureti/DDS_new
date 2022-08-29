@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:distributor/src/strings.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
 import 'package:distributor/ui/widgets/smart_widgets/crate_transactions/crate_transaction_listing_viewmodel.dart';
@@ -54,15 +55,13 @@ class CrateTransactionListingView extends StatelessWidget {
                     : Container(
                         child: Center(
                           child: EmptyContentContainer(
-                            label: 'There are no crate transactions',
-                          ),
+                              label: kStringNoCrateTransactions),
                         ),
                       )
             : Container(
                 child: Center(
-                  child: EmptyContentContainer(
-                    label: 'You have not been assigned any deliveries today.',
-                  ),
+                  child:
+                      EmptyContentContainer(label: kStringNoCrateTransactions),
                 ),
               );
       },

@@ -1,3 +1,5 @@
+import 'package:distributor/conf/style/lib/colors.dart';
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/core/enums.dart';
 import 'package:distributor/ui/views/crate_movement/crate_movement_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
@@ -33,13 +35,7 @@ class CrateMovementView extends StatelessWidget {
                   ? Center(child: BusyWidget())
                   : Column(
                       children: [
-                        Text(
-                          _buildLead(crateTxnType),
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey),
-                        ),
+                        Text(_buildLead(crateTxnType), style: kLeadingBodyText),
                         crateTxnType == CrateTxnType.Return &&
                                 model.crateList.isNotEmpty
                             ? CheckboxListTile(
@@ -59,9 +55,7 @@ class CrateMovementView extends StatelessWidget {
                                 children: [
                                   Text(
                                     'Reason For Editing : ',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16),
+                                    style: kLabelTextStyle,
                                   ),
                                   SizedBox(
                                     width: 5,
@@ -168,17 +162,15 @@ class CrateMovementView extends StatelessWidget {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                crate.itemName,
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
+                                              Text(crate.itemName,
+                                                  style: kTileLeadingTextStyle),
                                               SizedBox(
                                                 height: 4,
                                               ),
-                                              Text(crate.itemCode),
+                                              Text(
+                                                crate.itemCode,
+                                                style: kTileSubtitleTextStyle,
+                                              ),
                                             ],
                                           ),
                                           Container(
@@ -234,20 +226,23 @@ class CrateMovementView extends StatelessWidget {
                                 child: BusyWidget(),
                               )
                             : model.crateList.isNotEmpty
-                                ? RaisedButton(
-                                    color: Colors.orange,
-                                    onPressed:
-                                        crateTxnType == CrateTxnType.Return
-                                            ? model.commitReturnCrates
-                                            : model.isValid == true ||
-                                                    model.customerId != null
-                                                ? model.commitChanges
-                                                : null,
-                                    child: Text(
-                                      'UPDATE',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600),
+                                ? Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: RaisedButton(
+                                      color: kColorDDSPrimaryLight,
+                                      onPressed:
+                                          crateTxnType == CrateTxnType.Return
+                                              ? model.commitReturnCrates
+                                              : model.isValid == true ||
+                                                      model.customerId != null
+                                                  ? model.commitChanges
+                                                  : null,
+                                      child: Text(
+                                        'UPDATE',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600),
+                                      ),
                                     ),
                                   )
                                 : Container(),

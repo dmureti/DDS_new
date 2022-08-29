@@ -3,9 +3,6 @@ import 'package:distributor/conf/style/lib/fonts.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:flutter/material.dart';
 
-TextStyle kCommentTextStyle =
-    TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black45);
-
 TextStyle kListStyleTitle1 = TextStyle(
     color: kColorMiniDarkBlue, fontSize: 16, fontWeight: FontWeight.w600);
 TextStyle kListStyleTitle2 =

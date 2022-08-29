@@ -1,5 +1,7 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
+import 'package:distributor/conf/style/lib/colors.dart';
+import 'package:distributor/conf/style/lib/fonts.dart';
 import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/connectivity_service.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
@@ -46,9 +48,8 @@ ThemeData _buildAppTheme() {
       color: kColDDSPrimaryDark,
       titleTextStyle: TextStyle(
           color: Colors.white,
-          fontSize: 18.0,
-          fontWeight: FontWeight.w500,
-          fontFamily: 'NerisBold'),
+          fontSize: kMediumTextSize,
+          fontFamily: kFontBoldBody),
       iconTheme: IconThemeData(color: Colors.white),
     ),
     buttonTheme: base.buttonTheme.copyWith(
@@ -76,7 +77,7 @@ ThemeData _buildAppTheme() {
     textTheme: _buildAppTextTheme(base.textTheme),
     primaryTextTheme: _buildAppTextTheme(base.primaryTextTheme),
     snackBarTheme: SnackBarThemeData(
-        backgroundColor: Colors.pink, actionTextColor: Colors.black),
+        backgroundColor: kColorDDSPrimaryDark, actionTextColor: kColorNeutral),
   );
 }
 
@@ -84,22 +85,26 @@ TextTheme _buildAppTextTheme(TextTheme base) {
   return base
       .copyWith(
         headline5: base.headline5.copyWith(
-          color: Colors.pink,
-          fontFamily: 'BenderBold',
+          color: kColorDDSPrimaryLight,
+          fontFamily: kFontBoldBody,
         ),
         headline6: base.headline6.copyWith(fontSize: 18.0),
         caption: base.caption.copyWith(
-          fontFamily: 'BenderBold',
+          fontFamily: kFontBoldBody,
           fontSize: 14.0,
         ),
         bodyText1: base.bodyText1.copyWith(
-            fontFamily: 'NerisBlack', fontSize: 14.0, color: Colors.white),
+            fontFamily: kFontLightBody,
+            fontSize: kBodyTextSize,
+            color: Colors.white),
         button: base.button.copyWith(color: kColDDSPrimaryLight),
         bodyText2: base.bodyText1.copyWith(
-            fontFamily: 'NerisBlack', fontSize: 14.0, color: Colors.white),
+            fontFamily: kFontLightBody,
+            fontSize: kBodyTextSize,
+            color: Colors.white),
       )
       .apply(
-        fontFamily: 'NerisLight',
+        fontFamily: kFontLightBody,
         displayColor: Colors.grey,
         bodyColor: Colors.black,
       );

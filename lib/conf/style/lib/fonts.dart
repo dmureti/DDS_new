@@ -1,4 +1,4 @@
-const kFontDefault = kFontBoldBody;
+const kFontDefault = kFontLightBody;
 
 const kFontLightHeading = "BenderLight";
 const kFontRegularHeading = "BenderRegular";
