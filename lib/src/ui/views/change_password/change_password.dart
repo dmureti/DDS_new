@@ -1,3 +1,4 @@
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/core/enums.dart';
 import 'package:distributor/src/ui/views/change_password/change_password_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
@@ -30,7 +31,10 @@ class ChangePasswordView extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               child: ListView(
                 children: [
-                  Text(model.introTextToDisplay),
+                  Text(
+                    model.introTextToDisplay,
+                    style: kLeadingBodyText,
+                  ),
                   SizedBox(
                     height: 16,
                   ),
