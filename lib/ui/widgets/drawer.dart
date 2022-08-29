@@ -104,6 +104,7 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
                   fontFamily: 'NerisBlack', color: kColDDSPrimaryDark),
             ),
             onTap: () async {
+              Navigator.pop(context);
               model.navigateToChangePassword();
             },
           ),
