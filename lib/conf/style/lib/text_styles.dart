@@ -73,3 +73,8 @@ const TextStyle kCartSecondaryStyle =
 
 TextStyle kCommentTextStyle = TextStyle(
     fontSize: kBodyTextSize, fontFamily: kFontThinBody, color: Colors.black87);
+
+const TextStyle kCrateReceivedTextStyle =
+    TextStyle(color: Colors.lightGreen, fontFamily: kFontThinBody);
+const TextStyle kCrateDroppedTextStyle =
+    TextStyle(color: Colors.orange, fontFamily: kFontThinBody);

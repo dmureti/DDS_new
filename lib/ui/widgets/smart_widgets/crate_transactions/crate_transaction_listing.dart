@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:distributor/conf/style/lib/colors.dart';
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/src/strings.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
@@ -22,6 +24,7 @@ class CrateTransactionListingView extends StatelessWidget {
                 ? Center(child: BusyWidget())
                 : model.crateTransactionListings.isNotEmpty
                     ? RefreshIndicator(
+                        backgroundColor: kColorDDSPrimaryDark,
                         child: ListView.builder(
                           physics: const AlwaysScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
@@ -33,18 +36,22 @@ class CrateTransactionListingView extends StatelessWidget {
                               title: Row(
                                 children: [
                                   Text(
-                                    description['customer'] ??
-                                        "Unknown Customer",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w600),
-                                  ),
+                                      description['customer'] ??
+                                          "Unknown Customer",
+                                      style: kTileLeadingTextStyle),
                                 ],
                               ),
                               subtitle: Row(
                                 children: [
-                                  Expanded(child: Text(crateTxn['itemName'])),
-                                  Text(
-                                      "Received : ${description['received'] ?? "-"} | Dropped : ${description['dropped'] ?? "-"}"),
+                                  Expanded(
+                                    child: Text(
+                                      crateTxn['itemName'],
+                                      style: kTileSubtitleTextStyle,
+                                    ),
+                                  ),
+                                  _buildTransactionWidget(description),
+                                  // Text(
+                                  //     "Received : ${description['received'] ?? "-"} | Dropped : ${description['dropped'] ?? "-"}"),
                                 ],
                               ),
                             );
@@ -67,5 +74,23 @@ class CrateTransactionListingView extends StatelessWidget {
       },
       viewModelBuilder: () => CrateTransactionListingViewModel(),
     );
+  }
+
+  _buildTransactionWidget(Map<String, dynamic> description) {
+    var received = description['received'];
+    var dropped = description['dropped'];
+    if (received > 0) {
+      return Text(
+        "RECEIVED : ${received}",
+        style: kCrateReceivedTextStyle,
+      );
+    }
+    if (dropped > 0) {
+      return Text(
+        "DROPPED : ${dropped}",
+        style: kCrateDroppedTextStyle,
+      );
+    }
+    return Text("");
   }
 }
