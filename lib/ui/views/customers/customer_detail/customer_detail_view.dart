@@ -1,3 +1,5 @@
+import 'package:distributor/conf/style/lib/colors.dart';
+import 'package:distributor/conf/style/lib/fonts.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/views/customers/customer_detail/accounts_tab/accounts_tab.dart';
@@ -182,12 +184,14 @@ class _CustomerDetailViewState extends State<CustomerDetailView>
           ],
           bottom: TabBar(
             controller: _tabController,
-            indicatorColor: kMutedYellowDark,
+            indicatorColor: kColorDDSPrimaryLight,
             indicatorWeight: 3.0,
             labelPadding: EdgeInsets.only(bottom: 10.0),
             labelStyle: TextStyle(
-                fontFamily: 'ProximaNova500', color: Colors.pink, fontSize: 16),
-            unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
+                fontFamily: kFontThinBody,
+                color: Colors.pink,
+                fontSize: kBodyTextSize),
+            unselectedLabelStyle: TextStyle(fontFamily: kFontThinBody),
             labelColor: kMutedYellowDark,
             unselectedLabelColor: Colors.white,
             onTap: (int) {
