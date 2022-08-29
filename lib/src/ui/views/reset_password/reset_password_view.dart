@@ -1,3 +1,4 @@
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/src/ui/views/reset_password/reset_password_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,9 @@ class ResetPasswordView extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                      'Forgotten your password ? Please enter your phone number or email address. You shall receive a reset password'),
+                    'Forgotten your password ? Please enter your phone number or email address. You shall receive a reset password.',
+                    style: kLeadingBodyText,
+                  ),
                   SizedBox(
                     height: 16,
                   ),
@@ -29,14 +32,17 @@ class ResetPasswordView extends StatelessWidget {
                   ),
                   model.isBusy
                       ? BusyWidget()
-                      : RaisedButton(
-                          onPressed:
-                              model.userId != null && model.userId.isNotEmpty
-                                  ? model.resetPassword
-                                  : null,
-                          child: Text(
-                            'Reset Password',
-                            style: TextStyle(color: Colors.white),
+                      : Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: RaisedButton(
+                            onPressed:
+                                model.userId != null && model.userId.isNotEmpty
+                                    ? model.resetPassword
+                                    : null,
+                            child: Text(
+                              'Reset Password',
+                              // style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         )
                 ],
@@ -57,7 +63,7 @@ class _UserIdTextFormField extends HookViewModelWidget<ResetPasswordViewmodel> {
       decoration: InputDecoration(
           prefixIcon: Icon(Icons.person),
           filled: false,
-          helperText: 'Email Address OR Phone Number'),
+          hintText: 'Email Address OR Phone Number'),
       onChanged: (val) => model.setUserId(val),
       controller: _controller,
     );

@@ -85,7 +85,7 @@ class StockView extends StatelessWidget {
                                   child: TabBar(
                                     unselectedLabelColor: kColorLabelColor1,
                                     indicatorColor: kColorDDSPrimaryDark,
-                                    indicatorWeight: 2,
+                                    indicatorWeight: 3,
                                     tabs: [
                                       Tab(
                                         child: Text(

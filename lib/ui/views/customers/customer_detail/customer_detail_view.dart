@@ -105,7 +105,6 @@ class _CustomerDetailViewState extends State<CustomerDetailView>
           actionsIconTheme: IconThemeData(color: Colors.white),
           title: Text(
             '${widget.customer.name}',
-            style: TextStyle(color: Colors.white),
           ),
           automaticallyImplyLeading: true,
 //          leading: IconButton(

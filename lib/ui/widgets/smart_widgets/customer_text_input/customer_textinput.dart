@@ -12,7 +12,6 @@ class CustomerTextInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Autocomplete<Customer>(
       displayStringForOption: (customer) => customer.name,
-      // initialValue: initialValue,
       optionsBuilder: (TextEditingValue textEditingValue) {
         if (textEditingValue.text == '') {
           return const Iterable<Customer>.empty();
@@ -23,7 +22,6 @@ class CustomerTextInput extends StatelessWidget {
               .contains(textEditingValue.text.toLowerCase());
         });
       },
-
       onSelected: (Customer customer) {
         onSelected(customer);
         Focus.of(context).unfocus();

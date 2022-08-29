@@ -32,7 +32,6 @@ class StopListTile extends StatelessWidget {
                 type: MaterialType.card,
                 // elevation: 1,
                 child: ListTile(
-                  visualDensity: VisualDensity.compact,
                   onTap: () async {
                     await model.navigateToDeliveryDetailView(
                         deliveryJourney, deliveryStop);

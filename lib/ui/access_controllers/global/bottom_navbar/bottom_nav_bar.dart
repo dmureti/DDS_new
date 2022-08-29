@@ -24,9 +24,9 @@ class BottomNavBar extends StatelessWidget {
           iconSize: 20,
           type: BottomNavigationBarType.fixed,
           currentIndex: model.index,
-          selectedIconTheme: IconThemeData(color: kColDDSPrimaryDark, size: 28),
+          selectedIconTheme: IconThemeData(color: kColDDSPrimaryDark, size: 30),
           unselectedIconTheme:
-              (IconThemeData(color: kColorLabelColor1.withOpacity(0.6))),
+              (IconThemeData(color: kColorLabelColor1.withOpacity(0.45))),
           showUnselectedLabels: false,
           showSelectedLabels: false,
           selectedLabelStyle:

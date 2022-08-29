@@ -1,5 +1,7 @@
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/ui/views/customers/customer_detail/notifications/notifications_tab_viewmodel.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -14,57 +16,52 @@ class NotificationsTab extends StatelessWidget {
     return ViewModelBuilder<NotificationsTabViewModel>.reactive(
         onModelReady: (model) => model.getIssues(),
         builder: (context, model, child) => model.isBusy
-            ? Center(child: CircularProgressIndicator())
-            : Container(
-                margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                child: Column(
-                  children: [
-                    model.issueList == null || model.issueList.length == 0
-                        ? Expanded(
-                            child: Center(child: Text('No issues or requests')))
-                        : Expanded(
-                            child: ListView.builder(
-                              itemBuilder: (context, index) {
-                                Issue issue = model.issueList[index];
-                                return Container(
-                                  margin: EdgeInsets.symmetric(vertical: 3),
-                                  child: Material(
-                                    elevation: 2,
-                                    child: ListTile(
-                                      visualDensity: VisualDensity.compact,
-                                      onTap: () {
-                                        model.showDetailedIssueDialog(issue);
-                                      },
-                                      trailing: Text(
-                                          Helper.formatDateForAccounts(
-                                              issue.dateReported)),
-                                      title: Row(
-                                        children: [
-                                          Text(
-                                            issue.issue_code,
-                                            style: TextStyle(
-                                                fontFamily: 'NerisBlack'),
-                                          ),
-                                          SizedBox(
-                                            width: 8,
-                                          ),
-                                        ],
-                                      ),
-                                      subtitle: issue.subject != null
-                                          ? Text(
-                                              issue.subject,
+            ? Center(child: BusyWidget())
+            : Column(
+                children: [
+                  model.issueList == null || model.issueList.length == 0
+                      ? Expanded(
+                          child: Center(child: Text('No issues or requests')))
+                      : Expanded(
+                          child: ListView.builder(
+                            itemBuilder: (context, index) {
+                              Issue issue = model.issueList[index];
+                              return Material(
+                                elevation: 2,
+                                child: ListTile(
+                                    onTap: () {
+                                      model.showDetailedIssueDialog(issue);
+                                    },
+                                    // trailing: ,
+                                    title: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(issue.description ?? "",
                                               overflow: TextOverflow.ellipsis,
-                                            )
-                                          : Text(''),
+                                              style: kTileLeadingTextStyle),
+                                        ),
+                                        Text(
+                                          Helper.formatDateForAccounts(
+                                              issue.dateReported),
+                                          style: kTileLeadingSecondaryTextStyle,
+                                        )
+                                      ],
                                     ),
-                                  ),
-                                );
-                              },
-                              itemCount: model.issueList.length,
-                            ),
-                          )
-                  ],
-                ),
+                                    subtitle: Text(issue.issue_code,
+                                        style: kTileSubtitleTextStyle)
+                                    // subtitle: issue.subject != null
+                                    //     ? Text(
+                                    //         issue.subject,
+                                    //         overflow: TextOverflow.ellipsis,
+                                    //       )
+                                    //     : Text(''),
+                                    ),
+                              );
+                            },
+                            itemCount: model.issueList.length,
+                          ),
+                        )
+                ],
               ),
         viewModelBuilder: () => NotificationsTabViewModel(customer: customer));
   }

@@ -7,7 +7,7 @@ const TextStyle kLabelTextStyle =
     TextStyle(color: kColorLabelColor1, fontSize: kLabelTextSize);
 
 const kAppBarTextStyle = TextStyle(
-    fontFamily: kFontDefault, fontSize: kMediumTextSize, color: Colors.white);
+    fontFamily: kFontThinBody, fontSize: kMediumTextSize, color: Colors.white);
 
 const kTileLeadingLargeTextStyle = TextStyle(
     fontFamily: kFontBoldBody,
@@ -17,7 +17,7 @@ const kTileLeadingLargeTextStyle = TextStyle(
 const kTileLeadingTextStyle = TextStyle(
     fontFamily: kFontThinBody,
     color: kColorDDSColorDark,
-    fontSize: kBodyTextSize);
+    fontSize: kBodyTextSize * 1.1);
 const kTileLeadingSecondaryTextStyle = TextStyle(
     fontFamily: kFontThinBody,
     color: kColorDDSPrimaryLight,
@@ -28,7 +28,7 @@ const kTileSubtitleTextStyle = TextStyle(
     fontSize: kLabelTextSize);
 
 const TextStyle kTabTextStyleActive =
-    TextStyle(fontFamily: kFontBoldBody, fontSize: kLabelTextSize);
+    TextStyle(fontFamily: kFontThinBody, fontSize: kLabelTextSize * 1.2);
 
 const kTitleTextStyle = TextStyle();
 const kSubheadingTextStyle1 =

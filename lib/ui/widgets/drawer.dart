@@ -12,11 +12,11 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
     return Container(
       decoration: BoxDecoration(
         color: kColorNeutral,
-        image: DecorationImage(
-          image: AssetImage('assets/images/dds_logo.png'),
-          opacity: 0.2,
-          alignment: Alignment.bottomCenter,
-        ),
+        // image: DecorationImage(
+        //   image: AssetImage('assets/images/dds_logo.png'),
+        //   opacity: 0.2,
+        //   alignment: Alignment.bottomCenter,
+        // ),
       ),
       child: ListView(
         padding: EdgeInsets.zero,

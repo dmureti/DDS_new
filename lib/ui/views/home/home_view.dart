@@ -1,4 +1,5 @@
 import 'package:distributor/conf/style/lib/colors.dart';
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
 import 'package:distributor/src/ui/views/adhoc_listing/adhoc_listing_view.dart';
@@ -192,37 +193,37 @@ class HomeView extends StatelessWidget {
       case 0:
         return Text(
           'Home',
-          style: TextStyle(color: Colors.white),
+          style: kAppBarTextStyle,
         );
         break;
       case 1:
         return Text(
           'Journey',
-          style: TextStyle(color: Colors.white),
+          style: kAppBarTextStyle,
         );
         break;
       case 2:
         return Text(
           'Adhoc Sales',
-          style: TextStyle(color: Colors.white),
+          style: kAppBarTextStyle,
         );
         break;
       case 3:
         return Text(
           'Stock Balance',
-          style: TextStyle(color: Colors.white),
+          style: kAppBarTextStyle,
         );
         break;
       case 4:
         return Text(
           'Customers',
-          style: TextStyle(color: Colors.white),
+          style: kAppBarTextStyle,
         );
         break;
       default:
         return Text(
           'Home',
-          style: TextStyle(color: Colors.white),
+          style: kAppBarTextStyle,
         );
         break;
     }

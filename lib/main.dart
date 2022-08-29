@@ -2,6 +2,7 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/conf/style/lib/colors.dart';
 import 'package:distributor/conf/style/lib/fonts.dart';
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/connectivity_service.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
@@ -41,16 +42,19 @@ ThemeData _buildAppTheme() {
     visualDensity: VisualDensity.adaptivePlatformDensity,
     // canvasColor: kCanvasColor,
     dialogTheme: DialogTheme(
-        contentTextStyle: TextStyle(fontFamily: kFontThinBody),
-        titleTextStyle:
-            TextStyle(color: kColorDDSPrimaryDark, fontFamily: kFontBoldBody)),
+      contentTextStyle: TextStyle(
+          fontFamily: kFontThinBody,
+          color: kColorDDSColorDark,
+          fontSize: kBodyTextSize),
+      titleTextStyle: TextStyle(
+          color: kColorDDSPrimaryDark,
+          fontFamily: kFontThinBody,
+          fontSize: kMediumTextSize),
+    ),
     appBarTheme: AppBarTheme(
       elevation: 1.0,
       color: kColDDSPrimaryDark,
-      titleTextStyle: TextStyle(
-          color: Colors.white,
-          fontSize: kMediumTextSize,
-          fontFamily: kFontBoldBody),
+      titleTextStyle: kAppBarTextStyle,
       iconTheme: IconThemeData(color: Colors.white),
     ),
     buttonTheme: base.buttonTheme.copyWith(
@@ -89,20 +93,25 @@ TextTheme _buildAppTextTheme(TextTheme base) {
           color: kColorDDSPrimaryLight,
           fontFamily: kFontBoldBody,
         ),
-        headline6: base.headline6.copyWith(fontSize: 18.0),
-        caption: base.caption.copyWith(
-          fontFamily: kFontBoldBody,
-          fontSize: 14.0,
-        ),
+        subtitle1: base.subtitle1.copyWith(
+            fontFamily: kFontThinBody,
+            color: kColorDDSColorDark,
+            fontSize: kBodyTextSize),
+        headline6: base.headline6.copyWith(
+            fontFamily: kFontThinBody,
+            fontSize: kBodyTextSize,
+            color: kColorDDSPrimaryDark),
+        caption: base.caption
+            .copyWith(fontFamily: kFontThinBody, fontSize: kBodyTextSize),
         bodyText1: base.bodyText1.copyWith(
             fontFamily: kFontLightBody,
             fontSize: kBodyTextSize,
-            color: Colors.white),
+            color: kColorDDSColorDark),
         button: base.button.copyWith(color: kColDDSPrimaryLight),
         bodyText2: base.bodyText1.copyWith(
             fontFamily: kFontLightBody,
             fontSize: kBodyTextSize,
-            color: Colors.white),
+            color: kColorDDSColorDark),
       )
       .apply(
         fontFamily: kFontLightBody,
