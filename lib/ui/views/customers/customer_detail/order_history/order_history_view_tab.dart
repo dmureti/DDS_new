@@ -40,9 +40,6 @@ class OrderHistoryTab extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
                 model.hasError
                     ? Center(child: Text('An error occurred'))
                     : model.customerOrders.length == 0
@@ -64,20 +61,8 @@ class OrderHistoryTab extends StatelessWidget {
                                     _customerOrdersList[index];
                                 DeliveryJourney deliveryJourney = null;
 
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: OrderHistoryTile(model.navigateToOrder,
-                                      salesOrder, deliveryJourney),
-                                  // child: OrderListTile(
-                                  //   orderType: OrderType.salesOrder,
-                                  //   onTap: () => model.navigateToOrder(
-                                  //       salesOrder, deliveryJourney, null),
-                                  //   orderStatus: salesOrder.orderStatus,
-                                  //   orderNo: salesOrder.orderNo,
-                                  //   items: salesOrder.orderItems,
-                                  // ),
-                                );
+                                return OrderHistoryTile(model.navigateToOrder,
+                                    salesOrder, deliveryJourney);
                               },
                             ),
                           ),

@@ -63,7 +63,7 @@ class AddIssueViewModel extends ReactiveViewModel {
     setBusy(false);
     if (result) {
       _snackbarService.showSnackbar(
-          message: 'The issue was added successfully.');
+          title: 'Success', message: 'The issue was added successfully.');
       await _customerService.getCustomerIssues(customer.customerCode);
       _navigationService.back(result: true);
     } else if (result is CustomException) {

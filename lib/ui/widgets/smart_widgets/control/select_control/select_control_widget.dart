@@ -1,4 +1,5 @@
 import 'package:distributor/ui/shared/brand_colors.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/smart_widgets/control/select_control/select_control_widget_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -19,7 +20,7 @@ class SelectControlWidget extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: model.isBusy
                     ? Center(
-                        child: CircularProgressIndicator(),
+                        child: BusyWidget(),
                       )
                     : RaisedButton(
                         color: model.isCurrentSelection

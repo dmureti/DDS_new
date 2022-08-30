@@ -95,7 +95,7 @@ class CustomerDetailViewModel extends BaseViewModel {
 
   Future fetchCustomerOrders() async {
     setBusy(true);
-    await _customerService.fetchOrdersByCustomer(customer.id);
+    await _customerService.fetchOrdersByCustomer(customer.customerCode);
     setBusy(false);
     notifyListeners();
   }
@@ -158,7 +158,7 @@ class CustomerDetailViewModel extends BaseViewModel {
       if (result) {
         await fetchCustomerOrders();
         _snackbarService.showSnackbar(
-            message: 'The order was placed successfully');
+            title: 'Success', message: 'The order was placed successfully');
       }
     }
   }
@@ -169,7 +169,7 @@ class CustomerDetailViewModel extends BaseViewModel {
     if (result is bool) {
       await fetchAccounts();
       _snackbarService.showSnackbar(
-          message: 'The payment was added successfully.');
+          title: 'Success', message: 'The payment was added successfully.');
     }
   }
 
@@ -184,7 +184,7 @@ class CustomerDetailViewModel extends BaseViewModel {
     if (result is bool) {
       await fetchIssues();
       _snackbarService.showSnackbar(
-          message: 'The issue was added successfully.');
+          title: 'Success', message: 'The issue was added successfully.');
     }
   }
 }

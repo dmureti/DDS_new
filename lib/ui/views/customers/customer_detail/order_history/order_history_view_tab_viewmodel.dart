@@ -23,7 +23,8 @@ class OrderHistoryTabViewModel extends ReactiveViewModel {
   List<SalesOrder> get customerOrders => _customerService.salesOrderList;
 
   Future fetchCustomerOrders() async {
-    var result = await _customerService.fetchOrdersByCustomer(customer.id);
+    var result =
+        await _customerService.fetchOrdersByCustomer(customer.customerCode);
     notifyListeners();
   }
 

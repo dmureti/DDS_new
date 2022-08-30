@@ -1,5 +1,6 @@
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:stacked/stacked.dart';
@@ -230,11 +231,11 @@ class OrderConfirmation extends StatelessWidget {
                       model.isBusy
                           ? Column(
                               children: <Widget>[
-                                CircularProgressIndicator(),
+                                BusyWidget(),
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text('Please wait..saving order')
+                                Text('Please wait..placing order')
                               ],
                             )
                           : RaisedButton(

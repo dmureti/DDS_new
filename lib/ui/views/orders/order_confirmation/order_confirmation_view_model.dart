@@ -36,7 +36,7 @@ class OrderConfirmationViewModel extends ReactiveViewModel {
     setBusy(false);
     if (result is bool) {
       if (result) {
-        await _customerService.fetchOrdersByCustomer(customer.id);
+        await _customerService.fetchOrdersByCustomer(customer.customerCode);
         _activityService.addActivity(Activity(
             activityTitle: 'Sales Order submitted',
             activityDesc:

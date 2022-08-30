@@ -3,6 +3,7 @@ import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/app_bar_column_title.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 
 import 'package:distributor/ui/widgets/smart_widgets/sales_order_item/sales_order_item_widget.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -65,7 +66,7 @@ class CreateSalesOrderView extends StatelessWidget {
         ),
         body: model.isBusy
             ? Center(
-                child: CircularProgressIndicator(),
+                child: BusyWidget(),
               )
             : Column(
                 children: [

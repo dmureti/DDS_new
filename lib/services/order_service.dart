@@ -61,7 +61,7 @@ class OrderService with ReactiveServiceMixin {
       /// Increase the count of sales orders
       _ordersPlaced.value++;
       updateValueOfOrdersPlaced(salesOrderRequest.total);
-      await _customerService.fetchOrdersByCustomer(customer.id);
+      await _customerService.fetchOrdersByCustomer(customer.customerCode);
       notifyListeners();
     }
     return result;

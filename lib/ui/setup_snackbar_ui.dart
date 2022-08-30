@@ -12,6 +12,8 @@ void setupSnackbarUi() {
     SnackbarConfig(
         backgroundColor: kColorDDSPrimaryDark,
         textColor: kColorNeutral,
-        mainButtonTextColor: Colors.black),
+        messageColor: kColorNeutral,
+        titleColor: kColorNeutral,
+        mainButtonTextColor: kColorNeutral),
   );
 }

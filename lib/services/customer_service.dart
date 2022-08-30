@@ -106,9 +106,9 @@ class CustomerService with ReactiveServiceMixin {
 
   bool get enableCustomerTab => _accessControlService.enableCustomerTab;
 
-  Future fetchOrdersByCustomer(String customerId) async {
+  Future fetchOrdersByCustomer(String customerCode) async {
     var result =
-        await api.fetchOrderByCustomer(customerId, _userService.user.token);
+        await api.fetchOrderByCustomer(customerCode, _userService.user.token);
     if (result is List<SalesOrder>) {
       _salesOrderList.value = result;
       notifyListeners();
