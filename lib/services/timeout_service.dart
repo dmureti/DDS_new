@@ -15,8 +15,8 @@ class TimeoutService {
   Timer _timer;
   Timer get timer => _timer;
 
-  //Timeout in seconds
-  final int duration = 8;
+  //Timeout in hours
+  final int duration = 2;
 
   //Initialize the timer
   init() {
