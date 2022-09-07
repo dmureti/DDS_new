@@ -13,6 +13,10 @@ void setupSnackbarUi() {
         backgroundColor: kColorDDSPrimaryDark,
         textColor: kColorNeutral,
         messageColor: kColorNeutral,
+        icon: Icon(
+          Icons.check_circle,
+          color: Colors.green,
+        ),
         titleColor: kColorNeutral,
         mainButtonTextColor: kColorNeutral),
   );

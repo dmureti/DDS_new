@@ -89,7 +89,8 @@ class JourneyConsole extends StatelessWidget {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              model.currentJourney?.journeyId,
+                                              model.currentJourney?.journeyId ??
+                                                  "",
                                               style: kJourneyConsoleJourney,
                                             ),
                                             Container(

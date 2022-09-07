@@ -55,78 +55,80 @@ class DeliveryJourneyExpansionPanel
     return ViewModelBuilder<JourneyViewModel>.reactive(
         builder: (context, model, child) => Container(
               // margin: EdgeInsets.only(left: 10, right: 10, top: 5),
-              child: Material(
-                type: MaterialType.card,
-                borderOnForeground: true,
-                // shape: RoundedRectangleBorder(
-                //   borderRadius: BorderRadius.circular(5),
-                // ),
-                elevation: 0,
-                child: ExpansionTile(
-                  backgroundColor: kLightestBlue,
-                  initiallyExpanded: false,
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          '${deliveryJourney.route}',
-                          style: kTileLeadingTextStyle,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Text(deliveryJourney.journeyId,
-                          style: kTileLeadingSecondaryTextStyle),
-                    ],
+              child: Container(
+                child: Material(
+                  type: MaterialType.card,
+                  borderOnForeground: true,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
+                  elevation: 1,
+                  child: ExpansionTile(
+                    backgroundColor: kLightestBlue,
+                    initiallyExpanded: false,
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            '${deliveryJourney.route}',
+                            style: kTileLeadingTextStyle,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        Text(deliveryJourney.journeyId,
+                            style: kTileLeadingSecondaryTextStyle),
+                      ],
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              model.selectedJourney.journeyId ==
+                                      deliveryJourney.journeyId
+                                  ? model.selectedJourney.status.toUpperCase()
+                                  : deliveryJourney.status.toUpperCase(),
+                              style: kTileSubtitleTextStyle,
+                              textAlign: TextAlign.right,
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            // deliveryJourney.dependentRoutes.isNotEmpty
+                            //     ? Text('M')
+                            //     : Text(deliveryJourney.dependentRoutes.length
+                            //         .toString()),
                             model.selectedJourney.journeyId ==
                                     deliveryJourney.journeyId
-                                ? model.selectedJourney.status.toUpperCase()
-                                : deliveryJourney.status.toUpperCase(),
-                            style: kTileSubtitleTextStyle,
-                            textAlign: TextAlign.right,
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          // deliveryJourney.dependentRoutes.isNotEmpty
-                          //     ? Text('M')
-                          //     : Text(deliveryJourney.dependentRoutes.length
-                          //         .toString()),
-                          model.selectedJourney.journeyId ==
-                                  deliveryJourney.journeyId
-                              ? Icon(Icons.star)
-                              : Container(
-                                  width: 0,
-                                )
-                        ],
+                                ? Icon(Icons.star)
+                                : Container(
+                                    width: 0,
+                                  )
+                          ],
+                        ),
+                      ],
+                    ),
+                    children: [
+                      Container(
+                        height: 2,
+                        color: Colors.grey.withOpacity(0.2),
+                      ),
+                      StopsListWidget(
+                        deliveryJourney: deliveryJourney,
+                      ),
+                      // Journey control widget
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: SelectControlWidget(
+                          deliveryJourney: deliveryJourney,
+                        ),
                       ),
                     ],
                   ),
-                  children: [
-                    Container(
-                      height: 2,
-                      color: Colors.grey.withOpacity(0.2),
-                    ),
-                    StopsListWidget(
-                      deliveryJourney: deliveryJourney,
-                    ),
-                    // Journey control widget
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      child: SelectControlWidget(
-                        deliveryJourney: deliveryJourney,
-                      ),
-                    ),
-                  ],
                 ),
               ),
             ),

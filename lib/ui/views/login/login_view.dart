@@ -127,7 +127,7 @@ class _LoginViewState extends State<LoginView> {
                                 }
                                 return null;
                               },
-                              keyboardType: TextInputType.emailAddress,
+                              keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 filled: false,
                                 hintText: 'Email Address / Phone ',
@@ -236,6 +236,10 @@ class _LoginViewState extends State<LoginView> {
                                       ? null
                                       : () {
                                           // if (_formKey.currentState.validate()) {
+                                          //Close the keyboard
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
+
                                           model.login();
                                           // }
                                         },
