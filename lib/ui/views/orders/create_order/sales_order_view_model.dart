@@ -92,7 +92,7 @@ class SalesOrderViewModel extends ReactiveViewModel {
   DateTime get initialDate => _initialDate;
 
   DateTime get firstDate => _initialDate;
-  DateTime get lastDate => firstDate.add(Duration(days: 7));
+  DateTime get lastDate => firstDate.add(Duration(days: 1));
 
   String formatDate(DateTime dateTime) {
     String result;
