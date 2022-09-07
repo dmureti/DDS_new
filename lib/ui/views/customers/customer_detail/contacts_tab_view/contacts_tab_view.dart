@@ -91,11 +91,11 @@ class ContactsTabView extends StatelessWidget {
                                       ReportFieldRow(
                                           field: 'Price List',
                                           value: customer.defaultPriceList),
-                                      ReportFieldRow(
-                                        field: 'Credit Limit',
-                                        value:
-                                            'Kshs ${Helper.formatCurrency(customer.creditLimit)}',
-                                      ),
+                                      // ReportFieldRow(
+                                      //   field: 'Credit Limit',
+                                      //   value:
+                                      //       'Kshs ${Helper.formatCurrency(customer.creditLimit)}',
+                                      // ),
 
                                       Row(
                                         children: [
@@ -153,11 +153,11 @@ class ContactsTabView extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      ReportFieldRow(
-                                        field: 'Credit Limit',
-                                        value:
-                                            'Kshs ${Helper.formatCurrency(customer.creditLimit)}',
-                                      ),
+                                      // ReportFieldRow(
+                                      //   field: 'Credit Limit',
+                                      //   value:
+                                      //       'Kshs ${Helper.formatCurrency(customer.creditLimit)}',
+                                      // ),
                                       ReportFieldRow(
                                         field: 'Terms of Payment',
                                         value: '${customer.termsOfPayment}',
