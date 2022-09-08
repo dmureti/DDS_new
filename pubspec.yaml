@@ -70,6 +70,7 @@ flutter:
     - assets/images/dds_logo_horizontal.png
     - assets/images/dds_logo.png
     - assets/images/no_journey.png
+    - assets/images/mini_logo.png
     - assets/ca/
   fonts:
     - family: BenderRegular

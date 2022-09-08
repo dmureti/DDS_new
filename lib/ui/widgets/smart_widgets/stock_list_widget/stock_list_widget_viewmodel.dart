@@ -43,7 +43,6 @@ class StockListWidgetViewModel extends BaseViewModel {
     var result = await _stockControllerService.getStockBalance();
     setBusy(false);
     if (result is List<Product>) {
-      print(result);
       _productList = result;
       // .where((element) =>
       //     element.itemName.toLowerCase().contains('crates') != true)

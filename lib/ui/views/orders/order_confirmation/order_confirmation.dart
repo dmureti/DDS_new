@@ -1,6 +1,8 @@
+import 'package:distributor/conf/style/lib/fonts.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:stacked/stacked.dart';
@@ -21,7 +23,8 @@ class OrderConfirmation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<OrderConfirmationViewModel>.reactive(
-      viewModelBuilder: () => OrderConfirmationViewModel(customer: customer),
+      viewModelBuilder: () => OrderConfirmationViewModel(
+          customer: customer, salesOrderRequest: salesOrderRequest),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -82,7 +85,7 @@ class OrderConfirmation extends StatelessWidget {
                             style: TextStyle(color: Colors.white),
                           ),
                           Text(
-                            '${salesOrderRequest.items.length}',
+                            '${model.salesOrder.items.length}',
                             style: TextStyle(color: Colors.white),
                           )
                         ],
@@ -120,7 +123,7 @@ class OrderConfirmation extends StatelessWidget {
                             style: TextStyle(color: Colors.white, fontSize: 20),
                           ),
                           Text(
-                            'Kshs ${Helper.formatCurrency(salesOrderRequest.total)}',
+                            'Kshs ${Helper.formatCurrency(model.salesOrder.total)}',
                             style: TextStyle(color: Colors.white, fontSize: 20),
                           )
                         ],
@@ -134,92 +137,103 @@ class OrderConfirmation extends StatelessWidget {
               ),
               Container(
                 child: Expanded(
-                  child: ListView.separated(
-                    itemCount: salesOrderRequest.items.length,
-                    scrollDirection: Axis.vertical,
-                    separatorBuilder: (context, index) => Container(
-                      height: 1,
-                      color: Colors.black.withOpacity(0.5),
-                    ),
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Row(
-                              children: [
-                                Container(
-                                  child: Text(
-                                    '${salesOrderRequest.items[index].quantity}',
-                                    style: TextStyle(
-                                        color: kColorMiniDarkBlue,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 4.0, left: 4),
-                                  child: Text('x'),
-                                ),
-                              ],
-                            ),
-                            Expanded(
-                              child: Text(
-                                '${salesOrderRequest.items[index].item.itemName}',
-                                style: TextStyle(
-                                    color: kColorMiniDarkBlue,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  '${Helper.formatCurrency((salesOrderRequest.items[index].quantity * salesOrderRequest.items[index].item.itemPrice))}',
-                                  style: TextStyle(
-                                      color: kColorMiniDarkBlue,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                ClipOval(
-                                  child: InkWell(
-                                    splashColor: Colors.pink,
-                                    child: Material(
-                                      elevation: 4,
-                                      type: MaterialType.card,
-                                      color: Colors.white,
-                                      child: SizedBox(
-                                        width: 50,
-                                        height: 50,
-                                        child: Icon(
-                                          Icons.delete,
-                                          color: Colors.blueGrey,
+                  child: model.salesOrder.items.isEmpty
+                      ? Center(
+                          child: EmptyContentContainer(
+                            label: 'There are no items left',
+                          ),
+                        )
+                      : ListView.separated(
+                          itemCount: model.salesOrder.items.length,
+                          scrollDirection: Axis.vertical,
+                          separatorBuilder: (context, index) => Container(
+                            height: 1,
+                            color: Colors.black.withOpacity(0.5),
+                          ),
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Row(
+                                    children: [
+                                      Container(
+                                        child: Text(
+                                          '${salesOrderRequest.items[index].quantity}',
+                                          style: TextStyle(
+                                              color: kColorMiniDarkBlue,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w700),
                                         ),
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            right: 4.0, left: 4),
+                                        child: Text('x'),
+                                      ),
+                                    ],
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      '${salesOrderRequest.items[index].item.itemName}',
+                                      style: TextStyle(
+                                          color: kColorMiniDarkBlue,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w700),
                                     ),
                                   ),
-                                ),
-                              ],
-                            )
-                          ],
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        '${Helper.formatCurrency((salesOrderRequest.items[index].quantity * salesOrderRequest.items[index].item.itemPrice))}',
+                                        style: TextStyle(
+                                            color: kColorMiniDarkBlue,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                      ClipOval(
+                                        child: InkWell(
+                                          onTap: () => model.deleteItem(
+                                              salesOrderRequest
+                                                  .items[index].item,
+                                              salesOrderRequest.items[index]),
+                                          splashColor: Colors.pink,
+                                          child: Material(
+                                            elevation: 4,
+                                            type: MaterialType.card,
+                                            color: Colors.grey.withOpacity(0.5),
+                                            child: SizedBox(
+                                              width: 35,
+                                              height: 35,
+                                              child: Icon(
+                                                Icons.delete_forever_sharp,
+                                                color: Colors.white,
+                                                size: 20,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
                 ),
               ),
               Container(
-                  height: 100,
+                  height: 90,
                   width: MediaQuery.of(context).size.width,
                   color: Colors.orange,
                   padding: EdgeInsets.all(15.0),
@@ -227,33 +241,49 @@ class OrderConfirmation extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-//              Text('Grand Total : ${salesOrderRequest.total}'),
-                      model.isBusy
-                          ? Column(
-                              children: <Widget>[
-                                BusyWidget(),
-                                SizedBox(
-                                  height: 10,
+                      model.salesOrder.items.isEmpty ||
+                              model.salesOrder.total == 0
+                          ? Container(
+                              child: RaisedButton(
+                                onPressed: () => model.backToPlaceOrder(),
+                                child: Text(
+                                  'Back to Place Order'.toUpperCase(),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                      fontSize: 20),
                                 ),
-                                Text('Please wait..placing order')
-                              ],
-                            )
-                          : RaisedButton(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 25, vertical: 10),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              onPressed: () {
-                                model.createSalesOrder(salesOrderRequest);
-                              },
-                              child: Text(
-                                'place order'.toUpperCase(),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.white,
-                                    fontSize: 20),
                               ),
-                            ),
+                            )
+                          : model.isBusy
+                              ? Column(
+                                  children: <Widget>[
+                                    BusyWidget(),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text('Please wait..placing order')
+                                  ],
+                                )
+                              : Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  child: RaisedButton(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 25, vertical: 10),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8)),
+                                    onPressed: () {
+                                      model.createSalesOrder();
+                                    },
+                                    child: Text(
+                                      'place order'.toUpperCase(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.white,
+                                          fontSize: 20),
+                                    ),
+                                  ),
+                                ),
                     ],
                   )),
             ],

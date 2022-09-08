@@ -42,6 +42,8 @@ class CustomerViewModel extends FutureViewModel<List<Customer>> {
       switch (customerFilter.toLowerCase()) {
         case 'all':
           _customerList = unorderedList;
+          _customerList.sort(
+              (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
           break;
         case 'name':
           if (sortAscending) {
@@ -59,6 +61,9 @@ class CustomerViewModel extends FutureViewModel<List<Customer>> {
           break;
         default:
           _customerList = unorderedList;
+          _customerList
+            ..sort(
+                (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
           break;
       }
       return _customerList;

@@ -1,4 +1,5 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/activity_service.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/customer_service.dart';
@@ -23,29 +24,42 @@ class OrderConfirmationViewModel extends ReactiveViewModel {
   User get user => _userService.user;
   final Customer customer;
 
-  OrderConfirmationViewModel({@required this.customer})
-      : assert(customer != null);
+  SalesOrderRequest _salesOrder;
+  SalesOrderRequest get salesOrder => _salesOrder;
+
+  OrderConfirmationViewModel(
+      {@required this.customer, SalesOrderRequest salesOrderRequest})
+      : assert(customer != null),
+        _salesOrder = salesOrderRequest;
 
   navigateToProductSelection() async {
     _navigationService.popRepeated(1);
   }
 
-  createSalesOrder(SalesOrderRequest salesOrder) async {
-    setBusy(true);
-    var result = await _orderService.createSalesOrder(salesOrder, customer);
-    setBusy(false);
-    if (result is bool) {
-      if (result) {
-        await _customerService.fetchOrdersByCustomer(customer.customerCode);
-        _activityService.addActivity(Activity(
-            activityTitle: 'Sales Order submitted',
-            activityDesc:
-                'Sales Order for ${customer.name} of ${customer.route} created and submitted.'));
-        _navigationService.back(result: true);
+  createSalesOrder() async {
+    var dialogResponse = await _dialogService.showConfirmationDialog(
+        title: 'Confirm Order',
+        description:
+            'Are you sure that the order you are about to place for ${customer.name} is accurate?',
+        confirmationTitle: 'Yes',
+        cancelTitle: 'NO');
+    if (dialogResponse.confirmed) {
+      setBusy(true);
+      var result = await _orderService.createSalesOrder(salesOrder, customer);
+      setBusy(false);
+      if (result is bool) {
+        if (result) {
+          await _customerService.fetchOrdersByCustomer(customer.customerCode);
+          _activityService.addActivity(Activity(
+              activityTitle: 'Sales Order submitted',
+              activityDesc:
+                  'Sales Order for ${customer.name} of ${customer.route} created and submitted.'));
+          _navigationService.back(result: true);
+        }
+      } else if (result is CustomException) {
+        await _dialogService.showDialog(
+            title: result.title, description: result.description);
       }
-    } else if (result is CustomException) {
-      await _dialogService.showDialog(
-          title: result.title, description: result.description);
     }
   }
 
@@ -55,4 +69,29 @@ class OrderConfirmationViewModel extends ReactiveViewModel {
   // TODO: implement reactiveServices
   List<ReactiveServiceMixin> get reactiveServices =>
       [_customerService, _orderService];
+
+  deleteItem(Product item, SalesOrderItem salesOrderItem) async {
+    var dialogResponse = await _dialogService.showConfirmationDialog(
+        title: 'Delete Item Order',
+        confirmationTitle: 'Yes',
+        cancelTitle: 'No',
+        description:
+            'Are you sure you want to remove ${item.itemName} from ${customer.name}\'s order ?');
+    if (dialogResponse.confirmed) {
+      //Remove the item
+      _salesOrder.items
+          .removeWhere((element) => element.item.itemName == item.itemName);
+
+      //Update the total
+      _salesOrder.total -=
+          salesOrderItem.quantity * salesOrderItem.item.itemPrice;
+
+      notifyListeners();
+    }
+  }
+
+  backToPlaceOrder() {
+    _navigationService.replaceWith(Routes.createSalesOrderView,
+        arguments: CreateSalesOrderViewArguments(customer: customer));
+  }
 }

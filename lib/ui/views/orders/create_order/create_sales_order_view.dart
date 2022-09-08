@@ -276,19 +276,19 @@ class _SummaryDraggableSheetState extends State<SummaryDraggableSheet> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 2.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Credit Limit'),
-                  Text(
-                    'Kshs ${Helper.formatCurrency(widget.model.customer.creditLimit)}',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(vertical: 2.0),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Text('Credit Limit'),
+            //       Text(
+            //         'Kshs ${Helper.formatCurrency(widget.model.customer.creditLimit)}',
+            //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 2.0),
               child: Row(
@@ -308,12 +308,11 @@ class _SummaryDraggableSheetState extends State<SummaryDraggableSheet> {
             Container(
               alignment: Alignment.center,
               child: RaisedButton(
-                color: kColorfulMiniRed,
                 padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8)),
                 child: Text(
-                  'Checkout'.toUpperCase(),
+                  'Continue'.toUpperCase(),
                   style: TextStyle(
                       fontFamily: 'ProximaNova500',
                       color: Colors.white,
@@ -359,17 +358,37 @@ class _SummaryDraggableSheetState extends State<SummaryDraggableSheet> {
                                     ),
                                     Text(
                                         'Please select a due date. Use the date selection button to set a due date.'),
-                                    Text(
-                                      'You can only order for items one week in advance.',
-                                      style: TextStyle(
-                                          color: Colors.grey, fontSize: 15),
-                                    ),
                                   ],
                                 ),
                               ))
-                      : model.placeOrder(
-                          customer: widget.customer,
-                          salesOrderRequest: salesOrderRequest);
+                      : salesOrderRequest.items.isEmpty
+                          ? showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text(
+                                  'NO ITEMS ADDED',
+                                  style: TextStyle(color: Colors.indigo),
+                                ),
+                                actions: <Widget>[
+                                  FlatButton.icon(
+                                    onPressed: () => Navigator.pop(context),
+                                    icon: Icon(Icons.close),
+                                    label: Text('CLOSE'),
+                                    splashColor: Colors.indigo,
+                                  )
+                                ],
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Text(
+                                        'You have not added any items for ${salesOrderRequest.customer}. '),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : model.placeOrder(
+                              customer: widget.customer,
+                              salesOrderRequest: salesOrderRequest);
                 },
               ),
             )

@@ -11,6 +11,8 @@ class DeliveryNoteViewmodel extends BaseViewModel {
   DialogService _dialogService = locator<DialogService>();
 
   final SalesOrder _salesOrder;
+  String _customerName;
+  String get customerName => _customerName;
 
   String get salesOrderId => _salesOrder.orderNo;
 
@@ -18,7 +20,9 @@ class DeliveryNoteViewmodel extends BaseViewModel {
     await getDeliveryNotesForSalesOrder(salesOrderId);
   }
 
-  DeliveryNoteViewmodel(this._salesOrder);
+  DeliveryNoteViewmodel(SalesOrder salesOrder, {String customerName})
+      : _customerName = salesOrder.customerName,
+        _salesOrder = salesOrder;
 
   Api get api => _apiService.api;
   User get user => _userService.user;
@@ -43,7 +47,7 @@ class DeliveryNoteViewmodel extends BaseViewModel {
   getDeliveryNotesForSalesOrder(String salesOrderId) async {
     setBusy(true);
     var result = await api.getDeliveryNotesForSO(
-        salesOrderId: salesOrderId, token: user.token);
+        salesOrderId: customerName, token: user.token);
     setBusy(false);
     if (result is String) {
       await _dialogService.showDialog(title: 'Error', description: result);

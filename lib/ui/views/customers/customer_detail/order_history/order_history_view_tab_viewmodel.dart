@@ -23,21 +23,20 @@ class OrderHistoryTabViewModel extends ReactiveViewModel {
   List<SalesOrder> get customerOrders => _customerService.salesOrderList;
 
   Future fetchCustomerOrders() async {
-    var result =
-        await _customerService.fetchOrdersByCustomer(customer.customerCode);
+    setBusy(true);
+    await _customerService.fetchOrdersByCustomer(customer.customerCode);
+    setBusy(false);
     notifyListeners();
   }
 
   navigateToOrder(SalesOrder salesOrder, DeliveryJourney deliveryJourney,
       String stopId) async {
-    var result = await _navigationService.navigateTo(Routes.orderDetailView,
+    await _navigationService.navigateTo(Routes.orderDetailView,
         arguments: OrderDetailViewArguments(
             salesOrder: salesOrder,
             deliveryJourney: deliveryJourney,
             stopId: stopId));
-    if (result is bool) {
-      await fetchCustomerOrders();
-    }
+    await fetchCustomerOrders();
   }
 
   init() async {

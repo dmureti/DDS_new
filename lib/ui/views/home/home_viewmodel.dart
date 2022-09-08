@@ -64,6 +64,9 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   DateTime get endDate => _endDate;
   DateTime get startDate => _startDate;
 
+  bool _hasPendingTransactions = false;
+  bool get hasPendingTransactions => _hasPendingTransactions;
+
   setStartDate(DateTime dt) {
     _startDate = dt;
     notifyListeners();

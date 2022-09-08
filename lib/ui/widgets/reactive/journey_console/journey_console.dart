@@ -96,7 +96,8 @@ class JourneyConsole extends StatelessWidget {
                                             Container(
                                               child: Text(
                                                 model.journeyStatus
-                                                    .toUpperCase(),
+                                                        ?.toUpperCase() ??
+                                                    "",
                                                 overflow: TextOverflow.clip,
                                                 style: kJourneyConsoleStatus,
                                               ),

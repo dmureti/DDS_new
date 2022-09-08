@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:distributor/conf/style/lib/colors.dart';
 import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/core/helper.dart';
@@ -47,24 +48,32 @@ class HomeView extends StatelessWidget {
                     tooltip: 'Add Adhoc Sale',
                   )
                 : model.currentIndex == 3
-                    ? PopupMenuButton(
-                        onSelected: (value) =>
-                            model.onStockBalancePopupSelected(value),
-                        itemBuilder: (context) => [
-                          PopupMenuItem(
-                            child: Text('Pending Transactions'),
-                            value: 0,
-                          ),
-                          PopupMenuItem(
-                            child: Text('Return Stock'),
-                            value: 1,
-                          ),
-                          PopupMenuItem(
-                            child: Text('Return Crates'),
-                            value: 2,
-                          )
-                        ],
-                      )
+                    ? Badge(
+                        showBadge: false,
+                        badgeColor: Colors.red,
+                        position: BadgePosition(top: 15, end: 10),
+                        // toAnimate: true,
+                        // animationDuration: Duration(seconds: 2),
+                        borderRadius: BorderRadius.circular(300),
+                        // animationType: BadgeAnimationType.scale,
+                        child: PopupMenuButton(
+                          onSelected: (value) =>
+                              model.onStockBalancePopupSelected(value),
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                              child: Text('Pending Transactions'),
+                              value: 0,
+                            ),
+                            PopupMenuItem(
+                              child: Text('Return Stock'),
+                              value: 1,
+                            ),
+                            PopupMenuItem(
+                              child: Text('Return Crates'),
+                              value: 2,
+                            )
+                          ],
+                        ))
                     : Container(),
 
             // MapIconButton(),

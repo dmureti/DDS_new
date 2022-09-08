@@ -86,8 +86,7 @@ class SalesOrderViewModel extends ReactiveViewModel {
   }
 
   /// It shall always start the following day
-  /// @TODO : In production add a duration of 1 day
-//  DateTime _initialDate = DateTime.now().add(Duration(days: 1));
+  //  DateTime _initialDate = DateTime.now().add(Duration(days: 1));
   DateTime _initialDate = DateTime.now();
   DateTime get initialDate => _initialDate;
 
@@ -109,7 +108,7 @@ class SalesOrderViewModel extends ReactiveViewModel {
         if (_salesOrderItems[i].item == p) {
           // Increase the value of the sales order item
           _salesOrderItems[i].quantity += quantity;
-          // print(_salesOrderItems[i].quantity);
+
           notifyListeners();
         }
       }
@@ -119,7 +118,6 @@ class SalesOrderViewModel extends ReactiveViewModel {
       _salesOrderItems.add(s);
       notifyListeners();
     }
-    // print(quantity);
   }
 
   editQuantityManually(Product p, quantity) {
@@ -150,8 +148,6 @@ class SalesOrderViewModel extends ReactiveViewModel {
         if (_salesOrderItems[i].item == p) {
           // Decrease the value of the sales order item
           _salesOrderItems[i].quantity -= quantity;
-          print(quantity);
-          print(_salesOrderItems[i].quantity);
           if (salesOrderItems[i].quantity == 0) {
             _items.remove(p);
             _salesOrderItems.removeAt(i);
