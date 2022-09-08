@@ -77,9 +77,9 @@ class DeliveryNoteViewModel extends BaseViewModel {
                 title: result.title, description: result.description);
           } else {
             await getDeliveryNote();
-            //@TODO change snackbar
             _snackbarService.showSnackbar(
-                message: 'The delivery was closed successfully');
+                message: 'The delivery was closed successfully',
+                title: 'Success');
           }
         }
         break;
@@ -98,7 +98,8 @@ class DeliveryNoteViewModel extends BaseViewModel {
           if (result is bool) {
             if (result) {
               _snackbarService.showSnackbar(
-                  message: 'The partial delivery was closed successfully');
+                  message: 'The partial delivery was closed successfully',
+                  title: 'Success');
               await getDeliveryNote();
             }
           }
@@ -109,7 +110,7 @@ class DeliveryNoteViewModel extends BaseViewModel {
             arguments: AddPaymentViewArguments(customer: customer));
         if (result) {
           _snackbarService.showSnackbar(
-              message: 'The payment was added successfully.');
+              message: 'The payment was added successfully.', title: 'Success');
         }
         break;
       case 'not_possible':
