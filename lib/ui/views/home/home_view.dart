@@ -13,6 +13,8 @@ import 'package:distributor/ui/views/home/home_viewmodel.dart';
 import 'package:distributor/ui/views/routes/route_listing_view.dart';
 import 'package:distributor/ui/views/stock/stock_view.dart';
 import 'package:distributor/ui/widgets/drawer.dart';
+import 'package:distributor/ui/widgets/reactive/transaction_popup/transaction_popup_view.dart';
+import 'package:distributor/ui/widgets/smart_widgets/location_widget/location_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:stacked/stacked.dart';
@@ -48,32 +50,8 @@ class HomeView extends StatelessWidget {
                     tooltip: 'Add Adhoc Sale',
                   )
                 : model.currentIndex == 3
-                    ? Badge(
-                        showBadge: false,
-                        badgeColor: Colors.red,
-                        position: BadgePosition(top: 15, end: 10),
-                        // toAnimate: true,
-                        // animationDuration: Duration(seconds: 2),
-                        borderRadius: BorderRadius.circular(300),
-                        // animationType: BadgeAnimationType.scale,
-                        child: PopupMenuButton(
-                          onSelected: (value) =>
-                              model.onStockBalancePopupSelected(value),
-                          itemBuilder: (context) => [
-                            PopupMenuItem(
-                              child: Text('Pending Transactions'),
-                              value: 0,
-                            ),
-                            PopupMenuItem(
-                              child: Text('Return Stock'),
-                              value: 1,
-                            ),
-                            PopupMenuItem(
-                              child: Text('Return Crates'),
-                              value: 2,
-                            )
-                          ],
-                        ))
+                    ? TransactionPopupView(
+                        onSelected: model.onStockBalancePopupSelected)
                     : Container(),
 
             // MapIconButton(),
@@ -129,6 +107,7 @@ class HomeView extends StatelessWidget {
         return Stack(
           children: [
             NetworkSensitiveWidget(),
+            // LocationWidget(),
             DashboardView(),
           ],
         );
@@ -137,6 +116,7 @@ class HomeView extends StatelessWidget {
         return Stack(
           children: [
             NetworkSensitiveWidget(),
+            // LocationWidget(),
             RoutesListingView(),
           ],
         );
@@ -145,6 +125,7 @@ class HomeView extends StatelessWidget {
         return Column(
           children: [
             NetworkSensitiveWidget(),
+            // LocationWidget(),
             Container(
               height: 50,
               child: Material(
@@ -174,6 +155,7 @@ class HomeView extends StatelessWidget {
         return Column(
           children: [
             NetworkSensitiveWidget(),
+            // LocationWidget(),
             Expanded(child: StockView()),
           ],
         );
@@ -182,6 +164,7 @@ class HomeView extends StatelessWidget {
         return Column(
           children: [
             NetworkSensitiveWidget(),
+            // LocationWidget(),
             Expanded(child: CustomerView()),
           ],
         );
@@ -190,6 +173,7 @@ class HomeView extends StatelessWidget {
         return Column(
           children: [
             NetworkSensitiveWidget(),
+            // LocationWidget(),
             DashboardView(),
           ],
         );

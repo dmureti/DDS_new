@@ -2,6 +2,7 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/activity_service.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/logistics_service.dart';
+import 'package:distributor/services/transaction_service.dart';
 import 'package:distributor/ui/widgets/smart_widgets/info_bar/info_bar_widget_viewmodel.dart';
 import 'package:flutter/foundation.dart';
 import 'package:stacked/stacked.dart';
@@ -14,6 +15,7 @@ class SelectControlWidgetViewModel extends ReactiveViewModel {
   ActivityService _activityService = locator<ActivityService>();
   JourneyService _journeyService = locator<JourneyService>();
   DialogService _dialogService = locator<DialogService>();
+  final _transactionService = locator<TransactionService>();
 
   final DeliveryJourney _deliveryJourney;
 
@@ -41,6 +43,7 @@ class SelectControlWidgetViewModel extends ReactiveViewModel {
     //Check if the selected journey is same as current journey
     if (selectedDeliveryJourney.journeyId == _deliveryJourney.journeyId) {
       cancelSelectedJourney();
+      await _transactionService.init();
       _activityService.addActivity(Activity(
           activityTitle: '${deliveryJourney.journeyId} deselected',
           activityDesc: '${deliveryJourney.journeyId} deselected'));
@@ -55,6 +58,7 @@ class SelectControlWidgetViewModel extends ReactiveViewModel {
           deliveryJourney: deliveryJourney,
           journeyState: JourneyState.selected);
       var result = await _journeyService.init(deliveryJourney.journeyId);
+      _transactionService.init();
       setBusy(false);
       if (result is bool) {
         _activityService.addActivity(Activity(

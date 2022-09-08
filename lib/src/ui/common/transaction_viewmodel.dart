@@ -29,7 +29,6 @@ class TransactionViewmodel extends BaseViewModel {
   }
 
   getAllStockTransactions() async {
-    // print(userService.user.salesChannel);
-    return await stockControlService.getTransactionsPendingAuth(branchId);
+    return await stockControlService.getTransactionsPendingAuth();
   }
 }

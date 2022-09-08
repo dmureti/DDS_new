@@ -4,11 +4,14 @@ import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/crate_,management_service.dart';
 
 import 'package:distributor/services/customer_service.dart';
+import 'package:distributor/services/firestore_service.dart';
 import 'package:distributor/services/init_service.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/order_service.dart';
+import 'package:distributor/services/remote_config_service.dart';
 import 'package:distributor/services/stock_controller_service.dart';
+import 'package:distributor/services/transaction_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -44,4 +47,10 @@ abstract class ThirdPartyServicesModule {
   OrderService get orderService;
   @lazySingleton
   LocationService get locationService;
+  @lazySingleton
+  TransactionService get transactionService;
+  @lazySingleton
+  RemoteConfigService get remoteConfigService;
+  @lazySingleton
+  FirestoreService get firestoreService;
 }

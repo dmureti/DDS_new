@@ -313,6 +313,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
     switch (value) {
       case 0:
         navigateToPendingTransactionsView();
+        notifyListeners();
         break;
       case 1:
         navigateToReturnStockView();

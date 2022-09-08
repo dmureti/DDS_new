@@ -23,6 +23,10 @@ class StockControllerService {
   bool _hasJourney = false;
   bool get hasJourney => _hasJourney;
 
+  get branchId => !_journeyService.hasJourney
+      ? _userService.user.salesChannel
+      : _journeyService.currentJourney.route;
+
   getStockTransaction(String stockTransactionId, String voucherType) async {
     var result = await _api.getStockTransaction(_user.token,
         voucherType: voucherType, stockTransactionId: stockTransactionId);
@@ -37,7 +41,7 @@ class StockControllerService {
 //	should only be displayed if the user has "virtual_stock_balance.view_cog" permission;
 //	otherwise, hide this column
 
-  getTransactionsPendingAuth(String branchId) async {
+  getTransactionsPendingAuth() async {
     var result = await _api.getPendingAuthStockTransactions(_user.token,
         branchId: branchId);
     if (result is List) {
