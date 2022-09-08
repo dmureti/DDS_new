@@ -28,7 +28,7 @@ class TransactionTile extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.6,
+                        width: MediaQuery.of(context).size.width * 0.55,
                         child: Row(
                           children: [
                             Container(
