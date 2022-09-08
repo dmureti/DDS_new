@@ -1,6 +1,6 @@
 name: distributor
 description: Digital Distribution System
-version: 10.0.0+10
+version: 10.1.0+10
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
@@ -44,7 +44,7 @@ dependencies:
     path: '../tripletrio_core'
     #    git: 'https://github.com/AlbertKamau/tripletrio_core'
   firebase_core: "^0.7.0"
-  firebase_crashlytics: "^0.4.0+1"
+#  firebase_crashlytics: "^0.4.0+1"
   firebase_performance: "^0.5.0+1"
 
   flutter:
