@@ -1,3 +1,4 @@
+import 'package:distributor/conf/style/lib/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
@@ -57,6 +58,7 @@ class _CustomerTextInputState extends State<CustomerTextInput> {
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.search_sharp),
             hintText: 'Search',
+            hintStyle: TextStyle(fontFamily: kFontThinBody),
             suffixIcon: IconButton(
               onPressed: () {
                 fieldTextEditingController.text = "";
