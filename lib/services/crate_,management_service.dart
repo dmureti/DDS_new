@@ -92,7 +92,7 @@ class CrateManagementService with ReactiveServiceMixin {
     // print(currentJourney.route);
     var productList = await _apiService.api.getStockBalance(
         token: userToken, branchId: currentJourney.route ?? _user.salesChannel);
-    print(productList);
+
     if (productList is List<Product>) {
       if (productList.isNotEmpty) {
         return productList

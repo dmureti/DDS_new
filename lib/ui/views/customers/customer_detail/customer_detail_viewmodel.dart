@@ -97,7 +97,6 @@ class CustomerDetailViewModel extends BaseViewModel {
     setBusy(true);
     await _customerService.fetchOrdersByCustomer(customer.customerCode);
     setBusy(false);
-    notifyListeners();
   }
 
   fetchAccounts() async {
@@ -153,12 +152,11 @@ class CustomerDetailViewModel extends BaseViewModel {
     var result = await _navigationService.navigateTo(
         Routes.createSalesOrderView,
         arguments: CreateSalesOrderViewArguments(customer: customer));
-
     if (result is bool) {
       if (result) {
-        await fetchCustomerOrders();
         _snackbarService.showSnackbar(
             title: 'Success', message: 'The order was placed successfully');
+        await fetchCustomerOrders();
       }
     }
   }

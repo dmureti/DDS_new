@@ -18,7 +18,7 @@ class OrderHistoryTab extends StatelessWidget {
     return ViewModelBuilder<OrderHistoryTabViewModel>.reactive(
       onModelReady: (model) => model.init(),
       fireOnModelReadyOnce: false,
-      disposeViewModel: true,
+      disposeViewModel: false,
       builder: (context, model, child) => model.isBusy
           ? Center(
               child: BusyWidget(),
