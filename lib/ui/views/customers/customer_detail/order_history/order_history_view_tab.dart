@@ -1,6 +1,7 @@
 import 'package:distributor/core/models/order_search_delegate.dart';
 import 'package:distributor/ui/views/customers/customer_detail/order_history/order_history_view_tab_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/app_bar_search.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/order_history_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -20,7 +21,7 @@ class OrderHistoryTab extends StatelessWidget {
       disposeViewModel: true,
       builder: (context, model, child) => model.isBusy
           ? Center(
-              child: CircularProgressIndicator(),
+              child: BusyWidget(),
             )
           : Container(
               child: Column(
