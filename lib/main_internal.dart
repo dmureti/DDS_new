@@ -33,7 +33,7 @@ void main() async {
       flavor: Flavor.internal,
       name: 'Mini',
       flavorValues: FlavorValues(
-          baseUrl: 'https://dds.ddsolutions.tech/dds-backend/api/v1'),
+          baseUrl: 'https://mbnl.ddsolutions.tech/dds-backend/api/v1'),
     ),
     AppEnv(
       flavor: Flavor.internal,

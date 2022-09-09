@@ -19,7 +19,7 @@ void main() async {
       flavor: Flavor.mini,
       name: 'mini',
       flavorValues: FlavorValues(
-          baseUrl: 'https://dds.ddsolutions.tech/dds-backend/api/v1'),
+          baseUrl: 'https://mbnl.ddsolutions.tech/dds-backend/api/v1'),
     )
   ]);
   runApp(MainApp());
