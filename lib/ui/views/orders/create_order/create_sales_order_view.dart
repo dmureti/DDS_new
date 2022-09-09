@@ -86,14 +86,11 @@ class CreateSalesOrderView extends StatelessWidget {
                                 .where((product) => product.itemPrice > 0)
                                 .length,
                             itemBuilder: (context, index) {
-                              if (model.productList[index].itemPrice > 0) {
-                                return SalesOrderItemWidget(
-                                  item: model.productList[index],
-                                  salesOrderViewModel: model,
-                                );
-                              }
-                              return Container();
-                            }),
+                              return SalesOrderItemWidget(
+                                item: model.productList[index],
+                                salesOrderViewModel: model,
+                              );
+                            })
                       ],
                     ),
                   ),
