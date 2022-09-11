@@ -26,9 +26,12 @@ import '../src/ui/views/stock_transaction/stock_transaction_list_view.dart';
 import '../src/ui/views/stock_transfer/stock_transfer_view.dart';
 import '../src/ui/views/voucher_detail/voucher_detail_view.dart';
 import '../ui/views/adhoc_sales/adhoc_sales_view.dart';
+import '../ui/views/app_info/app_info_view.dart';
+import '../ui/views/bug_report/bug_report.dart';
 import '../ui/views/crate_movement/crate_movement_view.dart';
 import '../ui/views/customer_location.dart';
 import '../ui/views/customers/customer_detail/customer_detail_view.dart';
+import '../ui/views/help/help_view.dart';
 import '../ui/views/home/home_view.dart';
 import '../ui/views/journey/journey_view.dart';
 import '../ui/views/link_payment/link_payment_view.dart';
@@ -74,6 +77,9 @@ class Routes {
   static const String stockCollectionView = '/stock-collection-view';
   static const String adhocSalesView = '/adhoc-sales-view';
   static const String manageCrateView = '/manage-crate-view';
+  static const String helpView = '/help-view';
+  static const String bugReportView = '/bug-report-view';
+  static const String appInfoView = '/app-info-view';
   static const all = <String>{
     homeView,
     startupView,
@@ -105,6 +111,9 @@ class Routes {
     stockCollectionView,
     adhocSalesView,
     manageCrateView,
+    helpView,
+    bugReportView,
+    appInfoView,
   };
 }
 
@@ -142,6 +151,9 @@ class Router extends RouterBase {
     RouteDef(Routes.stockCollectionView, page: StockCollectionView),
     RouteDef(Routes.adhocSalesView, page: AdhocSalesView),
     RouteDef(Routes.manageCrateView, page: ManageCrateView),
+    RouteDef(Routes.helpView, page: HelpView),
+    RouteDef(Routes.bugReportView, page: BugReportView),
+    RouteDef(Routes.appInfoView, page: AppInfoView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -457,6 +469,24 @@ class Router extends RouterBase {
           crateType: args.crateType,
           customer: args.customer,
         ),
+        settings: data,
+      );
+    },
+    HelpView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const HelpView(),
+        settings: data,
+      );
+    },
+    BugReportView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const BugReportView(),
+        settings: data,
+      );
+    },
+    AppInfoView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const AppInfoView(),
         settings: data,
       );
     },

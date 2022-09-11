@@ -23,7 +23,7 @@ class StockControllerService {
   bool _hasJourney = false;
   bool get hasJourney => _hasJourney;
 
-  get branchId => !_journeyService.hasJourney
+  String get branchId => !_journeyService.hasJourney
       ? _userService.user.salesChannel
       : _journeyService.currentJourney.route;
 

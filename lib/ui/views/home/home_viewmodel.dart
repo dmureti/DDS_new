@@ -323,4 +323,19 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
         break;
     }
   }
+
+  navigateToBugView() async {
+    _navigationService.back();
+    await _navigationService.navigateTo(Routes.bugReportView);
+  }
+
+  navigateToInfoView() async {
+    _navigationService.back();
+    await _navigationService.navigateTo(Routes.appInfoView);
+  }
+
+  navigateToHelpView() async {
+    _navigationService.back();
+    await _navigationService.navigateTo(Routes.helpView);
+  }
 }

@@ -3,11 +3,11 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class VersionService {
-  String get version => '10.1.2';
+  String get version => '10.1.5';
   // PackageInfo _packageInfo = PackageInfo(
   //   appName: 'Unknown',
   //   packageName: 'Unknown',
-  //   version: 'Unknown',
+  //   version: 'Unknown',K
   //   buildNumber: 'Unknown',
   // );
 

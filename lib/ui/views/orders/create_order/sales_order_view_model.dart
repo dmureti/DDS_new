@@ -60,7 +60,7 @@ class SalesOrderViewModel extends ReactiveViewModel {
         _productList.sort((b, a) => a.itemName.compareTo(b.itemName));
         break;
     }
-    return _productList;
+    return _productList.where((product) => product.itemPrice > 0).toList();
   }
 
   int get availableProducts =>
@@ -180,6 +180,7 @@ class SalesOrderViewModel extends ReactiveViewModel {
     setBusy(false);
     if (result is List<Product>) {
       _productList = result;
+
       return _productList;
     } else {
       await _dialogService.showDialog(

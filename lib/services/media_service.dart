@@ -1,0 +1,7 @@
+class MediaService {
+
+    uploadMedia(){}
+
+    downloadMedia(){}
+
+}

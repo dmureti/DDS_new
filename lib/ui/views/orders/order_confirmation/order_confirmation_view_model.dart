@@ -3,6 +3,7 @@ import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/activity_service.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/customer_service.dart';
+import 'package:distributor/services/firestore_service.dart';
 import 'package:distributor/services/order_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,9 @@ class OrderConfirmationViewModel extends ReactiveViewModel {
     if (dialogResponse.confirmed) {
       setBusy(true);
       var result = await _orderService.createSalesOrder(salesOrder, customer);
+
+      /// Send to repository
+
       setBusy(false);
       if (result is bool) {
         if (result) {

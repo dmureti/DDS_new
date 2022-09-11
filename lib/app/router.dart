@@ -15,9 +15,13 @@ import 'package:distributor/src/ui/views/stock_transaction/stock_transaction_lis
 import 'package:distributor/src/ui/views/stock_transfer/stock_transfer_view.dart';
 import 'package:distributor/src/ui/views/voucher_detail/voucher_detail_view.dart';
 import 'package:distributor/ui/views/adhoc_sales/adhoc_sales_view.dart';
+import 'package:distributor/ui/views/app_info/app_info_view.dart';
+import 'package:distributor/ui/views/bug_report/bug_report.dart';
+import 'package:distributor/ui/views/bug_report/bug_report_viewmodel.dart';
 import 'package:distributor/ui/views/crate_movement/crate_movement_view.dart';
 import 'package:distributor/ui/views/customer_location.dart';
 import 'package:distributor/ui/views/customers/customer_detail/customer_detail_view.dart';
+import 'package:distributor/ui/views/help/help_view.dart';
 
 import 'package:distributor/ui/views/home/home_view.dart';
 import 'package:distributor/ui/views/journey/journey_view.dart';
@@ -68,7 +72,10 @@ import '../ui/views/login/login_view.dart';
     MaterialRoute(page: VoucherDetailView),
     MaterialRoute(page: StockCollectionView),
     MaterialRoute(page: AdhocSalesView),
-    MaterialRoute(page: ManageCrateView)
+    MaterialRoute(page: ManageCrateView),
+    MaterialRoute(page: HelpView),
+    MaterialRoute(page: BugReportView),
+    MaterialRoute(page: AppInfoView),
   ],
 )
 class $Router {}

@@ -15,7 +15,10 @@ class StockControllerWidget extends StatelessWidget {
     return ViewModelBuilder<StockControllerWidgetViewModel>.reactive(
         builder: (context, model, child) => model.hasJourneys == false
             ? Center(
-                child: EmptyContentContainer(label: kStringNoJourney),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: EmptyContentContainer(label: kStringNoJourney),
+                ),
               )
             : model.hasSelectedJourney == true
                 ? StockListWidget(

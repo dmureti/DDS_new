@@ -31,6 +31,41 @@ class CreateSalesOrderView extends StatelessWidget {
               Navigator.pop(context, false);
             },
           ),
+          // bottom: PreferredSize(
+          //   preferredSize: const Size.fromHeight(48.0),
+          //   child: Container(
+          //     child: Autocomplete<SalesOrderItem>(
+          //       optionsBuilder: (TextEditingValue textEditingValue) {
+          //         return model.salesOrderItems
+          //             .where((SalesOrderItem salesOrderItem) => salesOrderItem
+          //                 .item.itemName
+          //                 .toLowerCase()
+          //                 .startsWith(textEditingValue.text.toLowerCase()))
+          //             .toList();
+          //       },
+          //       displayStringForOption: (SalesOrderItem salesOrderItem) =>
+          //           salesOrderItem.item.itemName,
+          //       fieldViewBuilder: (BuildContext context,
+          //           TextEditingController fieldTextEditingController,
+          //           FocusNode fieldFocusNode,
+          //           VoidCallback onFieldSubmitted) {
+          //         return Container(
+          //           margin: EdgeInsets.symmetric(horizontal: 20),
+          //           child: TextField(
+          //             controller: fieldTextEditingController,
+          //             focusNode: fieldFocusNode,
+          //             style: const TextStyle(
+          //               fontWeight: FontWeight.bold,
+          //             ),
+          //             decoration: InputDecoration(
+          //                 prefixIcon: Icon(Icons.search), helperText: 'Search'),
+          //           ),
+          //         );
+          //       },
+          //     ),
+          //   ),
+          // ),
+
           title: AppBarColumnTitle(
             mainTitle: 'Place Order',
             subTitle: customer.name,

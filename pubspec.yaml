@@ -1,6 +1,6 @@
 name: distributor
 description: Digital Distribution System
-version: 10.1.2+10
+version: 10.1.5+10
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
@@ -53,6 +53,8 @@ dependencies:
   responsive_framework: ^0.1.4
   connectivity_plus: ^0.6.0
   provider: ^4.3.3
+  cloud_firestore: ^0.16.0+1
+
 #  json_serializable: ^4.0.0-nullsafety.0
 
 dev_dependencies:

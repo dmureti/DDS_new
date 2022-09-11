@@ -13,6 +13,7 @@ class EmptyContentContainer extends StatelessWidget {
       child: Text(
         label,
         style: kCommentTextStyle,
+        textAlign: TextAlign.center,
       ),
     );
   }
