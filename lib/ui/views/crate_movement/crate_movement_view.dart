@@ -228,8 +228,11 @@ class CrateMovementView extends StatelessWidget {
                             : model.crateList.isNotEmpty
                                 ? Container(
                                     width: MediaQuery.of(context).size.width,
-                                    child: RaisedButton(
-                                      color: kColorDDSPrimaryLight,
+                                    child: ElevatedButton(
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  kColorDDSPrimaryLight)),
                                       onPressed:
                                           crateTxnType == CrateTxnType.Return
                                               ? model.commitReturnCrates

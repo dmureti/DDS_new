@@ -34,7 +34,7 @@ class ResetPasswordView extends StatelessWidget {
                       ? BusyWidget()
                       : Container(
                           width: MediaQuery.of(context).size.width,
-                          child: RaisedButton(
+                          child: ElevatedButton(
                             onPressed:
                                 model.userId != null && model.userId.isNotEmpty
                                     ? model.resetPassword

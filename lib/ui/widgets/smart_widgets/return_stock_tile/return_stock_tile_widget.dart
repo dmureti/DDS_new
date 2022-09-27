@@ -99,7 +99,7 @@ class ReturnStockTileWidget extends StatelessWidget {
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: RaisedButton(
+                                          child: ElevatedButton(
                                             onPressed: () {
                                               onChange(model.product);
                                               Navigator.pop(

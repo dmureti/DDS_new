@@ -52,7 +52,7 @@ class ChangePasswordView extends StatelessWidget {
                   ),
                   model.isBusy
                       ? BusyWidget()
-                      : RaisedButton(
+                      : ElevatedButton(
                           onPressed:
                               model.enableSubmit ? model.changePassword : null,
                           child: Text('Change Password'),

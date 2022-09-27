@@ -54,7 +54,7 @@ class PaymentReferenceView extends StatelessWidget {
                       ? CircularProgressIndicator()
                       : Container(
                           width: double.infinity,
-                          child: RaisedButton(
+                          child: ElevatedButton(
                             onPressed: () {
                               model.retrievePendingPayment();
                             },

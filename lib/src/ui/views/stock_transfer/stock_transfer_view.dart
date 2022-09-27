@@ -56,7 +56,7 @@ class StockTransferView extends StatelessWidget {
                               height: 50,
                               child: model.isBusy
                                   ? Center(child: BusyWidget())
-                                  : RaisedButton(
+                                  : ElevatedButton(
                                       child: Text(
                                         'Return to Branch',
                                         style: kActiveButtonTextStyle,

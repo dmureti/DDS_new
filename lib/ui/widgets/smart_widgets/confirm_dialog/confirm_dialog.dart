@@ -44,7 +44,7 @@ class ConfirmDialog extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        RaisedButton(
+                        ElevatedButton(
                           child: Row(
                             children: <Widget>[
                               Icon(FontAwesomeIcons.solidWindowClose),
@@ -62,7 +62,7 @@ class ConfirmDialog extends StatelessWidget {
                             ? Center(
                                 child: CircularProgressIndicator(),
                               )
-                            : RaisedButton(
+                            : ElevatedButton(
                                 child: Row(
                                   children: <Widget>[
                                     Icon(FontAwesomeIcons.check),

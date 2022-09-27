@@ -75,7 +75,7 @@ class AddIssueView extends StatelessWidget {
                     ? BusyWidget()
                     : Container(
                         width: double.infinity,
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () async {
                             await model.addIssue();
                             Navigator.pop(context);

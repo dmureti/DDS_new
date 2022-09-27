@@ -90,7 +90,7 @@ class AdhocCartView extends StatelessWidget {
                         Container(
                           height: 50,
                           width: MediaQuery.of(context).size.width,
-                          child: RaisedButton(
+                          child: ElevatedButton(
                             child: Text(
                               'CONTINUE TO PAYMENT',
                               style: kActiveButtonTextStyle,

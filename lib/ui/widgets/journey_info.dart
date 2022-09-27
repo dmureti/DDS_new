@@ -138,7 +138,8 @@ class JourneyInfo extends StatelessWidget {
                                     ),
                                     backgroundColor: Colors.green,
                                   );
-                                  Scaffold.of(context).showSnackBar(snackbar);
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackbar);
                                 } else {
                                   // The status of the journey has not been changed
                                   // @TODO : Show a snackbar to notify the user that the status has not changed.
@@ -151,7 +152,8 @@ class JourneyInfo extends StatelessWidget {
                                     ),
                                     backgroundColor: Colors.red,
                                   );
-                                  Scaffold.of(context).showSnackBar(snackbar);
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackbar);
                                 }
                               }
                             },
@@ -220,14 +222,14 @@ class JourneyInfo extends StatelessWidget {
                                             content: Text(
                                                 'Do you want to start on this journey on Route : ${e.route} ?\nClick Cancel to select another journey OR Confirm to continue.'),
                                             actions: <Widget>[
-                                              RaisedButton(
+                                              ElevatedButton(
                                                 child: Text('Confirm'),
                                                 onPressed: () {
                                                   Navigator.pop(
                                                       dialogContext, true);
                                                 },
                                               ),
-                                              RaisedButton(
+                                              ElevatedButton(
                                                 child: Text('Cancel'),
                                                 onPressed: () {
                                                   Navigator.pop(
@@ -256,14 +258,14 @@ class JourneyInfo extends StatelessWidget {
                                             content: Text(
                                                 'Do you want to continue with this journey on Route : ${e.route} ?\nClick Cancel to select another journey OR Confirm to continue.'),
                                             actions: <Widget>[
-                                              RaisedButton(
+                                              ElevatedButton(
                                                 child: Text('Confirm'),
                                                 onPressed: () {
                                                   Navigator.pop(
                                                       dialogContext, true);
                                                 },
                                               ),
-                                              RaisedButton(
+                                              ElevatedButton(
                                                 child: Text('Cancel'),
                                                 onPressed: () {
                                                   Navigator.pop(

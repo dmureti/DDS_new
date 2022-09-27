@@ -235,7 +235,7 @@ class SaleItemWidget extends HookViewModelWidget<AdhocDetailViewModel> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: RaisedButton(
+                                      child: ElevatedButton(
                                         onPressed: () {
                                           model.updateMemento(
                                               saleItem,

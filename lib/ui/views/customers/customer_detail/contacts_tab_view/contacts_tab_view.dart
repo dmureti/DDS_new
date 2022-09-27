@@ -100,7 +100,7 @@ class ContactsTabView extends StatelessWidget {
                                       Row(
                                         children: [
                                           Text('Location'),
-                                          FlatButton.icon(
+                                          TextButton.icon(
                                               onPressed: () async {
                                                 Navigator.of(context).push(
                                                   MaterialPageRoute(

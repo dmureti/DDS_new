@@ -668,14 +668,14 @@ class _CreateOrderButton extends HookViewModelWidget<CustomerDetailViewModel> {
                   .navigateToCreateSalesOrderView(model.customer)
                   .then((value) {
                 if (value != null) {
-                  return Scaffold.of(context).showSnackBar(SnackBar(
+                  return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.red,
                     content: Container(child: Text('No order was placed')),
                   ));
                 } else {
                   //@TODO: Fetch the data again
 
-                  return Scaffold.of(context).showSnackBar(
+                  return ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       elevation: 4,
                       shape: RoundedRectangleBorder(

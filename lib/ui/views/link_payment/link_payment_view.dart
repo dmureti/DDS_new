@@ -55,8 +55,8 @@ class LinkPaymentView extends StatelessWidget {
                           ? Center(
                               child: CircularProgressIndicator(),
                             )
-                          : RaisedButton(
-                              splashColor: Colors.pink,
+                          : ElevatedButton(
+                              style: ButtonStyle(),
                               onPressed: model.isComplete
                                   ? () {
                                       model.linkPayment();

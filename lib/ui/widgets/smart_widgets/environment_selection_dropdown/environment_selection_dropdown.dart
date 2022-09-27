@@ -24,7 +24,7 @@ class EnvironmentSelectionDropDown extends StatelessWidget {
           ),
           onChanged: (AppEnv appEnv) {
             model.updateEnv(appEnv);
-            Scaffold.of(context).showSnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Container(
                   child: Text('Using ${model.appEnv.name}'),

@@ -244,7 +244,7 @@ class OrderConfirmation extends StatelessWidget {
                       model.salesOrder.items.isEmpty ||
                               model.salesOrder.total == 0
                           ? Container(
-                              child: RaisedButton(
+                              child: ElevatedButton(
                                 onPressed: () => model.backToPlaceOrder(),
                                 child: Text(
                                   'Back to Place Order'.toUpperCase(),
@@ -267,11 +267,17 @@ class OrderConfirmation extends StatelessWidget {
                                 )
                               : Container(
                                   width: MediaQuery.of(context).size.width,
-                                  child: RaisedButton(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 25, vertical: 10),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8)),
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                        padding: MaterialStateProperty.all(
+                                          EdgeInsets.symmetric(
+                                              horizontal: 25, vertical: 10),
+                                        ),
+                                        shape: MaterialStateProperty.all(
+                                          RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                        )),
                                     onPressed: () {
                                       model.createSalesOrder();
                                     },

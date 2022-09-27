@@ -197,7 +197,7 @@ class _LoginViewState extends State<LoginView> {
                               Padding(
                                 padding:
                                     const EdgeInsets.only(left: 8.0, top: 10),
-                                child: FlatButton(
+                                child: TextButton(
                                     onPressed: model.navigateToForgotPassword,
                                     child: Text(
                                       'Reset Password',
@@ -212,11 +212,11 @@ class _LoginViewState extends State<LoginView> {
                           UIHelper.verticalSpace(10),
                           model.isBusy
                               ? BusyWidget()
-                              : RaisedButton(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 14),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(6)),
+                              : ElevatedButton(
+                                  // padding: EdgeInsets.symmetric(
+                                  //     horizontal: 20, vertical: 14),
+                                  // shape: RoundedRectangleBorder(
+                                  //     borderRadius: BorderRadius.circular(6)),
                                   child: Container(
                                     width: 250,
                                     child: Center(
@@ -243,7 +243,10 @@ class _LoginViewState extends State<LoginView> {
                                           model.login();
                                           // }
                                         },
-                                  color: kColDDSPrimaryDark,
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              kColDDSPrimaryDark)),
                                 ),
                         ],
                       ),

@@ -22,14 +22,19 @@ class SelectControlWidget extends StatelessWidget {
                     ? Center(
                         child: BusyWidget(),
                       )
-                    : RaisedButton(
-                        color: model.isCurrentSelection
-                            ? kStopControl
-                            : kSelectControl,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                        // shape: RoundedRectangleBorder(
-                        //     borderRadius: BorderRadius.circular(25)),
+                    : ElevatedButton(
+                        style: ButtonStyle(
+                            padding: MaterialStateProperty.all(
+                                EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10)),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25)),
+                            ),
+                            backgroundColor: MaterialStateProperty.all(
+                                model.isCurrentSelection
+                                    ? kStopControl
+                                    : kSelectControl)),
                         onPressed: () {
                           model.toggleSelectedJourney(deliveryJourney);
                         },

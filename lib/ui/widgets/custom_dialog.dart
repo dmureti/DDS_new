@@ -69,8 +69,10 @@ class CustomDialog extends StatelessWidget {
                 SizedBox(height: 24.0),
                 Align(
                   alignment: Alignment.bottomRight,
-                  child: FlatButton.icon(
-                    color: Colors.indigo,
+                  child: TextButton.icon(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.indigo)),
                     onPressed: () {
                       Navigator.of(context).pop(); // To close the dialog
                     },

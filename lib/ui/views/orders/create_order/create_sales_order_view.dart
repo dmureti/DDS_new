@@ -238,7 +238,7 @@ class _SummaryDraggableSheetState extends State<SummaryDraggableSheet> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  RaisedButton(
+                                  ElevatedButton(
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
@@ -339,10 +339,13 @@ class _SummaryDraggableSheetState extends State<SummaryDraggableSheet> {
             ),
             Container(
               alignment: Alignment.center,
-              child: RaisedButton(
-                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    padding: MaterialStateProperty.all(
+                      EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                    ),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)))),
                 child: Text(
                   'Continue'.toUpperCase(),
                   style: TextStyle(
@@ -370,11 +373,11 @@ class _SummaryDraggableSheetState extends State<SummaryDraggableSheet> {
                                   style: TextStyle(color: Colors.indigo),
                                 ),
                                 actions: <Widget>[
-                                  FlatButton.icon(
+                                  TextButton.icon(
                                     onPressed: () => Navigator.pop(context),
                                     icon: Icon(Icons.close),
                                     label: Text('CLOSE'),
-                                    splashColor: Colors.indigo,
+                                    // splashColor: Colors.indigo,
                                   )
                                 ],
                                 content: Column(
@@ -402,11 +405,11 @@ class _SummaryDraggableSheetState extends State<SummaryDraggableSheet> {
                                   style: TextStyle(color: Colors.indigo),
                                 ),
                                 actions: <Widget>[
-                                  FlatButton.icon(
+                                  TextButton.icon(
                                     onPressed: () => Navigator.pop(context),
                                     icon: Icon(Icons.close),
                                     label: Text('CLOSE'),
-                                    splashColor: Colors.indigo,
+                                    // splashColor: Colors.indigo,
                                   )
                                 ],
                                 content: Column(

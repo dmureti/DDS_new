@@ -56,7 +56,7 @@ class AccountsTab extends StatelessWidget {
                                           : Row(
                                               children: [
                                                 model.showDateSelection == true
-                                                    ? FlatButton.icon(
+                                                    ? TextButton.icon(
                                                         onPressed: () {
                                                           model.clear();
                                                           model

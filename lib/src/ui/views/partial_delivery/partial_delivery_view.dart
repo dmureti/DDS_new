@@ -131,7 +131,7 @@ class PartialDeliveryView extends StatelessWidget {
                               ? Center(
                                   child: BusyWidget(),
                                 )
-                              : RaisedButton(
+                              : ElevatedButton(
                                   child: Text(
                                     'Make Partial Delivery',
                                     style: TextStyle(

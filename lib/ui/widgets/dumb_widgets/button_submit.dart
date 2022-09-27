@@ -11,7 +11,7 @@ class ButtonSubmit extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      child: RaisedButton(
+      child: ElevatedButton(
         child: Text(label),
         onPressed: () => onPressed(),
       ),

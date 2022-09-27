@@ -7,7 +7,7 @@ class AppBarSearch<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton.icon(
+    return TextButton.icon(
       icon: Icon(
         Icons.search,
         color: Colors.white,
