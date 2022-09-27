@@ -1,9 +1,10 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/services/location_repository.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 class DistanceWidgetViewModel extends FutureViewModel {
-  LocationService _locationService = locator<LocationService>();
+  final _locationService = locator<LocationRepository>();
   final UserLocation _customerLocation;
   final UserLocation _userLocation;
 

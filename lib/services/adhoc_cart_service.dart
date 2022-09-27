@@ -2,6 +2,8 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/journey_service.dart';
+import 'package:distributor/services/location_repository.dart';
+import 'package:distributor/services/location_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/user_service.dart';
 
@@ -15,7 +17,7 @@ class AdhocCartService with ReactiveServiceMixin {
   ApiService _apiService = locator<ApiService>();
   UserService _userService = locator<UserService>();
   LogisticsService _logisticsService = locator<LogisticsService>();
-  LocationService _locationService = locator<LocationService>();
+  final _locationService = locator<LocationRepository>();
   JourneyService _journeyService = locator<JourneyService>();
 
   UserLocation _userLocation;
@@ -91,7 +93,7 @@ class AdhocCartService with ReactiveServiceMixin {
       }
       // await getPaymentModes(_journeyService.currentJourney.route);
     }
-    await getCurrentLocation();
+    // await getCurrentLocation();
   }
 
   getPOSAccount(String modeOfPayment, branchId) async {
@@ -227,6 +229,7 @@ class AdhocCartService with ReactiveServiceMixin {
   get customerName => _customerName.value;
 
   createPayment() async {
+    await getCurrentLocation();
     Map<String, dynamic> data = {
       "customerId": customerId,
       "customerName": customerName,

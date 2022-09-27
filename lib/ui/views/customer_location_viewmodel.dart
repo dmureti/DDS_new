@@ -1,11 +1,12 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/services/location_repository.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 class CustomerLocationViewModel extends FutureViewModel {
-  LocationService _locationService = locator<LocationService>();
+  final _locationService = locator<LocationRepository>();
   DialogService _dialogService = locator<DialogService>();
   final UserLocation _customerLocation;
 

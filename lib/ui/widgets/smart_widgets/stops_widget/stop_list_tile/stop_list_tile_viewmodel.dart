@@ -2,6 +2,7 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/journey_service.dart';
+import 'package:distributor/services/location_repository.dart';
 import 'package:distributor/services/user_service.dart';
 
 import 'package:geolocator/geolocator.dart';
@@ -14,7 +15,7 @@ class StopListTileViewModel extends BaseViewModel {
   ApiService _apiService = locator<ApiService>();
   NavigationService _navigationService = locator<NavigationService>();
   DialogService _dialogService = locator<DialogService>();
-  LocationService _locationService = locator<LocationService>();
+  final _locationService = locator<LocationRepository>();
   JourneyService _journeyService = locator<JourneyService>();
   Api get _api => _apiService.api;
   UserService _userService = locator<UserService>();

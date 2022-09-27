@@ -1,5 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/journey_service.dart';
+import 'package:distributor/services/location_repository.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:stacked/stacked.dart';
@@ -12,7 +13,7 @@ class ConfirmDialogViewModel extends BaseViewModel {
   LogisticsService _logisticsService = locator<LogisticsService>();
   NavigationService _navigationService = locator<NavigationService>();
   SnackbarService _snackbarService = locator<SnackbarService>();
-  LocationService _locationService = locator<LocationService>();
+  final _locationService = locator<LocationRepository>();
 
   String _deliveryLocation;
   String get deliveryLocation => _deliveryLocation;

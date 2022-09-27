@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:distributor/services/remote_storage_repository.dart';
 
-class FirestoreService {
+class FirestoreService implements RemoteStorageRepository {
   final _firebaseFirestore = FirebaseFirestore.instance;
 
   CollectionReference get _titleCollectionReference =>
@@ -41,5 +42,34 @@ class FirestoreService {
       docRef.set(data);
     } catch (e) {
     } finally {}
+  }
+
+  @override
+  deleteData() {
+    // TODO: implement deleteData
+    throw UnimplementedError();
+  }
+
+  @override
+  fetchData(String endPoint) {
+    // TODO: implement fetchData
+    throw UnimplementedError();
+  }
+
+  @override
+  updateData(String endPoint, Map<String, dynamic> data) {
+    // TODO: implement updateData
+    throw UnimplementedError();
+  }
+
+  @override
+  writeData(String endPoint, Map<String, dynamic> data) {
+    // TODO: implement writeData
+    throw UnimplementedError();
+  }
+
+  @override
+  writeLocationData(Map<String, dynamic> locationData) async {
+    return _firebaseFirestore.collection('locations').add(locationData);
   }
 }

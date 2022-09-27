@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:distributor/app/locator.dart';
 
 import 'package:distributor/services/journey_service.dart';
+import 'package:distributor/services/location_repository.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -14,7 +15,7 @@ class PartialDeliveryViewModel extends BaseViewModel {
   UserService _userService = locator<UserService>();
   String get token => _userService.user.token;
 
-  LocationService _locationService = locator<LocationService>();
+  final _locationService = locator<LocationRepository>();
 
   SalesOrder _salesOrder;
   final DeliveryJourney deliveryJourney;

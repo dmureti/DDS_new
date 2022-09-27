@@ -2,6 +2,7 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/journey_service.dart';
+import 'package:distributor/services/location_repository.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:flutter/foundation.dart';
@@ -12,7 +13,7 @@ import 'package:tripletriocore/tripletriocore.dart';
 
 class OrderDetailViewModel extends ReactiveViewModel {
   LogisticsService _logisticsService = locator<LogisticsService>();
-  LocationService _locationService = locator<LocationService>();
+  final _locationService = locator<LocationRepository>();
   JourneyService _journeyService = locator<JourneyService>();
   ApiService _apiService = locator<ApiService>();
   UserService _userService = locator<UserService>();

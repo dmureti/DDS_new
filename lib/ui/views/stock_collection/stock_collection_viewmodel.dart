@@ -1,4 +1,5 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/services/location_repository.dart';
 
 import 'package:distributor/services/stock_controller_service.dart';
 import 'package:stacked/stacked.dart';
@@ -9,7 +10,7 @@ class StockCollectionViewModel extends BaseViewModel {
   final _dialogService = locator<DialogService>();
   final _navigationService = locator<NavigationService>();
   final _stockControlService = locator<StockControllerService>();
-  final _locationService = locator<LocationService>();
+  final _locationService = locator<LocationRepository>();
 
   StockCollectionViewModel(this._deliveryStop);
 

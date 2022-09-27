@@ -7,10 +7,9 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:stacked_services/stacked_services.dart' as _i10;
-import 'package:tripletriocore/tripletriocore.dart' as _i14;
 
 import '../core/models/product_service.dart' as _i19;
-import '../core/models/search_service.dart' as _i22;
+import '../core/models/search_service.dart' as _i23;
 import '../services/access_controller_service.dart' as _i3;
 import '../services/activity_service.dart' as _i4;
 import '../services/adhoc_cart_service.dart' as _i5;
@@ -21,21 +20,23 @@ import '../services/customer_service.dart' as _i9;
 import '../services/firestore_service.dart' as _i11;
 import '../services/init_service.dart' as _i12;
 import '../services/journey_service.dart' as _i13;
+import '../services/location_repository.dart' as _i14;
 import '../services/logistics_service.dart' as _i15;
 import '../services/order_service.dart' as _i16;
 import '../services/payments_service.dart' as _i17;
 import '../services/permission_service.dart' as _i18;
 import '../services/remote_config_service.dart' as _i20;
-import '../services/return_stock_service.dart' as _i21;
-import '../services/stock_controller_service.dart' as _i23;
-import '../services/stop_service.dart' as _i24;
-import '../services/third_party_services_module.dart' as _i30;
-import '../services/timeout_service.dart' as _i25;
-import '../services/transaction_service.dart' as _i26;
-import '../services/update_service.dart' as _i27;
-import '../services/user_service.dart' as _i28;
+import '../services/remote_storage_repository.dart' as _i21;
+import '../services/return_stock_service.dart' as _i22;
+import '../services/stock_controller_service.dart' as _i24;
+import '../services/stop_service.dart' as _i25;
+import '../services/third_party_services_module.dart' as _i31;
+import '../services/timeout_service.dart' as _i26;
+import '../services/transaction_service.dart' as _i27;
+import '../services/update_service.dart' as _i28;
+import '../services/user_service.dart' as _i29;
 import '../services/version_service.dart'
-    as _i29; // ignore_for_file: unnecessary_lambdas
+    as _i30; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -61,8 +62,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => thirdPartyServicesModule.initService);
   gh.lazySingleton<_i13.JourneyService>(
       () => thirdPartyServicesModule.journeyService);
-  gh.lazySingleton<_i14.LocationService>(
-      () => thirdPartyServicesModule.locationService);
+  gh.lazySingleton<_i14.LocationRepository>(
+      () => thirdPartyServicesModule.locationRepository);
   gh.lazySingleton<_i15.LogisticsService>(
       () => thirdPartyServicesModule.logisticsService);
   gh.lazySingleton<_i10.NavigationService>(
@@ -74,24 +75,26 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i19.ProductService>(() => _i19.ProductService());
   gh.lazySingleton<_i20.RemoteConfigService>(
       () => thirdPartyServicesModule.remoteConfigService);
-  gh.lazySingleton<_i21.ReturnStockService>(() => _i21.ReturnStockService());
-  gh.lazySingleton<_i22.SearchService>(() => _i22.SearchService());
+  gh.lazySingleton<_i21.RemoteStorageRepository>(
+      () => thirdPartyServicesModule.remoteStorageRepository);
+  gh.lazySingleton<_i22.ReturnStockService>(() => _i22.ReturnStockService());
+  gh.lazySingleton<_i23.SearchService>(() => _i23.SearchService());
   gh.lazySingleton<_i10.SnackbarService>(
       () => thirdPartyServicesModule.snackbarService);
-  gh.lazySingleton<_i23.StockControllerService>(
+  gh.lazySingleton<_i24.StockControllerService>(
       () => thirdPartyServicesModule.stockControlService);
-  gh.lazySingleton<_i24.StopService>(() => _i24.StopService());
-  gh.lazySingleton<_i25.TimeoutService>(() => _i25.TimeoutService());
-  gh.lazySingleton<_i26.TransactionService>(
+  gh.lazySingleton<_i25.StopService>(() => _i25.StopService());
+  gh.lazySingleton<_i26.TimeoutService>(() => _i26.TimeoutService());
+  gh.lazySingleton<_i27.TransactionService>(
       () => thirdPartyServicesModule.transactionService);
-  gh.lazySingleton<_i27.UpdateService>(() => _i27.UpdateService());
-  gh.lazySingleton<_i28.UserService>(
+  gh.lazySingleton<_i28.UpdateService>(() => _i28.UpdateService());
+  gh.lazySingleton<_i29.UserService>(
       () => thirdPartyServicesModule.userService);
-  gh.lazySingleton<_i29.VersionService>(() => _i29.VersionService());
+  gh.lazySingleton<_i30.VersionService>(() => _i30.VersionService());
   return get;
 }
 
-class _$ThirdPartyServicesModule extends _i30.ThirdPartyServicesModule {
+class _$ThirdPartyServicesModule extends _i31.ThirdPartyServicesModule {
   @override
   _i3.AccessControlService get accessControlService =>
       _i3.AccessControlService();
@@ -111,7 +114,7 @@ class _$ThirdPartyServicesModule extends _i30.ThirdPartyServicesModule {
   @override
   _i13.JourneyService get journeyService => _i13.JourneyService();
   @override
-  _i14.LocationService get locationService => _i14.LocationService();
+  _i14.LocationRepository get locationRepository => _i14.LocationRepository();
   @override
   _i15.LogisticsService get logisticsService => _i15.LogisticsService();
   @override
@@ -122,12 +125,15 @@ class _$ThirdPartyServicesModule extends _i30.ThirdPartyServicesModule {
   _i20.RemoteConfigService get remoteConfigService =>
       _i20.RemoteConfigService();
   @override
+  _i21.RemoteStorageRepository get remoteStorageRepository =>
+      _i21.RemoteStorageRepository();
+  @override
   _i10.SnackbarService get snackbarService => _i10.SnackbarService();
   @override
-  _i23.StockControllerService get stockControlService =>
-      _i23.StockControllerService();
+  _i24.StockControllerService get stockControlService =>
+      _i24.StockControllerService();
   @override
-  _i26.TransactionService get transactionService => _i26.TransactionService();
+  _i27.TransactionService get transactionService => _i27.TransactionService();
   @override
-  _i28.UserService get userService => _i28.UserService();
+  _i29.UserService get userService => _i29.UserService();
 }

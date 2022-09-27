@@ -1,10 +1,11 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/services/location_repository.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 class PlacemarkWidgetViewModel extends FutureViewModel<List<Placemark>> {
-  LocationService _locationService = locator<LocationService>();
+  final _locationService = locator<LocationRepository>();
   final UserLocation _userLocation;
 
   PlacemarkWidgetViewModel(this._userLocation);

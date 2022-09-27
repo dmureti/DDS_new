@@ -3,6 +3,7 @@ import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/journey_service.dart';
+import 'package:distributor/services/location_repository.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -22,7 +23,7 @@ class DeliveryNoteViewModel extends BaseViewModel {
   DeliveryJourney get deliveryJourney => _deliveryJourney;
   DeliveryStop get deliveryStop => _deliveryStop;
   final Customer customer;
-  LocationService _locationService = locator<LocationService>();
+  final _locationService = locator<LocationRepository>();
 
   DeliveryNote _deliveryNote;
   DeliveryNote get deliveryNote => _deliveryNote;

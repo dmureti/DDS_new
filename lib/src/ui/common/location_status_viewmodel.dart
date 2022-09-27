@@ -1,4 +1,5 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/services/location_repository.dart';
 import 'package:distributor/services/permission_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:stacked/stacked.dart';
@@ -6,7 +7,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 class LocationStatusViewModel extends BaseViewModel {
-  final _locationService = locator<LocationService>();
+  final _locationService = locator<LocationRepository>();
   final _dialogService = locator<DialogService>();
   final _permissionService = locator<PermissionService>();
 
