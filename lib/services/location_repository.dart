@@ -15,4 +15,6 @@ abstract class LocationRepository {
       double latitude, double longitude, double latitude2, double longitude2);
 
   addGeoPoint();
+
+  listenToUserLocation() {}
 }

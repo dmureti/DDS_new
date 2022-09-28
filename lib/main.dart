@@ -4,10 +4,12 @@ import 'package:distributor/conf/style/lib/colors.dart';
 import 'package:distributor/conf/style/lib/fonts.dart';
 import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/core/enums.dart';
+import 'package:distributor/main_viewmodel.dart';
 import 'package:distributor/services/connectivity_service.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 import 'package:distributor/app/router.gr.dart' as app_router;
@@ -20,14 +22,20 @@ class MainApp extends StatelessWidget {
     return StreamProvider<ConnectivityStatus>(
       create: (context) =>
           ConnectivityService().connectionStatusController.stream,
-      child: MaterialApp(
-        supportedLocales: const [Locale('en'), Locale('en_us')],
-        title: Globals.appName,
-        debugShowCheckedModeBanner: false,
-        theme: _kAppTheme,
-        initialRoute: Routes.startupView,
-        onGenerateRoute: app_router.Router().onGenerateRoute,
-        navigatorKey: locator<NavigationService>().navigatorKey,
+      child: ViewModelBuilder<MainViewModel>.reactive(
+        builder: (context, model, child) {
+          return MaterialApp(
+            supportedLocales: const [Locale('en'), Locale('en_us')],
+            title: Globals.appName,
+            debugShowCheckedModeBanner: false,
+            theme: _kAppTheme,
+            initialRoute: Routes.startupView,
+            onGenerateRoute: app_router.Router().onGenerateRoute,
+            navigatorKey: locator<NavigationService>().navigatorKey,
+          );
+        },
+        viewModelBuilder: () => MainViewModel(),
+        onModelReady: (model) => model.init(),
       ),
     );
   }
