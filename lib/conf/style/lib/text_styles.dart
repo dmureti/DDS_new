@@ -61,7 +61,7 @@ const kJourneyConsoleStops =
 
 // Use for leading text
 const kLeadingBodyText = TextStyle(
-    fontSize: kBodyTextSize * 1.2,
+    fontSize: kBodyTextSize * 1.0,
     fontFamily: kFontThinBody,
     color: kColorDDSColorDark);
 
