@@ -91,7 +91,7 @@ class LocationService implements LocationRepository {
   listenToUserLocation() {
     List waypoints = [];
     LocationOptions locationOptions = LocationOptions(
-        accuracy: LocationAccuracy.bestForNavigation, distanceFilter: 100);
+        accuracy: LocationAccuracy.bestForNavigation, distanceFilter: 1000);
     Geolocator().getPositionStream(locationOptions).listen((Position position) {
       if (position != null) {
         waypoints.add(UserLocation(

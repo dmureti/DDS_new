@@ -15,7 +15,7 @@ class MainViewModel extends BaseViewModel {
   init() {
     //@TODO Check the permissions for location
     //@TODO Initialize the location stream
-    listenToLocation();
+    // listenToLocation();
   }
 
   listenToLocation() {
@@ -28,15 +28,5 @@ class MainViewModel extends BaseViewModel {
         // print("${userLocation.latitude} ${userLocation.longitude}");
       }
     });
-
-    // _locationService.locationStream().listen((UserLocation userLocation) {
-    //   updatedLocations.add(userLocation);
-    //
-    //   if (updatedLocations != null && updatedLocations.length > 0) {
-    //     _waypoints = updatedLocations;
-    //     notifyListeners();
-    //   }
-    //   // print(waypoints.last);
-    // });
   }
 }

@@ -3,6 +3,7 @@ import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
 
 import 'package:distributor/services/journey_service.dart';
+import 'package:distributor/services/waypoint_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -11,11 +12,10 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
   JourneyService _journeyService = locator<JourneyService>();
   DialogService _dialogService = locator<DialogService>();
   NavigationService _navigationService = locator<NavigationService>();
+  final _waypointService = locator<WaypointService>();
 
   navigateToJourneyMap() async {
-    await _navigationService.navigateTo(Routes.deliveryJourneyMapView,
-        arguments: DeliveryJourneyMapViewArguments(
-            deliveryJourney: _journeyService.currentJourney));
+    await _navigationService.navigateTo(Routes.journeyLog);
   }
 
   navigateToJourneyInfoRoute() async {
@@ -54,9 +54,11 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
       if (dialogResponse.confirmed) {
         setBusy(true);
         var result = await _journeyService.startTrip();
+        _waypointService.initializeJourney();
         setBusy(false);
         if (result) {
           notifyListeners();
+          _waypointService.listenToLocation();
           return true;
         }
       }
@@ -65,6 +67,8 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
     } else if (journeyStatus.toLowerCase() == 'in transit') {
       setBusy(true);
       var result = await _journeyService.stopTrip();
+      await _waypointService.completeJourney();
+      //@TODO Stop listening to the stream
       setBusy(false);
       if (result is bool) {
         notifyListeners();

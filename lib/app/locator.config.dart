@@ -30,13 +30,14 @@ import '../services/remote_storage_repository.dart' as _i21;
 import '../services/return_stock_service.dart' as _i22;
 import '../services/stock_controller_service.dart' as _i24;
 import '../services/stop_service.dart' as _i25;
-import '../services/third_party_services_module.dart' as _i31;
+import '../services/third_party_services_module.dart' as _i32;
 import '../services/timeout_service.dart' as _i26;
 import '../services/transaction_service.dart' as _i27;
 import '../services/update_service.dart' as _i28;
 import '../services/user_service.dart' as _i29;
-import '../services/version_service.dart'
-    as _i30; // ignore_for_file: unnecessary_lambdas
+import '../services/version_service.dart' as _i30;
+import '../services/waypoint_service.dart'
+    as _i31; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -91,10 +92,12 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.lazySingleton<_i29.UserService>(
       () => thirdPartyServicesModule.userService);
   gh.lazySingleton<_i30.VersionService>(() => _i30.VersionService());
+  gh.lazySingleton<_i31.WaypointService>(
+      () => thirdPartyServicesModule.waypointService);
   return get;
 }
 
-class _$ThirdPartyServicesModule extends _i31.ThirdPartyServicesModule {
+class _$ThirdPartyServicesModule extends _i32.ThirdPartyServicesModule {
   @override
   _i3.AccessControlService get accessControlService =>
       _i3.AccessControlService();
@@ -136,4 +139,6 @@ class _$ThirdPartyServicesModule extends _i31.ThirdPartyServicesModule {
   _i27.TransactionService get transactionService => _i27.TransactionService();
   @override
   _i29.UserService get userService => _i29.UserService();
+  @override
+  _i31.WaypointService get waypointService => _i31.WaypointService();
 }

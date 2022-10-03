@@ -16,6 +16,7 @@ import 'package:distributor/services/stock_controller_service.dart';
 import 'package:distributor/services/remote_storage_repository.dart';
 import 'package:distributor/services/transaction_service.dart';
 import 'package:distributor/services/user_service.dart';
+import 'package:distributor/services/waypoint_service.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -60,4 +61,6 @@ abstract class ThirdPartyServicesModule {
   LocationRepository get locationRepository;
   @lazySingleton
   RemoteStorageRepository get remoteStorageRepository;
+  @lazySingleton
+  WaypointService get waypointService;
 }

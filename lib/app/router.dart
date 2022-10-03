@@ -7,6 +7,7 @@ import 'package:distributor/src/ui/views/adhoc_cart_view/adhoc_cart_view.dart';
 import 'package:distributor/src/ui/views/adhoc_detail/adhoc_detail.dart';
 
 import 'package:distributor/src/ui/views/adhoc_payment/adhoc_payment_view.dart';
+import 'package:distributor/src/ui/views/journey_log/journey_log.dart';
 import 'package:distributor/src/ui/views/partial_delivery/partial_delivery_view.dart';
 import 'package:distributor/src/ui/views/delivery_note/delivery_note_view.dart';
 import 'package:distributor/src/ui/views/reset_password/reset_password_view.dart';
@@ -21,6 +22,7 @@ import 'package:distributor/ui/views/bug_report/bug_report_viewmodel.dart';
 import 'package:distributor/ui/views/crate_movement/crate_movement_view.dart';
 import 'package:distributor/ui/views/customer_location.dart';
 import 'package:distributor/ui/views/customers/customer_detail/customer_detail_view.dart';
+import 'package:distributor/ui/views/help/help_detail_view.dart';
 import 'package:distributor/ui/views/help/help_view.dart';
 
 import 'package:distributor/ui/views/home/home_view.dart';
@@ -73,6 +75,8 @@ import 'package:distributor/ui/widgets/smart_widgets/map_view/delivery_journey_m
     MaterialRoute(page: HelpView),
     MaterialRoute(page: BugReportView),
     MaterialRoute(page: AppInfoView),
+    MaterialRoute(page: HelpDetailView),
+    MaterialRoute(page: JourneyLog)
   ],
 )
 class $Router {}

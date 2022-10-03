@@ -72,4 +72,38 @@ class FirestoreService implements RemoteStorageRepository {
   writeLocationData(Map<String, dynamic> locationData) async {
     return _firebaseFirestore.collection('locations').add(locationData);
   }
+
+  fetchFAQById(String itemId) async {
+    return await _firebaseFirestore
+        .collection('titles')
+        .doc(itemId)
+        .get()
+        .then((docSnapshot) => docSnapshot.data());
+  }
+
+  void createGeoPoint(Map<String, dynamic> data, String journeyId) async {
+    data.addAll({"timestamp": FieldValue.serverTimestamp()});
+    await _firebaseFirestore
+        .collection('locations')
+        .doc(journeyId)
+        .collection('markers')
+        .add(data);
+  }
+
+  fetchMarkers(String journeyId) async {
+    return _firebaseFirestore
+        .collection('locations')
+        .doc(journeyId)
+        .collection('markers')
+        .get()
+        .then((querySnapshot) =>
+            querySnapshot.docs.map((e) => e.data()).toList());
+  }
+
+  updateJourney(String journeyId, Map<String, dynamic> data) async {
+    await _firebaseFirestore
+        .collection('locations')
+        .doc(journeyId)
+        .set(data, SetOptions(merge: true));
+  }
 }

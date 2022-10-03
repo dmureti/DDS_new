@@ -20,6 +20,7 @@ import '../src/ui/views/adhoc_detail/adhoc_detail.dart';
 import '../src/ui/views/adhoc_payment/adhoc_payment_view.dart';
 import '../src/ui/views/change_password/change_password.dart';
 import '../src/ui/views/delivery_note/delivery_note_view.dart';
+import '../src/ui/views/journey_log/journey_log.dart';
 import '../src/ui/views/partial_delivery/partial_delivery_view.dart';
 import '../src/ui/views/reset_password/reset_password_view.dart';
 import '../src/ui/views/stock_transaction/stock_transaction_list_view.dart';
@@ -31,6 +32,7 @@ import '../ui/views/bug_report/bug_report.dart';
 import '../ui/views/crate_movement/crate_movement_view.dart';
 import '../ui/views/customer_location.dart';
 import '../ui/views/customers/customer_detail/customer_detail_view.dart';
+import '../ui/views/help/help_detail_view.dart';
 import '../ui/views/help/help_view.dart';
 import '../ui/views/home/home_view.dart';
 import '../ui/views/journey/journey_view.dart';
@@ -80,6 +82,8 @@ class Routes {
   static const String helpView = '/help-view';
   static const String bugReportView = '/bug-report-view';
   static const String appInfoView = '/app-info-view';
+  static const String helpDetailView = '/help-detail-view';
+  static const String journeyLog = '/journey-log';
   static const all = <String>{
     homeView,
     startupView,
@@ -114,6 +118,8 @@ class Routes {
     helpView,
     bugReportView,
     appInfoView,
+    helpDetailView,
+    journeyLog,
   };
 }
 
@@ -154,6 +160,8 @@ class Router extends RouterBase {
     RouteDef(Routes.helpView, page: HelpView),
     RouteDef(Routes.bugReportView, page: BugReportView),
     RouteDef(Routes.appInfoView, page: AppInfoView),
+    RouteDef(Routes.helpDetailView, page: HelpDetailView),
+    RouteDef(Routes.journeyLog, page: JourneyLog),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -490,6 +498,25 @@ class Router extends RouterBase {
         settings: data,
       );
     },
+    HelpDetailView: (data) {
+      final args = data.getArgs<HelpDetailViewArguments>(
+        orElse: () => HelpDetailViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => HelpDetailView(
+          key: args.key,
+          id: args.id,
+          title: args.title,
+        ),
+        settings: data,
+      );
+    },
+    JourneyLog: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const JourneyLog(),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -705,4 +732,12 @@ class ManageCrateViewArguments {
   final Customer customer;
   ManageCrateViewArguments(
       {this.key, this.crateTxnType, this.crateType, this.customer});
+}
+
+/// HelpDetailView arguments holder class
+class HelpDetailViewArguments {
+  final Key key;
+  final String id;
+  final String title;
+  HelpDetailViewArguments({this.key, this.id, this.title});
 }

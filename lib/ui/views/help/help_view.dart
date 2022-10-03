@@ -26,6 +26,14 @@ class HelpView extends StatelessWidget {
                         : ListView.builder(
                             itemBuilder: (context, index) => ListTile(
                               title: Text(model.items[index]['title']),
+                              onTap: () {
+                                model.navigateToDetail(model.items[index]['id'],
+                                    model.items[index]['id']);
+                              },
+                              trailing: IconButton(
+                                icon: Icon(Icons.chevron_right),
+                                onPressed: () => null,
+                              ),
                             ),
                             itemCount: model.items.length,
                           ),
