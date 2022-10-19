@@ -261,6 +261,7 @@ class CrateMovementViewModel extends BaseViewModel {
         computeTotal(value);
         salesOrderItems.add(s);
       });
+      print((salesOrderItems.toString()));
       setBusy(true);
       var result = await _crateManagementService.collectDropCrates(
           customer: customerId,

@@ -49,7 +49,7 @@ class CrateTransactionListingView extends StatelessWidget {
                                       style: kTileSubtitleTextStyle,
                                     ),
                                   ),
-                                  _buildTransactionWidget(description),
+                                  _buildTransactionWidget(crateTxn['quantity']),
                                   // Text(
                                   //     "Received : ${description['received'] ?? "-"} | Dropped : ${description['dropped'] ?? "-"}"),
                                 ],
@@ -76,18 +76,18 @@ class CrateTransactionListingView extends StatelessWidget {
     );
   }
 
-  _buildTransactionWidget(Map<String, dynamic> description) {
-    var received = description['received'];
-    var dropped = description['dropped'];
-    if (received > 0) {
+  _buildTransactionWidget(int value) {
+    // var received = description['received'];
+    // var dropped = description['dropped'];
+    if (value >= 0) {
       return Text(
-        "RECEIVED : ${received}",
+        "RECEIVED : ${value}",
         style: kCrateReceivedTextStyle,
       );
     }
-    if (dropped > 0) {
+    if (value.isNegative) {
       return Text(
-        "DROPPED : ${dropped}",
+        "DROPPED : ${value * -1}",
         style: kCrateDroppedTextStyle,
       );
     }
