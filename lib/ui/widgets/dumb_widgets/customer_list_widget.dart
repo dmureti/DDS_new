@@ -70,17 +70,13 @@ class CustomerListWidget extends HookViewModelWidget<CustomerViewModel> {
 }
 
 Widget CustomerList({List<Customer> customerList, Function onTap}) {
-  return ListView.separated(
-      separatorBuilder: (context, index) {
-        return Divider(
-          height: 0.5,
-        );
-      },
+  return ListView.builder(
       itemCount: customerList.length,
       itemBuilder: (context, index) {
         Customer customer = customerList[index];
         return Container(
           child: ListTile(
+            visualDensity: VisualDensity.comfortable,
             trailing: Container(
               width: 60,
               height: 60,
