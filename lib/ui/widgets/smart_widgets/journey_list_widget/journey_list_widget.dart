@@ -6,7 +6,7 @@ import 'package:stacked/stacked.dart';
 class JourneyListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<JourneyViewModel>.nonReactive(
+    return ViewModelBuilder<JourneyViewModel>.reactive(
         builder: (context, model, child) => model.isBusy
             ? CircularProgressIndicator()
             : Expanded(

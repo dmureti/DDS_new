@@ -25,8 +25,10 @@ class StopsListWidgetViewModel extends BaseViewModel {
         assert(journeyId != null);
 
   getJourneyDetails() async {
+    setBusy(true);
     var result = await _apiService.api.getJourneyDetails(
         token: _userService.user.token, journeyId: _journeyId);
+    setBusy(false);
     if (result is DeliveryJourney) {
       _deliveryJourney = result;
       notifyListeners();

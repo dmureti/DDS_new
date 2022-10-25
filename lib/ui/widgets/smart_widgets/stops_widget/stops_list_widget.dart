@@ -17,15 +17,17 @@ class StopsListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<StopsListWidgetViewModel>.reactive(
         onModelReady: (model) => model.getJourneyDetails(),
-        builder: (context, model, child) => model.deliveryJourney == null
+        builder: (context, model, child) => model.isBusy
             ? Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
                   child: BusyWidget(),
                 ),
               )
-            : Column(
-                mainAxisSize: MainAxisSize.min,
+            : ListView(
+                shrinkWrap: true,
+                physics: ClampingScrollPhysics(),
+                // mainAxisSize: MainAxisSize.max,
                 children: model.deliveryJourney.stops
                     .map((DeliveryStop deliveryStop) {
                   return _buildWidget(deliveryStop, deliveryJourney, model);

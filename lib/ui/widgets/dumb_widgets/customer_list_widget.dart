@@ -21,7 +21,7 @@ class CustomerListWidget extends HookViewModelWidget<CustomerViewModel> {
         : Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                // mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Expanded(
                     flex: 4,
@@ -33,28 +33,27 @@ class CustomerListWidget extends HookViewModelWidget<CustomerViewModel> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: DropdownButton(
-                        isDense: true,
-                        dropdownColor: Colors.white,
-                        value: model.customerFilter,
-                        onChanged: (val) {
-                          model.toggleSortAscending();
-                          model.customerFilter = val;
-                        },
-                        items: model.customerFilters
-                            .map((e) => DropdownMenuItem(
-                                  child: Text(
-                                    e['value'],
-                                  ),
-                                  value: e['name'],
-                                ))
-                            .toList()),
-                  ),
+                  // SizedBox(
+                  //   width: 3,
+                  // ),
+                  //   Expanded(
+                  //     child: DropdownButton(
+                  //         isDense: true,
+                  //         dropdownColor: Colors.white,
+                  //         value: model.customerFilter,
+                  //         onChanged: (val) {
+                  //           model.toggleSortAscending();
+                  //           model.customerFilter = val;
+                  //         },
+                  //         items: model.customerFilters
+                  //             .map((e) => DropdownMenuItem(
+                  //                   child: Text(
+                  //                     e['value'],
+                  //                   ),
+                  //                   value: e['name'],
+                  //                 ))
+                  //             .toList()),
+                  //   ),
                 ],
               ),
               Divider(

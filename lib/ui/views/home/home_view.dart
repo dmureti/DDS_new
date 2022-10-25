@@ -29,7 +29,7 @@ class HomeView extends StatelessWidget {
     return ViewModelBuilder<HomeViewModel>.reactive(
       onModelReady: (model) => model.init(),
       fireOnModelReadyOnce: false,
-      disposeViewModel: true,
+      disposeViewModel: false,
       createNewModelOnInsert: true,
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
@@ -170,7 +170,7 @@ class HomeView extends StatelessWidget {
         );
         break;
       default:
-        return Column(
+        return Stack(
           children: [
             NetworkSensitiveWidget(),
             // LocationWidget(),
