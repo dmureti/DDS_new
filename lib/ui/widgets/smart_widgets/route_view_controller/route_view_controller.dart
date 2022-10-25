@@ -12,8 +12,10 @@ class RouteViewController extends StatelessWidget {
         builder: (context, model, child) => model.userHasJourneys
             ? model.currentJourney.journeyId == null
                 ? JourneyListWidget()
-                : StopsListWidget(
-                    deliveryJourney: model.currentJourney,
+                : SingleChildScrollView(
+                    child: StopsListWidget(
+                      deliveryJourney: model.currentJourney,
+                    ),
                   )
             : NoJourneyContainer(),
         viewModelBuilder: () => RouteViewControllerViewModel());

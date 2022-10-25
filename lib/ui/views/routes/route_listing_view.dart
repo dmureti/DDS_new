@@ -16,7 +16,7 @@ class RoutesListingView extends StatelessWidget {
             Divider(
               height: 2,
             ),
-            RouteViewController()
+            Expanded(child: RouteViewController())
           ],
         ),
       ),
