@@ -51,6 +51,16 @@ class SalesOrderViewModel extends ReactiveViewModel {
     }
   }
 
+  List<Product> filterBySKU(String val) {
+    if (val.isNotEmpty) {
+      return productList
+          .where((product) =>
+              product.itemName.toLowerCase().contains(val.toLowerCase()))
+          .toList();
+    } else
+      return productList;
+  }
+
   _resetSKUList() {
     skuSearchString = "";
     filteredProductList = productList;

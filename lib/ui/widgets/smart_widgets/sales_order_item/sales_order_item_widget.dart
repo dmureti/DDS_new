@@ -16,7 +16,11 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
   final quantity;
 
   SalesOrderItemWidget(
-      {@required this.item, @required this.salesOrderViewModel, this.quantity});
+      {@required this.item,
+      @required this.salesOrderViewModel,
+      this.quantity,
+      Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

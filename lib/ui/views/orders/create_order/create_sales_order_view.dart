@@ -5,8 +5,10 @@ import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/app_bar_column_title.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/sku_suggestionTile.dart';
 
 import 'package:distributor/ui/widgets/smart_widgets/sales_order_item/sales_order_item_widget.dart';
+import 'package:distributor/ui/widgets/smart_widgets/sku_autocomplete/sku_autocomplete.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:stacked/stacked.dart';
@@ -110,12 +112,32 @@ class CreateSalesOrderView extends StatelessWidget {
                 children: [
                   Container(
                     height: 50,
-                    child: SearchBar(),
+                    // child: SearchBar(),
+                    child: Row(
+                      children: [
+                        TextButton.icon(
+                          onPressed: () => showSearch(
+                              context: context,
+                              delegate: SKUSearchDelegate(model)),
+                          label: Text(
+                            'Search by SKU',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          icon: Icon(
+                            Icons.search,
+                            color: Colors.grey,
+                            size: 25,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                   Expanded(
                     child: ListView(
                       padding: EdgeInsets.zero,
-                      children: <Widget>[_ResultsView()],
+                      children: <Widget>[
+                        _ResultsView(model.filterBySKU(model.skuSearchString))
+                      ],
                     ),
                   ),
                   model.displaySummary
@@ -466,9 +488,12 @@ class SearchBar extends HookViewModelWidget<SalesOrderViewModel> {
 }
 
 class _ResultsView extends HookViewModelWidget<SalesOrderViewModel> {
+  final List<Product> skuList;
+
+  _ResultsView(this.skuList);
   @override
   Widget buildViewModelWidget(BuildContext context, SalesOrderViewModel model) {
-    return model.filteredProductList.isEmpty
+    return skuList.isEmpty
         ? Center(
             child: EmptyContentContainer(
                 label:
@@ -482,12 +507,80 @@ class _ResultsView extends HookViewModelWidget<SalesOrderViewModel> {
               );
             },
             shrinkWrap: true,
-            itemCount: model.filteredProductList.length,
+            itemCount: skuList.length,
             itemBuilder: (context, index) {
               return SalesOrderItemWidget(
-                item: model.filteredProductList[index],
+                item: skuList[index],
                 salesOrderViewModel: model,
               );
             });
+  }
+}
+
+class SKUSearchDelegate extends SearchDelegate {
+  final SalesOrderViewModel model;
+
+  SKUSearchDelegate(this.model);
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+          onPressed: () {
+            query = "";
+          },
+          icon: Icon(Icons.clear))
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+        onPressed: () {
+          close(context, null);
+        },
+        icon: Icon(Icons.arrow_back));
+  }
+
+  List<Product> results = <Product>[];
+
+  @override
+  Widget buildResults(BuildContext context) {
+    results = model.productList
+        .where((element) => element.itemName
+            .toLowerCase()
+            .startsWith(query.trim().toLowerCase()))
+        .toList();
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return SalesOrderItemWidget(
+          item: results[index],
+          salesOrderViewModel: model,
+        );
+      },
+      itemCount: results.length,
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    List<Product> suggestions = model.productList
+        .where((element) => element.itemName
+            .toLowerCase()
+            .startsWith(query.trim().toLowerCase()))
+        .toList();
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          onTap: () {
+            close(context, results);
+          },
+          child: SKUSuggestionTile(
+            product: suggestions[index],
+          ),
+        );
+      },
+      itemCount: suggestions.length,
+    );
   }
 }
