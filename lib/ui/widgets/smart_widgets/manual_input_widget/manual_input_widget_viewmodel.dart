@@ -21,17 +21,10 @@ class ManualInputWidgetViewModel extends BaseViewModel {
   bool get isValidInput => _isValidInput;
 
   init() async {
-    _textEditingController =
-        TextEditingController(text: initialQuantity.toString());
     //Add a listener for the text editing controller
-    _textEditingController.addListener(() {
-      validateInput(textEditingController.text);
-    });
-  }
-
-  dispose() {
-    _textEditingController?.dispose();
-    super.dispose();
+    // _textEditingController.addListener(() {
+    //   validateInput(textEditingController.text);
+    // });
   }
 
   ManualInputWidgetViewModel(

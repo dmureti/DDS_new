@@ -29,6 +29,42 @@ class SalesOrderViewModel extends ReactiveViewModel {
 
   ProductOrdering _productOrdering = ProductOrdering.alphaAsc;
 
+  String skuSearchString = "";
+  List<Product> filteredProductList = <Product>[];
+
+  updateSearchString(String val) {
+    skuSearchString = val.trim();
+    search();
+    notifyListeners();
+  }
+
+  toggleShowSummary(bool val) {
+    _displaySummary = val;
+    notifyListeners();
+  }
+
+  search() {
+    if (skuSearchString.isNotEmpty) {
+      _updateSKUList(skuSearchString);
+    } else {
+      _resetSKUList();
+    }
+  }
+
+  _resetSKUList() {
+    skuSearchString = "";
+    filteredProductList = productList;
+    notifyListeners();
+  }
+
+  _updateSKUList(String val) {
+    filteredProductList = productList
+        .where((product) =>
+            product.itemName.toLowerCase().contains(val.toLowerCase()))
+        .toList();
+    notifyListeners();
+  }
+
   navigateToCustomerDetailView() async {
     await _navigationService.popRepeated(1);
   }
@@ -51,6 +87,7 @@ class SalesOrderViewModel extends ReactiveViewModel {
   }
 
   List<Product> _productList;
+
   List<Product> get productList {
     switch (_productOrdering) {
       case ProductOrdering.alphaAsc:
@@ -61,6 +98,20 @@ class SalesOrderViewModel extends ReactiveViewModel {
         break;
     }
     return _productList.where((product) => product.itemPrice > 0).toList();
+  }
+
+  resetSearch() {
+    skuSearchString = "";
+    _displaySummary = true;
+    _resetSKUList();
+    notifyListeners();
+  }
+
+  bool _displaySummary = true;
+  bool get displaySummary => _displaySummary;
+  changeSummaryState(bool val) {
+    _displaySummary = val;
+    notifyListeners();
   }
 
   int get availableProducts =>
@@ -108,7 +159,6 @@ class SalesOrderViewModel extends ReactiveViewModel {
         if (_salesOrderItems[i].item == p) {
           // Increase the value of the sales order item
           _salesOrderItems[i].quantity += quantity;
-
           notifyListeners();
         }
       }
@@ -180,7 +230,7 @@ class SalesOrderViewModel extends ReactiveViewModel {
     setBusy(false);
     if (result is List<Product>) {
       _productList = result;
-
+      filteredProductList = productList;
       return _productList;
     } else {
       await _dialogService.showDialog(
@@ -190,4 +240,14 @@ class SalesOrderViewModel extends ReactiveViewModel {
 
   @override
   List<ReactiveServiceMixin> get reactiveServices => [_adhocCartService];
+
+  onEditComplete() {
+    print('Edit Completed');
+    notifyListeners();
+  }
+
+  onFieldSubmitted(String val) {
+    print(val);
+    print('Field Submitted');
+  }
 }

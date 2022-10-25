@@ -4,10 +4,13 @@ import 'package:distributor/core/helper.dart';
 import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/app_bar_column_title.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
 
 import 'package:distributor/ui/widgets/smart_widgets/sales_order_item/sales_order_item_widget.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_hooks/stacked_hooks.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 import 'package:flutter/material.dart';
@@ -105,34 +108,22 @@ class CreateSalesOrderView extends StatelessWidget {
               )
             : Column(
                 children: [
+                  Container(
+                    height: 50,
+                    child: SearchBar(),
+                  ),
                   Expanded(
                     child: ListView(
                       padding: EdgeInsets.zero,
-                      children: <Widget>[
-                        ListView.separated(
-                            physics: ClampingScrollPhysics(),
-                            separatorBuilder: (context, index) {
-                              return Divider(
-                                height: 1,
-                              );
-                            },
-                            shrinkWrap: true,
-                            itemCount: model.productList
-                                .where((product) => product.itemPrice > 0)
-                                .length,
-                            itemBuilder: (context, index) {
-                              return SalesOrderItemWidget(
-                                item: model.productList[index],
-                                salesOrderViewModel: model,
-                              );
-                            })
-                      ],
+                      children: <Widget>[_ResultsView()],
                     ),
                   ),
-                  Container(
-                    height: 200,
-                    child: SummaryDraggableSheet(model, customer),
-                  )
+                  model.displaySummary
+                      ? Container(
+                          height: 200,
+                          child: SummaryDraggableSheet(model, customer),
+                        )
+                      : Container()
                 ],
               ),
       ),
@@ -443,5 +434,60 @@ class SummaryDraggableSheetViewModel extends BaseViewModel {
         arguments: OrderConfirmationArguments(
             customer: customer, salesOrderRequest: salesOrderRequest));
     _navigationService.back(result: result);
+  }
+}
+
+class SearchBar extends HookViewModelWidget<SalesOrderViewModel> {
+  @override
+  Widget buildViewModelWidget(
+      BuildContext context, SalesOrderViewModel viewModel) {
+    var searchString =
+        useTextEditingController(text: viewModel.skuSearchString);
+    return TextFormField(
+      controller: searchString,
+      keyboardType: TextInputType.text,
+      // textInputAction: TextInputAction.en,
+      onChanged: viewModel.updateSearchString,
+      onTap: () => viewModel.toggleShowSummary(false),
+      onFieldSubmitted: (val) => viewModel.onFieldSubmitted(val),
+      onEditingComplete: () {
+        //Happens when the user presses the action
+        viewModel.onEditComplete();
+        //Close the keyboard
+      },
+      decoration: InputDecoration(
+          prefixIcon: Icon(Icons.search),
+          hintText: 'Search for an SKU',
+          suffixIcon: IconButton(
+              onPressed: () => viewModel.resetSearch(),
+              icon: Icon(Icons.cancel_outlined))),
+    );
+  }
+}
+
+class _ResultsView extends HookViewModelWidget<SalesOrderViewModel> {
+  @override
+  Widget buildViewModelWidget(BuildContext context, SalesOrderViewModel model) {
+    return model.filteredProductList.isEmpty
+        ? Center(
+            child: EmptyContentContainer(
+                label:
+                    'There are no SKU items that match this ${model.skuSearchString}'),
+          )
+        : ListView.separated(
+            physics: ClampingScrollPhysics(),
+            separatorBuilder: (context, index) {
+              return Divider(
+                height: 0.1,
+              );
+            },
+            shrinkWrap: true,
+            itemCount: model.filteredProductList.length,
+            itemBuilder: (context, index) {
+              return SalesOrderItemWidget(
+                item: model.filteredProductList[index],
+                salesOrderViewModel: model,
+              );
+            });
   }
 }
