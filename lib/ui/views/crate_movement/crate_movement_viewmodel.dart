@@ -216,9 +216,7 @@ class CrateMovementViewModel extends BaseViewModel {
                     itemPrice: product.itemPrice,
                     id: product.itemCode,
                     itemCode: product.itemCode)));
-          } else {
-            print('---');
-          }
+          } else {}
         });
       }
       setBusy(true);
@@ -271,11 +269,16 @@ class CrateMovementViewModel extends BaseViewModel {
           items: salesOrderItems,
           journeyId: journeyId);
       setBusy(false);
-      if (result) {
+
+      if (result['status']) {
         await _dialogService.showDialog(
             title: 'Transaction Success',
             description: 'The action was performed successfully');
         _navigationService.back(result: true);
+      } else {
+        await _dialogService.showDialog(
+            title: 'Transaction Failed', description: result['message']);
+        _navigationService.back(result: false);
       }
     }
   }

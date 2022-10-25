@@ -105,4 +105,10 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
       ),
     );
   }
+
+  navigateToStockView() async {
+    await _navigationService.navigateTo(
+      Routes.stockReturnView,
+    );
+  }
 }

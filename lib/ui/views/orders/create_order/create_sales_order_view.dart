@@ -113,23 +113,32 @@ class CreateSalesOrderView extends StatelessWidget {
                   Container(
                     height: 50,
                     // child: SearchBar(),
-                    child: Row(
-                      children: [
-                        TextButton.icon(
-                          onPressed: () => showSearch(
-                              context: context,
-                              delegate: SKUSearchDelegate(model)),
-                          label: Text(
-                            'Search by SKU',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          icon: Icon(
-                            Icons.search,
-                            color: Colors.grey,
-                            size: 25,
-                          ),
-                        )
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0, vertical: 2),
+                      child: Material(
+                        borderRadius: BorderRadius.circular(4),
+                        elevation: 2,
+                        type: MaterialType.card,
+                        child: Row(
+                          children: [
+                            TextButton.icon(
+                              onPressed: () => showSearch(
+                                  context: context,
+                                  delegate: SKUSearchDelegate(model)),
+                              label: Text(
+                                'Search by SKU',
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                              icon: Icon(
+                                Icons.search,
+                                color: Colors.grey,
+                                size: 25,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                   Expanded(
@@ -197,6 +206,7 @@ class _SummaryDraggableSheetState extends State<SummaryDraggableSheet> {
             EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0, bottom: 10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

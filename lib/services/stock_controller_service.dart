@@ -117,4 +117,35 @@ class StockControllerService {
         .completeTechStop(token: _user.token, journeyId: journeyId, data: data);
     return result;
   }
+
+  /**
+   * Return the stocks the branch
+   * [fromWarehouse] is the route
+   * [toWarehouse] is the branch
+   */
+  routeReturn({
+    @required List<SalesOrderItem> stockReturnItems,
+    @required String fromWarehouse,
+    @required String toWarehouse,
+    String reason = "",
+  }) async {
+    Map<String, dynamic> data = {
+      "details": reason,
+      "fromWarehouse": fromWarehouse,
+      "toWarehouse": toWarehouse,
+      "items": stockReturnItems
+          .map((e) => {
+                "item": {
+                  "id": e.item.id,
+                  "itemCode": e.item.itemCode,
+                  "itemName": e.item.itemName,
+                  "itemPrice": e.item.itemPrice
+                },
+                "quantity": e.quantity
+              })
+          .toList()
+    };
+
+    return await _apiService.api.routeReturn(token: _user.token, data: data);
+  }
 }

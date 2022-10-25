@@ -46,6 +46,7 @@ import '../ui/views/orders/order_detail/order_detail_view.dart';
 import '../ui/views/payment_reference/payment_reference_view.dart';
 import '../ui/views/startup/startup_view.dart';
 import '../ui/views/stock_collection/stock_collection_view.dart';
+import '../ui/views/stock_return/stock_return_view.dart';
 import '../ui/widgets/smart_widgets/map_view/delivery_journey_map_view.dart';
 
 class Routes {
@@ -61,6 +62,7 @@ class Routes {
   static const String orderConfirmation = '/order-confirmation';
   static const String deliveryJourneyMapView = '/delivery-journey-map-view';
   static const String notificationView = '/notification-view';
+  static const String stockReturnView = '/stock-return-view';
   static const String linkPaymentView = '/link-payment-view';
   static const String paymentReferenceView = '/payment-reference-view';
   static const String addPaymentView = '/add-payment-view';
@@ -97,6 +99,7 @@ class Routes {
     orderConfirmation,
     deliveryJourneyMapView,
     notificationView,
+    stockReturnView,
     linkPaymentView,
     paymentReferenceView,
     addPaymentView,
@@ -139,6 +142,7 @@ class Router extends RouterBase {
     RouteDef(Routes.orderConfirmation, page: OrderConfirmation),
     RouteDef(Routes.deliveryJourneyMapView, page: DeliveryJourneyMapView),
     RouteDef(Routes.notificationView, page: NotificationView),
+    RouteDef(Routes.stockReturnView, page: StockReturnView),
     RouteDef(Routes.linkPaymentView, page: LinkPaymentView),
     RouteDef(Routes.paymentReferenceView, page: PaymentReferenceView),
     RouteDef(Routes.addPaymentView, page: AddPaymentView),
@@ -281,6 +285,12 @@ class Router extends RouterBase {
     NotificationView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => NotificationView(),
+        settings: data,
+      );
+    },
+    StockReturnView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const StockReturnView(),
         settings: data,
       );
     },

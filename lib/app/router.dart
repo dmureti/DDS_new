@@ -38,6 +38,7 @@ import 'package:distributor/ui/views/orders/order_detail/order_detail_view.dart'
 import 'package:distributor/ui/views/payment_reference/payment_reference_view.dart';
 import 'package:distributor/ui/views/startup/startup_view.dart';
 import 'package:distributor/ui/views/stock_collection/stock_collection_view.dart';
+import 'package:distributor/ui/views/stock_return/stock_return_view.dart';
 import 'package:distributor/ui/widgets/smart_widgets/map_view/delivery_journey_map_view.dart';
 
 @AdaptiveAutoRouter(
@@ -54,6 +55,7 @@ import 'package:distributor/ui/widgets/smart_widgets/map_view/delivery_journey_m
     MaterialRoute(page: OrderConfirmation),
     MaterialRoute(page: DeliveryJourneyMapView),
     MaterialRoute(page: NotificationView),
+    MaterialRoute(page: StockReturnView),
     MaterialRoute(page: LinkPaymentView),
     MaterialRoute(page: PaymentReferenceView),
     MaterialRoute(page: AddPaymentView),

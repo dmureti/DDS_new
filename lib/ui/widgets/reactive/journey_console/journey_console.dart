@@ -175,6 +175,16 @@ class JourneyConsole extends StatelessWidget {
                                               },
                                             ),
                                             ListTile(
+                                              leading: Icon(Icons.ad_units),
+                                              title: Text(
+                                                  'Return Stock To Branch'),
+                                              onTap: () async {
+                                                await model
+                                                    .navigateToStockView();
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                            ListTile(
                                               leading: Icon(Icons.location_on),
                                               title: Text('Show Journey Map'),
                                               onTap: () async {

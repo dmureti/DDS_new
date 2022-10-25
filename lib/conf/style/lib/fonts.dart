@@ -8,8 +8,10 @@ const kFontLightBody = "ProximaNovaRegular";
 const kFontThinBody = "ProximaNova500";
 const kFontBoldBody = "ProximaNova700";
 
-const kLargeTextSize = 26.0;
-const kMediumTextSize = 20.0;
-const kBodyTextSize = 16.0;
-const kLabelTextSize = 14.0;
+const kReduce = 0.9;
+
+const kLargeTextSize = 26.0 * kReduce;
+const kMediumTextSize = 20.0 * kReduce;
+const kBodyTextSize = 16.0 * kReduce;
+const kLabelTextSize = 14.0 * kReduce;
 const kHintTextSize = 12.0;
