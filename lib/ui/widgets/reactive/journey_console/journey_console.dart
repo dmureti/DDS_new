@@ -59,7 +59,7 @@ class JourneyConsole extends StatelessWidget {
                                                   .toLowerCase()
                                                   .contains('dispatched')
                                               ? JourneyControlButton(
-                                                  label: 'Start',
+                                                  label: 'START',
                                                 )
                                               : model.journeyStatus
                                                       .toLowerCase()
