@@ -21,7 +21,6 @@ class HelpDetailView extends StatelessWidget {
             title: Column(
               children: [
                 Text('Help'),
-                Text(title),
               ],
             ),
           ),
