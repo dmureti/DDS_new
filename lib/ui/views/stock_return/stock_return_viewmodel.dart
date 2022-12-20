@@ -45,11 +45,11 @@ class StockReturnViewModel extends BaseViewModel {
     DialogResponse dialogResponse = await _confirmTransactionAction();
     if (dialogResponse.confirmed) {
       // Return the crates to the branch
-      _returnCrates();
+      _returnStocks();
     }
   }
 
-  _returnCrates() async {
+  _returnStocks() async {
     List<SalesOrderItem> stockReturnItems = <SalesOrderItem>[];
     productItems.forEach((p) {
       SalesOrderItem s = SalesOrderItem(
@@ -60,10 +60,11 @@ class StockReturnViewModel extends BaseViewModel {
             id: p.itemCode,
             itemCode: p.itemCode,
           ),
-          quantity: (p.quantity * p.itemPrice).toInt());
+          quantity: p.quantity.toInt());
       stockReturnItems.add(s);
     });
     setBusy(true);
+
     var result = await _stockControllerService.routeReturn(
         reason: reason,
         stockReturnItems: stockReturnItems,
@@ -77,7 +78,7 @@ class StockReturnViewModel extends BaseViewModel {
       _navigationService.back(result: true);
     } else {
       await _dialogService.showDialog(
-          title: 'Failed', description: result['message']);
+          title: 'Stock Return Failed', description: result['message']);
       _navigationService.back(result: false);
     }
     return;

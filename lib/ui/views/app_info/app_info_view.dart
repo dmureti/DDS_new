@@ -12,6 +12,19 @@ class AppInfoView extends StatelessWidget {
               appBar: AppBar(
                 title: Text('About'),
               ),
+              body: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Image.asset(
+                        'assets/images/dds_logo.png',
+                      ),
+                    ),
+                  ),
+                  Text('Version : ${model.version}')
+                ],
+              ),
             ),
         viewModelBuilder: () => AppInfoViewModel());
   }
