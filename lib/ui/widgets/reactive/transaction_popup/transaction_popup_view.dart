@@ -27,11 +27,12 @@ class TransactionPopupView extends StatelessWidget {
               child: PopupMenuButton(
                 // onSelected: (value) => model.onStockBalancePopupSelected(value),
                 onSelected: (value) => model.onPopupAction(value),
-                itemBuilder: (context) => [
+                itemBuilder: (context) => <PopupMenuEntry<Object>>[
                   PopupMenuItem(
                     child: Text('Pending Transactions'),
                     value: 0,
                   ),
+                  PopupMenuDivider(),
                   PopupMenuItem(
                     child: Text('Return Stock'),
                     value: 1,
