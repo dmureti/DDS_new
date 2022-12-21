@@ -3,6 +3,7 @@ import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
 
 import 'package:distributor/services/journey_service.dart';
+import 'package:distributor/services/location_repository.dart';
 import 'package:distributor/services/waypoint_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -13,6 +14,7 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
   DialogService _dialogService = locator<DialogService>();
   NavigationService _navigationService = locator<NavigationService>();
   final _waypointService = locator<WaypointService>();
+  final locationService = locator<LocationRepository>();
 
   navigateToJourneyMap() async {
     await _navigationService.navigateTo(Routes.journeyLog);
@@ -54,6 +56,9 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
       if (dialogResponse.confirmed) {
         setBusy(true);
         var result = await _journeyService.startTrip();
+        //Start updating the locations on db
+        locationService.listenToLocationUpdates(result.token,
+            journeyId: _journeyService.journeyId);
         _waypointService.initializeJourney();
         setBusy(false);
         if (result) {
@@ -69,6 +74,7 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
       var result = await _journeyService.stopTrip();
       await _waypointService.completeJourney();
       //@TODO Stop listening to the stream
+
       setBusy(false);
       if (result is bool) {
         notifyListeners();
