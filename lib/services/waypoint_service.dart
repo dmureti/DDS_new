@@ -98,12 +98,3 @@ class WaypointService {
     });
   }
 }
-
-class WayPoint {
-  final String id;
-  final String creationDate;
-
-  WayPoint(this.id, this.creationDate);
-
-  Map<String, dynamic> toJson() => {"id": id, "creationDate": creationDate};
-}

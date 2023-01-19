@@ -17,4 +17,7 @@ abstract class LocationRepository {
   addGeoPoint();
 
   listenToUserLocation() {}
+
+  void listenToLocationUpdates(String token,
+      {String journeyId, String plateNum}) {}
 }

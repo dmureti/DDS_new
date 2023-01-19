@@ -52,7 +52,12 @@ class HomeView extends StatelessWidget {
                 : model.currentIndex == 3
                     ? TransactionPopupView(
                         onSelected: model.onStockBalancePopupSelected)
-                    : Container(),
+                    : model.currentIndex == 1
+                        ? IconButton(
+                            icon: Icon(Icons.more_vert),
+                            onPressed: model.navigateToJourneyInfoView,
+                          )
+                        : Container(),
 
             // MapIconButton(),
           ],

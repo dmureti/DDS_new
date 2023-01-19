@@ -37,7 +37,8 @@ dependencies:
   #  i18n_extension:
   google_maps_flutter: ^0.5.26+4
   flutter_polyline_points: ^0.2.2
-  geolocator: ^5.3.1
+  geolocator:
+  geocoding:
   #  flutter_localizations:
   #    sdk: flutter
   tripletriocore:
@@ -55,6 +56,7 @@ dependencies:
   provider: ^4.3.3
   cloud_firestore: ^0.16.0+1
   geoflutterfire: ^2.2.2
+  easy_geofencing: ^0.1.1
 
 #  json_serializable: ^4.0.0-nullsafety.0
 

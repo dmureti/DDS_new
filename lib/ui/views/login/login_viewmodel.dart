@@ -3,24 +3,42 @@ import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/activity_service.dart';
 import 'package:distributor/services/api_service.dart';
+import 'package:distributor/services/geofence_service.dart';
+import 'package:distributor/services/location_repository.dart';
+import 'package:distributor/services/location_service.dart';
 import 'package:distributor/services/timeout_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:distributor/services/version_service.dart';
+import 'package:easy_geofencing/enums/geofence_status.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 import 'package:distributor/services/init_service.dart';
 
-class LoginViewModel extends BaseViewModel {
+class LoginViewModel extends StreamViewModel<GeofenceStatus> {
   final NavigationService _navigationService = locator<NavigationService>();
   ActivityService _activityService = locator<ActivityService>();
   InitService _initService = locator<InitService>();
   TimeoutService _timerService = locator<TimeoutService>();
   final _versionService = locator<VersionService>();
+  final locationService = locator<LocationRepository>();
+  final geofenceService = locator<GeoFenceService>();
 
   String get version => _versionService.version;
 
   List<AppEnv> get environments => _initService.availableEnvList;
+
+  List<String> get languages => <String>[
+        'English',
+        'Swahili',
+      ];
+
+  String _language;
+  String get language => _language ?? languages.first;
+  setLanguage(String val) {
+    _language = val;
+    notifyListeners();
+  }
 
   LoginViewModel(String userId, String password)
       : _userId = userId,
@@ -94,6 +112,9 @@ class LoginViewModel extends BaseViewModel {
       // Update the activity Service
       _activityService.addActivity(Activity(
           activityTitle: 'Login in', activityDesc: 'Logged In successfully'));
+      // Start listening to location stream updates
+
+      // Initialize the geofencing service
 
       if (result.status != 1) {
         _navigationService.pushNamedAndRemoveUntil(Routes.changePasswordView,
@@ -135,6 +156,20 @@ class LoginViewModel extends BaseViewModel {
   setUserId(String val) {
     if (val.isNotEmpty) {
       _userId = val.trim();
+    }
+  }
+
+  @override
+  Stream<GeofenceStatus> get stream => geofenceService.getGeofenceStream();
+
+  get enableSignIn {
+    switch (data) {
+      case GeofenceStatus.init:
+        return false;
+      case GeofenceStatus.exit:
+        return false;
+      case GeofenceStatus.enter:
+        return true;
     }
   }
 }

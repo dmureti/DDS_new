@@ -11,6 +11,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
+import 'package:geocoding/geocoding.dart';
 
 class MapViewmodel extends FutureViewModel<UserLocation> {
   LocationService _locationService = locator<LocationService>();

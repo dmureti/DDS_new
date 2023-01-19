@@ -1,17 +1,25 @@
 import 'dart:async';
 
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/location_repository.dart';
 import 'package:distributor/services/remote_storage_repository.dart';
+import 'package:distributor/services/user_service.dart';
+import 'package:distributor/core/models/waypoint.dart';
+
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geoflutterfire/src/geoflutterfire.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:tripletriocore/src/core/models/user_location.dart';
 import 'package:tripletriocore/tripletriocore.dart';
+import 'package:geocoding/geocoding.dart';
 
 class LocationService implements LocationRepository {
   Geoflutterfire geo = Geoflutterfire();
+  final _api = locator<ApiService>();
   final remoteStorageService = locator<RemoteStorageRepository>();
+
+  Api get api => _api.api;
 
   /// Keep track of current location
   UserLocation _currentLocation;
@@ -21,8 +29,11 @@ class LocationService implements LocationRepository {
       StreamController<UserLocation>.broadcast();
 
   LocationService() {
-    listenToUserLocation();
+    print('in location service');
     // listenToUserLocation();
+    // listenToLocationUpdates();
+    print('outside listenToUserLocationChange');
+
     // LocationOptions locationOptions =
     //     LocationOptions(accuracy: LocationAccuracy.low, distanceFilter: 200);
     // Geolocator().checkGeolocationPermissionStatus().then((granted) {
@@ -50,7 +61,7 @@ class LocationService implements LocationRepository {
 
   Future<UserLocation> getLocation() async {
     try {
-      Position position = await Geolocator().getCurrentPosition(
+      Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.bestForNavigation);
       _currentLocation = UserLocation(
           latitude: position.latitude, longitude: position.longitude);
@@ -63,7 +74,7 @@ class LocationService implements LocationRepository {
   Future placemarkFromCoordinates(double latitude, double longitude) async {
     try {
       List<Placemark> placemark =
-          await Geolocator().placemarkFromCoordinates(latitude, longitude);
+          await placemarkFromCoordinates(latitude, longitude);
       return placemark;
     } catch (e) {
       return e.toString();
@@ -72,7 +83,7 @@ class LocationService implements LocationRepository {
 
   Future<double> getDistanceBetween(double startLatitude, double startLongitude,
       double endLatitude, double endLongitude) async {
-    double distanceInMeters = await Geolocator().distanceBetween(
+    double distanceInMeters = await Geolocator.distanceBetween(
         startLatitude, startLongitude, endLatitude, endLongitude);
     return distanceInMeters / 1000;
   }
@@ -90,23 +101,52 @@ class LocationService implements LocationRepository {
 
   listenToUserLocation() {
     List waypoints = [];
-    LocationOptions locationOptions = LocationOptions(
-        accuracy: LocationAccuracy.bestForNavigation, distanceFilter: 1000);
-    Geolocator().getPositionStream(locationOptions).listen((Position position) {
+    // LocationOptions locationOptions = LocationOptions(
+    //     accuracy: LocationAccuracy.bestForNavigation, distanceFilter: 1000);
+    Geolocator.getPositionStream(
+      desiredAccuracy: LocationAccuracy.bestForNavigation,
+    ).listen((Position position) {
       if (position != null) {
         waypoints.add(UserLocation(
             latitude: position.latitude, longitude: position.longitude));
         _locationController.add(UserLocation(
             latitude: position.latitude, longitude: position.longitude));
-        // print("${position.latitude} : ${position.longitude}");
+        print("${position.latitude} : ${position.longitude}");
       }
+      print('position null');
     }).onData((position) {
       if (position != null) {
+        print("${position.latitude} : ${position.longitude}");
         waypoints.add(UserLocation(
             latitude: position.latitude, longitude: position.longitude));
         _locationController.add(UserLocation(
             latitude: position.latitude, longitude: position.longitude));
       }
+    });
+  }
+
+  // This service depends on a journey
+  listenToLocationUpdates(String token,
+      {String journeyId = "JN-22-000062", String plateNum = "KDB 240L"}) {
+    print('listening to location updates');
+    Geolocator.getPositionStream(
+      distanceFilter: 100,
+    ).listen((Position position) {
+      if (position != null) {
+        //Add this waypoint to the database
+
+        Waypoint wayPoint = Waypoint(
+            latitude: position.latitude,
+            longitude: position.longitude,
+            speed: position.speed,
+            journeyId: journeyId,
+            plateNum: plateNum);
+
+        api.createWaypoint(token: token, waypointData: wayPoint.toJson());
+      }
+      print(position == null
+          ? 'Unknown'
+          : '${position.latitude.toString()}, ${position.longitude.toString()} ${position.speed.toString()} -- updated');
     });
   }
 }

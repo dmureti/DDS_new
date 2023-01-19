@@ -257,4 +257,12 @@ class JourneyService with ReactiveServiceMixin {
     _journeyState.value = JourneyState.idle;
     return true;
   }
+
+  fetchLocationStats() async {
+    var result = await _api.fetchLocationDataByJourneyId(
+        token: _user.token, journeyId: 'JN-22-000062');
+    // print(result);
+    // print(result.toString());
+    return;
+  }
 }

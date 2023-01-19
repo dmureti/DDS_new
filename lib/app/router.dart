@@ -27,6 +27,7 @@ import 'package:distributor/ui/views/help/help_view.dart';
 
 import 'package:distributor/ui/views/home/home_view.dart';
 import 'package:distributor/ui/views/journey/journey_view.dart';
+import 'package:distributor/ui/views/journey_info/journey_info_view.dart';
 import 'package:distributor/ui/views/link_payment/link_payment_view.dart';
 
 import 'package:distributor/ui/views/login/login_view.dart';
@@ -78,7 +79,8 @@ import 'package:distributor/ui/widgets/smart_widgets/map_view/delivery_journey_m
     MaterialRoute(page: BugReportView),
     MaterialRoute(page: AppInfoView),
     MaterialRoute(page: HelpDetailView),
-    MaterialRoute(page: JourneyLog)
+    MaterialRoute(page: JourneyLog),
+    MaterialRoute(page: JourneyInfoView)
   ],
 )
 class $Router {}

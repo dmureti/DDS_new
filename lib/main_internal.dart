@@ -45,7 +45,7 @@ void main() async {
       flavor: Flavor.internal,
       name: 'Demo',
       flavorValues:
-          FlavorValues(baseUrl: 'http://54.228.169.28:8888/dds-backend/api/v1'),
+          FlavorValues(baseUrl: 'http://63.34.178.251:8888/dds-backend/api/v1'),
     ),
   ];
   _initService.setAvailableEnvList(_appEnv);

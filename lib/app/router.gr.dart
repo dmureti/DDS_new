@@ -36,6 +36,7 @@ import '../ui/views/help/help_detail_view.dart';
 import '../ui/views/help/help_view.dart';
 import '../ui/views/home/home_view.dart';
 import '../ui/views/journey/journey_view.dart';
+import '../ui/views/journey_info/journey_info_view.dart';
 import '../ui/views/link_payment/link_payment_view.dart';
 import '../ui/views/login/login_view.dart';
 import '../ui/views/manage_crate/manage_crate_view.dart';
@@ -86,6 +87,7 @@ class Routes {
   static const String appInfoView = '/app-info-view';
   static const String helpDetailView = '/help-detail-view';
   static const String journeyLog = '/journey-log';
+  static const String journeyInfoView = '/journey-info-view';
   static const all = <String>{
     homeView,
     startupView,
@@ -123,6 +125,7 @@ class Routes {
     appInfoView,
     helpDetailView,
     journeyLog,
+    journeyInfoView,
   };
 }
 
@@ -166,6 +169,7 @@ class Router extends RouterBase {
     RouteDef(Routes.appInfoView, page: AppInfoView),
     RouteDef(Routes.helpDetailView, page: HelpDetailView),
     RouteDef(Routes.journeyLog, page: JourneyLog),
+    RouteDef(Routes.journeyInfoView, page: JourneyInfoView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -524,6 +528,12 @@ class Router extends RouterBase {
     JourneyLog: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const JourneyLog(),
+        settings: data,
+      );
+    },
+    JourneyInfoView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const JourneyInfoView(),
         settings: data,
       );
     },

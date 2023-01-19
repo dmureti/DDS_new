@@ -3,6 +3,7 @@ import 'package:distributor/services/location_repository.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
+import 'package:geocoding/geocoding.dart';
 
 class PlacemarkWidgetViewModel extends FutureViewModel<List<Placemark>> {
   final _locationService = locator<LocationRepository>();

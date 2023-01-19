@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
+import 'package:geocoding/geocoding.dart';
 
 class CustomerLocationViewModel extends FutureViewModel {
   final _locationService = locator<LocationRepository>();
