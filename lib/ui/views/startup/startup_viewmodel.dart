@@ -37,7 +37,7 @@ class StartupViewModel extends BaseViewModel {
 
   Future handleStartUpLogic() async {
     bool result = await _initService.init();
-    geoFenceService.listenToGeofenceStatusStream();
+    // geoFenceService.listenToGeofenceStatusStream();
     await _versionService.getVersion();
     String userId;
     String password;
