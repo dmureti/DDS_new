@@ -1,9 +1,6 @@
 import 'package:distributor/conf/dds_brand_guide.dart';
 import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
-
-import 'package:distributor/ui/config/brand.dart';
-import 'package:distributor/ui/shared/text_styles.dart';
 import 'package:distributor/ui/shared/widgets.dart';
 import 'package:distributor/ui/views/login/login_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
@@ -78,18 +75,18 @@ class _LoginViewState extends State<LoginView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     NetworkSensitiveWidget(),
-                    // model.enableSignIn
-                    //     ? Container()
-                    //     : Container(
-                    //         color: Colors.red,
-                    //         child: Padding(
-                    //           padding: const EdgeInsets.all(8.0),
-                    //           child: Text(
-                    //             'You are currently outside your preassigned zone. ',
-                    //             style: TextStyle(
-                    //                 color: Colors.black, fontSize: 16),
-                    //           ),
-                    //         )),
+                    model.enableSignIn
+                        ? Container()
+                        : Container(
+                            color: Colors.red,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'You are currently outside your preassigned zone. ',
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 16),
+                              ),
+                            )),
                     Form(
                       key: _formKey,
                       child: Column(

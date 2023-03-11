@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="1.10" />
+    <bytecodeTargetLevel target="1.10">
+      <module name="android.app" target="1.8" />
+      <module name="cloud_firestore-0.16.0+1.android.cloud_firestore" target="1.8" />
+      <module name="cloud_firestore-3.5.1.android.cloud_firestore" target="11" />
+      <module name="com.baseflow.geolocator.android.geolocator_android" target="11" />
+      <module name="com.baseflow.permissionhandler.android.permission_handler" target="1.8" />
+      <module name="com.baseflow.permissionhandler.android.permission_handler_android" target="11" />
+      <module name="connectivity_plus-0.6.0.android.connectivity_plus" target="1.8" />
+      <module name="connectivity_plus-3.0.2.android.connectivity_plus" target="11" />
+      <module name="firebase_core-0.7.0.android.firebase_core" target="1.8" />
+      <module name="firebase_core-1.24.0.android.firebase_core" target="11" />
+      <module name="flutter_plugin_android_lifecycle-1.0.11.android.flutter_plugin_android_lifecycle" target="11" />
+      <module name="geocoding-1.0.5.android.geocoding" target="1.8" />
+      <module name="geocoding-2.0.5.android.geocoding" target="11" />
+      <module name="geolocator-6.2.1.android.geolocator" target="1.8" />
+      <module name="google_maps_flutter-0.5.26+4.android.google_maps_flutter" target="11" />
+      <module name="io.flutter.plugins.urllauncher.android.url_launcher" target="1.8" />
+      <module name="io.flutter.plugins.urllauncher.android.url_launcher_android" target="11" />
+      <module name="pub.dartlang.org.flutter_plugin_android_lifecycle-1.0.11.android.flutter_plugin_android_lifecycle" target="1.8" />
+      <module name="pub.dartlang.org.google_maps_flutter-0.5.26+4.android.google_maps_flutter" target="1.8" />
+      <module name="pub.dartlang.org.shared_preferences-0.5.7+3.android.shared_preferences" target="1.8" />
+      <module name="shared_preferences-0.5.7+3.android.shared_preferences" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
