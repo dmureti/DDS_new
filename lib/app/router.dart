@@ -5,31 +5,27 @@ import 'package:distributor/src/ui/views/add_issue/add_issue_view.dart';
 import 'package:distributor/src/ui/views/add_payment/add_payment_view.dart';
 import 'package:distributor/src/ui/views/adhoc_cart_view/adhoc_cart_view.dart';
 import 'package:distributor/src/ui/views/adhoc_detail/adhoc_detail.dart';
-
 import 'package:distributor/src/ui/views/adhoc_payment/adhoc_payment_view.dart';
+import 'package:distributor/src/ui/views/change_password/change_password.dart';
+import 'package:distributor/src/ui/views/delivery_note/delivery_note_view.dart';
 import 'package:distributor/src/ui/views/journey_log/journey_log.dart';
 import 'package:distributor/src/ui/views/partial_delivery/partial_delivery_view.dart';
-import 'package:distributor/src/ui/views/delivery_note/delivery_note_view.dart';
 import 'package:distributor/src/ui/views/reset_password/reset_password_view.dart';
-import 'package:distributor/src/ui/views/change_password/change_password.dart';
 import 'package:distributor/src/ui/views/stock_transaction/stock_transaction_list_view.dart';
 import 'package:distributor/src/ui/views/stock_transfer/stock_transfer_view.dart';
 import 'package:distributor/src/ui/views/voucher_detail/voucher_detail_view.dart';
 import 'package:distributor/ui/views/adhoc_sales/adhoc_sales_view.dart';
 import 'package:distributor/ui/views/app_info/app_info_view.dart';
 import 'package:distributor/ui/views/bug_report/bug_report.dart';
-import 'package:distributor/ui/views/bug_report/bug_report_viewmodel.dart';
 import 'package:distributor/ui/views/crate_movement/crate_movement_view.dart';
 import 'package:distributor/ui/views/customer_location.dart';
 import 'package:distributor/ui/views/customers/customer_detail/customer_detail_view.dart';
 import 'package:distributor/ui/views/help/help_detail_view.dart';
 import 'package:distributor/ui/views/help/help_view.dart';
-
 import 'package:distributor/ui/views/home/home_view.dart';
 import 'package:distributor/ui/views/journey/journey_view.dart';
 import 'package:distributor/ui/views/journey_info/journey_info_view.dart';
 import 'package:distributor/ui/views/link_payment/link_payment_view.dart';
-
 import 'package:distributor/ui/views/login/login_view.dart';
 import 'package:distributor/ui/views/manage_crate/manage_crate_view.dart';
 import 'package:distributor/ui/views/notifications/notification_view.dart';
@@ -40,7 +36,10 @@ import 'package:distributor/ui/views/payment_reference/payment_reference_view.da
 import 'package:distributor/ui/views/startup/startup_view.dart';
 import 'package:distributor/ui/views/stock_collection/stock_collection_view.dart';
 import 'package:distributor/ui/views/stock_return/stock_return_view.dart';
+import 'package:distributor/ui/views/territory/territory_view.dart';
 import 'package:distributor/ui/widgets/smart_widgets/map_view/delivery_journey_map_view.dart';
+
+import '../ui/views/territory/territory_viewdetail.dart';
 
 @AdaptiveAutoRouter(
   routes: <AutoRoute>[
@@ -55,6 +54,7 @@ import 'package:distributor/ui/widgets/smart_widgets/map_view/delivery_journey_m
     MaterialRoute(page: OrderDetailView),
     MaterialRoute(page: OrderConfirmation),
     MaterialRoute(page: DeliveryJourneyMapView),
+    MaterialRoute(page: TerritoryView),
     MaterialRoute(page: NotificationView),
     MaterialRoute(page: StockReturnView),
     MaterialRoute(page: LinkPaymentView),
@@ -80,6 +80,7 @@ import 'package:distributor/ui/widgets/smart_widgets/map_view/delivery_journey_m
     MaterialRoute(page: AppInfoView),
     MaterialRoute(page: HelpDetailView),
     MaterialRoute(page: JourneyLog),
+    MaterialRoute(page: TerritoryDetailView),
     MaterialRoute(page: JourneyInfoView)
   ],
 )

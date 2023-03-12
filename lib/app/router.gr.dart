@@ -48,6 +48,8 @@ import '../ui/views/payment_reference/payment_reference_view.dart';
 import '../ui/views/startup/startup_view.dart';
 import '../ui/views/stock_collection/stock_collection_view.dart';
 import '../ui/views/stock_return/stock_return_view.dart';
+import '../ui/views/territory/territory_view.dart';
+import '../ui/views/territory/territory_viewdetail.dart';
 import '../ui/widgets/smart_widgets/map_view/delivery_journey_map_view.dart';
 
 class Routes {
@@ -62,6 +64,7 @@ class Routes {
   static const String orderDetailView = '/order-detail-view';
   static const String orderConfirmation = '/order-confirmation';
   static const String deliveryJourneyMapView = '/delivery-journey-map-view';
+  static const String territoryView = '/territory-view';
   static const String notificationView = '/notification-view';
   static const String stockReturnView = '/stock-return-view';
   static const String linkPaymentView = '/link-payment-view';
@@ -87,6 +90,7 @@ class Routes {
   static const String appInfoView = '/app-info-view';
   static const String helpDetailView = '/help-detail-view';
   static const String journeyLog = '/journey-log';
+  static const String territoryDetailView = '/territory-detail-view';
   static const String journeyInfoView = '/journey-info-view';
   static const all = <String>{
     homeView,
@@ -100,6 +104,7 @@ class Routes {
     orderDetailView,
     orderConfirmation,
     deliveryJourneyMapView,
+    territoryView,
     notificationView,
     stockReturnView,
     linkPaymentView,
@@ -125,6 +130,7 @@ class Routes {
     appInfoView,
     helpDetailView,
     journeyLog,
+    territoryDetailView,
     journeyInfoView,
   };
 }
@@ -144,6 +150,7 @@ class Router extends RouterBase {
     RouteDef(Routes.orderDetailView, page: OrderDetailView),
     RouteDef(Routes.orderConfirmation, page: OrderConfirmation),
     RouteDef(Routes.deliveryJourneyMapView, page: DeliveryJourneyMapView),
+    RouteDef(Routes.territoryView, page: TerritoryView),
     RouteDef(Routes.notificationView, page: NotificationView),
     RouteDef(Routes.stockReturnView, page: StockReturnView),
     RouteDef(Routes.linkPaymentView, page: LinkPaymentView),
@@ -169,6 +176,7 @@ class Router extends RouterBase {
     RouteDef(Routes.appInfoView, page: AppInfoView),
     RouteDef(Routes.helpDetailView, page: HelpDetailView),
     RouteDef(Routes.journeyLog, page: JourneyLog),
+    RouteDef(Routes.territoryDetailView, page: TerritoryDetailView),
     RouteDef(Routes.journeyInfoView, page: JourneyInfoView),
   ];
   @override
@@ -283,6 +291,12 @@ class Router extends RouterBase {
           deliveryJourney: args.deliveryJourney,
           key: args.key,
         ),
+        settings: data,
+      );
+    },
+    TerritoryView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const TerritoryView(),
         settings: data,
       );
     },
@@ -531,6 +545,18 @@ class Router extends RouterBase {
         settings: data,
       );
     },
+    TerritoryDetailView: (data) {
+      final args = data.getArgs<TerritoryDetailViewArguments>(
+        orElse: () => TerritoryDetailViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => TerritoryDetailView(
+          key: args.key,
+          fence: args.fence,
+        ),
+        settings: data,
+      );
+    },
     JourneyInfoView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const JourneyInfoView(),
@@ -760,4 +786,11 @@ class HelpDetailViewArguments {
   final String id;
   final String title;
   HelpDetailViewArguments({this.key, this.id, this.title});
+}
+
+/// TerritoryDetailView arguments holder class
+class TerritoryDetailViewArguments {
+  final Key key;
+  final Fence fence;
+  TerritoryDetailViewArguments({this.key, this.fence});
 }

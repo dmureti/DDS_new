@@ -9,7 +9,6 @@ import 'package:distributor/services/activity_service.dart';
 import 'package:distributor/services/adhoc_cart_service.dart';
 import 'package:distributor/services/init_service.dart';
 import 'package:distributor/services/journey_service.dart';
-
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/permission_service.dart';
 import 'package:distributor/services/timeout_service.dart';
@@ -17,12 +16,10 @@ import 'package:distributor/services/user_service.dart';
 import 'package:distributor/services/version_service.dart';
 import 'package:distributor/traits/contextual_viewmodel.dart';
 import 'package:distributor/ui/views/adhoc_sales/adhoc_sales_view.dart';
-
 import 'package:distributor/ui/views/customers/customer_view.dart';
 import 'package:distributor/ui/views/dashboard/dashboard_view.dart';
 import 'package:distributor/ui/views/routes/route_listing_view.dart';
 import 'package:distributor/ui/views/stock/stock_view.dart';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
@@ -91,6 +88,10 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
     await _navigationService.navigateTo(Routes.changePasswordView,
         arguments: ChangePasswordViewArguments(
             passwordChangeType: PasswordChangeType.user));
+  }
+
+  navigateToTerritoryView() async {
+    await _navigationService.navigateTo(Routes.territoryView);
   }
 
   bool get hasActivityUpdate => _activityService.hasUpdate;

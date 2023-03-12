@@ -85,6 +85,15 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
                   isEnabled: model.enableJourneyTab,
                 ),
                 DrawerListTile(
+                  label: 'Territories',
+                  onTap: () {
+                    Navigator.pop(context);
+                    model.navigateToTerritoryView();
+                  },
+                  iconData: Icons.fence,
+                  isEnabled: model.user.fences.isNotEmpty,
+                ),
+                DrawerListTile(
                   isEnabled: model.enableAdhocTab,
                   label: 'Adhoc Sales',
                   onTap: () {
