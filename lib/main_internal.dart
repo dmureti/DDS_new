@@ -54,7 +54,7 @@ void main() async {
       name: 'Geofence / Offline',
       flavorValues: FlavorValues(
           baseUrl:
-              'https://85e8-41-90-66-214.in.ngrok.io/spvdev-backend/api/v1'),
+              'https://bbb9-41-90-65-22.in.ngrok.io/spvdev-backend/api/v1'),
     ),
   ];
   _initService.setAvailableEnvList(_appEnv);
