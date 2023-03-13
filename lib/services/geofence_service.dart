@@ -1,11 +1,10 @@
 import 'dart:async';
 
-import 'package:easy_geofencing/enums/geofence_status.dart';
-import 'package:flutter/foundation.dart';
-import 'package:injectable/injectable.dart';
 import 'package:easy_geofencing/easy_geofencing.dart';
+import 'package:easy_geofencing/enums/geofence_status.dart';
+import 'package:injectable/injectable.dart';
 
-@singleton
+@lazySingleton
 class GeoFenceService {
   bool _disableServices = false;
   bool get disableServices => _disableServices;

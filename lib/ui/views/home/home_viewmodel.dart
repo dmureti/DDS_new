@@ -34,6 +34,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   AdhocCartService _adhocCartService = locator<AdhocCartService>();
   final _timeoutService = locator<TimeoutService>();
   Timer get timer => _timeoutService.timer;
+  // final geoFenceService = locator<GeoFenceService>();
 
   UserService _userService = locator<UserService>();
   NavigationService _navigationService = locator<NavigationService>();
@@ -173,6 +174,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   init() async {
     await _logisticsService.fetchJourneys();
     await _permissionService.init();
+    // geoFenceService.listenToGeofenceStatusStream();
     //Check if the user has permissions before enabling this
     if (user.hasSalesChannel) {
       await fetchAdhocSales();

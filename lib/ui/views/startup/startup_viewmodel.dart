@@ -1,11 +1,9 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/api_service.dart';
-import 'package:distributor/services/geofence_service.dart';
 import 'package:distributor/services/init_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:distributor/services/version_service.dart';
-
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -17,7 +15,7 @@ class StartupViewModel extends BaseViewModel {
   AuthenticationService get authenticationService => AuthenticationService(api);
   final ApiService _apiService = locator<ApiService>();
   final _versionService = locator<VersionService>();
-  final geoFenceService = locator<GeoFenceService>();
+
   Api get api => _apiService.api;
 
   AppEnv get appEnv => _initService.appEnv;
@@ -37,7 +35,7 @@ class StartupViewModel extends BaseViewModel {
 
   Future handleStartUpLogic() async {
     bool result = await _initService.init();
-    geoFenceService.listenToGeofenceStatusStream();
+
     await _versionService.getVersion();
     String userId;
     String password;

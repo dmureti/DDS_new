@@ -8,8 +8,8 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:stacked_services/stacked_services.dart' as _i12;
 
-import '../core/models/product_service.dart' as _i21;
-import '../core/models/search_service.dart' as _i25;
+import '../core/models/product_service.dart' as _i22;
+import '../core/models/search_service.dart' as _i26;
 import '../services/access_controller_service.dart' as _i3;
 import '../services/activity_service.dart' as _i4;
 import '../services/adhoc_cart_service.dart' as _i5;
@@ -20,28 +20,28 @@ import '../services/connectivity_service.dart' as _i9;
 import '../services/crate_,management_service.dart' as _i10;
 import '../services/customer_service.dart' as _i11;
 import '../services/firestore_service.dart' as _i13;
-import '../services/geofence_service.dart' as _i35;
-import '../services/init_service.dart' as _i14;
-import '../services/journey_service.dart' as _i15;
-import '../services/location_repository.dart' as _i16;
-import '../services/logistics_service.dart' as _i17;
-import '../services/order_service.dart' as _i18;
-import '../services/payments_service.dart' as _i19;
-import '../services/permission_service.dart' as _i20;
-import '../services/remote_config_service.dart' as _i22;
-import '../services/remote_storage_repository.dart' as _i23;
-import '../services/return_stock_service.dart' as _i24;
-import '../services/stock_controller_service.dart' as _i26;
-import '../services/stop_service.dart' as _i27;
+import '../services/geofence_service.dart' as _i14;
+import '../services/init_service.dart' as _i15;
+import '../services/journey_service.dart' as _i16;
+import '../services/location_repository.dart' as _i17;
+import '../services/logistics_service.dart' as _i18;
+import '../services/order_service.dart' as _i19;
+import '../services/payments_service.dart' as _i20;
+import '../services/permission_service.dart' as _i21;
+import '../services/remote_config_service.dart' as _i23;
+import '../services/remote_storage_repository.dart' as _i24;
+import '../services/return_stock_service.dart' as _i25;
+import '../services/stock_controller_service.dart' as _i27;
+import '../services/stop_service.dart' as _i28;
 import '../services/third_party_services_module.dart' as _i36;
-import '../services/timeout_service.dart' as _i28;
-import '../services/tracking_service.dart' as _i29;
-import '../services/transaction_service.dart' as _i30;
-import '../services/update_service.dart' as _i31;
-import '../services/user_service.dart' as _i32;
-import '../services/version_service.dart' as _i33;
+import '../services/timeout_service.dart' as _i29;
+import '../services/tracking_service.dart' as _i30;
+import '../services/transaction_service.dart' as _i31;
+import '../services/update_service.dart' as _i32;
+import '../services/user_service.dart' as _i33;
+import '../services/version_service.dart' as _i34;
 import '../services/waypoint_service.dart'
-    as _i34; // ignore_for_file: unnecessary_lambdas
+    as _i35; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -65,43 +65,43 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => thirdPartyServicesModule.dialogService);
   gh.lazySingleton<_i13.FirestoreService>(
       () => thirdPartyServicesModule.firestoreService);
-  gh.lazySingleton<_i14.InitService>(
+  gh.lazySingleton<_i14.GeoFenceService>(() => _i14.GeoFenceService());
+  gh.lazySingleton<_i15.InitService>(
       () => thirdPartyServicesModule.initService);
-  gh.lazySingleton<_i15.JourneyService>(
+  gh.lazySingleton<_i16.JourneyService>(
       () => thirdPartyServicesModule.journeyService);
-  gh.lazySingleton<_i16.LocationRepository>(
+  gh.lazySingleton<_i17.LocationRepository>(
       () => thirdPartyServicesModule.locationRepository);
-  gh.lazySingleton<_i17.LogisticsService>(
+  gh.lazySingleton<_i18.LogisticsService>(
       () => thirdPartyServicesModule.logisticsService);
   gh.lazySingleton<_i12.NavigationService>(
       () => thirdPartyServicesModule.navigationService);
-  gh.lazySingleton<_i18.OrderService>(
+  gh.lazySingleton<_i19.OrderService>(
       () => thirdPartyServicesModule.orderService);
-  gh.lazySingleton<_i19.PaymentsService>(() => _i19.PaymentsService());
-  gh.lazySingleton<_i20.PermissionService>(() => _i20.PermissionService());
-  gh.lazySingleton<_i21.ProductService>(() => _i21.ProductService());
-  gh.lazySingleton<_i22.RemoteConfigService>(
+  gh.lazySingleton<_i20.PaymentsService>(() => _i20.PaymentsService());
+  gh.lazySingleton<_i21.PermissionService>(() => _i21.PermissionService());
+  gh.lazySingleton<_i22.ProductService>(() => _i22.ProductService());
+  gh.lazySingleton<_i23.RemoteConfigService>(
       () => thirdPartyServicesModule.remoteConfigService);
-  gh.lazySingleton<_i23.RemoteStorageRepository>(
+  gh.lazySingleton<_i24.RemoteStorageRepository>(
       () => thirdPartyServicesModule.remoteStorageRepository);
-  gh.lazySingleton<_i24.ReturnStockService>(() => _i24.ReturnStockService());
-  gh.lazySingleton<_i25.SearchService>(() => _i25.SearchService());
+  gh.lazySingleton<_i25.ReturnStockService>(() => _i25.ReturnStockService());
+  gh.lazySingleton<_i26.SearchService>(() => _i26.SearchService());
   gh.lazySingleton<_i12.SnackbarService>(
       () => thirdPartyServicesModule.snackbarService);
-  gh.lazySingleton<_i26.StockControllerService>(
+  gh.lazySingleton<_i27.StockControllerService>(
       () => thirdPartyServicesModule.stockControlService);
-  gh.lazySingleton<_i27.StopService>(() => _i27.StopService());
-  gh.lazySingleton<_i28.TimeoutService>(() => _i28.TimeoutService());
-  gh.lazySingleton<_i29.TrackingService>(() => _i29.TrackingService());
-  gh.lazySingleton<_i30.TransactionService>(
+  gh.lazySingleton<_i28.StopService>(() => _i28.StopService());
+  gh.lazySingleton<_i29.TimeoutService>(() => _i29.TimeoutService());
+  gh.lazySingleton<_i30.TrackingService>(() => _i30.TrackingService());
+  gh.lazySingleton<_i31.TransactionService>(
       () => thirdPartyServicesModule.transactionService);
-  gh.lazySingleton<_i31.UpdateService>(() => _i31.UpdateService());
-  gh.lazySingleton<_i32.UserService>(
+  gh.lazySingleton<_i32.UpdateService>(() => _i32.UpdateService());
+  gh.lazySingleton<_i33.UserService>(
       () => thirdPartyServicesModule.userService);
-  gh.lazySingleton<_i33.VersionService>(() => _i33.VersionService());
-  gh.lazySingleton<_i34.WaypointService>(
+  gh.lazySingleton<_i34.VersionService>(() => _i34.VersionService());
+  gh.lazySingleton<_i35.WaypointService>(
       () => thirdPartyServicesModule.waypointService);
-  gh.singleton<_i35.GeoFenceService>(_i35.GeoFenceService());
   return get;
 }
 
@@ -121,32 +121,32 @@ class _$ThirdPartyServicesModule extends _i36.ThirdPartyServicesModule {
   @override
   _i13.FirestoreService get firestoreService => _i13.FirestoreService();
   @override
-  _i14.InitService get initService => _i14.InitService();
+  _i15.InitService get initService => _i15.InitService();
   @override
-  _i15.JourneyService get journeyService => _i15.JourneyService();
+  _i16.JourneyService get journeyService => _i16.JourneyService();
   @override
-  _i16.LocationRepository get locationRepository => _i16.LocationRepository();
+  _i17.LocationRepository get locationRepository => _i17.LocationRepository();
   @override
-  _i17.LogisticsService get logisticsService => _i17.LogisticsService();
+  _i18.LogisticsService get logisticsService => _i18.LogisticsService();
   @override
   _i12.NavigationService get navigationService => _i12.NavigationService();
   @override
-  _i18.OrderService get orderService => _i18.OrderService();
+  _i19.OrderService get orderService => _i19.OrderService();
   @override
-  _i22.RemoteConfigService get remoteConfigService =>
-      _i22.RemoteConfigService();
+  _i23.RemoteConfigService get remoteConfigService =>
+      _i23.RemoteConfigService();
   @override
-  _i23.RemoteStorageRepository get remoteStorageRepository =>
-      _i23.RemoteStorageRepository();
+  _i24.RemoteStorageRepository get remoteStorageRepository =>
+      _i24.RemoteStorageRepository();
   @override
   _i12.SnackbarService get snackbarService => _i12.SnackbarService();
   @override
-  _i26.StockControllerService get stockControlService =>
-      _i26.StockControllerService();
+  _i27.StockControllerService get stockControlService =>
+      _i27.StockControllerService();
   @override
-  _i30.TransactionService get transactionService => _i30.TransactionService();
+  _i31.TransactionService get transactionService => _i31.TransactionService();
   @override
-  _i32.UserService get userService => _i32.UserService();
+  _i33.UserService get userService => _i33.UserService();
   @override
-  _i34.WaypointService get waypointService => _i34.WaypointService();
+  _i35.WaypointService get waypointService => _i35.WaypointService();
 }

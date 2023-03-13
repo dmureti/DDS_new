@@ -3,26 +3,23 @@ import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/activity_service.dart';
 import 'package:distributor/services/api_service.dart';
-import 'package:distributor/services/geofence_service.dart';
+import 'package:distributor/services/init_service.dart';
 import 'package:distributor/services/location_repository.dart';
-import 'package:distributor/services/location_service.dart';
 import 'package:distributor/services/timeout_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:distributor/services/version_service.dart';
-import 'package:easy_geofencing/enums/geofence_status.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
-import 'package:distributor/services/init_service.dart';
 
-class LoginViewModel extends StreamViewModel<GeofenceStatus> {
+class LoginViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
   ActivityService _activityService = locator<ActivityService>();
   InitService _initService = locator<InitService>();
   TimeoutService _timerService = locator<TimeoutService>();
   final _versionService = locator<VersionService>();
   final locationService = locator<LocationRepository>();
-  final geofenceService = locator<GeoFenceService>();
+  // final geofenceService = locator<GeoFenceService>();
 
   String get version => _versionService.version;
 
@@ -159,17 +156,17 @@ class LoginViewModel extends StreamViewModel<GeofenceStatus> {
     }
   }
 
-  @override
-  Stream<GeofenceStatus> get stream => geofenceService.getGeofenceStream();
-
-  get enableSignIn {
-    switch (data) {
-      case GeofenceStatus.init:
-        return false;
-      case GeofenceStatus.exit:
-        return false;
-      case GeofenceStatus.enter:
-        return true;
-    }
-  }
+  // @override
+  // Stream<GeofenceStatus> get stream => geofenceService.getGeofenceStream();
+  //
+  // get enableSignIn {
+  //   switch (data) {
+  //     case GeofenceStatus.init:
+  //       return false;
+  //     case GeofenceStatus.exit:
+  //       return false;
+  //     case GeofenceStatus.enter:
+  //       return true;
+  //   }
+  // }
 }

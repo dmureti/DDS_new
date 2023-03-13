@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 
 class HomeAppBar extends StatelessWidget {
@@ -24,9 +24,9 @@ class HomeAppBar extends StatelessWidget {
         ),
         IconButton(
           onPressed: null,
-          icon: Badge(
+          icon: badge.Badge(
             padding: EdgeInsets.all(3.0),
-            position: BadgePosition(top: -2, end: -2),
+            position: badge.BadgePosition(top: -2, end: -2),
             child: Icon(
               Icons.notifications,
               color: Colors.white,

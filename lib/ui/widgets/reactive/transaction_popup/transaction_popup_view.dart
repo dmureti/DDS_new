@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:distributor/ui/widgets/reactive/transaction_popup/transaction_popupviewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -16,10 +16,10 @@ class TransactionPopupView extends StatelessWidget {
         fireOnModelReadyOnce: false,
         disposeViewModel: true,
         createNewModelOnInsert: true,
-        builder: (context, model, child) => Badge(
+        builder: (context, model, child) => badge.Badge(
               showBadge: model.hasPendingTransactions,
               badgeColor: Colors.red,
-              position: BadgePosition(top: 15, end: 10),
+              position: badge.BadgePosition(top: 15, end: 10),
               toAnimate: true,
               animationDuration: Duration(seconds: 2),
               borderRadius: BorderRadius.circular(300),

@@ -1,8 +1,7 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/ui/views/customers/customer_detail/accounts_tab/accounts_tab_viewmodel.dart';
-
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -70,7 +69,7 @@ class AccountsTab extends StatelessWidget {
                                                           model
                                                               .toggleShowDateSelection();
                                                         },
-                                                        icon: Badge(
+                                                        icon: badge.Badge(
                                                           child: Icon(
                                                               Icons.filter_alt),
                                                           showBadge: true,
