@@ -33,7 +33,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     compileSdkVersion 33
-    ndkVersion flutter.ndkVersion
+//    ndkVersion flutter.ndkVersion
 
     kotlinOptions {
         jvmTarget = '1.8'

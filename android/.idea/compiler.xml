@@ -17,12 +17,25 @@
       <module name="geocoding-2.0.5.android.geocoding" target="11" />
       <module name="geolocator-6.2.1.android.geolocator" target="1.8" />
       <module name="google_maps_flutter-0.5.26+4.android.google_maps_flutter" target="11" />
+      <module name="hosted.pub.dartlang.org.flutter_plugin_android_lifecycle-1.0.11.android.flutter_plugin_android_lifecycle" target="1.8" />
+      <module name="hosted.pub.dartlang.org.google_maps_flutter-0.5.26+4.android.google_maps_flutter" target="1.8" />
       <module name="io.flutter.plugins.urllauncher.android.url_launcher" target="1.8" />
       <module name="io.flutter.plugins.urllauncher.android.url_launcher_android" target="11" />
+      <module name="permission_handler-5.1.0+2.android.permission_handler" target="1.8" />
+      <module name="pub.dartlang.org.cloud_firestore-0.16.0+1.android.cloud_firestore" target="1.8" />
+      <module name="pub.dartlang.org.connectivity_plus-0.6.0.android.connectivity_plus" target="1.8" />
+      <module name="pub.dartlang.org.firebase_core-0.7.0.android.firebase_core" target="1.8" />
       <module name="pub.dartlang.org.flutter_plugin_android_lifecycle-1.0.11.android.flutter_plugin_android_lifecycle" target="1.8" />
+      <module name="pub.dartlang.org.geocoding-1.0.5.android.geocoding" target="1.8" />
+      <module name="pub.dartlang.org.geolocator-6.2.1.android.geolocator" target="1.8" />
       <module name="pub.dartlang.org.google_maps_flutter-0.5.26+4.android.google_maps_flutter" target="1.8" />
       <module name="pub.dartlang.org.shared_preferences-0.5.7+3.android.shared_preferences" target="1.8" />
+      <module name="pub.dev.flutter_plugin_android_lifecycle-1.0.11.android.flutter_plugin_android_lifecycle" target="1.8" />
+      <module name="pub.dev.google_maps_flutter-0.5.26+4.android.google_maps_flutter" target="1.8" />
+      <module name="pub.dev.shared_preferences-0.5.12+4.android.shared_preferences" target="1.8" />
+      <module name="shared_preferences-0.5.12+4.android.shared_preferences" target="1.8" />
       <module name="shared_preferences-0.5.7+3.android.shared_preferences" target="11" />
+      <module name="url_launcher-5.7.10.android.url_launcher" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
