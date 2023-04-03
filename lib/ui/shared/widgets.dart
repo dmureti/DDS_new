@@ -57,10 +57,12 @@ class ReportFieldRow extends StatelessWidget {
           SizedBox(
             width: 10,
           ),
-          Text(
-            '$value',
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+          Expanded(
+            child: Text(
+              '$value',
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+            ),
           ),
         ],
       ),
