@@ -115,8 +115,11 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   User get user => _userService.user;
 
   logout() async {
-    //Stop the timer
+    // Stop the timer
     timer.cancel();
+    // Clear the cache
+    await _userService.clearAPPCache();
+    // Clear the unnecessary services
     await _navigationService.pushNamedAndRemoveUntil(Routes.loginView);
   }
 
