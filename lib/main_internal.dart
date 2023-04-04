@@ -13,8 +13,7 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
-      .then((value) => print(value.name));
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   setupLocator();
   setupSnackbarUi();
   InitService _initService = locator<InitService>();
