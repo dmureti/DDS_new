@@ -136,7 +136,7 @@ class _LoginViewState extends State<LoginView> {
                                 }
                                 return null;
                               },
-                              keyboardType: TextInputType.text,
+                              keyboardType: TextInputType.phone,
                               decoration: InputDecoration(
                                 filled: false,
                                 hintText: 'Email Address / Phone ',
