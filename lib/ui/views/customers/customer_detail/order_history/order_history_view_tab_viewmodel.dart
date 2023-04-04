@@ -1,6 +1,5 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
-
 import 'package:distributor/services/customer_service.dart';
 import 'package:distributor/services/order_service.dart';
 import 'package:flutter/cupertino.dart';

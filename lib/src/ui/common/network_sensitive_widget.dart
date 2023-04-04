@@ -26,7 +26,7 @@ class NetworkSensitiveWidget extends StatelessWidget {
                 width: 8,
               ),
               Text(
-                'You are offline. Connect to the internet.',
+                'You are offline. You will have limited functionality.',
                 style: TextStyle(color: Colors.white),
               ),
             ],

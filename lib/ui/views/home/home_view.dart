@@ -1,12 +1,9 @@
-import 'package:badges/badges.dart';
 import 'package:distributor/conf/style/lib/colors.dart';
 import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/core/helper.dart';
-import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
 import 'package:distributor/src/ui/views/adhoc_listing/adhoc_listing_view.dart';
 import 'package:distributor/ui/access_controllers/global/bottom_navbar/bottom_nav_bar.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
-
 import 'package:distributor/ui/views/customers/customer_view.dart';
 import 'package:distributor/ui/views/dashboard/dashboard_view.dart';
 import 'package:distributor/ui/views/home/home_viewmodel.dart';
@@ -14,9 +11,8 @@ import 'package:distributor/ui/views/routes/route_listing_view.dart';
 import 'package:distributor/ui/views/stock/stock_view.dart';
 import 'package:distributor/ui/widgets/drawer.dart';
 import 'package:distributor/ui/widgets/reactive/transaction_popup/transaction_popup_view.dart';
-import 'package:distributor/ui/widgets/smart_widgets/location_widget/location_widget.dart';
+import 'package:distributor/ui/widgets/smart_widgets/connection_status/connection_status_widget.dart';
 import 'package:flutter/material.dart';
-
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 
@@ -37,6 +33,7 @@ class HomeView extends StatelessWidget {
           elevation: 0,
           title: _buildTitle(model.currentIndex),
           actions: <Widget>[
+            ConnectionStatusWidget(),
             // IconButton(
             //   onPressed: () => model.refresh(),
             //   icon: Icon(FontAwesome.refresh),
@@ -111,7 +108,7 @@ class HomeView extends StatelessWidget {
       case 0:
         return Stack(
           children: [
-            NetworkSensitiveWidget(),
+            // NetworkSensitiveWidget(),
             // LocationWidget(),
             DashboardView(),
           ],
@@ -120,7 +117,7 @@ class HomeView extends StatelessWidget {
       case 1:
         return Stack(
           children: [
-            NetworkSensitiveWidget(),
+            // NetworkSensitiveWidget(),
             // LocationWidget(),
             RoutesListingView(),
           ],
@@ -129,7 +126,7 @@ class HomeView extends StatelessWidget {
       case 2:
         return Column(
           children: [
-            NetworkSensitiveWidget(),
+            // NetworkSensitiveWidget(),
             // LocationWidget(),
             Container(
               height: 50,
@@ -159,7 +156,7 @@ class HomeView extends StatelessWidget {
       case 3:
         return Column(
           children: [
-            NetworkSensitiveWidget(),
+            // NetworkSensitiveWidget(),
             // LocationWidget(),
             Expanded(child: StockView()),
           ],
@@ -168,7 +165,7 @@ class HomeView extends StatelessWidget {
       case 4:
         return Column(
           children: [
-            NetworkSensitiveWidget(),
+            // NetworkSensitiveWidget(),
             // LocationWidget(),
             Expanded(child: CustomerView()),
           ],
@@ -177,7 +174,7 @@ class HomeView extends StatelessWidget {
       default:
         return Stack(
           children: [
-            NetworkSensitiveWidget(),
+            // NetworkSensitiveWidget(),
             // LocationWidget(),
             DashboardView(),
           ],

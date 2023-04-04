@@ -14,6 +14,7 @@ import 'package:tripletriocore/tripletriocore.dart';
 
 class LoginViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
+  final snackBarService = locator<SnackbarService>();
   ActivityService _activityService = locator<ActivityService>();
   InitService _initService = locator<InitService>();
   TimeoutService _timerService = locator<TimeoutService>();
@@ -100,6 +101,8 @@ class LoginViewModel extends BaseViewModel {
         userId: userId, password: password);
     setBusy(false);
     if (result is User) {
+      // Clear the cache
+      await api.clearAPICache();
       // Update the user
 
       _userService.updateUser(result);
@@ -118,14 +121,7 @@ class LoginViewModel extends BaseViewModel {
             arguments: ChangePasswordViewArguments(
                 passwordChangeType: PasswordChangeType.initial));
       } else {
-        //@TODO Check if the user has accepted location permissions
-        //If NOT display dialog
-        // await _dialogService.showDialog(
-        //     title: '',
-        //     description:
-        //         'DDS collects location data to enable verification of deliveries at the respective client destinations even when the app is closed or not in use.”');
-
-        //Navigate to the home page
+        await initializeAppCache(result);
         _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
       }
     } else if (result is CustomException) {
@@ -135,6 +131,20 @@ class LoginViewModel extends BaseViewModel {
       await _dialogService.showDialog(
           title: 'Login Failure', description: 'Unknown Error.');
     }
+  }
+
+  bool _displayInitDialog = false;
+  bool get displayInitDialog => _displayInitDialog;
+  setDisplayInitDialog(bool value) {
+    _displayInitDialog = value;
+    notifyListeners();
+  }
+
+  initializeAppCache(User user) async {
+    setDisplayInitDialog(true);
+    snackBarService.showSnackbar(message: 'Preparing environment');
+    await api.initializeAppCache(user);
+    setDisplayInitDialog(false);
   }
 
   void updatePassword(String value) {
