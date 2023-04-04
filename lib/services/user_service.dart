@@ -1,9 +1,9 @@
 // Will maintain info about a user
 import 'package:auto_route/auto_route.dart';
+import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:tripletriocore/tripletriocore.dart';
-import 'package:distributor/app/locator.dart';
 
 class UserService {
   ApiService _apiService = locator<ApiService>();
@@ -34,6 +34,10 @@ class UserService {
     };
     var result = await _apiService.api.completeResetMyPassword(data);
     return result;
+  }
+
+  clearAPPCache() async {
+    await _apiService.api.clearAPICache();
   }
 
   resetPassword({
@@ -71,4 +75,3 @@ class UserService {
     return await _apiService.api.getUserSummary(user.token, user: user);
   }
 }
-  
