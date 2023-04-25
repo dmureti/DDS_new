@@ -9,6 +9,8 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
+enum JourneyType { Route, Multibranch, Reliever }
+
 class CrateMovementViewModel extends BaseViewModel {
   final _crateManagementService = locator<CrateManagementService>();
   final _dialogService = locator<DialogService>();
@@ -20,8 +22,25 @@ class CrateMovementViewModel extends BaseViewModel {
 
   get token => _userService.user.token;
 
+  bool get isReliever => _journeyService.currentJourney?.isReliever ?? false;
+
   List _branches;
   List get branches => _branches;
+
+  List _routes;
+  List get routes => _routes;
+
+  /// The route
+  /// Applicable to [JourneyType] != JourneyType.route
+  String _route = "";
+  String get route => _route;
+
+  // Set the route
+  // Applicable to journeys where [JourneyType != JourneyType.Route]
+  setRoute(var s) {
+    _route = s;
+    notifyListeners();
+  }
 
   getBranches() async {
     setBusy(true);
@@ -36,6 +55,11 @@ class CrateMovementViewModel extends BaseViewModel {
     }
     setBusy(false);
   }
+
+  ///
+  /// Get the routes for a selected branch
+  /// @TODO : Implement get routes
+  getRoutes() async {}
 
   String _branch;
   String get branch => _branch ?? _userService.user.branch;
@@ -125,6 +149,11 @@ class CrateMovementViewModel extends BaseViewModel {
     }
     if (_deliveryStop == null && crateTxnType != CrateTxnType.Return) {
       await _fetchCustomers();
+    }
+
+    // If reliever route fetch the associated routes for this user
+    if (isReliever) {
+      await getRoutes();
     }
   }
 
@@ -269,7 +298,6 @@ class CrateMovementViewModel extends BaseViewModel {
           items: salesOrderItems,
           journeyId: journeyId);
       setBusy(false);
-
       if (result['status']) {
         await _dialogService.showDialog(
             title: 'Transaction Success',
