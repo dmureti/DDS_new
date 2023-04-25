@@ -55,6 +55,12 @@ void main() async {
           baseUrl:
               'https://9600-41-90-70-216.eu.ngrok.io/spvdev-backend/api/v1'),
     ),
+    AppEnv(
+      flavor: Flavor.internal,
+      name: 'Mini Mombasa',
+      flavorValues: FlavorValues(
+          baseUrl: 'https://testdds.ddsolutions.tech/spv-backend/api'),
+    ),
   ];
   _initService.setAvailableEnvList(_appEnv);
   ByteData data =

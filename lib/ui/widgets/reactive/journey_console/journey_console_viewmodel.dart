@@ -1,7 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
-
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/location_repository.dart';
 import 'package:distributor/services/waypoint_service.dart';
@@ -56,10 +55,12 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
       if (dialogResponse.confirmed) {
         setBusy(true);
         var result = await _journeyService.startTrip();
-        //Start updating the locations on db
-        locationService.listenToLocationUpdates(result.token,
-            journeyId: _journeyService.journeyId);
-        _waypointService.initializeJourney();
+        if (result) {
+          //Start updating the locations on db
+          locationService.listenToLocationUpdates(result.token,
+              journeyId: _journeyService.journeyId);
+          _waypointService.initializeJourney();
+        }
         setBusy(false);
         if (result) {
           notifyListeners();
@@ -68,7 +69,6 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
         }
       }
       //Do nothing if the user did not confirm
-
     } else if (journeyStatus.toLowerCase() == 'in transit') {
       setBusy(true);
       var result = await _journeyService.stopTrip();

@@ -56,10 +56,20 @@ class CrateMovementViewModel extends BaseViewModel {
     setBusy(false);
   }
 
+  get branchId => !_journeyService.hasJourney
+      ? _userService.user.salesChannel
+      : _journeyService.currentJourney.route;
+
   ///
   /// Get the routes for a selected branch
   /// @TODO : Implement get routes
-  getRoutes() async {}
+  getRoutes() async {
+    setBusy(true);
+    _routes = await _apiService.api.getRoutes(token: token, branch: branchId);
+    print(_routes);
+    setBusy(false);
+    notifyListeners();
+  }
 
   String _branch;
   String get branch => _branch ?? _userService.user.branch;
@@ -152,9 +162,10 @@ class CrateMovementViewModel extends BaseViewModel {
     }
 
     // If reliever route fetch the associated routes for this user
-    if (isReliever) {
-      await getRoutes();
-    }
+    await getRoutes();
+    // if (isReliever) {
+    //   await getRoutes();
+    // }
   }
 
   _getCrates() async {
