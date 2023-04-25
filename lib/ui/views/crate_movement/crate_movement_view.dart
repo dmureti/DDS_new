@@ -48,6 +48,38 @@ class CrateMovementView extends StatelessWidget {
                                     'Would you like to edit the quantity of crates ? '),
                               )
                             : Container(),
+                        //Check if it is a reliever journey
+                        model.isReliever &&
+                                model.routes != null &&
+                                model.routes.isNotEmpty
+                            ? Row(
+                                children: [
+                                  Text(
+                                    'Route : ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Expanded(
+                                    child: DropdownButton(
+                                        isExpanded: true,
+                                        hint: Text('Select Route'),
+                                        value: model.route,
+                                        items: model.routes
+                                            .map((e) => DropdownMenuItem(
+                                                  child: Text(e),
+                                                  value: e,
+                                                ))
+                                            .toList(),
+                                        onChanged: (s) => model.setRoute(s)),
+                                  ),
+                                ],
+                              )
+                            : Container(),
+
                         crateTxnType == CrateTxnType.Return &&
                                 model.crateList.isNotEmpty &&
                                 model.disableTextFormField
@@ -147,8 +179,12 @@ class CrateMovementView extends StatelessWidget {
                                   ),
                         Divider(),
                         model.crateList.isEmpty
-                            ? EmptyContentContainer(
-                                label: 'There are no crates.')
+                            ? Expanded(
+                                child: Center(
+                                  child: EmptyContentContainer(
+                                      label: 'There are no crates.'),
+                                ),
+                              )
                             : Expanded(
                                 child: ListView.builder(
                                   itemBuilder: (context, index) {
