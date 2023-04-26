@@ -1,18 +1,18 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/user_service.dart';
-
-import 'package:stacked/stacked.dart';
-
-import 'package:tripletriocore/tripletriocore.dart';
-import 'package:distributor/core/enums.dart';
 import 'package:observable_ish/observable_ish.dart';
+import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+import 'package:tripletriocore/tripletriocore.dart';
 
 class CustomerService with ReactiveServiceMixin {
   AccessControlService _accessControlService = locator<AccessControlService>();
   ApiService _apiService = locator<ApiService>();
   UserService _userService = locator<UserService>();
+  final _dialogService = locator<DialogService>();
 
   User get user => _userService.user;
   Api get api => _apiService.api;
@@ -43,6 +43,13 @@ class CustomerService with ReactiveServiceMixin {
         .getCustomersIssuesByCustomer(customerCode, user.token);
     if (result is List<Issue>) {
       _customerIssues.value = result;
+      notifyListeners();
+    } else {
+      if (result is CustomException) {
+        await _dialogService.showDialog(
+            title: result.title, description: result.description);
+      }
+      _customerIssues.value = <Issue>[];
       notifyListeners();
     }
   }
@@ -113,6 +120,10 @@ class CustomerService with ReactiveServiceMixin {
       _salesOrderList.value = result;
       notifyListeners();
     } else {
+      if (result is CustomException) {
+        await _dialogService.showDialog(
+            title: result.title, description: result.description);
+      }
       _salesOrderList.value = <SalesOrder>[];
       notifyListeners();
     }
