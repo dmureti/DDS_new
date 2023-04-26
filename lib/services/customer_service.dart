@@ -147,6 +147,11 @@ class CustomerService with ReactiveServiceMixin {
     if (result is CustomerAccount) {
       _customerAccount.value = result;
       notifyListeners();
+    } else {
+      await _dialogService.showDialog(
+          title: result.title, description: result.description);
+      _customerAccount.value = CustomerAccount();
+      notifyListeners();
     }
   }
 
