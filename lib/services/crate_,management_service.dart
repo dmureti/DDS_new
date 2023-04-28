@@ -35,7 +35,8 @@ class CrateManagementService with ReactiveServiceMixin {
       {@required List<Product> expectedCrates,
       @required List<SalesOrderItem> actualReturnedCrates,
       @required String branch,
-      String reason}) async {
+      String reason,
+      String route}) async {
     var details = {
       "jnId": currentJourney.journeyId,
       "expectedCrates": expectedCrates
@@ -48,7 +49,8 @@ class CrateManagementService with ReactiveServiceMixin {
     };
     Map<String, dynamic> data = {
       "details": json.encode(details),
-      "fromWarehouse": _journeyService.currentJourney.route ??
+      "fromWarehouse": route ??
+          _journeyService.currentJourney.route ??
           _userService.user.salesChannel,
       "toWarehouse": branch,
       "reason": reason ?? "",
@@ -68,7 +70,8 @@ class CrateManagementService with ReactiveServiceMixin {
         await _apiService.api.returnCrates(token: userToken, data: data);
     if (result is String) {
       await _dialogService.showDialog(
-          title: 'Crate Return Error', description: result.toString());
+          title: 'You have already returned the crates.',
+          description: result.toString());
       return false;
     }
     return true;
@@ -117,13 +120,16 @@ class CrateManagementService with ReactiveServiceMixin {
       @required int received,
       @required dropped,
       @required List<SalesOrderItem> items,
-      String journeyId}) async {
+      String journeyId,
+      String route,
+      String customerCode}) async {
     final int company = 4;
     final String purpose = "Material Receipt";
     const String warehouseType = "Virtual Warehouse";
     final Map<String, dynamic> details = {
       "jnId": "${currentJourney.journeyId}" ?? "${journeyId}",
       "customer": "${customer}",
+      "customerCode": "${customerCode}",
       "dnId": "${dnId}",
       "received": received,
       "dropped": dropped
@@ -144,13 +150,15 @@ class CrateManagementService with ReactiveServiceMixin {
       "details": json.encode(details),
       "toWarehouse": {
         "company": company,
-        "id": _journeyService.currentJourney.route ??
+        "id": route ??
+            _journeyService.currentJourney.route ??
             _userService.user.salesChannel,
         "name": _journeyService.currentJourney.route ??
             _userService.user.salesChannel,
         "warehouseType": warehouseType
       }
     };
+    print(data);
     var result =
         await _apiService.api.collectDropCrates(token: userToken, data: data);
     return result;
