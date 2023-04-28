@@ -1,7 +1,6 @@
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/src/ui/text_styles.dart';
-
 import 'package:flutter/material.dart';
 
 class TransactionTile extends StatelessWidget {
@@ -26,28 +25,35 @@ class TransactionTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.55,
                         child: Row(
                           children: [
-                            Container(
-                              child: Text(
-                                'FR0M : ',
-                                style: TextStyle(fontWeight: FontWeight.w600),
-                              ),
-                              width: 60,
+                            Row(
+                              children: [
+                                Container(
+                                  child: Text(
+                                    'FR0M : ',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w600),
+                                  ),
+                                  width: 60,
+                                ),
+                                Text(
+                                  transaction.sourceWarehouse,
+                                ),
+                              ],
                             ),
                             Text(
-                              transaction.sourceWarehouse,
+                              transaction.stockTransactionId,
+                              textAlign: TextAlign.right,
+                              style: kListStyleTitle1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ],
                         ),
-                      ),
-                      Container(
-                        child: Text(transaction.stockTransactionId,
-                            textAlign: TextAlign.right,
-                            style: kListStyleTitle1),
                       ),
                     ],
                   ),

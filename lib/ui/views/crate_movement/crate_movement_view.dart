@@ -48,10 +48,9 @@ class CrateMovementView extends StatelessWidget {
                                     'Would you like to edit the quantity of crates ? '),
                               )
                             : Container(),
+
                         //Check if it is a reliever journey
-                        model.isReliever &&
-                                model.routes != null &&
-                                model.routes.isNotEmpty
+                        model.isReliever
                             ? Row(
                                 children: [
                                   Text(
@@ -67,18 +66,22 @@ class CrateMovementView extends StatelessWidget {
                                     child: DropdownButton(
                                         isExpanded: true,
                                         hint: Text('Select Route'),
-                                        value: model.route,
-                                        items: model.routes
+                                        value: model.warehouse,
+                                        items: model.warehouseList
                                             .map((e) => DropdownMenuItem(
-                                                  child: Text(e),
-                                                  value: e,
+                                                  child: Text(e.name),
+                                                  value: e.name,
                                                 ))
                                             .toList(),
-                                        onChanged: (s) => model.setRoute(s)),
+                                        onChanged: (s) =>
+                                            model.setWarehouse(s)),
                                   ),
                                 ],
                               )
                             : Container(),
+
+                        //Check if it is a multibranch
+                        model.isMultiBranch ? Container() : Container(),
 
                         crateTxnType == CrateTxnType.Return &&
                                 model.crateList.isNotEmpty &&
@@ -109,8 +112,10 @@ class CrateMovementView extends StatelessWidget {
                                 ],
                               )
                             : Container(),
-                        // Divider(),
-                        model.branches != null && model.branches.isNotEmpty
+
+                        model.branches != null &&
+                                model.branches.isNotEmpty &&
+                                !model.isReliever
                             ? Row(
                                 children: [
                                   Text(

@@ -121,7 +121,7 @@ class LoginViewModel extends BaseViewModel {
             arguments: ChangePasswordViewArguments(
                 passwordChangeType: PasswordChangeType.initial));
       } else {
-        await initializeAppCache(result);
+        // await initializeAppCache(result);
         _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
       }
     } else if (result is CustomException) {
