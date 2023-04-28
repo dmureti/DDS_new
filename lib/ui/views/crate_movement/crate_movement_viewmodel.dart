@@ -87,12 +87,15 @@ class CrateMovementViewModel extends BaseViewModel {
   bool _disableTextFormField;
   bool get disableTextFormField => _disableTextFormField;
 
+  final String _customerCode;
+
   CrateMovementViewModel(this._deliveryStop, this._crateTxnType)
       : _disableTextFormField = _crateTxnType != CrateTxnType.Return,
-        _customerId = _deliveryStop?.customerCode,
+        _customerId = _deliveryStop?.customerId,
         _journeyId = _deliveryStop?.journeyId,
         _dnId = _deliveryStop?.deliveryNoteId,
-        _isValid = _crateTxnType == CrateTxnType.Return;
+        _isValid = _crateTxnType == CrateTxnType.Return,
+        _customerCode = _deliveryStop?.customerCode;
 
   toggleDisableTextFormField() async {
     _disableTextFormField = !disableTextFormField;
@@ -272,7 +275,7 @@ class CrateMovementViewModel extends BaseViewModel {
             description:
                 'You have successfully returned the crates to the warehouse.');
         _navigationService.back(result: true);
-      } else {}
+      }
     }
   }
 
@@ -308,7 +311,8 @@ class CrateMovementViewModel extends BaseViewModel {
           dropped: dropped,
           items: salesOrderItems,
           journeyId: journeyId,
-          route: warehouse);
+          route: warehouse,
+          customerCode: _customerCode);
       setBusy(false);
       if (result['status']) {
         await _dialogService.showDialog(
