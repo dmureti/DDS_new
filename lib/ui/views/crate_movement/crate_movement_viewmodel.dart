@@ -23,22 +23,24 @@ class CrateMovementViewModel extends BaseViewModel {
   get token => _userService.user.token;
 
   bool get isReliever => _journeyService.currentJourney?.isReliever ?? false;
+  bool get isMultiBranch =>
+      _journeyService.currentJourney?.isMultibranch ?? false;
 
   List _branches;
   List get branches => _branches;
 
-  List _routes;
-  List get routes => _routes;
+  List<Warehouse> _warehouseList;
+  List<Warehouse> get warehouseList => _warehouseList;
 
   /// The route
   /// Applicable to [JourneyType] != JourneyType.route
-  String _route = "";
-  String get route => _route;
+  String _warehouse;
+  String get warehouse => _warehouse;
 
   // Set the route
   // Applicable to journeys where [JourneyType != JourneyType.Route]
-  setRoute(var s) {
-    _route = s;
+  setWarehouse(String s) {
+    _warehouse = s;
     notifyListeners();
   }
 
@@ -63,18 +65,18 @@ class CrateMovementViewModel extends BaseViewModel {
   ///
   /// Get the routes for a selected branch
   /// @TODO : Implement get routes
-  getRoutes() async {
+  getWarehouses() async {
     setBusy(true);
-    _routes = await _apiService.api.getRoutes(token: token, branch: branchId);
-    print(_routes);
+    _warehouseList = await _apiService.api.getWarehouseListByJourney(
+        token: token, journeyId: _journeyService.currentJourney?.journeyId);
     setBusy(false);
-    notifyListeners();
   }
 
   String _branch;
   String get branch => _branch ?? _userService.user.branch;
   setBranch(var s) {
     _branch = s;
+    print(s);
     notifyListeners();
   }
 
@@ -87,7 +89,7 @@ class CrateMovementViewModel extends BaseViewModel {
 
   CrateMovementViewModel(this._deliveryStop, this._crateTxnType)
       : _disableTextFormField = _crateTxnType != CrateTxnType.Return,
-        _customerId = _deliveryStop?.customerId,
+        _customerId = _deliveryStop?.customerCode,
         _journeyId = _deliveryStop?.journeyId,
         _dnId = _deliveryStop?.deliveryNoteId,
         _isValid = _crateTxnType == CrateTxnType.Return;
@@ -143,6 +145,9 @@ class CrateMovementViewModel extends BaseViewModel {
   }
 
   init() async {
+    if (isReliever) {
+      await getWarehouses();
+    }
     switch (crateTxnType) {
       case CrateTxnType.Return:
         await _getCrates();
@@ -160,12 +165,6 @@ class CrateMovementViewModel extends BaseViewModel {
     if (_deliveryStop == null && crateTxnType != CrateTxnType.Return) {
       await _fetchCustomers();
     }
-
-    // If reliever route fetch the associated routes for this user
-    await getRoutes();
-    // if (isReliever) {
-    //   await getRoutes();
-    // }
   }
 
   _getCrates() async {
@@ -264,7 +263,8 @@ class CrateMovementViewModel extends BaseViewModel {
           expectedCrates: _crateList,
           reason: reason,
           actualReturnedCrates: actualReturned,
-          branch: branch);
+          branch: branch,
+          route: warehouse);
       setBusy(false);
       if (result) {
         await _dialogService.showDialog(
@@ -307,7 +307,8 @@ class CrateMovementViewModel extends BaseViewModel {
           received: received,
           dropped: dropped,
           items: salesOrderItems,
-          journeyId: journeyId);
+          journeyId: journeyId,
+          route: warehouse);
       setBusy(false);
       if (result['status']) {
         await _dialogService.showDialog(
