@@ -43,7 +43,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
 
   final _versionService = locator<VersionService>();
 
-  String get version => _versionService.version;
+  // String get versionCode => _versionService.appVersion.versionCode;
 
   HomeViewModel(int index) : _currentIndex = index;
 
