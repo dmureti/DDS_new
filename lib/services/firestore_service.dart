@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:distributor/core/models/app_version.dart';
 import 'package:distributor/services/remote_storage_repository.dart';
 
 class FirestoreService implements RemoteStorageRepository {
@@ -12,6 +13,15 @@ class FirestoreService implements RemoteStorageRepository {
       _firebaseFirestore.collection("orders");
   CollectionReference get _bugCollectionReference =>
       _firebaseFirestore.collection('bugs');
+  CollectionReference get _applicationCollectionReference =>
+      _firebaseFirestore.collection('versions');
+
+  checkForUpdates(String tenantId) async {
+    return await _applicationCollectionReference
+        .doc(tenantId)
+        .get()
+        .then((docSnapshot) => AppVersion.fromMap(docSnapshot.data()));
+  }
 
   Future<List> fetchTitleList() async {
     return await _titleCollectionReference.orderBy('priority').get().then(

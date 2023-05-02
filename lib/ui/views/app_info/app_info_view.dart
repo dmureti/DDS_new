@@ -8,6 +8,7 @@ class AppInfoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<AppInfoViewModel>.reactive(
+        onModelReady: (model) => model.init(),
         builder: (context, model, child) => Scaffold(
               appBar: AppBar(
                 title: Text('About'),
@@ -22,7 +23,7 @@ class AppInfoView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Text('Version : ${model.version}')
+                  Text('Version : ${model.appVersion.versionCode}')
                 ],
               ),
             ),

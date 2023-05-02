@@ -1,6 +1,7 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
+import 'package:distributor/core/models/app_version.dart';
 import 'package:distributor/services/activity_service.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/init_service.dart';
@@ -20,9 +21,11 @@ class LoginViewModel extends BaseViewModel {
   TimeoutService _timerService = locator<TimeoutService>();
   final _versionService = locator<VersionService>();
   final locationService = locator<LocationRepository>();
+  final dialogService = locator<DialogService>();
   // final geofenceService = locator<GeoFenceService>();
 
-  String get version => _versionService.version;
+  AppVersion _appVersion;
+  AppVersion get appVersion => _appVersion;
 
   List<AppEnv> get environments => _initService.availableEnvList;
 
@@ -44,6 +47,41 @@ class LoginViewModel extends BaseViewModel {
 
   init() async {
     _rememberMe = _initService.rememberMe;
+    await initialiseAppEnvironment();
+  }
+
+  initialiseAppEnvironment() async {
+    setInitScript("Preparing environment");
+    setBusy(true);
+    await _versionService.getVersion().then((value) async {
+      _appVersion = value;
+      _versionCode = _appVersion.versionCode.toString();
+      await checkForUpdates();
+    });
+    setBusy(false);
+    notifyListeners();
+  }
+
+  checkForUpdates() async {
+    setBusy(true);
+    AppVersion remoteVersion;
+    bool result = await _versionService
+        .checkForUpdates(appVersion.tenantId)
+        .then((value) {
+      remoteVersion = value;
+      return _versionService.compareVersions(
+          appVersion1: appVersion, appVersion2: value);
+    });
+    //Compare the versions
+    setBusy(false);
+    print('checked for updates');
+    if (result) {
+      await _dialogService.showConfirmationDialog(
+          title: 'Update DDS',
+          description: 'DDS recommends that you update to the latest version.\n'
+              'You are currently using ${appVersion.versionCode}. The latest version is ${remoteVersion.versionCode}',
+          confirmationTitle: 'Update');
+    }
   }
 
   bool _rememberMe;
@@ -70,8 +108,8 @@ class LoginViewModel extends BaseViewModel {
   AuthenticationService get authenticationService => AuthenticationService(api);
   Api get api => _apiService.api;
 
-  String _versionName;
-  String get versionName => _versionName;
+  String _versionCode;
+  String get versionCode => _versionCode;
 
   bool _obscurePassword = true;
   bool get obscurePassword => _obscurePassword;
@@ -156,6 +194,13 @@ class LoginViewModel extends BaseViewModel {
 
   void navigateToForgotPassword() async {
     await _navigationService.navigateTo(Routes.resetPasswordView);
+  }
+
+  String _initScript = "";
+  String get initScript => _initScript;
+  setInitScript(String val) {
+    _initScript = val;
+    notifyListeners();
   }
 
   String _userId;

@@ -292,9 +292,12 @@ class _LoginViewState extends State<LoginView> {
               ),
               Align(
                 alignment: Alignment.bottomCenter,
-                child: Text(
-                  'Version : ${model.version}',
-                  style: TextStyle(fontSize: 14, color: Colors.white),
+                child: GestureDetector(
+                  onTap: () => model.checkForUpdates(),
+                  child: Text(
+                    'Version : ${model.versionCode}',
+                    style: TextStyle(fontSize: 14, color: Colors.white),
+                  ),
                 ),
               ),
             ],
