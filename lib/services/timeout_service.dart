@@ -24,7 +24,9 @@ class TimeoutService {
   }
 
   void handleTimeout() async {
+    //@TODO Check if there are any unprocessed transactions
     //@TODO Stop all background services
+    //@TODO Clear the cache
 
     //Display a dialog that the session has timed out
     await _dialogService.showDialog(

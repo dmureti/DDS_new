@@ -50,7 +50,7 @@ class CrateMovementView extends StatelessWidget {
                             : Container(),
 
                         //Check if it is a reliever journey
-                        model.isReliever
+                        model.isReliever && crateTxnType == CrateTxnType.Return
                             ? Row(
                                 children: [
                                   Text(

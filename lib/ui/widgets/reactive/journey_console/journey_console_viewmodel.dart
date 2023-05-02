@@ -57,14 +57,13 @@ class JourneyConsoleViewModel extends ReactiveViewModel {
         var result = await _journeyService.startTrip();
         if (result) {
           //Start updating the locations on db
-          locationService.listenToLocationUpdates(result.token,
-              journeyId: _journeyService.journeyId);
-          _waypointService.initializeJourney();
+          // locationService.listenToLocationUpdates(result.token,journeyId: _journeyService.journeyId);
+          // _waypointService.initializeJourney();
         }
         setBusy(false);
+        notifyListeners();
         if (result) {
-          notifyListeners();
-          _waypointService.listenToLocation();
+          // _waypointService.listenToLocation();
           return true;
         }
       }
