@@ -4,6 +4,7 @@ import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
 import 'package:distributor/ui/shared/widgets.dart';
 import 'package:distributor/ui/views/login/login_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
+import 'package:distributor/ui/widgets/smart_widgets/progress_bars/linear_progress_indicator_widget.dart';
 import 'package:distributor/ui/widgets/smart_widgets/remember_me/remember_me_checkbox.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -71,6 +72,7 @@ class _LoginViewState extends State<LoginView> {
           height: MediaQuery.of(context).size.height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               NetworkSensitiveWidget(),
               // model.enableSignIn
@@ -85,6 +87,7 @@ class _LoginViewState extends State<LoginView> {
               //                 color: Colors.black, fontSize: 16),
               //           ),
               //         )),
+              Spacer(),
               Form(
                 key: _formKey,
                 child: Column(
@@ -300,6 +303,14 @@ class _LoginViewState extends State<LoginView> {
                   ),
                 ),
               ),
+              Spacer(),
+              model.hasUpdate
+                  ? Align(
+                      alignment: Alignment.bottomCenter,
+                      child: LinearProgressIndicatorWidget(
+                          progressValue: model.downloaded),
+                    )
+                  : Container()
             ],
           ),
         ),

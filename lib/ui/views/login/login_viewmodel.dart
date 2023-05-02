@@ -43,11 +43,36 @@ class LoginViewModel extends BaseViewModel {
 
   LoginViewModel(String userId, String password)
       : _userId = userId,
-        _password = password;
+        _password = password {
+    _versionService.downloadProgress.listen(_onDownloadUpdated);
+  }
+
+  bool _hasUpdate = false;
+  bool get hasUpdate => _hasUpdate;
+  setHasUpdate(bool val) {
+    _hasUpdate = val;
+    notifyListeners();
+  }
+
+  double _downloaded = 0;
+  double get downloaded => _downloaded;
+
+  _onDownloadUpdated(var data) {
+    print(data);
+    _downloaded = data;
+    notifyListeners();
+    if (downloaded == 100) {
+      print("complete");
+    }
+  }
 
   init() async {
     _rememberMe = _initService.rememberMe;
     await initialiseAppEnvironment();
+  }
+
+  onDispose() {
+    super.dispose();
   }
 
   initialiseAppEnvironment() async {
@@ -74,15 +99,25 @@ class LoginViewModel extends BaseViewModel {
     });
     //Compare the versions
     setBusy(false);
-    print('checked for updates');
     if (result) {
-      await _dialogService.showConfirmationDialog(
+      setHasUpdate(true);
+      var dialogResponse = await _dialogService.showConfirmationDialog(
           title: 'Update DDS',
           description: 'DDS recommends that you update to the latest version.\n'
               'You are currently using ${appVersion.versionCode}. The latest version is ${remoteVersion.versionCode}',
           confirmationTitle: 'Update');
+      if (dialogResponse.confirmed) {
+        // snackBarService.showSnackbar(message: 'Download started');
+        await _versionService.downloadAndUpdate(remoteVersion.remoteUrl);
+        // snackBarService.showSnackbar(
+        //     message: 'Download Completed',
+        //     onTap: (_) => _versionService.openFile());
+      }
     }
   }
+
+  double _downloadProgress;
+  double get downloadProgress => _downloadProgress ?? 0;
 
   bool _rememberMe;
   bool get rememberMe => _rememberMe;
