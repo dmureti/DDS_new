@@ -48,15 +48,14 @@ class VersionService {
   int _contentLength;
   int get contentLength => _contentLength;
 
-  downloadAndUpdate(String remoteUrl) async {
+  downloadAndUpdate(String remoteUrl, String appCode) async {
     var httpClient = http.Client();
     var request = new http.Request('GET', Uri.parse(remoteUrl));
-
     var response = httpClient.send(request);
-
-    String dir = (await getApplicationDocumentsDirectory()).path;
     List<List<int>> chunks = new List();
     int downloaded = 0;
+    String dir = (await getExternalStorageDirectory()).path;
+    String path = 'dds_$appCode.apk';
     response.asStream().listen((http.StreamedResponse r) {
       r.stream.listen((List<int> chunk) {
         // Display percentage of completion
@@ -71,8 +70,8 @@ class VersionService {
         // Display percentage of completion
         // debugPrint('downloadPercentage: ${downloaded / r.contentLength * 100}');
         // Save the file
-        File file = new File('$dir/demo.apk');
-        print('$dir/demo.apk');
+
+        File file = new File('$dir/$path');
         final Uint8List bytes = Uint8List(r.contentLength);
         int offset = 0;
         for (List<int> chunk in chunks) {
@@ -83,17 +82,18 @@ class VersionService {
         var dialogResponse = await _dialogService.showConfirmationDialog(
             title: 'Download Complete', confirmationTitle: 'Install');
         if (dialogResponse.confirmed) {
-          await openFile();
+          await openFile(path);
         }
         return;
       });
     });
   }
 
-  openFile() async {
-    String dir = (await getApplicationDocumentsDirectory()).path;
-    final File file = File('$dir/demo.apk');
-    await file.readAsBytes();
+  openFile(String path) async {
+    String dir = (await getExternalStorageDirectory()).path;
+    final File file = File('$dir/$path');
+    print(file.path);
+    return await file.open().then((value) => print("done reading"));
   }
 
   VersionService() {

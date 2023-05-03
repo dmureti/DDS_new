@@ -58,12 +58,9 @@ class LoginViewModel extends BaseViewModel {
   double get downloaded => _downloaded;
 
   _onDownloadUpdated(var data) {
-    print(data);
     _downloaded = data;
     notifyListeners();
-    if (downloaded == 100) {
-      print("complete");
-    }
+    if (downloaded == 100) {}
   }
 
   init() async {
@@ -108,7 +105,8 @@ class LoginViewModel extends BaseViewModel {
           confirmationTitle: 'Update');
       if (dialogResponse.confirmed) {
         // snackBarService.showSnackbar(message: 'Download started');
-        await _versionService.downloadAndUpdate(remoteVersion.remoteUrl);
+        await _versionService.downloadAndUpdate(
+            remoteVersion.remoteUrl, remoteVersion.versionCode);
         // snackBarService.showSnackbar(
         //     message: 'Download Completed',
         //     onTap: (_) => _versionService.openFile());
