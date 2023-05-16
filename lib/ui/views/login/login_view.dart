@@ -304,13 +304,13 @@ class _LoginViewState extends State<LoginView> {
                 ),
               ),
               Spacer(),
-              model.hasUpdate
+              model.hasUpdate && !model.isComplete
                   ? Align(
                       alignment: Alignment.bottomCenter,
                       child: LinearProgressIndicatorWidget(
                           progressValue: model.downloaded),
                     )
-                  : Container()
+                  : Container(),
             ],
           ),
         ),

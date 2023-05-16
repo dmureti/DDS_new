@@ -100,7 +100,8 @@ class CrateManagementService with ReactiveServiceMixin {
       if (productList.isNotEmpty) {
         return productList
             .where((product) =>
-                product.itemName.toLowerCase().contains('crates') == true)
+                product.itemName.toLowerCase().contains('crates') == true ||
+                product.itemName.toLowerCase().contains('outer'))
             .toList();
       } else {
         return <Product>[];

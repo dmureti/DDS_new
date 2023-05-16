@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -38,9 +39,12 @@ class VersionService {
   final StreamController<double> _downloadProgressController =
       StreamController<double>();
 
+  final StreamController<bool> _downloadStatusController =
+      StreamController<bool>();
+
   // Public feedback stream to be consumed in model
   Stream<double> get downloadProgress => _downloadProgressController.stream;
-
+  Stream<bool> get downloadStatus => _downloadStatusController.stream;
   getProgressFromStream(int downloaded, int contentLength) {
     return downloaded / contentLength * 100;
   }
@@ -48,19 +52,23 @@ class VersionService {
   int _contentLength;
   int get contentLength => _contentLength;
 
+  String _path;
+  String get path => _path;
+
   downloadAndUpdate(String remoteUrl, String appCode) async {
     var httpClient = http.Client();
     var request = new http.Request('GET', Uri.parse(remoteUrl));
     var response = httpClient.send(request);
     List<List<int>> chunks = new List();
     int downloaded = 0;
-    String dir = (await getExternalStorageDirectory()).path;
-    String path = 'dds_$appCode.apk';
+    String dir = (await getApplicationDocumentsDirectory()).path;
+    _path = 'dds_$appCode.apk';
     response.asStream().listen((http.StreamedResponse r) {
       r.stream.listen((List<int> chunk) {
         // Display percentage of completion
         _downloadProgressController
             .add(getProgressFromStream(downloaded, r.contentLength));
+        _downloadStatusController.add(false);
         // debugPrint(
         //     'downloadPercentage: ${getProgressFromStream(downloaded, r.contentLength)}');
         chunks.add(chunk);
@@ -70,7 +78,7 @@ class VersionService {
         // Display percentage of completion
         // debugPrint('downloadPercentage: ${downloaded / r.contentLength * 100}');
         // Save the file
-
+        _downloadStatusController.add(true);
         File file = new File('$dir/$path');
         final Uint8List bytes = Uint8List(r.contentLength);
         int offset = 0;
@@ -79,21 +87,19 @@ class VersionService {
           offset += chunk.length;
         }
         await file.writeAsBytes(bytes);
-        var dialogResponse = await _dialogService.showConfirmationDialog(
-            title: 'Download Complete', confirmationTitle: 'Install');
-        if (dialogResponse.confirmed) {
-          await openFile(path);
-        }
         return;
       });
     });
   }
 
-  openFile(String path) async {
-    String dir = (await getExternalStorageDirectory()).path;
-    final File file = File('$dir/$path');
-    print(file.path);
-    return await file.open().then((value) => print("done reading"));
+  openFile() async {
+    String dir = (await getApplicationDocumentsDirectory()).path;
+    print('$dir/$path');
+    final result = await OpenFilex.open('$dir/$path');
+    print(result.type);
+    // final File file = File('$dir/$path');
+    // print(file.path);
+    // return await file.open().then((value) => print("done reading"));
   }
 
   VersionService() {

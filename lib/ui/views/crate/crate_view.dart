@@ -1,6 +1,5 @@
 import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/src/strings.dart';
-import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/ui/views/crate/crate_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
@@ -26,7 +25,7 @@ class CrateView extends StatelessWidget {
                       : model.crateList.isEmpty
                           ? Center(
                               child: EmptyContentContainer(
-                                  label: 'There are no crates available.'))
+                                  label: 'There are no outers available.'))
                           : ListView.builder(
                               itemBuilder: (context, index) {
                                 var crate = model.crateList[index];
@@ -52,11 +51,11 @@ class CrateView extends StatelessWidget {
                                     itemBuilder: (context) {
                                       return <PopupMenuEntry<Object>>[
                                         PopupMenuItem(
-                                          child: Text('Collect Crates'),
+                                          child: Text('Collect Outers'),
                                           value: 'receive_crates',
                                         ),
                                         PopupMenuItem(
-                                            child: Text('Drop Crates'),
+                                            child: Text('Drop Outers'),
                                             value: 'drop_crates'),
                                       ];
                                     },

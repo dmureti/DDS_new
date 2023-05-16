@@ -45,6 +45,7 @@ class LoginViewModel extends BaseViewModel {
       : _userId = userId,
         _password = password {
     _versionService.downloadProgress.listen(_onDownloadUpdated);
+    _versionService.downloadStatus.listen(_onDownloadComplete);
   }
 
   bool _hasUpdate = false;
@@ -57,14 +58,47 @@ class LoginViewModel extends BaseViewModel {
   double _downloaded = 0;
   double get downloaded => _downloaded;
 
+  bool _updateAPK;
+  bool get updateAPK => _updateAPK;
+  setUpdateAPK(bool val) {
+    _updateAPK = val;
+    notifyListeners();
+  }
+
+  bool _isComplete = false;
+  bool get isComplete => _isComplete;
+
+  _onDownloadComplete(var data) {
+    _isComplete = data;
+    if (data) {
+      displayInstallDialog();
+      notifyListeners();
+    }
+  }
+
   _onDownloadUpdated(var data) {
     _downloaded = data;
     notifyListeners();
-    if (downloaded == 100) {}
+    // if (downloaded == 100) {
+    //   var dialogResponse = await _dialogService.showConfirmationDialog(
+    //       title: 'Download Complete', confirmationTitle: 'Install');
+    //   if (dialogResponse.confirmed) {
+    //     await _versionService.openFile();
+    //   }
+    // }
+  }
+
+  displayInstallDialog() async {
+    var dialogResponse = await _dialogService.showConfirmationDialog(
+        title: 'Download Complete', confirmationTitle: 'Install');
+    if (dialogResponse.confirmed) {
+      return await _versionService.openFile();
+    }
   }
 
   init() async {
     _rememberMe = _initService.rememberMe;
+
     await initialiseAppEnvironment();
   }
 
@@ -186,6 +220,7 @@ class LoginViewModel extends BaseViewModel {
       // Start listening to location stream updates
 
       // Initialize the geofencing service
+      await initializeAppCache(result);
 
       if (result.status != 1) {
         _navigationService.pushNamedAndRemoveUntil(Routes.changePasswordView,

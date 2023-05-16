@@ -1,6 +1,5 @@
 import 'package:distributor/conf/style/lib/colors.dart';
 import 'package:distributor/conf/style/lib/text_styles.dart';
-import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/ui/views/crate/crate_view.dart';
 import 'package:distributor/ui/views/stock/stock_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/flat_button_widget.dart';
@@ -9,7 +8,6 @@ import 'package:distributor/ui/widgets/smart_widgets/info_bar_controller/info_ba
 import 'package:distributor/ui/widgets/smart_widgets/stock_controller/stock_controller_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-
 import 'package:tripletriocore/tripletriocore.dart';
 
 class StockView extends StatelessWidget {
@@ -95,13 +93,13 @@ class StockView extends StatelessWidget {
                                       ),
                                       Tab(
                                         child: Text(
-                                          'Crates',
+                                          'Outers',
                                           style: kTabTextStyleActive,
                                         ),
                                       ),
                                       Tab(
                                         child: Text(
-                                          'Crates Movement',
+                                          'Outters Movement',
                                           textAlign: TextAlign.center,
                                           style: kTabTextStyleActive,
                                         ),
