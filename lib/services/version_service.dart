@@ -37,10 +37,10 @@ class VersionService {
 
   // Controller for the download progress stream
   final StreamController<double> _downloadProgressController =
-      StreamController<double>();
+      StreamController<double>.broadcast();
 
   final StreamController<bool> _downloadStatusController =
-      StreamController<bool>();
+      StreamController<bool>.broadcast();
 
   // Public feedback stream to be consumed in model
   Stream<double> get downloadProgress => _downloadProgressController.stream;
