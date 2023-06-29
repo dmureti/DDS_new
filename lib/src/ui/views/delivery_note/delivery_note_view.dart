@@ -1,9 +1,10 @@
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/app_bar_column_title.dart';
-import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
+
 import 'delivery_note_viewmodel.dart';
 
 class DeliveryNoteView extends StatelessWidget {
@@ -57,8 +58,15 @@ class DeliveryNoteView extends StatelessWidget {
                               ? 'full_delivery'
                               : 'not_possible',
                         ),
+                        PopupMenuDivider(),
                         PopupMenuItem(
-                          child: Text('Partial Delivery'),
+                            child: Text('Collect Crates'),
+                            value: 'receive_crates'),
+                        PopupMenuItem(
+                            child: Text('Drop Crates'), value: 'drop_crates'),
+                        PopupMenuDivider(),
+                        PopupMenuItem(
+                          child: Text('Sales Returns'),
                           value: model.deliveryStop.stopId != null &&
                                   model.deliveryNote.deliveryStatus
                                           .toLowerCase() ==
@@ -66,12 +74,6 @@ class DeliveryNoteView extends StatelessWidget {
                               ? 'partial_delivery'
                               : 'not_possible',
                         ),
-                        PopupMenuDivider(),
-                        PopupMenuItem(
-                            child: Text('Collect Crates'),
-                            value: 'receive_crates'),
-                        PopupMenuItem(
-                            child: Text('Drop Crates'), value: 'drop_crates'),
                         // PopupMenuItem(
                         //     child: Text('Return Crates'),
                         //     value: 'crates_return'),
@@ -80,7 +82,7 @@ class DeliveryNoteView extends StatelessWidget {
                         //   child: Text('Receive Returns'),
                         //   value: 'receive_return',
                         // ),
-                        PopupMenuDivider(),
+                        // PopupMenuDivider(),
                         // PopupMenuItem(
                         //   child: Text('Add Payment'),
                         //   value: 'add_payment',
@@ -96,7 +98,7 @@ class DeliveryNoteView extends StatelessWidget {
               body: TabBarView(
                 children: [
                   model.deliveryNote == null
-                      ? BusyWidget()
+                      ? Center(child: BusyWidget())
                       : Container(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
