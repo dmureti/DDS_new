@@ -1,4 +1,3 @@
-import 'package:distributor/conf/dds_brand_guide.dart';
 import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:distributor/ui/widgets/button/journey_control.dart';
