@@ -162,6 +162,7 @@ class CrateMovementViewModel extends BaseViewModel {
         await listCrates();
         break;
       case CrateTxnType.Drop:
+        // await _getCrates();
         await listCrates();
         break;
     }
@@ -178,7 +179,7 @@ class CrateMovementViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  updateItemSet(String val, Product crate) {
+  _validateInput(String val, Product crate) {
     if (val.isNotEmpty) {
       Item item = Item(
           itemName: crate.itemName,
@@ -199,6 +200,18 @@ class CrateMovementViewModel extends BaseViewModel {
         // Add the item to the list
         _itemSet.addAll({item: int.parse(val)});
       }
+    }
+  }
+
+  updateItemSet(String val, Product crate) {
+    switch (crateTxnType) {
+      // case CrateTxnType.Drop:
+      //   // _dialogService.showDialog(title: 'Invalid Value', description: 'The value $val exceeds the current stock at hand');
+      //   // _validateInput(val, crate);
+      //   break;
+      default:
+        _validateInput(val, crate);
+        break;
     }
   }
 

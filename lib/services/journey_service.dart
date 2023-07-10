@@ -5,13 +5,11 @@ import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/user_service.dart';
-
 import 'package:distributor/ui/widgets/smart_widgets/info_bar/info_bar_widget_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:observable_ish/observable_ish.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import 'package:tripletriocore/tripletriocore.dart';
 
 /// An enumeration of the states that a journey can be in
@@ -151,9 +149,10 @@ class JourneyService with ReactiveServiceMixin {
     return result;
   }
 
-  Future makePartialDelivery(
+  Future makeSalesReturns(
       {@required String journeyId, @required Map<String, dynamic> data}) async {
-    var result = await _api.makeCustomDelivery(journeyId, _user.token, data);
+    print(_user.token);
+    var result = await _api.makeSalesReturns(journeyId, _user.token, data);
     if (result is bool) {
       _noOfCompletedStops.value++;
     }

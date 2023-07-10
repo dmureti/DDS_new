@@ -1,13 +1,13 @@
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/src/ui/views/partial_delivery/partial_delivery_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/app_bar_column_title.dart';
-import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:flutter/material.dart';
-
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
-class PartialDeliveryView extends StatelessWidget {
+class PartialDeliveryView extends StatefulWidget {
   final SalesOrder salesOrder;
   final DeliveryJourney deliveryJourney;
   final DeliveryNote deliveryNote;
@@ -22,62 +22,84 @@ class PartialDeliveryView extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<PartialDeliveryView> createState() => _PartialDeliveryViewState();
+}
+
+class _PartialDeliveryViewState extends State<PartialDeliveryView> {
+  @override
   Widget build(BuildContext context) {
-    print(deliveryStop.isTechnicalStop.toString());
+    print(widget.deliveryStop.isTechnicalStop.toString());
     return ViewModelBuilder<PartialDeliveryViewModel>.reactive(
         onModelReady: (model) => model.init(),
         builder: (context, model, child) {
           return Scaffold(
             appBar: AppBar(
               title: AppBarColumnTitle(
-                mainTitle: 'Partial Delivery',
+                mainTitle: 'Sales Returns',
                 subTitle: model.deliveryStop.deliveryNoteId,
               ),
             ),
             body: Container(
               margin: EdgeInsets.symmetric(horizontal: 8),
               child: model.userLocation == null
-                  ? BusyWidget()
+                  ? Center(child: BusyWidget())
                   : Column(
                       children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                              'Confirm that these are the number of stock items that you are returning to the warehouse',
+                              style: kLeadingBodyText),
+                        ),
+                        // model.reasons.isEmpty
+                        //     ? Container()
+                        //     : DropdownButton(
+                        //         hint: Text('Reason for returns'),
+                        //         isExpanded: true,
+                        //         value: model.reason,
+                        //         items: model.reasons
+                        //             .map((e) => DropdownMenuItem(
+                        //                   child: Text(e),
+                        //                   value: e,
+                        //                 ))
+                        //             .toList(),
+                        //         onChanged: (e) {
+                        //           model.updateReason(e);
+                        //         }),
+                        // ReasonTextView(),
+                        Divider(),
+                        Text('Items'),
+                        //Fetch SKUS
                         Expanded(
                           child: ListView.builder(
                             itemBuilder: (context, index) {
                               var salesOrderRequestItem =
                                   model.deliveryNote.deliveryItems[index];
-                              return Container(
-                                margin: EdgeInsets.symmetric(vertical: 4),
-                                child: Material(
-                                  type: MaterialType.card,
-                                  elevation: 2,
+                              return ListTile(
+                                title: Container(
+                                  // margin: EdgeInsets.symmetric(vertical: 4),
                                   child: Padding(
                                     padding: const EdgeInsets.all(4.0),
                                     child: Row(
                                       children: [
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              salesOrderRequestItem['itemCode'],
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 18),
-                                            ),
-                                            Text(
-                                              salesOrderRequestItem['quantity']
-                                                  .toStringAsFixed(0),
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
+                                        // Column(
+                                        //   mainAxisAlignment:
+                                        //       MainAxisAlignment.center,
+                                        //   crossAxisAlignment:
+                                        //       CrossAxisAlignment.center,
+                                        //   children: [
+                                        //     Text(
+                                        //       salesOrderRequestItem['quantity']
+                                        //           .toStringAsFixed(0),
+                                        //       style: TextStyle(
+                                        //           fontSize: 18,
+                                        //           fontWeight: FontWeight.w600),
+                                        //     ),
+                                        //   ],
+                                        // ),
+                                        // SizedBox(
+                                        //   width: 5,
+                                        // ),
                                         Expanded(
                                           flex: 4,
                                           child: Column(
@@ -113,13 +135,93 @@ class PartialDeliveryView extends StatelessWidget {
                                             ],
                                           ),
                                         ),
-                                        Expanded(
-                                            child: UnitsDeliveredTextForm(
-                                                salesOrderRequestItem, index))
+
+                                        // Expanded(
+                                        //     child: UnitsDeliveredTextForm(
+                                        //         salesOrderRequestItem, index)),
+                                        _ReasonIconButton(index)
+                                        // IconButton(
+                                        //   onPressed: () async {
+                                        //     await showModalBottomSheet(
+                                        //       context: (context),
+                                        //       builder: (context) => Container(
+                                        //         color: Colors.white,
+                                        //         child: Column(
+                                        //           crossAxisAlignment:
+                                        //               CrossAxisAlignment.start,
+                                        //           mainAxisSize:
+                                        //               MainAxisSize.max,
+                                        //           children: [
+                                        //             Row(
+                                        //               mainAxisAlignment:
+                                        //                   MainAxisAlignment
+                                        //                       .spaceBetween,
+                                        //               children: [
+                                        //                 Padding(
+                                        //                   padding:
+                                        //                       const EdgeInsets
+                                        //                           .all(8.0),
+                                        //                   child: Text(
+                                        //                     'Reason for Return',
+                                        //                     style: TextStyle(
+                                        //                         fontSize: 16,
+                                        //                         fontWeight:
+                                        //                             FontWeight
+                                        //                                 .w800),
+                                        //                   ),
+                                        //                 ),
+                                        //                 IconButton(
+                                        //                   icon:
+                                        //                       Icon(Icons.close),
+                                        //                   onPressed: () {
+                                        //                     Navigator.pop(
+                                        //                         context);
+                                        //                   },
+                                        //                 ),
+                                        //               ],
+                                        //             ),
+                                        //             ...model.reasons
+                                        //                 .map(
+                                        //                   (reason) =>
+                                        //                       CheckboxListTile(
+                                        //                     title: Text(reason),
+                                        //                     controlAffinity:
+                                        //                         ListTileControlAffinity
+                                        //                             .leading,
+                                        //                     value: model
+                                        //                         .checkReasonStatus(
+                                        //                             index,
+                                        //                             reason),
+                                        //                     onChanged: (_) {
+                                        //                       model
+                                        //                           .updateSalesOrderRequestReason(
+                                        //                               index,
+                                        //                               reason);
+                                        //
+                                        //                       //Show snackbar
+                                        //                     },
+                                        //                   ),
+                                        //                 )
+                                        //                 .toList(),
+                                        //           ],
+                                        //         ),
+                                        //       ),
+                                        //     );
+                                        //   },
+                                        //   icon: Icon(
+                                        //     Icons.more_vert,
+                                        //     size: 30,
+                                        //     // color: Colors.white,
+                                        //   ),
+                                        //   visualDensity: VisualDensity.compact,
+                                        // ),
                                       ],
                                     ),
                                   ),
                                 ),
+                                //@TODO List of reasons
+                                subtitle: Text(
+                                    'Reason : ${model.getReasonForItem(index)}'),
                               );
                             },
                             itemCount: model.deliveryStop.deliveryItems.length,
@@ -133,13 +235,13 @@ class PartialDeliveryView extends StatelessWidget {
                                 )
                               : ElevatedButton(
                                   child: Text(
-                                    'Make Partial Delivery',
+                                    'Make Sales Returns',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w500),
                                   ),
                                   onPressed: () {
-                                    model.makePartialDelivery();
+                                    model.makeSalesReturns();
                                   },
                                 ),
                         )
@@ -148,8 +250,122 @@ class PartialDeliveryView extends StatelessWidget {
             ),
           );
         },
-        viewModelBuilder: () => PartialDeliveryViewModel(
-            salesOrder, deliveryJourney, deliveryNote, deliveryStop));
+        viewModelBuilder: () => PartialDeliveryViewModel(widget.salesOrder,
+            widget.deliveryJourney, widget.deliveryNote, widget.deliveryStop));
+  }
+}
+
+class _ReasonIconButton extends HookViewModelWidget<PartialDeliveryViewModel> {
+  final int index;
+  _ReasonIconButton(this.index);
+  @override
+  Widget buildViewModelWidget(
+      BuildContext context, PartialDeliveryViewModel model) {
+    return IconButton(
+      onPressed: () async {
+        await showModalBottomSheet(
+          // isScrollControlled: true,
+          context: (context),
+          builder: (context) => StatefulBuilder(
+              builder: (context, setState) => Container(
+                    color: Colors.white,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'Reason for Return',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w800),
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.close),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        ),
+                        ...model.reasons
+                            .map(
+                              (reason) => CheckboxListTile(
+                                // groupValue: model.getCurrentValue(index, reason),
+                                title: Row(
+                                  children: [
+                                    Expanded(child: Text(reason)),
+                                    Container(
+                                      child: TextFormField(
+                                          initialValue: '0',
+                                          //@TODO Check if the corresponding checkbox is enabled
+                                          enabled: false,
+                                          keyboardType: TextInputType.number),
+                                      width: 50,
+                                    ),
+                                  ],
+                                ),
+
+                                controlAffinity:
+                                    ListTileControlAffinity.leading,
+                                value: model.checkReasonStatus(index, reason),
+                                onChanged: (_) {
+                                  setState(() {
+                                    // Add / Remove the reason
+
+                                    // Enable / Disable textform field
+
+                                    // If disabled reset value to zero
+                                    // _checked = value;
+                                  });
+                                  //If enabled display a text editing
+
+                                  //model.updateSalesOrderRequestReason(index, reason);
+
+                                  //Show snackbar
+                                },
+                              ),
+                            )
+                            .toList(),
+                        ElevatedButton(
+                          onPressed: null,
+                          child: Text('Submit'),
+                        )
+                      ],
+                    ),
+                  )),
+        );
+      },
+      icon: Icon(
+        Icons.add_circle_outline,
+        size: 30,
+        // color: Colors.white,
+      ),
+      visualDensity: VisualDensity.compact,
+    );
+  }
+}
+
+class _ReasonForReturnCheckBox
+    extends HookViewModelWidget<PartialDeliveryViewModel> {
+  final salesOrderRequestItem;
+  final int index;
+  final String reason;
+
+  _ReasonForReturnCheckBox(this.salesOrderRequestItem, this.index, this.reason);
+
+  @override
+  Widget buildViewModelWidget(
+      BuildContext context, PartialDeliveryViewModel model) {
+    return CheckboxListTile(
+        title: Text(reason),
+        controlAffinity: ListTileControlAffinity.leading,
+        value: false,
+        onChanged: (_) => model.updateSalesOrderRequestReason(index, reason));
   }
 }
 

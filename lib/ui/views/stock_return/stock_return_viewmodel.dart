@@ -24,6 +24,7 @@ class StockReturnViewModel extends BaseViewModel {
   }
 
   init() async {
+    await fetchReasons();
     await fetchStockBalance();
   }
 
@@ -47,6 +48,19 @@ class StockReturnViewModel extends BaseViewModel {
       // Return the crates to the branch
       _returnStocks();
     }
+  }
+
+  List _reasons = [];
+  List get reasons => _reasons;
+
+  fetchReasons() async {
+    var result = await _stockControllerService.fetchReasons();
+    if (result is List) {
+      _reasons = result;
+      _reason = _reasons.first;
+      notifyListeners();
+    }
+    // print(result);
   }
 
   _returnStocks() async {
@@ -91,5 +105,10 @@ class StockReturnViewModel extends BaseViewModel {
             'Are you sure you want to return the stock to the warehouse ? ',
         cancelTitle: 'NO',
         confirmationTitle: 'YES, I AM SURE');
+  }
+
+  setReason(e) {
+    _reason = e;
+    notifyListeners();
   }
 }

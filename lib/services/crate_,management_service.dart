@@ -68,10 +68,9 @@ class CrateManagementService with ReactiveServiceMixin {
     };
     var result =
         await _apiService.api.returnCrates(token: userToken, data: data);
-    if (result is String) {
+    if (result is CustomException) {
       await _dialogService.showDialog(
-          title: 'You have already returned the crates.',
-          description: result.toString());
+          title: result.title, description: result.description);
       return false;
     }
     return true;

@@ -93,13 +93,13 @@ class StockView extends StatelessWidget {
                                       ),
                                       Tab(
                                         child: Text(
-                                          'Outers',
+                                          'Crates',
                                           style: kTabTextStyleActive,
                                         ),
                                       ),
                                       Tab(
                                         child: Text(
-                                          'Outters Movement',
+                                          'Crates Movement',
                                           textAlign: TextAlign.center,
                                           style: kTabTextStyleActive,
                                         ),

@@ -6,7 +6,6 @@ import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import 'package:tripletriocore/tripletriocore.dart';
 
 class StockControllerService {
@@ -42,8 +41,6 @@ class StockControllerService {
 //	When the balances are displayed, the specific column "value of stock"
 //	should only be displayed if the user has "virtual_stock_balance.view_cog" permission;
 //	otherwise, hide this column
-
-
 
   getTransactionsPendingAuth() async {
     var result = await _api.getPendingAuthStockTransactions(_user.token,
@@ -151,5 +148,9 @@ class StockControllerService {
     };
 
     return await _apiService.api.routeReturn(token: _user.token, data: data);
+  }
+
+  fetchReasons() async {
+    return await _apiService.api.getReturnReasonsList(_user.token);
   }
 }

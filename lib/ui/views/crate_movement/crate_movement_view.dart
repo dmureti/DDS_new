@@ -237,6 +237,7 @@ class CrateMovementView extends StatelessWidget {
                                                 enabled:
                                                     model.disableTextFormField,
                                                 onChanged: (val) {
+                                                  //@TODO Max value of crates
                                                   model.updateItemSet(
                                                       val, crate);
                                                 },

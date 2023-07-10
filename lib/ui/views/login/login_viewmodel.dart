@@ -220,7 +220,7 @@ class LoginViewModel extends BaseViewModel {
       // Start listening to location stream updates
 
       // Initialize the geofencing service
-      await initializeAppCache(result);
+      // await initializeAppCache(result);
 
       if (result.status != 1) {
         _navigationService.pushNamedAndRemoveUntil(Routes.changePasswordView,

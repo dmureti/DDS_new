@@ -20,13 +20,13 @@ void main() async {
   List<AppEnv> _appEnv = [
     AppEnv(
       flavor: Flavor.internal,
-      name: 'Development',
+      name: 'Encours',
       flavorValues: FlavorValues(
           baseUrl: 'https://testdds.ddsolutions.tech/spvdev-backend/api/v1'),
     ),
     AppEnv(
       flavor: Flavor.internal,
-      name: 'SIT',
+      name: 'SPV',
       flavorValues: FlavorValues(
           baseUrl: 'https://testdds.ddsolutions.tech/spv-backend/api/v1'),
     ),

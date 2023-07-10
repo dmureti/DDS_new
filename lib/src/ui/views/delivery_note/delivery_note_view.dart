@@ -70,7 +70,7 @@ class DeliveryNoteView extends StatelessWidget {
                           value: model.deliveryStop.stopId != null &&
                                   model.deliveryNote.deliveryStatus
                                           .toLowerCase() ==
-                                      'in journey'
+                                      'fullfilled'
                               ? 'partial_delivery'
                               : 'not_possible',
                         ),
