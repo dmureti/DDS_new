@@ -5,7 +5,6 @@ import 'package:distributor/ui/shared/widgets.dart';
 import 'package:distributor/ui/views/login/login_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/smart_widgets/progress_bars/linear_progress_indicator_widget.dart';
-import 'package:distributor/ui/widgets/smart_widgets/remember_me/remember_me_checkbox.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stacked/stacked.dart';
@@ -228,11 +227,11 @@ class _LoginViewState extends State<LoginView> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 8.0, top: 5),
-                                child: RememberMeCheckbox(),
-                              ),
+                              // Padding(
+                              //   padding:
+                              //       const EdgeInsets.only(left: 8.0, top: 5),
+                              //   child: RememberMeCheckbox(),
+                              // ),
                               Padding(
                                 padding:
                                     const EdgeInsets.only(left: 8.0, top: 10),
