@@ -4,6 +4,7 @@ import 'package:distributor/ui/views/crate/crate_view.dart';
 import 'package:distributor/ui/views/stock/stock_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/flat_button_widget.dart';
 import 'package:distributor/ui/widgets/smart_widgets/crate_transactions/crate_transaction_listing.dart';
+import 'package:distributor/ui/widgets/smart_widgets/crew_order_history/crew_history_view.dart';
 import 'package:distributor/ui/widgets/smart_widgets/info_bar_controller/info_bar_controller_view.dart';
 import 'package:distributor/ui/widgets/smart_widgets/stock_controller/stock_controller_widget.dart';
 import 'package:flutter/material.dart';
@@ -123,12 +124,7 @@ class StockView extends StatelessWidget {
                                       // Container(),
                                       CrateView(),
                                       CrateTransactionListingView(),
-                                      Container(
-                                        child: Center(
-                                          child: Text(
-                                              'Place order summary widget here'),
-                                        ),
-                                      ),
+                                      CrewHistoryView()
                                     ],
                                   ),
                                 )

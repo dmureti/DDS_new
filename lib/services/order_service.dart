@@ -80,4 +80,8 @@ class OrderService with ReactiveServiceMixin {
   }
 
   getSalesOrders(String customerId) async {}
+
+  fetchOrdersByUser(String token) async {
+    return await _apiService.api.getSalesOrdersByUser(token);
+  }
 }
