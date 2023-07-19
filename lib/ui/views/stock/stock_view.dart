@@ -73,7 +73,7 @@ class StockView extends StatelessWidget {
                           ),
                         )
                       : DefaultTabController(
-                          length: 3,
+                          length: 4,
                           child: Expanded(
                             child: Column(
                               children: [
@@ -104,6 +104,13 @@ class StockView extends StatelessWidget {
                                           style: kTabTextStyleActive,
                                         ),
                                       ),
+                                      Tab(
+                                        child: Text(
+                                          'Orders',
+                                          textAlign: TextAlign.center,
+                                          style: kTabTextStyleActive,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -116,6 +123,12 @@ class StockView extends StatelessWidget {
                                       // Container(),
                                       CrateView(),
                                       CrateTransactionListingView(),
+                                      Container(
+                                        child: Center(
+                                          child: Text(
+                                              'Place order summary widget here'),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 )

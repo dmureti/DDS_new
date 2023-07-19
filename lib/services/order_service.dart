@@ -3,7 +3,6 @@ import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/customer_service.dart';
 import 'package:distributor/services/firestore_service.dart';
 import 'package:distributor/services/user_service.dart';
-
 import 'package:observable_ish/observable_ish.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -65,17 +64,16 @@ class OrderService with ReactiveServiceMixin {
       _ordersPlaced.value++;
       updateValueOfOrdersPlaced(salesOrderRequest.total);
       await _customerService.fetchOrdersByCustomer(customer.customerCode);
-      print(customer.customerCode);
-      await _dataRepository.placeOrder(
-        {
-          "customer": customer.customerCode,
-          "event": "sales order",
-          "source": "",
-          "recipient": "",
-          "title": "New Sales Order created",
-          "body": ""
-        },
-      );
+      // await _dataRepository.placeOrder(
+      //   {
+      //     "customer": customer.customerCode,
+      //     "event": "sales order",
+      //     "source": "",
+      //     "recipient": "",
+      //     "title": "New Sales Order created",
+      //     "body": ""
+      //   },
+      // );
       notifyListeners();
     }
     return result;

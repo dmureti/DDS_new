@@ -11,6 +11,7 @@ import 'package:tripletriocore/tripletriocore.dart';
 
 class PartialDeliveryViewModel extends BaseViewModel {
   NavigationService _navigationService = locator<NavigationService>();
+  final _dialogService = locator<DialogService>();
   final _snackbarService = locator<SnackbarService>();
   JourneyService _journeyService = locator<JourneyService>();
   UserService _userService = locator<UserService>();
@@ -97,25 +98,6 @@ class PartialDeliveryViewModel extends BaseViewModel {
     return false;
   }
 
-  // Update the reason for each item
-  updateSalesOrderRequestReason(int index, String val) {
-    _newRequest[index].reason = val;
-    notifyListeners();
-    _navigationService.back();
-    _snackbarService.showSnackbar(
-        message: "Reason updated successfully to $val", title: 'Success');
-  }
-
-  Set _salesOrderRequestReasons;
-  Set get salesOrderRequestReasons => _salesOrderRequestReasons;
-
-  checkReasonStatus(int index, String val) {
-    if (newRequest[index].reason.toLowerCase() == val.toLowerCase()) {
-      return true;
-    }
-    return false;
-  }
-
   getCurrentValue(int index, String val) {
     if (newRequest[index].reason.toLowerCase() == val.toLowerCase()) {
       return true;
@@ -132,6 +114,29 @@ class PartialDeliveryViewModel extends BaseViewModel {
   String _remarks = "";
   String get remarks => _remarks;
 
+  fetchReasonsBySKU(itemCode) {
+    List _salesOrderReturnItem = [];
+    List _initialList = [];
+    if (salesOrderReturns.isNotEmpty) {
+      // Loop through the list
+      for (var salesOrderReturn in salesOrderReturns) {
+        var result = salesOrderReturn;
+        var _code = result['item']['itemCode'];
+        if (_code == itemCode) {
+          Map<String, dynamic> soi = {
+            "quantity": result['quantity'],
+            "reason": result['reason'],
+          };
+          _salesOrderReturnItem.add(soi);
+        }
+        // print(_code);
+      }
+
+      return _salesOrderReturnItem;
+    }
+    return _salesOrderReturnItem;
+  }
+
   makeSalesReturns() async {
     setBusy(true);
 
@@ -142,36 +147,38 @@ class PartialDeliveryViewModel extends BaseViewModel {
       "deliveryLocation":
           "lat:${userLocation.latitude.toString()},lng:${userLocation.longitude.toString()}",
       "deliveryWarehouse": deliveryJourney.route,
-      "items": newRequest.map((SalesOrderRequestItem e) {
+      "items": salesOrderReturns.map((e) {
         return {
           "item": {
-            "id": e.itemCode,
-            "itemCode": e.itemCode,
-            "itemName": e.itemName,
-            "itemPrice": e.itemRate,
+            "id": e['item']['itemCode'],
+            "itemCode": e['item']['itemCode'],
+            "itemName": e['item']['itemName'],
+            "itemPrice": e['item']['itemRate'],
           },
-          "quantity": e.quantity,
-          "reason": e.reason
+          "quantity": e['quantity'],
+          "reason": e['reason']
         };
       }).toList(),
       "onJourneyId": deliveryJourney.journeyId,
       "remarks": remarks,
       "salesOrderId": deliveryStop.orderId
     };
+    // print(salesOrderReturns.first.toString());
     print(json.encode(data));
     var result = await _journeyService.makeSalesReturns(
         journeyId: deliveryJourney.journeyId, data: data);
     setBusy(false);
-    print(result);
+
     _navigationService.back(result: result);
-    // if (result is CustomException) {
-    //   await _dialogService.showDialog(
-    //       title: result.title, description: result.description);
-    // } else {
-    //   _snackbarService.showSnackbar(
-    //       message: 'The delivery was completed successfully');
-    //   _navigationService.back(result: true);
-    // }
+    if (result is CustomException) {
+      print(result.title);
+      await _dialogService.showDialog(
+          title: result.title, description: result.description);
+    } else {
+      _snackbarService.showSnackbar(
+          message: 'The delivery was completed successfully');
+      _navigationService.back(result: true);
+    }
   }
 
   // Update the reason for item
@@ -179,25 +186,40 @@ class PartialDeliveryViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  getReason(String itemId) {}
+  // List of reasons by salesorderitem
+  /// SalesOrderItem
+  ///
+  List _salesOrderReturns = [];
+  List get salesOrderReturns => _salesOrderReturns;
 
-  updateReturnsBySKU() {
-    // Check if the state of this item
-    // Get the SKU
+  void updateSalesReturnUnits(List result, var itemCode) {
+    //Check if list is empty
+    if (_salesOrderReturns.isEmpty) {
+      _salesOrderReturns.addAll(result);
+    } else {
+      // Loop through the items
+      _salesOrderReturns.removeWhere((element) {
+        return element['item']['itemCode'].toString() == itemCode.toString();
+      });
 
-    //Update the list of returns
-    notifyListeners();
-  }
+      _salesOrderReturns.addAll(result);
+    }
+    // print(result);
 
-  Set<SalesReturn> _salesReturns;
-  Set<SalesReturn> get salesReturns => _salesReturns;
-
-  updateSalesReturn(String reason, int quantity, int index) {
-    notifyListeners();
-  }
-
-  //Update the Sales Returns List By SKU
-  submitSalesReturnsBySKU() {
+    // if (salesOrderReturns.isEmpty) {
+    //   _salesOrderReturns.add(result);
+    // } else {
+    //   //Check if the index exists
+    //   if (salesOrderReturns.asMap().containsKey(index)) {
+    //     _salesOrderReturns[index] = result;
+    //     print('$index exists');
+    //     _salesOrderReturns.add(result);
+    //   } else {
+    //     //Add the value to the index
+    //     _salesOrderReturns.add(result);
+    //   }
+    // }
+    // fetchReasonsBySKU(result);
     notifyListeners();
   }
 }
@@ -205,7 +227,13 @@ class PartialDeliveryViewModel extends BaseViewModel {
 class SalesReturn {
   final String reason;
   final int quantity;
-  final SalesOrderRequestItem saleRequestItem;
+  SalesOrderRequestItem saleRequestItem;
 
-  SalesReturn(this.reason, this.quantity, this.saleRequestItem);
+  SalesReturn(this.reason, this.quantity, {this.saleRequestItem});
+
+  @override
+  String toString() {
+    print(
+        "reason is $reason  quantity is $quantity and index is $saleRequestItem");
+  }
 }

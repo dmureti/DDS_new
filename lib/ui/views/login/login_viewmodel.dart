@@ -16,15 +16,22 @@ import 'package:tripletriocore/tripletriocore.dart';
 class LoginViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
   final snackBarService = locator<SnackbarService>();
+
   ActivityService _activityService = locator<ActivityService>();
+
   InitService _initService = locator<InitService>();
   TimeoutService _timerService = locator<TimeoutService>();
+
   final _versionService = locator<VersionService>();
+
   final locationService = locator<LocationRepository>();
+
   final dialogService = locator<DialogService>();
+
   // final geofenceService = locator<GeoFenceService>();
 
   AppVersion _appVersion;
+
   AppVersion get appVersion => _appVersion;
 
   List<AppEnv> get environments => _initService.availableEnvList;
@@ -220,7 +227,7 @@ class LoginViewModel extends BaseViewModel {
       // Start listening to location stream updates
 
       // Initialize the geofencing service
-      // await initializeAppCache(result);
+      await initializeAppCache(result);
 
       if (result.status != 1) {
         _navigationService.pushNamedAndRemoveUntil(Routes.changePasswordView,
