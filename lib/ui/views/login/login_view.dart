@@ -1,6 +1,5 @@
 import 'package:distributor/conf/dds_brand_guide.dart';
 import 'package:distributor/conf/style/lib/text_styles.dart';
-import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
 import 'package:distributor/ui/shared/widgets.dart';
 import 'package:distributor/ui/views/login/login_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
@@ -73,7 +72,7 @@ class _LoginViewState extends State<LoginView> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              NetworkSensitiveWidget(),
+              // NetworkSensitiveWidget(),
               // model.enableSignIn
               //     ? Container()
               //     : Container(
