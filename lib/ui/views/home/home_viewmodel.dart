@@ -7,6 +7,7 @@ import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/activity_service.dart';
 import 'package:distributor/services/adhoc_cart_service.dart';
+import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/init_service.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/logistics_service.dart';
@@ -27,19 +28,36 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
+  final _apiService = locator<ApiService>();
   PermissionService _permissionService = locator<PermissionService>();
   LogisticsService _logisticsService = locator<LogisticsService>();
   ActivityService _activityService = locator<ActivityService>();
   JourneyService _journeyService = locator<JourneyService>();
   AdhocCartService _adhocCartService = locator<AdhocCartService>();
   final _timeoutService = locator<TimeoutService>();
+  final _snackbarService = locator<SnackbarService>();
   Timer get timer => _timeoutService.timer;
   // final geoFenceService = locator<GeoFenceService>();
+
+  get api => _apiService.api;
 
   UserService _userService = locator<UserService>();
   NavigationService _navigationService = locator<NavigationService>();
   InitService _initService = locator<InitService>();
   AccessControlService _accessControlService = locator<AccessControlService>();
+  final _dialogService = locator<DialogService>();
+
+  syncData() async {
+    setBusy(true);
+    _snackbarService.showSnackbar(
+        message: 'Synchronization in progress', title: 'Offline Data sync');
+    await api.dataSync(_userService.user.token).then(() {
+      _snackbarService.showSnackbar(
+          message: 'Synchronization Complete', title: 'Offline Data sync');
+    });
+
+    setBusy(false);
+  }
 
   final _versionService = locator<VersionService>();
 
@@ -119,6 +137,9 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
     timer.cancel();
     // Clear the cache
     await _userService.clearAPPCache();
+    //Sync the data
+    // _dialogService.showDialog(title: 'Sync In Progress', description: 'Offline data synchronization in progress');
+
     // Clear the unnecessary services
     await _navigationService.pushNamedAndRemoveUntil(Routes.loginView);
   }
@@ -257,6 +278,10 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
     setBusy(true);
     _adhocSalesList =
         await _adhocCartService.fetchAdhocSalesList(postingDate: postingDate);
+    _adhocSalesList
+        .where(
+            (adhocSale) => adhocSale.referenceNo.toLowerCase().contains("pk-"))
+        .toList();
     setBusy(false);
     notifyListeners();
   }
@@ -291,8 +316,12 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
           return a.transactionDate.compareTo(b.transactionDate);
         });
       }
-      _memento = _adhocSalesList;
-      return _adhocSalesList;
+      _memento = _adhocSalesList
+          .where((element) => element.referenceNo.toLowerCase().contains('pk'))
+          .toList();
+      return _adhocSalesList
+          .where((element) => element.referenceNo.toLowerCase().contains('pk'))
+          .toList();
     }
     return _adhocSalesList;
   }

@@ -58,11 +58,13 @@ class OrderService with ReactiveServiceMixin {
   Future createSalesOrder(
       SalesOrderRequest salesOrderRequest, Customer customer) async {
     var result = await api.createSalesOrder(
-        user.token, salesOrderRequest, customer.customerCode);
+        user.token, salesOrderRequest, customer.customerCode,
+        customerName: customer.name);
     if (result is bool) {
       /// Increase the count of sales orders
       _ordersPlaced.value++;
       updateValueOfOrdersPlaced(salesOrderRequest.total);
+      print(customer.customerCode);
       await _customerService.fetchOrdersByCustomer(customer.customerCode);
       // await _dataRepository.placeOrder(
       //   {

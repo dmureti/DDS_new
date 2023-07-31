@@ -1,4 +1,5 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/order_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:stacked/stacked.dart';
@@ -16,25 +17,32 @@ class CrewHistoryViewModel extends BaseViewModel {
   List<SalesOrder> get orders => _orders;
 
   init() async {
-    fetchOrders();
+    await fetchOrders();
   }
 
   //fetch all orders
   fetchOrders() async {
     setBusy(true);
     var result = await _orderService.fetchOrdersByUser(token);
-    setBusy(false);
-    if (result is List<SalesOrder>) {
+    if (result) {
       _orders = result;
     }
+    setBusy(false);
     notifyListeners();
   }
 
-  navigateToSalesOrder(){
-
+  navigateToSalesOrder(SalesOrder salesOrder,
+      {DeliveryJourney deliveryJourney, String stopId}) async {
+    await _navigationService.navigateTo(Routes.orderDetailView,
+        arguments: OrderDetailViewArguments(
+            salesOrder: salesOrder,
+            deliveryJourney: deliveryJourney,
+            stopId: stopId));
+    await fetchOrders();
   }
 
-  syncOrder(){
-    
-  }
+  navigateToOrder(SalesOrder salesOrder, DeliveryJourney deliveryJourney,
+      String stopId) async {}
+
+  syncOrder() {}
 }

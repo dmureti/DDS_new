@@ -83,16 +83,16 @@ class LoginViewModel extends BaseViewModel {
     }
   }
 
-  _onDownloadUpdated(var data) {
+  _onDownloadUpdated(var data) async {
     _downloaded = data;
     notifyListeners();
-    // if (downloaded == 100) {
-    //   var dialogResponse = await _dialogService.showConfirmationDialog(
-    //       title: 'Download Complete', confirmationTitle: 'Install');
-    //   if (dialogResponse.confirmed) {
-    //     await _versionService.openFile();
-    //   }
-    // }
+    if (downloaded == 100) {
+      var dialogResponse = await _dialogService.showConfirmationDialog(
+          title: 'Download Complete', confirmationTitle: 'Install');
+      if (dialogResponse.confirmed) {
+        await _versionService.openFile();
+      }
+    }
   }
 
   displayInstallDialog() async {
@@ -105,7 +105,6 @@ class LoginViewModel extends BaseViewModel {
 
   init() async {
     _rememberMe = _initService.rememberMe;
-
     await initialiseAppEnvironment();
   }
 
@@ -145,12 +144,12 @@ class LoginViewModel extends BaseViewModel {
               'You are currently using ${appVersion.versionCode}. The latest version is ${remoteVersion.versionCode}',
           confirmationTitle: 'Update');
       if (dialogResponse.confirmed) {
-        // snackBarService.showSnackbar(message: 'Download started');
+        snackBarService.showSnackbar(message: 'Download started');
         await _versionService.downloadAndUpdate(
             remoteVersion.remoteUrl, remoteVersion.versionCode);
-        // snackBarService.showSnackbar(
-        //     message: 'Download Completed',
-        //     onTap: (_) => _versionService.openFile());
+        snackBarService.showSnackbar(
+            message: 'Download Completed',
+            onTap: (_) => _versionService.openFile());
       }
     }
   }
@@ -211,7 +210,7 @@ class LoginViewModel extends BaseViewModel {
 
     result = await authenticationService.loginWithUserIdAndPassword(
         userId: userId, password: password);
-    setBusy(false);
+
     if (result is User) {
       // Clear the cache
       await api.clearAPICache();
@@ -226,7 +225,7 @@ class LoginViewModel extends BaseViewModel {
           activityTitle: 'Login in', activityDesc: 'Logged In successfully'));
       // Start listening to location stream updates
 
-      // Initialize the geofencing service
+      // Initialize the geofen3cing service
       await initializeAppCache(result);
 
       if (result.status != 1) {
@@ -244,6 +243,7 @@ class LoginViewModel extends BaseViewModel {
       await _dialogService.showDialog(
           title: 'Login Failure', description: 'Unknown Error.');
     }
+    setBusy(false);
   }
 
   bool _displayInitDialog = false;
@@ -254,10 +254,14 @@ class LoginViewModel extends BaseViewModel {
   }
 
   initializeAppCache(User user) async {
-    setDisplayInitDialog(true);
-    snackBarService.showSnackbar(message: 'Preparing environment');
-    await api.initializeAppCache(user);
-    setDisplayInitDialog(false);
+    // setDisplayInitDialog(true);
+    setBusy(true);
+    snackBarService.showSnackbar(message: 'Data Synchronization started');
+    await api.initializeAppCache(user).whenComplete(() {
+      snackBarService.showSnackbar(message: 'Data Synchronization completed');
+    });
+    setBusy(false);
+    // setDisplayInitDialog(false);
   }
 
   void updatePassword(String value) {

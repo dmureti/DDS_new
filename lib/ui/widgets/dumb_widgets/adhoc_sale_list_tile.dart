@@ -1,4 +1,3 @@
-import 'package:distributor/core/helper.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/src/ui/common/sale_format.dart';
 import 'package:distributor/src/ui/text_styles.dart';
@@ -33,19 +32,6 @@ class AdhocSaleListTile extends StatelessWidget {
                   child: Text('${adhocSale.transactionStatus.toUpperCase()}'),
                   width: 100,
                 ),
-                // Container(
-                //   decoration: BoxDecoration(
-                //     border: Border.all(color: Colors.black26),
-                //     borderRadius: BorderRadius.circular(2),
-                //   ),
-                //   ch ild: Padding(
-                //     padding: const EdgeInsets.all(4.0),
-                //     child: Text(
-                //       '${adhocSale.transactionStatus.toUpperCase()}',
-                //       style: TextStyle(fontSize: 12),
-                //     ),
-                //   ),
-                // ),
                 Text(
                   'Kshs ${adhocSale.total.toStringAsFixed(2)}',
                   style: TextStyle(),
@@ -57,20 +43,20 @@ class AdhocSaleListTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                width: 70,
-                child: Text(
-                  '${adhocSale.referenceNo}',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 13, color: formatSale(adhocSale.baseType)),
-                ),
-              ),
-              Container(
                 width: 180,
                 child: Text(
                   '${adhocSale.customerName}',
                   overflow: TextOverflow.ellipsis,
                   style: kListStyleTitle1,
+                ),
+              ),
+              Container(
+                width: 100,
+                child: Text(
+                  '${adhocSale.referenceNo}',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontSize: 13, color: formatSale(adhocSale.baseType)),
                 ),
               ),
               // Container(

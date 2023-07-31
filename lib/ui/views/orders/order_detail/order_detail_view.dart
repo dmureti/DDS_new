@@ -1,11 +1,11 @@
+import 'package:distributor/core/helper.dart';
 import 'package:distributor/ui/views/orders/order_detail/order_detail_viewmodel.dart';
 import 'package:distributor/ui/views/orders/sales_order_item_list/sales_order_item_list.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/smart_widgets/customer_summary/customer_summary_view.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
-import 'package:distributor/core/helper.dart';
-import 'package:flutter/material.dart';
-import 'package:distributor/ui/views/delivery_note/delivery_note_view.dart';
 
 class OrderDetailView extends StatelessWidget {
   final SalesOrder salesOrder;
@@ -33,7 +33,7 @@ class OrderDetailView extends StatelessWidget {
           deliveryStop: deliveryStop,
           deliveryJourney: deliveryJourney),
       builder: (context, model, child) => DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             // actions: [
@@ -85,15 +85,15 @@ class OrderDetailView extends StatelessWidget {
                 Tab(
                   text: 'Particulars',
                 ),
-                Tab(
-                  text: 'History',
-                )
+                // Tab(
+                //   text: 'History',
+                // )
               ],
             ),
           ),
           body: model.isBusy
               ? Center(
-                  child: CircularProgressIndicator(),
+                  child: BusyWidget(),
                 )
               : TabBarView(
                   children: <Widget>[
@@ -193,13 +193,13 @@ class OrderDetailView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(15, 10, 10, 0),
-                      child: DeliveryNoteView(
-                        salesOrder: model.salesOrder,
-                        deliveryStop: deliveryStop,
-                      ),
-                    )
+                    // Container(
+                    //   margin: EdgeInsets.fromLTRB(15, 10, 10, 0),
+                    //   child: DeliveryNoteView(
+                    //     salesOrder: model.salesOrder,
+                    //     deliveryStop: deliveryStop,
+                    //   ),
+                    // )
                   ],
                 ),
         ),

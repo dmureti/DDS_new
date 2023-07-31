@@ -1,3 +1,4 @@
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
 import 'package:distributor/ui/widgets/smart_widgets/crew_order_history/crew_history_viewmodel.dart';
@@ -25,13 +26,23 @@ class CrewHistoryView extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 var salesOrder = model.orders[index];
                                 return ListTile(
+                                  onTap: () {
+                                    model.navigateToSalesOrder(salesOrder);
+                                  },
                                   title: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(salesOrder.customerName),
-                                      Text(salesOrder.orderNo),
+                                      Text(
+                                        salesOrder.customerName ?? "",
+                                        style: kTileLeadingTextStyle,
+                                      ),
+                                      Text(salesOrder.orderStatus)
                                     ],
+                                  ),
+                                  subtitle: Text(
+                                    salesOrder.orderNo.toUpperCase(),
+                                    style: kTileSubtitleTextStyle,
                                   ),
                                 );
                               },

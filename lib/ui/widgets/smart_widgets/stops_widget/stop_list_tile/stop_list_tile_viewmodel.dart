@@ -5,7 +5,6 @@ import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/location_repository.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:geocoding/geocoding.dart';
-
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -49,7 +48,7 @@ class StopListTileViewModel extends BaseViewModel {
   Future fetchSalesOrder() async {
     setBusy(true);
     var result = await _api.getSalesOrderDetail(
-        token: _user.token, orderId: _salesOrderId);
+        token: _user.token, salesOrderId: _salesOrderId);
     setBusy(false);
     if (result is SalesOrder) {
       _salesOrder = result;

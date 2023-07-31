@@ -4,7 +4,6 @@ import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:flutter/foundation.dart';
-
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -20,7 +19,7 @@ class DeliveryJourneyViewmodel extends BaseViewModel {
       @required DeliveryStop deliveryStop,
       DeliveryJourney deliveryJourney}) async {
     var result = await _apiService.api
-        .getSalesOrderDetail(token: _user.token, orderId: salesOrder);
+        .getSalesOrderDetail(token: _user.token, salesOrderId: salesOrder);
     if (result is SalesOrder) {
       await _navigationService.navigateTo(Routes.orderDetailView,
           arguments: OrderDetailViewArguments(

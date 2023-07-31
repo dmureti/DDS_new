@@ -5,8 +5,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
-class SalesOrderItemListViewModel
-    extends FutureViewModel<List<SalesOrderRequestItem>> {
+class SalesOrderItemListViewModel extends BaseViewModel {
   final OrderService _orderService = locator<OrderService>();
   final DialogService _dialogService = locator<DialogService>();
 
@@ -14,16 +13,19 @@ class SalesOrderItemListViewModel
   SalesOrderItemListViewModel({@required this.salesOrderId})
       : assert(salesOrderId != null);
 
-  Future<List<SalesOrderRequestItem>> fetchSalesOrderItems() async {
-    return await _orderService.getSalesOrderItems(salesOrderId);
+  List<SalesOrderRequestItem> _salesOrderRequestItems = [];
+  List<SalesOrderRequestItem> get salesOrderRequestItems =>
+      _salesOrderRequestItems;
+
+  init() async {
+    await fetchSalesOrderItems();
   }
 
-  @override
-  Future<List<SalesOrderRequestItem>> futureToRun() => fetchSalesOrderItems();
-
-  @override
-  void onError(error) async {
-    await _dialogService.showDialog(
-        title: 'Error', description: error.toString());
+  fetchSalesOrderItems() async {
+    setBusy(true);
+    _salesOrderRequestItems =
+        await _orderService.getSalesOrderItems(salesOrderId);
+    setBusy(false);
+    notifyListeners();
   }
 }

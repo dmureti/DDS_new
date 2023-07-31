@@ -33,7 +33,7 @@ class HomeView extends StatelessWidget {
           elevation: 0,
           title: _buildTitle(model.currentIndex),
           actions: <Widget>[
-            ConnectionStatusWidget(),
+            ConnectionStatusWidget(syncData: model.syncData),
             // IconButton(
             //   onPressed: () => model.refresh(),
             //   icon: Icon(FontAwesome.refresh),

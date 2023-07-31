@@ -8,7 +8,6 @@ import 'package:distributor/services/user_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import 'package:tripletriocore/tripletriocore.dart';
 
 class OrderDetailViewModel extends ReactiveViewModel {
@@ -49,7 +48,7 @@ class OrderDetailViewModel extends ReactiveViewModel {
 
   retrieveSalesOrder() async {
     setBusy(true);
-    var result = await _api.journeyDetails(
+    var result = await _api.getSalesOrderDetail(
         token: user.token, salesOrderId: salesOrderId);
     if (result is SalesOrder) {
       // result = SalesOrder(

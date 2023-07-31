@@ -133,6 +133,18 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
 
                 ListTile(
                   title: Text(
+                    'SYNC DATA',
+                    style: TextStyle(
+                        fontFamily: 'NerisBlack', color: kColDDSPrimaryDark),
+                  ),
+                  onTap: () async {
+                    Navigator.pop(context);
+                    model.syncData();
+                  },
+                ),
+
+                ListTile(
+                  title: Text(
                     'CHANGE PASSWORD',
                     style: TextStyle(
                         fontFamily: 'NerisBlack', color: kColDDSPrimaryDark),

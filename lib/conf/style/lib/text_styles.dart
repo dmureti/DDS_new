@@ -28,7 +28,7 @@ const kTileSubtitleTextStyle = TextStyle(
     fontSize: kLabelTextSize);
 
 const TextStyle kTabTextStyleActive =
-    TextStyle(fontFamily: kFontThinBody, fontSize: kLabelTextSize * 1.2);
+    TextStyle(fontFamily: kFontBoldBody, fontSize: kLabelTextSize * 1.1);
 
 const kTitleTextStyle = TextStyle();
 const kSubheadingTextStyle1 =

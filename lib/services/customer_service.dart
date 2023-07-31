@@ -116,6 +116,7 @@ class CustomerService with ReactiveServiceMixin {
   Future fetchOrdersByCustomer(String customerCode) async {
     var result =
         await api.fetchOrderByCustomer(customerCode, _userService.user.token);
+
     if (result is List<SalesOrder>) {
       _salesOrderList.value = result;
       notifyListeners();

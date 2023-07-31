@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ConnectionStatusWidget extends StatelessWidget {
-  const ConnectionStatusWidget({Key key}) : super(key: key);
+  final Function syncData;
+  ConnectionStatusWidget({Key key, this.syncData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +16,7 @@ class ConnectionStatusWidget extends StatelessWidget {
         badgeColor: Colors.yellow,
       );
     } else {
+      syncData;
       return Icon(
         Icons.wifi,
         color: Colors.white.withOpacity(0.2),

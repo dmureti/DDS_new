@@ -3,9 +3,6 @@ import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/activity_service.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/customer_service.dart';
-import 'package:distributor/services/firestore_service.dart';
-import 'package:distributor/services/location_repository.dart';
-import 'package:distributor/services/location_service.dart';
 import 'package:distributor/services/order_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +37,7 @@ class OrderConfirmationViewModel extends ReactiveViewModel {
   }
 
   createSalesOrder() async {
+    print('-create sales order');
     var dialogResponse = await _dialogService.showConfirmationDialog(
         title: 'Confirm Order',
         description:

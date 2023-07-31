@@ -1,15 +1,10 @@
 import 'package:distributor/conf/style/lib/text_styles.dart';
-import 'package:distributor/src/ui/text_styles.dart';
-import 'package:distributor/ui/shared/brand_colors.dart';
-import 'package:distributor/ui/views/customer_location.dart';
 import 'package:distributor/ui/views/customers/customer_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
 import 'package:distributor/ui/widgets/smart_widgets/customer_text_input/customer_textinput.dart';
-
 import 'package:flutter/material.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 import 'package:tripletriocore/tripletriocore.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class CustomerListWidget extends HookViewModelWidget<CustomerViewModel> {
   CustomerListWidget({Key key, reactive: true}) : super(key: key);
@@ -77,86 +72,86 @@ Widget CustomerList({List<Customer> customerList, Function onTap}) {
         return Container(
           child: ListTile(
             visualDensity: VisualDensity.comfortable,
-            trailing: Container(
-              width: 60,
-              height: 60,
-              child: ClipOval(
-                child: InkWell(
-                  onTap: () async {
-                    await showModalBottomSheet(
-                      context: (context),
-                      builder: (context) => Container(
-                        color: Colors.white,
-                        padding:
-                            EdgeInsets.only(bottom: 40, left: 20, right: 20),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                IconButton(
-                                  color: kColorMiniDarkBlue,
-                                  iconSize: 25,
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  icon: Icon(Icons.close),
-                                ),
-                              ],
-                            ),
-                            ListTile(
-                              leading: Icon(Icons.phone),
-                              title: Text('Call'),
-                              onTap: () async {
-                                var result =
-                                    await launch('tel:${customer.telephone}');
-                                Navigator.pop(context, result);
-                              },
-                            ),
-                            ListTile(
-                              leading: Icon(Icons.message),
-                              title: Text('Send SMS'),
-                              onTap: () async {
-                                var result =
-                                    await launch('sms:${customer.telephone}');
-                                Navigator.pop(context, result);
-                              },
-                            ),
-                            ListTile(
-                              leading: Icon(Icons.location_on),
-                              title: Text('Location'),
-                              onTap: () async {
-                                await Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context) => CustomerLocation(
-                                            customer: customer,
-                                          ),
-                                      fullscreenDialog: false),
-                                );
-                                Navigator.pop(context);
-                              },
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                  splashColor: Colors.pink,
-                  child: Material(
-                    color: kLightestBlue,
-                    type: MaterialType.button,
-                    elevation: 4,
-                    shadowColor: kLightBlue,
-                    child: SizedBox(
-                      width: 50,
-                      height: 50,
-                      child: Icon(Icons.contacts),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // trailing: Container(
+            //   width: 60,
+            //   height: 60,
+            //   child: ClipOval(
+            //     child: InkWell(
+            //       onTap: () async {
+            //         await showModalBottomSheet(
+            //           context: (context),
+            //           builder: (context) => Container(
+            //             color: Colors.white,
+            //             padding:
+            //                 EdgeInsets.only(bottom: 40, left: 20, right: 20),
+            //             child: Column(
+            //               mainAxisSize: MainAxisSize.min,
+            //               children: [
+            //                 Row(
+            //                   mainAxisAlignment: MainAxisAlignment.end,
+            //                   children: [
+            //                     IconButton(
+            //                       color: kColorMiniDarkBlue,
+            //                       iconSize: 25,
+            //                       onPressed: () {
+            //                         Navigator.pop(context);
+            //                       },
+            //                       icon: Icon(Icons.close),
+            //                     ),
+            //                   ],
+            //                 ),
+            //                 ListTile(
+            //                   leading: Icon(Icons.phone),
+            //                   title: Text('Call'),
+            //                   onTap: () async {
+            //                     var result =
+            //                         await launch('tel:${customer.telephone}');
+            //                     Navigator.pop(context, result);
+            //                   },
+            //                 ),
+            //                 ListTile(
+            //                   leading: Icon(Icons.message),
+            //                   title: Text('Send SMS'),
+            //                   onTap: () async {
+            //                     var result =
+            //                         await launch('sms:${customer.telephone}');
+            //                     Navigator.pop(context, result);
+            //                   },
+            //                 ),
+            //                 ListTile(
+            //                   leading: Icon(Icons.location_on),
+            //                   title: Text('Location'),
+            //                   onTap: () async {
+            //                     await Navigator.of(context).push(
+            //                       MaterialPageRoute(
+            //                           builder: (context) => CustomerLocation(
+            //                                 customer: customer,
+            //                               ),
+            //                           fullscreenDialog: false),
+            //                     );
+            //                     Navigator.pop(context);
+            //                   },
+            //                 )
+            //               ],
+            //             ),
+            //           ),
+            //         );
+            //       },
+            //       splashColor: Colors.pink,
+            //       child: Material(
+            //         color: kLightestBlue,
+            //         type: MaterialType.button,
+            //         elevation: 4,
+            //         shadowColor: kLightBlue,
+            //         child: SizedBox(
+            //           width: 50,
+            //           height: 50,
+            //           child: Icon(Icons.contacts),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             onTap: () {
               onTap(customer);
             },
