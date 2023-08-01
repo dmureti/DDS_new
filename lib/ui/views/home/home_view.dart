@@ -1,6 +1,8 @@
 import 'package:distributor/conf/style/lib/colors.dart';
 import 'package:distributor/conf/style/lib/text_styles.dart';
+import 'package:distributor/core/enums.dart';
 import 'package:distributor/core/helper.dart';
+import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
 import 'package:distributor/src/ui/views/adhoc_listing/adhoc_listing_view.dart';
 import 'package:distributor/ui/access_controllers/global/bottom_navbar/bottom_nav_bar.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
@@ -10,9 +12,11 @@ import 'package:distributor/ui/views/home/home_viewmodel.dart';
 import 'package:distributor/ui/views/routes/route_listing_view.dart';
 import 'package:distributor/ui/views/stock/stock_view.dart';
 import 'package:distributor/ui/widgets/drawer.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
 import 'package:distributor/ui/widgets/reactive/transaction_popup/transaction_popup_view.dart';
 import 'package:distributor/ui/widgets/smart_widgets/connection_status/connection_status_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 
@@ -22,6 +26,7 @@ class HomeView extends StatelessWidget {
   const HomeView({Key key, this.index}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var connectionStatus = Provider.of<ConnectivityStatus>(context);
     return ViewModelBuilder<HomeViewModel>.reactive(
       onModelReady: (model) => model.init(),
       fireOnModelReadyOnce: false,
@@ -95,31 +100,33 @@ class HomeView extends StatelessWidget {
             model.currentIndex != 0 ? backgroundColor : Colors.white,
         body: model.isBusy
             ? Center(
-                child: CircularProgressIndicator(),
+                child: BusyWidget(),
               )
             : _buildContent(model.currentIndex, model),
       ),
-      viewModelBuilder: () => HomeViewModel(index),
+      viewModelBuilder: () => HomeViewModel(index, connectionStatus),
     );
   }
+
+  _buildSyncWidget() {}
 
   _buildContent(int index, HomeViewModel model) {
     switch (index) {
       case 0:
         return Stack(
           children: [
-            // NetworkSensitiveWidget(),
             // LocationWidget(),
             DashboardView(),
+            // NetworkSensitiveWidget(),
           ],
         );
         break;
       case 1:
-        return Stack(
+        return Column(
           children: [
-            // NetworkSensitiveWidget(),
             // LocationWidget(),
-            RoutesListingView(),
+            Expanded(child: RoutesListingView()),
+            NetworkSensitiveWidget(),
           ],
         );
         break;
@@ -149,6 +156,7 @@ class HomeView extends StatelessWidget {
               ),
             ),
             Expanded(child: AdhocListingView()),
+            NetworkSensitiveWidget(),
           ],
         );
         // return AdhocSalesView();
@@ -159,15 +167,16 @@ class HomeView extends StatelessWidget {
             // NetworkSensitiveWidget(),
             // LocationWidget(),
             Expanded(child: StockView()),
+            NetworkSensitiveWidget(),
           ],
         );
         break;
       case 4:
         return Column(
           children: [
-            // NetworkSensitiveWidget(),
             // LocationWidget(),
             Expanded(child: CustomerView()),
+            NetworkSensitiveWidget(),
           ],
         );
         break;

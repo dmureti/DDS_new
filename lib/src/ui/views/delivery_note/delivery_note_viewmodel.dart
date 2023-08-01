@@ -31,9 +31,12 @@ class DeliveryNoteViewModel extends BaseViewModel {
   getDeliveryNote() async {
     var result = await _apiService.api.getDeliveryNoteDetails(
         deliveryNoteId: deliveryStop.deliveryNoteId, token: _user.token);
+    print(result.runtimeType);
     if (result is DeliveryNote) {
       _deliveryNote = result;
       notifyListeners();
+    } else {
+      print(result.runtimeType);
     }
   }
 
@@ -46,16 +49,26 @@ class DeliveryNoteViewModel extends BaseViewModel {
   String get deliveryLocation => _deliveryLocation;
 
   getCurrentLocation() async {
+    setBusy(true);
     var result = await _locationService.getLocation();
+    print(result);
+    setBusy(false);
     if (result != null) {
       _deliveryLocation = "${result.latitude},${result.longitude}";
+      print(result);
       notifyListeners();
+      return;
+    } else {
+      print(result);
+      return;
     }
   }
 
   init() async {
-    await getCurrentLocation();
+    print('init started');
     await getDeliveryNote();
+    await getCurrentLocation();
+    print('completed');
   }
 
   handleOrderAction(String action) async {

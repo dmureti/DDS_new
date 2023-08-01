@@ -12,15 +12,19 @@ class ConnectionStatusWidget extends StatelessWidget {
     var connectionStatus = Provider.of<ConnectivityStatus>(context);
     if (connectionStatus == ConnectivityStatus.Offline) {
       return b.Badge(
-        child: Icon(Icons.wifi),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Icon(Icons.signal_wifi_connected_no_internet_4),
+        ),
         badgeColor: Colors.yellow,
       );
     } else {
-      syncData;
-      return Icon(
-        Icons.wifi,
-        color: Colors.white.withOpacity(0.2),
-      );
+      return IconButton(
+          onPressed: () => syncData(),
+          icon: Icon(
+            Icons.sync_outlined,
+            color: Colors.white.withOpacity(0.2),
+          ));
     }
   }
 }

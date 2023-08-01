@@ -52,7 +52,6 @@ class CrateTransactionListingViewModel extends BaseViewModel {
           title: 'Error', description: result.description);
       return;
     } else {
-      print(result);
       List temp = result;
       _crateTransactionListings = temp
           .where((element) => element['transactionItemId']

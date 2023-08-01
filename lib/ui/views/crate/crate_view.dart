@@ -25,7 +25,7 @@ class CrateView extends StatelessWidget {
                       : model.crateList.isEmpty
                           ? Center(
                               child: EmptyContentContainer(
-                                  label: 'There are no outers available.'))
+                                  label: 'There are no crates available.'))
                           : ListView.builder(
                               itemBuilder: (context, index) {
                                 var crate = model.crateList[index];

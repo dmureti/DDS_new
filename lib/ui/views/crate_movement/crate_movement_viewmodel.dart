@@ -135,6 +135,7 @@ class CrateMovementViewModel extends BaseViewModel {
   listCrates() async {
     setBusy(true);
     List<Item> result = await _crateManagementService.listCrates();
+
     _crateList = result
         .map((e) => Product(
             itemPrice: e.itemPrice,

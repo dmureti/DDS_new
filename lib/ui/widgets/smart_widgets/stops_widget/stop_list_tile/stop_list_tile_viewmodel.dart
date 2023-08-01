@@ -93,8 +93,10 @@ class StopListTileViewModel extends BaseViewModel {
   DeliveryNote get deliveryNote => _deliveryNote;
 
   Future getDeliveryNote() async {
+    setBusy(true);
     var result = await _apiService.api.getDeliveryNoteDetails(
         deliveryNoteId: deliveryStop.deliveryNoteId, token: _user.token);
+    setBusy(false);
     if (result is DeliveryNote) {
       _deliveryNote = result;
       notifyListeners();

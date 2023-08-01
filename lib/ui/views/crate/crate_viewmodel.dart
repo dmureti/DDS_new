@@ -57,7 +57,6 @@ class CrateViewModel extends BaseViewModel {
   _getCrateListing() async {
     setBusy(true);
     _crateList = await _crateService.fetchCrates();
-    print(_crateList);
     // _crateList = _result.map((item) {
     //   if (crates.isNotEmpty || crates != null) {
     //     return crates.firstWhere((product) => product.itemCode == item.itemCode,
@@ -70,6 +69,7 @@ class CrateViewModel extends BaseViewModel {
     //   }
     // }).toList();
     setBusy(false);
+    notifyListeners();
   }
 
   void navigateToManageCrateView(

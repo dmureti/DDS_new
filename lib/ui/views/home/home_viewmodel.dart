@@ -39,6 +39,13 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   Timer get timer => _timeoutService.timer;
   // final geoFenceService = locator<GeoFenceService>();
 
+  ConnectivityStatus _connectivityStatus;
+  ConnectivityStatus get connectivityStatus => _connectivityStatus;
+  updateConnectivityStatus(ConnectivityStatus connectivityStatus) {
+    _connectivityStatus = connectivityStatus;
+    notifyListeners();
+  }
+
   get api => _apiService.api;
 
   UserService _userService = locator<UserService>();
@@ -51,7 +58,9 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
     setBusy(true);
     _snackbarService.showSnackbar(
         message: 'Synchronization in progress', title: 'Offline Data sync');
-    await api.dataSync(_userService.user.token).then(() {
+    await _apiService.api
+        .synchronizeData(_userService.user.token)
+        .then((value) {
       _snackbarService.showSnackbar(
           message: 'Synchronization Complete', title: 'Offline Data sync');
     });
@@ -63,7 +72,9 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
 
   // String get versionCode => _versionService.appVersion.versionCode;
 
-  HomeViewModel(int index) : _currentIndex = index;
+  HomeViewModel(int index, ConnectivityStatus connectivityStatus)
+      : _currentIndex = index,
+        _connectivityStatus = connectivityStatus;
 
   String get noOfUpdates => _activityService.noOfUpdates.toString();
 

@@ -1,5 +1,4 @@
 import 'package:distributor/core/enums.dart';
-import 'package:distributor/ui/config/brand.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,21 +12,16 @@ class NetworkSensitiveWidget extends StatelessWidget {
 
     if (connectionStatus == ConnectivityStatus.Offline) {
       return Container(
-        decoration: BoxDecoration(color: kColorfulMiniRed),
+        decoration: BoxDecoration(color: Colors.black),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.warning,
-                color: Colors.white,
-              ),
-              SizedBox(
-                width: 8,
-              ),
               Text(
-                'You are offline. You will have limited functionality.',
-                style: TextStyle(color: Colors.white),
+                'No Connection',
+                style: TextStyle(color: Colors.white, fontSize: 12),
+                textAlign: TextAlign.center,
               ),
             ],
           ),

@@ -24,7 +24,7 @@ class CrewHistoryViewModel extends BaseViewModel {
   fetchOrders() async {
     setBusy(true);
     var result = await _orderService.fetchOrdersByUser(token);
-    if (result) {
+    if (result is List<SalesOrder>) {
       _orders = result;
     }
     setBusy(false);
