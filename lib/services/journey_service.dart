@@ -148,7 +148,8 @@ class JourneyService with ReactiveServiceMixin {
         stopId: stopId,
         deliveryLocation: deliveryLocation,
         deliveryNoteId: deliveryNote.deliveryNoteId,
-        deliveryNote: deliveryNote);
+        deliveryNote: deliveryNote,
+        branchId: currentJourney.route);
 
     if (result is! CustomException) {
       _noOfCompletedStops.value++;

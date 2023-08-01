@@ -63,7 +63,21 @@ class StopListTile extends StatelessWidget {
                                   .toUpperCase(),
                               style: kTileSubtitleTextStyle,
                             )
-                          : Text('AWAITING CONNECTION'),
+                          : Row(
+                              children: [
+                                Icon(
+                                  Icons.access_time_rounded,
+                                  size: 15,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  'delivered'.toUpperCase(),
+                                  style: kTileSubtitleTextStyle,
+                                ),
+                              ],
+                            ),
                       Spacer(),
                     ],
                   ),

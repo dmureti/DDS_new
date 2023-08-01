@@ -2,6 +2,7 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/activity_service.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/logistics_service.dart';
+import 'package:distributor/services/stock_controller_service.dart';
 import 'package:distributor/services/transaction_service.dart';
 import 'package:distributor/ui/widgets/smart_widgets/info_bar/info_bar_widget_viewmodel.dart';
 import 'package:flutter/foundation.dart';
@@ -16,7 +17,7 @@ class SelectControlWidgetViewModel extends ReactiveViewModel {
   JourneyService _journeyService = locator<JourneyService>();
   DialogService _dialogService = locator<DialogService>();
   final _transactionService = locator<TransactionService>();
-
+  final _stockControllerService = locator<StockControllerService>();
   final DeliveryJourney _deliveryJourney;
 
   DeliveryJourney get selectedDeliveryJourney => _journeyService.currentJourney;
@@ -26,6 +27,13 @@ class SelectControlWidgetViewModel extends ReactiveViewModel {
       return true;
     }
     return false;
+  }
+
+  fetchStockBalance() async {
+    setBusy(true);
+    await _stockControllerService.getStockBalance();
+    print('fetched stock balance');
+    setBusy(false);
   }
 
   cancelSelectedJourney() {
@@ -61,6 +69,7 @@ class SelectControlWidgetViewModel extends ReactiveViewModel {
       _transactionService.init();
       setBusy(false);
       if (result is bool) {
+        await fetchStockBalance();
         _activityService.addActivity(Activity(
             activityTitle: '${deliveryJourney.journeyId} selected',
             activityDesc: '${deliveryJourney.journeyId} selected'));

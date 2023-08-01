@@ -132,7 +132,28 @@ class DeliveryNoteView extends StatelessWidget {
                                                         fontWeight:
                                                             FontWeight.w700),
                                                   )
-                                                : Text('Not Synced')
+                                                : Row(
+                                                    children: [
+                                                      Text(
+                                                        'delivered'
+                                                            .toUpperCase(),
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.purple,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w700),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 5,
+                                                      ),
+                                                      Icon(
+                                                        Icons
+                                                            .access_time_rounded,
+                                                        size: 15,
+                                                      )
+                                                    ],
+                                                  )
                                           ],
                                         ),
 
