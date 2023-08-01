@@ -137,12 +137,19 @@ class JourneyService with ReactiveServiceMixin {
   }
 
   Future makeFullSODelivery(
-      String orderId, String stopId, String deliveryLocation) async {
+    String orderId,
+    String stopId,
+    String deliveryLocation, {
+    DeliveryNote deliveryNote,
+  }) async {
     var result = await _api.makeFullDelivery(currentJourney.journeyId,
-        orderId: orderId,
+        salesOrderId: orderId,
         token: _user.token,
         stopId: stopId,
-        deliveryLocation: deliveryLocation);
+        deliveryLocation: deliveryLocation,
+        deliveryNoteId: deliveryNote.deliveryNoteId,
+        deliveryNote: deliveryNote);
+
     if (result is! CustomException) {
       _noOfCompletedStops.value++;
     }

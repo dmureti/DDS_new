@@ -27,6 +27,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var connectionStatus = Provider.of<ConnectivityStatus>(context);
+
     return ViewModelBuilder<HomeViewModel>.reactive(
       onModelReady: (model) => model.init(),
       fireOnModelReadyOnce: false,

@@ -31,14 +31,16 @@ class DeliveryNoteViewModel extends BaseViewModel {
   getDeliveryNote() async {
     var result = await _apiService.api.getDeliveryNoteDetails(
         deliveryNoteId: deliveryStop.deliveryNoteId, token: _user.token);
-    print(result.runtimeType);
     if (result is DeliveryNote) {
       _deliveryNote = result;
+      print(_deliveryNote.isSynced);
       notifyListeners();
     } else {
       print(result.runtimeType);
     }
   }
+
+  bool get isSynced => deliveryNote.isSynced;
 
   DeliveryNoteViewModel(
       DeliveryJourney deliveryJourney, DeliveryStop deliveryStop, this.customer)
@@ -65,10 +67,8 @@ class DeliveryNoteViewModel extends BaseViewModel {
   }
 
   init() async {
-    print('init started');
     await getDeliveryNote();
     await getCurrentLocation();
-    print('completed');
   }
 
   handleOrderAction(String action) async {
@@ -84,7 +84,11 @@ class DeliveryNoteViewModel extends BaseViewModel {
         if (response.confirmed) {
           setBusy(true);
           var result = await _journeyService.makeFullSODelivery(
-              deliveryStop.orderId, deliveryStop.stopId, deliveryLocation);
+            deliveryStop.orderId,
+            deliveryStop.stopId,
+            deliveryLocation,
+            deliveryNote: deliveryNote,
+          );
           setBusy(false);
           if (result is CustomException) {
             await _dialogService.showDialog(

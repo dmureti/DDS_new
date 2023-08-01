@@ -4,13 +4,11 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/user_service.dart';
-
 import 'package:distributor/ui/widgets/smart_widgets/info_bar/info_bar_widget_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:observable_ish/observable_ish.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import 'package:tripletriocore/tripletriocore.dart';
 
 class LogisticsService with ReactiveServiceMixin {
@@ -202,9 +200,10 @@ class LogisticsService with ReactiveServiceMixin {
   }
 
   /// Calls the API to update the status of a [SalesOrder]
-  Future makeFullSODelivery(String orderId, String stopId) async {
+  Future makeFullSODelivery(
+      String orderId, String stopId, String deliveryNoteId) async {
     var result = await api.makeFullDelivery(currentJourney.journeyId,
-        orderId: orderId, token: user.token, stopId: stopId);
+        salesOrderId: orderId, token: user.token, stopId: stopId);
     return result;
   }
 

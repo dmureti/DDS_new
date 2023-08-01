@@ -28,6 +28,21 @@ class OrderDetailViewModel extends ReactiveViewModel {
   String _deliveryLocation;
   String get deliveryLocation => _deliveryLocation;
 
+  DeliveryNote _deliveryNote;
+  DeliveryNote get deliveryNote => _deliveryNote;
+
+  getDeliveryNote() async {
+    var result = await _apiService.api.getDeliveryNoteDetails(
+        deliveryNoteId: deliveryStop.deliveryNoteId, token: user.token);
+    if (result is DeliveryNote) {
+      _deliveryNote = result;
+      print(_deliveryNote.isSynced);
+      notifyListeners();
+    } else {
+      print(result.runtimeType);
+    }
+  }
+
   getCurrentLocation() async {
     var result = await _locationService.getLocation();
     if (result != null) {
@@ -39,6 +54,7 @@ class OrderDetailViewModel extends ReactiveViewModel {
   init() async {
     await retrieveSalesOrder();
     await getCurrentLocation();
+    await getDeliveryNote();
   }
 
   List<SalesOrderRequestItem> _salesOrderRequestItems =
@@ -129,7 +145,8 @@ class OrderDetailViewModel extends ReactiveViewModel {
         if (response.confirmed) {
           setBusy(true);
           var result = await _journeyService.makeFullSODelivery(
-              deliveryStop.orderId, deliveryStop.stopId, deliveryLocation);
+              deliveryStop.orderId, deliveryStop.stopId, deliveryLocation,
+              deliveryNote: deliveryNote);
           setBusy(false);
           if (result is CustomException) {
             await _dialogService.showDialog(

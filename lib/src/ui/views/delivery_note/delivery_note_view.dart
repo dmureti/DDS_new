@@ -124,12 +124,15 @@ class DeliveryNoteView extends StatelessWidget {
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w700),
                                             ),
-                                            Text(
-                                              '${model.deliveryNote.deliveryStatus.toUpperCase()}',
-                                              style: TextStyle(
-                                                  color: Colors.purple,
-                                                  fontWeight: FontWeight.w700),
-                                            )
+                                            model.isSynced
+                                                ? Text(
+                                                    '${model.deliveryNote.deliveryStatus.toUpperCase()}',
+                                                    style: TextStyle(
+                                                        color: Colors.purple,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                                  )
+                                                : Text('Not Synced')
                                           ],
                                         ),
 

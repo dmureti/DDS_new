@@ -1,7 +1,5 @@
 import 'package:distributor/conf/style/lib/text_styles.dart';
-import 'package:distributor/ui/shared/text_styles.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
-
 import 'package:distributor/ui/widgets/smart_widgets/stops_widget/stop_list_tile/stop_list_tile_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -59,10 +57,13 @@ class StopListTile extends StatelessWidget {
                   subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        '${model.deliveryNote.deliveryStatus}'.toUpperCase(),
-                        style: kTileSubtitleTextStyle,
-                      ),
+                      model.deliveryNote.isSynced
+                          ? Text(
+                              '${model.deliveryNote.deliveryStatus}'
+                                  .toUpperCase(),
+                              style: kTileSubtitleTextStyle,
+                            )
+                          : Text('AWAITING CONNECTION'),
                       Spacer(),
                     ],
                   ),
