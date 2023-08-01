@@ -51,11 +51,11 @@ class CrateView extends StatelessWidget {
                                     itemBuilder: (context) {
                                       return <PopupMenuEntry<Object>>[
                                         PopupMenuItem(
-                                          child: Text('Collect Outers'),
+                                          child: Text('Collect Crates'),
                                           value: 'receive_crates',
                                         ),
                                         PopupMenuItem(
-                                            child: Text('Drop Outers'),
+                                            child: Text('Drop Crates'),
                                             value: 'drop_crates'),
                                       ];
                                     },
