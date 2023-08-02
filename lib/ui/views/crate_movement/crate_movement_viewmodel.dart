@@ -123,7 +123,8 @@ class CrateMovementViewModel extends BaseViewModel {
   String _dnId;
   bool _isValid;
 
-  String get journeyId => _journeyId;
+  String get journeyId =>
+      _journeyId ?? _journeyService.currentJourney?.journeyId;
   String get dnId => _dnId;
   DeliveryStop get deliveryStop => _deliveryStop;
   CrateTxnType get crateTxnType => _crateTxnType;
@@ -135,7 +136,6 @@ class CrateMovementViewModel extends BaseViewModel {
   listCrates() async {
     setBusy(true);
     List<Item> result = await _crateManagementService.listCrates();
-
     _crateList = result
         .map((e) => Product(
             itemPrice: e.itemPrice,
@@ -316,8 +316,8 @@ class CrateMovementViewModel extends BaseViewModel {
         computeTotal(value);
         salesOrderItems.add(s);
       });
-      print((salesOrderItems.toString()));
       setBusy(true);
+
       var result = await _crateManagementService.collectDropCrates(
           customer: customerId,
           dnId: dnId,

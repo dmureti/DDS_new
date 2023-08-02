@@ -1,6 +1,4 @@
 import 'package:distributor/conf/style/lib/text_styles.dart';
-import 'package:distributor/src/ui/text_styles.dart';
-
 import 'package:distributor/ui/widgets/dumb_widgets/product_quantity_container.dart';
 import 'package:flutter/material.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -18,12 +16,27 @@ class ProductQuantityTile extends StatelessWidget {
         dense: true,
         // visualDensity: VisualDensity.compact,
         title: Text(
-          product.itemName,
+          product.itemName ?? "",
           style: kTileLeadingTextStyle,
         ),
-        subtitle: Text(
-          product.itemCode,
-          style: kTileSubtitleTextStyle,
+        subtitle: Row(
+          children: [
+            product.isSynced
+                ? Container(
+                    width: 0,
+                  )
+                : Icon(
+                    Icons.timer_sharp,
+                    size: 12,
+                  ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              product.itemCode.toString() ?? "",
+              style: kTileSubtitleTextStyle,
+            ),
+          ],
         ),
         trailing: ProductQuantityContainer(
           quantity: product.quantity.toInt(),

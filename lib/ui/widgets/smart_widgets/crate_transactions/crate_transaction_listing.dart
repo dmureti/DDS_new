@@ -30,6 +30,10 @@ class CrateTransactionListingView extends StatelessWidget {
                           itemBuilder: (context, index) {
                             var crateTxn =
                                 model.crateTransactionListings[index];
+                            bool isSynced = crateTxn['isSynced'] == null ||
+                                    crateTxn['isSynced'] == true
+                                ? true
+                                : false;
                             var description =
                                 json.decode(crateTxn['description']);
                             return ListTile(
@@ -43,6 +47,15 @@ class CrateTransactionListingView extends StatelessWidget {
                               ),
                               subtitle: Row(
                                 children: [
+                                  isSynced
+                                      ? Container()
+                                      : Icon(
+                                          Icons.timer_sharp,
+                                          size: 12,
+                                        ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
                                   Expanded(
                                     child: Text(
                                       crateTxn['itemName'],

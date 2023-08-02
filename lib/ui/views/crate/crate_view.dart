@@ -29,6 +29,7 @@ class CrateView extends StatelessWidget {
                           : ListView.builder(
                               itemBuilder: (context, index) {
                                 var crate = model.crateList[index];
+                                bool isSynced = crate.isSynced ?? true;
                                 return ListTile(
                                   title: Row(
                                     mainAxisAlignment:
@@ -63,9 +64,24 @@ class CrateView extends StatelessWidget {
                                       model.handleOrderAction(x);
                                     },
                                   ),
-                                  subtitle: Text(
-                                    crate.itemCode,
-                                    style: kTileSubtitleTextStyle,
+                                  subtitle: Row(
+                                    children: [
+                                      isSynced == true
+                                          ? Container(
+                                              width: 0,
+                                            )
+                                          : Icon(
+                                              Icons.timer_sharp,
+                                              size: 12,
+                                            ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        crate.itemCode,
+                                        style: kTileSubtitleTextStyle,
+                                      ),
+                                    ],
                                   ),
                                   // trailing: IconButton(
                                   //   onPressed: () {},

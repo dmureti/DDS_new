@@ -33,7 +33,6 @@ class DeliveryNoteViewModel extends BaseViewModel {
         deliveryNoteId: deliveryStop.deliveryNoteId, token: _user.token);
     if (result is DeliveryNote) {
       _deliveryNote = result;
-      print(_deliveryNote.isSynced);
       notifyListeners();
     } else {
       print(result.runtimeType);
@@ -53,11 +52,9 @@ class DeliveryNoteViewModel extends BaseViewModel {
   getCurrentLocation() async {
     setBusy(true);
     var result = await _locationService.getLocation();
-    print(result);
     setBusy(false);
     if (result != null) {
       _deliveryLocation = "${result.latitude},${result.longitude}";
-      print(result);
       notifyListeners();
       return;
     } else {

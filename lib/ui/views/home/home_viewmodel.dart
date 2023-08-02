@@ -59,7 +59,8 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
     _snackbarService.showSnackbar(
         message: 'Synchronization in progress', title: 'Offline Data sync');
     await _apiService.api
-        .synchronizeData(_userService.user.token, user)
+        .synchronizeData(
+            _userService.user.token, user, _logisticsService.userJourneyList)
         .then((value) {
       _snackbarService.showSnackbar(
           message: 'Synchronization Complete', title: 'Offline Data sync');
@@ -146,8 +147,11 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   logout() async {
     // Stop the timer
     timer.cancel();
+    //Sync the data
+    await syncData();
     // Clear the cache
     await _userService.clearAPPCache();
+
     //Sync the data
     // _dialogService.showDialog(title: 'Sync In Progress', description: 'Offline data synchronization in progress');
 

@@ -37,7 +37,6 @@ class CrateTransactionListingViewModel extends BaseViewModel {
 
   init() async {
     if (_journeyService.hasJourney && _journeyService.journeyId.isNotEmpty) {
-      print(_journeyService.journeyId);
       await getCrateTransactions();
     }
   }
@@ -54,10 +53,15 @@ class CrateTransactionListingViewModel extends BaseViewModel {
     } else {
       List temp = result;
       _crateTransactionListings = temp
-          .where((element) => element['transactionItemId']
-              .toString()
-              .toLowerCase()
-              .contains("cc"))
+          .where((element) =>
+              element['transactionItemId']
+                  .toString()
+                  .toLowerCase()
+                  .contains("cc") ||
+              element['transactionItemId']
+                  .toString()
+                  .toLowerCase()
+                  .contains("off"))
           .toList();
       notifyListeners();
     }

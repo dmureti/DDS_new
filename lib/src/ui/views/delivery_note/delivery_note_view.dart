@@ -54,7 +54,8 @@ class DeliveryNoteView extends StatelessWidget {
                           value: model.deliveryStop.stopId != null &&
                                   model.deliveryNote.deliveryStatus
                                           .toLowerCase() ==
-                                      'in journey'
+                                      'in journey' &&
+                                  model.isSynced
                               ? 'full_delivery'
                               : 'not_possible',
                         ),

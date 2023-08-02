@@ -160,9 +160,9 @@ class CrateManagementService with ReactiveServiceMixin {
         "warehouseType": warehouseType
       }
     };
-    print(data);
-    var result =
-        await _apiService.api.collectDropCrates(token: userToken, data: data);
+
+    var result = await _apiService.api
+        .collectDropCrates(token: userToken, data: data, journeyId: journeyId);
     return result;
   }
 }

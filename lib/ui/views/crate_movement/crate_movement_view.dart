@@ -274,7 +274,7 @@ class CrateMovementView extends StatelessWidget {
                                       style: ButtonStyle(
                                           backgroundColor:
                                               MaterialStateProperty.all(
-                                                  kColorDDSPrimaryLight)),
+                                                  kColorDDSPrimaryDark)),
                                       onPressed:
                                           crateTxnType == CrateTxnType.Return
                                               ? model.commitReturnCrates
@@ -285,8 +285,8 @@ class CrateMovementView extends StatelessWidget {
                                       child: Text(
                                         'UPDATE',
                                         style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w600),
+                                            // fontFamily: 'NerisBlack',
+                                            color: Colors.white),
                                       ),
                                     ),
                                   )

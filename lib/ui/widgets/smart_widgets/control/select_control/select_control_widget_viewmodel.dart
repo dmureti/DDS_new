@@ -1,5 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/activity_service.dart';
+import 'package:distributor/services/crate_,management_service.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/stock_controller_service.dart';
@@ -18,6 +19,7 @@ class SelectControlWidgetViewModel extends ReactiveViewModel {
   DialogService _dialogService = locator<DialogService>();
   final _transactionService = locator<TransactionService>();
   final _stockControllerService = locator<StockControllerService>();
+  final _crateManagementService = locator<CrateManagementService>();
   final DeliveryJourney _deliveryJourney;
 
   DeliveryJourney get selectedDeliveryJourney => _journeyService.currentJourney;
@@ -32,7 +34,12 @@ class SelectControlWidgetViewModel extends ReactiveViewModel {
   fetchStockBalance() async {
     setBusy(true);
     await _stockControllerService.getStockBalance();
-    print('fetched stock balance');
+    setBusy(false);
+  }
+
+  fetchCrateTransactions() async {
+    setBusy(true);
+    await _crateManagementService.fetchCrates();
     setBusy(false);
   }
 
@@ -70,6 +77,7 @@ class SelectControlWidgetViewModel extends ReactiveViewModel {
       setBusy(false);
       if (result is bool) {
         await fetchStockBalance();
+
         _activityService.addActivity(Activity(
             activityTitle: '${deliveryJourney.journeyId} selected',
             activityDesc: '${deliveryJourney.journeyId} selected'));
