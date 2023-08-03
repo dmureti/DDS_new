@@ -17,7 +17,7 @@ class CrateTransactionListingView extends StatelessWidget {
     return ViewModelBuilder<CrateTransactionListingViewModel>.reactive(
       onModelReady: (model) => model.init(),
       fireOnModelReadyOnce: false,
-      disposeViewModel: true,
+      disposeViewModel: false,
       builder: (context, model, child) {
         return model.hasSelectedJourney == true
             ? model.isBusy

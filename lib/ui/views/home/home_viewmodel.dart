@@ -58,15 +58,16 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
     setBusy(true);
     _snackbarService.showSnackbar(
         message: 'Synchronization in progress', title: 'Offline Data sync');
-    await _apiService.api
+    var result = await _apiService.api
         .synchronizeData(
             _userService.user.token, user, _logisticsService.userJourneyList)
         .then((value) {
       _snackbarService.showSnackbar(
           message: 'Synchronization Complete', title: 'Offline Data sync');
     });
-
+    //Fetch the data
     setBusy(false);
+    print(result);
   }
 
   final _versionService = locator<VersionService>();

@@ -80,9 +80,7 @@ class CrateManagementService with ReactiveServiceMixin {
   transferCrates() async {}
 
   Future<List<Item>> listCrates() async {
-    print('in list crates');
     var result = await _apiService.api.listCrates(token: userToken);
-    print(result);
     if (result is List<Item>) {
       return result;
     } else {

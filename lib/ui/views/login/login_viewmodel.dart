@@ -257,9 +257,8 @@ class LoginViewModel extends BaseViewModel {
     // setDisplayInitDialog(true);
     setBusy(true);
     snackBarService.showSnackbar(message: 'Data Synchronization started');
-    await api.initializeAppCache(user).whenComplete(() {
-      snackBarService.showSnackbar(message: 'Data Synchronization completed');
-    });
+    await api.initializeAppCache(user);
+    snackBarService.showSnackbar(message: 'Data Synchronization completed');
     setBusy(false);
     // setDisplayInitDialog(false);
   }

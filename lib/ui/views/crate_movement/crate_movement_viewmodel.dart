@@ -87,7 +87,7 @@ class CrateMovementViewModel extends BaseViewModel {
   bool _disableTextFormField;
   bool get disableTextFormField => _disableTextFormField;
 
-  final String _customerCode;
+  String _customerCode;
 
   CrateMovementViewModel(this._deliveryStop, this._crateTxnType)
       : _disableTextFormField = _crateTxnType != CrateTxnType.Return,
@@ -130,6 +130,7 @@ class CrateMovementViewModel extends BaseViewModel {
   CrateTxnType get crateTxnType => _crateTxnType;
   bool get isReturn => disableTextFormField;
   String get customerId => _customerId;
+  String get customerCode => _customerCode ?? deliveryStop.customerCode;
 
   bool get isValid => _isValid;
 
@@ -356,6 +357,7 @@ class CrateMovementViewModel extends BaseViewModel {
 
   setCustomer(Customer customer) {
     _customerId = customer.name;
+    _customerCode = customer.customerCode;
     _isValid = true;
     notifyListeners();
   }
