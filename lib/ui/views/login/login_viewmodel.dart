@@ -224,16 +224,14 @@ class LoginViewModel extends BaseViewModel {
       _activityService.addActivity(Activity(
           activityTitle: 'Login in', activityDesc: 'Logged In successfully'));
       // Start listening to location stream updates
-
-      // Initialize the geofen3cing service
-      await initializeAppCache(result);
-
       if (result.status != 1) {
         _navigationService.pushNamedAndRemoveUntil(Routes.changePasswordView,
             arguments: ChangePasswordViewArguments(
                 passwordChangeType: PasswordChangeType.initial));
       } else {
-        // await initializeAppCache(result);
+        snackBarService.showSnackbar(message: 'Data Synchronization started');
+        await initializeAppCache(result);
+        snackBarService.showSnackbar(message: 'Data Synchronization completed');
         _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
       }
     } else if (result is CustomException) {
@@ -254,13 +252,7 @@ class LoginViewModel extends BaseViewModel {
   }
 
   initializeAppCache(User user) async {
-    // setDisplayInitDialog(true);
-    setBusy(true);
-    snackBarService.showSnackbar(message: 'Data Synchronization started');
     await api.initializeAppCache(user);
-    snackBarService.showSnackbar(message: 'Data Synchronization completed');
-    setBusy(false);
-    // setDisplayInitDialog(false);
   }
 
   void updatePassword(String value) {
