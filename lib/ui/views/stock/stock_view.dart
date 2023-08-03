@@ -107,7 +107,7 @@ class StockView extends StatelessWidget {
                                       ),
                                       Tab(
                                         child: Text(
-                                          'Order History',
+                                          'Order Summary',
                                           textAlign: TextAlign.center,
                                           style: kTabTextStyleActive,
                                         ),
