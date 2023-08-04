@@ -37,7 +37,7 @@ class CrateTransactionListingView extends StatelessWidget {
                             var description =
                                 json.decode(crateTxn['description']);
                             return ListTile(
-                              title: Row(
+                              title:  Row(
                                 children: [
                                   Text(
                                       description['customer'] ??
