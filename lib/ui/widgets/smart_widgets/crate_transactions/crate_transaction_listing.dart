@@ -30,14 +30,14 @@ class CrateTransactionListingView extends StatelessWidget {
                           itemBuilder: (context, index) {
                             var crateTxn =
                                 model.crateTransactionListings[index];
-                            bool isSynced = crateTxn['isSynced'] == null ||
-                                    crateTxn['isSynced'] == true
-                                ? true
-                                : false;
+                            bool isSynced = !crateTxn['transactionItemId']
+                                .toString()
+                                .toLowerCase()
+                                .contains("off");
                             var description =
                                 json.decode(crateTxn['description']);
                             return ListTile(
-                              title:  Row(
+                              title: Row(
                                 children: [
                                   Text(
                                       description['customer'] ??
