@@ -3,10 +3,8 @@ import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/location_repository.dart';
-import 'package:distributor/services/location_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/user_service.dart';
-
 import 'package:injectable/injectable.dart';
 import 'package:observable_ish/observable_ish.dart';
 import 'package:stacked/stacked.dart';
@@ -140,7 +138,7 @@ class AdhocCartService with ReactiveServiceMixin {
     init();
   }
 
-  num get total => _total.value;
+  num get total => _total.value ?? 0;
   String get customerId => _customerId.value ?? null;
   String get warehouse => _warehouse.value;
 
@@ -256,7 +254,7 @@ class AdhocCartService with ReactiveServiceMixin {
       "remarks": remarks,
       "sellingPriceList": sellingPriceList,
       "warehouseId":
-          _journeyService.currentJourney.route ?? _userService.user.salesChannel
+          _userService.user.salesChannel ?? _journeyService.currentJourney.route
     };
 
     var result = await api.createPOSPayment(

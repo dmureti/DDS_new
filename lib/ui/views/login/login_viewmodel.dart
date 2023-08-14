@@ -230,6 +230,7 @@ class LoginViewModel extends BaseViewModel {
                 passwordChangeType: PasswordChangeType.initial));
       } else {
         snackBarService.showSnackbar(message: 'Data Synchronization started');
+
         await initializeAppCache(result);
         snackBarService.showSnackbar(message: 'Data Synchronization completed');
         _navigationService.pushNamedAndRemoveUntil(Routes.homeView);

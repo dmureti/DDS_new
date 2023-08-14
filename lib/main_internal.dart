@@ -38,6 +38,12 @@ void main() async {
     ),
     AppEnv(
       flavor: Flavor.internal,
+      name: 'Mini-Mombasa',
+      flavorValues: FlavorValues(
+          baseUrl: 'https://dds.ddsolutions.tech/dds-backend/api/v1'),
+    ),
+    AppEnv(
+      flavor: Flavor.internal,
       name: 'Alpha',
       flavorValues: FlavorValues(
           baseUrl: 'https://testdds.ddsolutions.tech/alpha-backend/api/v1'),

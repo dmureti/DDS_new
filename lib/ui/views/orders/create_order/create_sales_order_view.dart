@@ -390,7 +390,7 @@ class _SummaryDraggableSheetState extends State<SummaryDraggableSheet> {
                               salesOrderRequest: salesOrderRequest);
                 },
               ),
-            )
+            ),
           ],
         ),
       ),

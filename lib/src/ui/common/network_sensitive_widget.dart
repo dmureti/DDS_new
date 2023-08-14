@@ -1,4 +1,5 @@
 import 'package:distributor/core/enums.dart';
+import 'package:distributor/ui/widgets/smart_widgets/syncWidget/syncWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,7 +10,6 @@ class NetworkSensitiveWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     //Get the connection status
     var connectionStatus = Provider.of<ConnectivityStatus>(context);
-
     if (connectionStatus == ConnectivityStatus.Offline) {
       return Container(
         decoration: BoxDecoration(color: Colors.black),
@@ -27,7 +27,8 @@ class NetworkSensitiveWidget extends StatelessWidget {
           ),
         ),
       );
+    } else {
+      return SyncWidget();
     }
-    return Container();
   }
 }

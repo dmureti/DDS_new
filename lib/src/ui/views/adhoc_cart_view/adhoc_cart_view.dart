@@ -1,6 +1,5 @@
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/text_styles.dart';
-
 import 'package:distributor/src/ui/views/adhoc_cart_view/adhoc_cart_viewmodel.dart';
 import 'package:distributor/ui/views/orders/create_order/sales_order_view_model.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
@@ -30,32 +29,43 @@ class AdhocCartView extends StatelessWidget {
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        isWalkin
-                            ? Container()
-                            : Container(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12.0, vertical: 10),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Available Credit : Kshs ${Helper.formatCurrency(model.creditLimit)}',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          color: (customer.creditLimit -
-                                                      model.total)
-                                                  .isNegative
-                                              ? Colors.red
-                                              : Colors.green,
-                                        ),
-                                        textAlign: TextAlign.left,
+                        if (isWalkin)
+                          Container()
+                        else
+                          Container(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12.0, vertical: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'Available Credit : Kshs ${Helper.formatCurrency(model.creditLimit)}',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        color: (model.total > model.creditLimit)
+                                            ? Colors.red
+                                            : Colors.green,
                                       ),
-                                    ],
+                                      textAlign: TextAlign.left,
+                                    ),
                                   ),
-                                ),
+                                  Text(
+                                    'Security : Kshs ${Helper.formatCurrency(model.security)}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: (model.total > model.creditLimit)
+                                          ? Colors.red
+                                          : Colors.green,
+                                    ),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ],
                               ),
+                            ),
+                          ),
                         Expanded(
                           child: ListView.builder(
                             itemBuilder: (context, index) {
@@ -95,8 +105,7 @@ class AdhocCartView extends StatelessWidget {
                               'CONTINUE TO PAYMENT',
                               style: kActiveButtonTextStyle,
                             ),
-                            onPressed: model.customer.creditLimit.isNegative ||
-                                    model.total == 0
+                            onPressed: model.total >= model.creditLimit
                                 ? null
                                 : model.total > model.customer.creditLimit
                                     ? () =>

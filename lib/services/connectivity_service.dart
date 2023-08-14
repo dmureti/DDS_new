@@ -1,11 +1,16 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/enums.dart';
+import 'package:distributor/services/api_service.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class ConnectivityService {
+  final _apiService = locator<ApiService>();
+  get api => _apiService.api;
+
   // Public controller
   StreamController<ConnectivityStatus> connectionStatusController =
       StreamController<ConnectivityStatus>();

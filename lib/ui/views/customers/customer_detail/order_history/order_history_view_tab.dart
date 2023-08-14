@@ -1,4 +1,5 @@
 import 'package:distributor/core/models/order_search_delegate.dart';
+import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
 import 'package:distributor/ui/views/customers/customer_detail/order_history/order_history_view_tab_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/app_bar_search.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
@@ -34,7 +35,7 @@ class OrderHistoryTab extends StatelessWidget {
                     children: <Widget>[
                       AppBarSearch(
                         delegate: OrderSearchDelegate(
-                            salesOrderList: model.customerOrders,
+                            salesOrderList: model.customerSalesOrders,
                             deliveryJourney: null,
                             onTap: model.navigateToOrder),
                       ),
@@ -43,7 +44,7 @@ class OrderHistoryTab extends StatelessWidget {
                 ),
                 model.hasError
                     ? Center(child: Text('An error occurred'))
-                    : model.customerOrders.length == 0
+                    : model.customerSalesOrders.length == 0
                         ? Expanded(
                             child: Center(
                               child: Container(
@@ -54,10 +55,10 @@ class OrderHistoryTab extends StatelessWidget {
                           )
                         : Expanded(
                             child: ListView.builder(
-                              itemCount: model.customerOrders.length,
+                              itemCount: model.customerSalesOrders.length,
                               itemBuilder: (context, int index) {
                                 List<SalesOrder> _customerOrdersList =
-                                    model.customerOrders;
+                                    model.customerSalesOrders;
                                 SalesOrder salesOrder =
                                     _customerOrdersList[index];
                                 DeliveryJourney deliveryJourney = null;
@@ -67,6 +68,7 @@ class OrderHistoryTab extends StatelessWidget {
                               },
                             ),
                           ),
+                NetworkSensitiveWidget()
               ],
             )),
       viewModelBuilder: () => OrderHistoryTabViewModel(customer: customer),

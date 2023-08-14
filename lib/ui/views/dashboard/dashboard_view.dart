@@ -1,9 +1,7 @@
 import 'package:distributor/ui/views/dashboard/dashboard_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/shop_name.dart';
-
 import 'package:distributor/ui/widgets/smart_widgets/dashboard_controller/dashboard_view_controller_view.dart';
-
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -106,57 +104,6 @@ class DashboardView extends StatelessWidget {
                                       ? ShopNameWidget(
                                           storeName: model.salesChannel)
                                       : Container(),
-
-                                  /// The Dashboard view will establish what widgets should be displayed
-                                  /// If the user does not have any deliveries
-                                  /// Show the no deliveries widget
-                                  ///
-
-                                  // model.showShop
-                                  //     ? Container(
-                                  //         margin: EdgeInsets.symmetric(
-                                  //             horizontal: 16, vertical: 16),
-                                  //         child: Center(
-                                  //           child: Wrap(
-                                  //             runAlignment:
-                                  //                 WrapAlignment.spaceEvenly,
-                                  //             runSpacing: 10,
-                                  //             spacing: 10,
-                                  //             children: [
-                                  //               DashboardButton(
-                                  //                   onTap: model
-                                  //                       .navigateToNewContractSale,
-                                  //                   title: 'New Contract Sale'),
-                                  //               DashboardButton(
-                                  //                   onTap: model
-                                  //                       .navigateToWalkInSale,
-                                  //                   title: 'New Walk In Sale'),
-                                  //               DashboardButton(
-                                  //                   onTap: model
-                                  //                       .navigateToPendingTransactionsView,
-                                  //                   title:
-                                  //                       'Pending Stock Transactions'),
-                                  //               DashboardButton(
-                                  //                   onTap: model
-                                  //                       .navigateToReturnStock,
-                                  //                   title:
-                                  //                       'Return Stock To Branch'),
-                                  //               DashboardButton(
-                                  //                   onTap: model
-                                  //                       .navigateToReturnStock,
-                                  //                   title:
-                                  //                       'Receive Finished Goods'),
-                                  //               DashboardButton(
-                                  //                   onTap: model
-                                  //                       .navigateToReturnStock,
-                                  //                   title:
-                                  //                       'Receive Purchased Goods'),
-                                  //             ],
-                                  //           ),
-                                  //         ),
-                                  //       )
-                                  //     :
-
                                   DashboardViewControllerView(),
                                 ],
                               ),

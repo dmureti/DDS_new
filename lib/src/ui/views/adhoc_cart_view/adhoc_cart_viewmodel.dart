@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
+import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/core/models/product_service.dart';
 import 'package:distributor/services/adhoc_cart_service.dart';
 import 'package:distributor/services/customer_service.dart';
@@ -59,19 +60,54 @@ class AdhocCartViewModel extends ReactiveViewModel {
       : _isWalkin = isWalkin,
         _customer = customer;
 
+  CustomerSecurity _customerSecurity;
+  CustomerSecurity get customerSecurity => _customerSecurity;
+
   init() async {
     await fetchStockBalance();
+    await fetchProductsByPrice();
     _creditLimit = await _customerService.getCustomerLimit(customer.name);
+    var result = await _customerService.getCustomerSecurity(customer);
+    _customerSecurity = CustomerSecurity.fromMap(result);
     isWalkin ? await fetchProductsByPrice() : await fetchProducts();
     _customerProductList.removeWhere((item) => stockBalanceList.contains(item));
+    // _customerProductList = stockBalanceList;
+    _security = await calculateSecurity(customerSecurity);
     notifyListeners();
+  }
+
+  double _security = 0.0;
+  double get security => _security;
+
+  double calculateSecurity(CustomerSecurity customerSecurity) {
+    // Is customer calculated for the security? If no, return 0.0
+    if (customerSecurity.calcSecurity.toLowerCase() != "yes") {
+      return security;
+    }
+    // If it is a fixed security, return the security amount
+    if (customerSecurity.securityAmount != "Variable") {
+      return double.parse(customerSecurity.securityAmount);
+    }
+
+    // Now calculate the variable security
+    customerProductList.forEach((customerProductList) {
+      // var ite = ddsItemRepository.getItemByCode(item.itemCode!);
+      var quantity = customerProductList.quantity ?? 0;
+      var securityAmount = int.tryParse(customerSecurity.securityAmount) ?? 0;
+
+      // var result = (quantity * securityAmount * item.itemFactor).toDouble();
+      var result = (quantity * securityAmount).toDouble();
+      _security += result;
+      print("This is the security to ADD:::: ${security}");
+    });
+
+    return security;
   }
 
   getCustomerPending() async {}
 
   Future fetchProductsByPrice() async {
     setBusy(true);
-    print(_adhocCartService.sellingPriceList);
     var result = await _productService.fetchProductsByDefaultPriceList(
         defaultStock: _adhocCartService.sellingPriceList);
 
@@ -98,9 +134,8 @@ class AdhocCartViewModel extends ReactiveViewModel {
     }
   }
 
-  fetchStockBalance() async {
+  Future fetchStockBalance() async {
     var result = await _stockControllerService.getStockBalance();
-    print(result);
     if (result is List<Product>) {
       _stockBalanceList = result;
       notifyListeners();

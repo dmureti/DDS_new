@@ -36,28 +36,34 @@ class OrderConfirmationViewModel extends ReactiveViewModel {
     _navigationService.popRepeated(1);
   }
 
-  createSalesOrder() async {
-    print('-create sales order');
+  createSalesOrder(bool isOnline) async {
     var dialogResponse = await _dialogService.showConfirmationDialog(
         title: 'Confirm Order',
         description:
-            'Are you sure that the order you are about to place for ${customer.name} is accurate?',
+            'Are you sure that the order you are about to place for ${customer.name} is accurate? {$isOnline ? : }',
         confirmationTitle: 'Yes',
         cancelTitle: 'NO');
     if (dialogResponse.confirmed) {
       setBusy(true);
-      var result = await _orderService.createSalesOrder(salesOrder, customer);
-
-      /// Send to repository
-
+      var result;
+      // = await _orderService.createSalesOrder(salesOrder, customer,isOnline: isOnline);
+      if (isOnline) {
+        result = await api.createSalesOrder(
+            user.token, salesOrder, customer.customerCode,
+            customerName: customer.name);
+      } else {
+        result = await api.createOfflineOrders(
+            salesOrder, customer.customerCode,
+            customerName: customer.name);
+      }
       setBusy(false);
       if (result is bool) {
         if (result) {
           await _customerService.fetchOrdersByCustomer(customer.customerCode);
-          _activityService.addActivity(Activity(
-              activityTitle: 'Sales Order submitted',
-              activityDesc:
-                  'Sales Order for ${customer.name} of ${customer.route} created and submitted.'));
+          // _activityService.addActivity(Activity(
+          //     activityTitle: 'Sales Order submitted',
+          //     activityDesc:
+          //         'Sales Order for ${customer.name} of ${customer.route} created and submitted.'));
           _navigationService.back(result: true);
         }
       } else if (result is CustomException) {
@@ -98,4 +104,6 @@ class OrderConfirmationViewModel extends ReactiveViewModel {
     _navigationService.replaceWith(Routes.createSalesOrderView,
         arguments: CreateSalesOrderViewArguments(customer: customer));
   }
+
+  createOfflineSalesOrder() {}
 }

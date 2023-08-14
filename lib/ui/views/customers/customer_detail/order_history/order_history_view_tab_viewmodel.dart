@@ -19,11 +19,17 @@ class OrderHistoryTabViewModel extends ReactiveViewModel {
   OrderHistoryTabViewModel({@required this.customer})
       : assert(customer != null);
 
-  List<SalesOrder> get customerOrders => _customerService.salesOrderList;
+  // List<SalesOrder> get customerOrders => _customerService.salesOrderList;
+
+  List<SalesOrder> _customerSalesOrders = [];
+  List<SalesOrder> get customerSalesOrders => _customerSalesOrders;
 
   Future fetchCustomerOrders() async {
     setBusy(true);
-    await _customerService.fetchOrdersByCustomer(customer.customerCode);
+    _customerSalesOrders =
+        await _customerService.fetchOrdersByCustomer(customer.customerCode);
+    // _customerSalesOrders = await _customerService
+    //     .fetchCustomerOrdersNonReactive(customer.customerCode);
     setBusy(false);
     notifyListeners();
   }

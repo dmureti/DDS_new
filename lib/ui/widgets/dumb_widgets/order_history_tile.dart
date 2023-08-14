@@ -1,6 +1,4 @@
 import 'package:distributor/conf/style/lib/text_styles.dart';
-import 'package:distributor/core/helper.dart';
-import 'package:distributor/src/ui/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
@@ -15,6 +13,7 @@ class OrderHistoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isSynced = !salesOrder.orderNo.toLowerCase().contains("off");
     return Material(
       type: MaterialType.card,
       elevation: 2.0,
@@ -26,14 +25,27 @@ class OrderHistoryTile extends StatelessWidget {
         subtitle: Padding(
           padding: EdgeInsets.only(bottom: 8),
           child: Text(
-              'Order Date : ${Helper.getDay(salesOrder.orderDate.toString())} \nDue Date : ${Helper.getDay(salesOrder.dueDate.toString())}'),
+              // 'Order Date : ${Helper.getDay(salesOrder.orderDate.toString())} \nDue Date : ${Helper.getDay(salesOrder.dueDate.toString())}'),
+              'Order Date : ${salesOrder.orderDate.toString()} \nDue Date : ${salesOrder.dueDate.toString()}'),
         ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              '${salesOrder.orderNo}',
-              style: kTileLeadingTextStyle,
+            Row(
+              children: [
+                isSynced
+                    ? Container(
+                        width: 0,
+                      )
+                    : Icon(
+                        (Icons.timer_sharp),
+                        size: 16,
+                      ),
+                Text(
+                  '${salesOrder.orderNo}',
+                  style: kTileLeadingTextStyle,
+                ),
+              ],
             ),
             Container(
               decoration: BoxDecoration(

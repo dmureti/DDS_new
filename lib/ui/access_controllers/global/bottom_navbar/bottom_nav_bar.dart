@@ -1,7 +1,6 @@
 import 'package:distributor/conf/dds_brand_guide.dart';
 import 'package:distributor/conf/style/lib/colors.dart';
 import 'package:distributor/ui/access_controllers/global/bottom_navbar/bottom_navbar_viewmodel.dart';
-import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/views/home/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -19,9 +18,9 @@ class BottomNavBar extends StatelessWidget {
     return ViewModelBuilder<BottomNavBarViewModel>.reactive(
       onModelReady: (model) => model.init(),
       builder: (context, model, child) => BottomNavigationBar(
-          elevation: 3,
+          elevation: 4,
           // fixedColor: Colors.pink,
-          iconSize: 20,
+          iconSize: 19,
           type: BottomNavigationBarType.fixed,
           currentIndex: model.index,
           selectedIconTheme: IconThemeData(color: kColDDSPrimaryDark, size: 30),

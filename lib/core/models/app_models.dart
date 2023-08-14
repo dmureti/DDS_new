@@ -38,6 +38,27 @@ class Transaction {
   }
 }
 
+class CustomerSecurity {
+  final double balanceAmount;
+  final String securityType;
+  final String calcSecurity;
+  final String securityAmount;
+
+  CustomerSecurity(this.balanceAmount, this.securityType, this.calcSecurity,
+      this.securityAmount);
+
+  factory CustomerSecurity.fromMap(Map<String, dynamic> data) {
+    double balanceAmount = double.tryParse(data['balance_amount']) ?? 0.0;
+    var securityType = data['securityType'].toString().isEmpty
+        ? "Fixed"
+        : data['securityType'].toString();
+    var calcSecurity = data['calcSecurity'];
+    var securityAmount = data['securityAmount'];
+    return CustomerSecurity(
+        balanceAmount, securityType, calcSecurity, securityAmount);
+  }
+}
+
 class StockTransferRequest {
   // Channel
   String fromWarehouse;

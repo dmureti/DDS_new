@@ -46,7 +46,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
     notifyListeners();
   }
 
-  get api => _apiService.api;
+  Api get api => _apiService.api;
 
   UserService _userService = locator<UserService>();
   NavigationService _navigationService = locator<NavigationService>();
@@ -54,13 +54,25 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   AccessControlService _accessControlService = locator<AccessControlService>();
   final _dialogService = locator<DialogService>();
 
+  fetchAllCustomers() async {
+    setBusy(true);
+    _customerList = await api.fetchAllCustomers(_userService.user.token);
+    setBusy(false);
+    notifyListeners();
+    return _customerList;
+  }
+
+  List<Customer> _customerList = [];
+  List<Customer> get customerList => _customerList;
+
   syncData() async {
     setBusy(true);
     _snackbarService.showSnackbar(
         message: 'Synchronization in progress', title: 'Offline Data sync');
+    List customerList = await fetchAllCustomers();
     var result = await _apiService.api
-        .synchronizeData(
-            _userService.user.token, user, _logisticsService.userJourneyList)
+        .synchronizeData(_userService.user.token, user,
+            _logisticsService.userJourneyList, customerList)
         .then((value) {
       _snackbarService.showSnackbar(
           message: 'Synchronization Complete', title: 'Offline Data sync');
@@ -214,6 +226,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   init() async {
     await _logisticsService.fetchJourneys();
     await _permissionService.init();
+    await fetchAllCustomers();
     // geoFenceService.listenToGeofenceStatusStream();
     //Check if the user has permissions before enabling this
     if (user.hasSalesChannel) {

@@ -84,15 +84,15 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
                   iconData: Icons.swap_calls,
                   isEnabled: model.enableJourneyTab,
                 ),
-                DrawerListTile(
-                  label: 'Territories',
-                  onTap: () {
-                    Navigator.pop(context);
-                    model.navigateToTerritoryView();
-                  },
-                  iconData: Icons.fence,
-                  isEnabled: model.user.fences.isNotEmpty,
-                ),
+                // DrawerListTile(
+                //   label: 'Territories',
+                //   onTap: () {
+                //     Navigator.pop(context);
+                //     model.navigateToTerritoryView();
+                //   },
+                //   iconData: Icons.fence,
+                //   isEnabled: model.user.fences.isNotEmpty,
+                // ),
                 DrawerListTile(
                   isEnabled: model.enableAdhocTab,
                   label: 'Adhoc Sales',
@@ -131,17 +131,17 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
                 // ),
                 Divider(),
 
-                ListTile(
-                  title: Text(
-                    'SYNC DATA',
-                    style: TextStyle(
-                        fontFamily: 'NerisBlack', color: kColDDSPrimaryDark),
-                  ),
-                  onTap: () async {
-                    Navigator.pop(context);
-                    model.syncData();
-                  },
-                ),
+                // ListTile(
+                //   title: Text(
+                //     'SYNC DATA',
+                //     style: TextStyle(
+                //         fontFamily: 'NerisBlack', color: kColDDSPrimaryDark),
+                //   ),
+                //   onTap: () async {
+                //     Navigator.pop(context);
+                //     model.syncData();
+                //   },
+                // ),
 
                 ListTile(
                   title: Text(

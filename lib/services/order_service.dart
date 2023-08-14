@@ -64,8 +64,15 @@ class OrderService with ReactiveServiceMixin {
       /// Increase the count of sales orders
       _ordersPlaced.value++;
       updateValueOfOrdersPlaced(salesOrderRequest.total);
-      print(customer.customerCode);
-      await _customerService.fetchOrdersByCustomer(customer.customerCode);
+
+      var result = await _customerService
+          .fetchCustomerOrdersNonReactive(customer.customerCode);
+      if (result is CustomException) {
+        print(result.description);
+        print(result.title);
+        print(result.code);
+      }
+      print("fetching customer orders");
       // await _dataRepository.placeOrder(
       //   {
       //     "customer": customer.customerCode,

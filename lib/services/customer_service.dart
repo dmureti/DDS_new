@@ -38,6 +38,12 @@ class CustomerService with ReactiveServiceMixin {
     }
   }
 
+  getCustomerSecurity(Customer customer) async {
+    var result = await _apiService.api
+        .getCustomerSecurity(customer: customer, token: user.token);
+    return result;
+  }
+
   getCustomerIssues(String customerCode) async {
     var result = await _apiService.api
         .getCustomersIssuesByCustomer(customerCode, user.token);
@@ -66,13 +72,11 @@ class CustomerService with ReactiveServiceMixin {
     return customers.sort((a, b) => a.name.compareTo(b.name));
   }
 
-  RxValue<List<SalesOrder>> _salesOrderList =
-      RxValue<List<SalesOrder>>(initial: <SalesOrder>[]);
-  List<SalesOrder> get salesOrderList => _salesOrderList.value;
+  List<SalesOrder> _salesOrderList = <SalesOrder>[];
+  List<SalesOrder> get salesOrderList => _salesOrderList;
 
   CustomerService() {
-    listenToReactiveValues(
-        [_salesOrderList, _customerIssues, _customerAccount]);
+    listenToReactiveValues([_customerIssues, _customerAccount]);
     init();
   }
 
@@ -113,22 +117,29 @@ class CustomerService with ReactiveServiceMixin {
 
   bool get enableCustomerTab => _accessControlService.enableCustomerTab;
 
+  Future fetchCustomerOrdersNonReactive(String customerCode) async {
+    var result =
+        // await api.refreshCustomerOrders(customerCode, _userService.user.token);
+        await fetchOrdersByCustomer(customerCode);
+    return result;
+  }
+
   Future fetchOrdersByCustomer(String customerCode) async {
     var result =
         await api.fetchOrderByCustomer(customerCode, _userService.user.token);
 
     if (result is List<SalesOrder>) {
-      _salesOrderList.value = result;
+      _salesOrderList = result;
       notifyListeners();
     } else {
       if (result is CustomException) {
         await _dialogService.showDialog(
             title: result.title, description: result.description);
       }
-      _salesOrderList.value = <SalesOrder>[];
+      _salesOrderList = <SalesOrder>[];
       notifyListeners();
     }
-    return true;
+    return _salesOrderList;
   }
 
   addCustomerIssue(Map<String, dynamic> data, String customerCode) async {

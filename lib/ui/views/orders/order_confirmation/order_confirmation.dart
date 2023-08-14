@@ -1,13 +1,14 @@
-import 'package:distributor/conf/style/lib/fonts.dart';
+import 'package:distributor/core/enums.dart';
 import 'package:distributor/core/helper.dart';
+import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
+import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
-import 'package:flutter/material.dart';
 
 import 'order_confirmation_view_model.dart';
 
@@ -22,6 +23,9 @@ class OrderConfirmation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var connectionStatus = Provider.of<ConnectivityStatus>(context);
+
+    bool isConnected = connectionStatus != ConnectivityStatus.Offline;
     return ViewModelBuilder<OrderConfirmationViewModel>.reactive(
       viewModelBuilder: () => OrderConfirmationViewModel(
           customer: customer, salesOrderRequest: salesOrderRequest),
@@ -40,6 +44,7 @@ class OrderConfirmation extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              NetworkSensitiveWidget(),
               Material(
                 elevation: 4,
                 color: kColorMiniDarkBlue,
@@ -235,7 +240,7 @@ class OrderConfirmation extends StatelessWidget {
               Container(
                   height: 90,
                   width: MediaQuery.of(context).size.width,
-                  color: Colors.orange,
+                  color: Colors.white,
                   padding: EdgeInsets.all(15.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -269,17 +274,18 @@ class OrderConfirmation extends StatelessWidget {
                                   width: MediaQuery.of(context).size.width,
                                   child: ElevatedButton(
                                     style: ButtonStyle(
-                                        padding: MaterialStateProperty.all(
-                                          EdgeInsets.symmetric(
-                                              horizontal: 25, vertical: 10),
-                                        ),
-                                        shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8)),
-                                        )),
+                                      padding: MaterialStateProperty.all(
+                                        EdgeInsets.symmetric(
+                                            horizontal: 25, vertical: 10),
+                                      ),
+                                      // shape: MaterialStateProperty.all(
+                                      //   RoundedRectangleBorder(
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(8)),
+                                      // )
+                                    ),
                                     onPressed: () {
-                                      model.createSalesOrder();
+                                      model.createSalesOrder(isConnected);
                                     },
                                     child: Text(
                                       'place order'.toUpperCase(),
