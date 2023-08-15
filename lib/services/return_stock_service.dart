@@ -46,26 +46,33 @@ class ReturnStockService {
   }
 
   returnItems() async {
-    if (itemsToReturn.isEmpty) {
-      var result = await fetchStockBalance();
-      _itemsToReturn = result;
-    }
-    StockTransferRequest stockTransferRequest = StockTransferRequest(
-        fromWarehouse: userChannel,
-        toWarehouse: user.branch,
-        items: itemsToReturn);
-    // print(stockTransferRequest.toJson());
-    var result = await api.shopReturn(user.token,
-        stockTransferData: stockTransferRequest.toJson());
-    if (result is String) {
-      await _dialogService.showDialog(title: 'Error', description: result);
-      return false;
-    } else {
-      await _dialogService.showDialog(
-          title: 'Success',
-          description:
-              'The stock was returned successfully.Use the Pending Stock Transactions Button to commit this transaction.');
-      return true;
+    DialogResponse dialogResponse = await _dialogService.showConfirmationDialog(
+        title: 'Stock Return Confirmation',
+        description: 'Are you sure you want to return stock to the branch ?',
+        confirmationTitle: 'Yes',
+        cancelTitle: 'NO');
+    if (dialogResponse.confirmed) {
+      if (itemsToReturn.isEmpty) {
+        var result = await fetchStockBalance();
+        _itemsToReturn = result;
+      }
+      StockTransferRequest stockTransferRequest = StockTransferRequest(
+          fromWarehouse: userChannel,
+          toWarehouse: user.branch,
+          items: itemsToReturn);
+      // print(stockTransferRequest.toJson());
+      var result = await api.shopReturn(user.token,
+          stockTransferData: stockTransferRequest.toJson());
+      if (result is String) {
+        await _dialogService.showDialog(title: 'Error', description: result);
+        return false;
+      } else {
+        await _dialogService.showDialog(
+            title: 'Success',
+            description:
+                'The stock was returned successfully.Use the Pending Stock Transactions Button to commit this transaction.');
+        return true;
+      }
     }
   }
 
