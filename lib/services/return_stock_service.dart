@@ -1,6 +1,7 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/services/api_service.dart';
+import 'package:distributor/services/stock_controller_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -11,6 +12,7 @@ class ReturnStockService {
   UserService _userService = locator<UserService>();
   ApiService _apiService = locator<ApiService>();
   final _dialogService = locator<DialogService>();
+  final _stockControllerService = locator<StockControllerService>();
   Api get api => _apiService.api;
 
   User get user => _userService.user;
@@ -25,12 +27,34 @@ class ReturnStockService {
     _itemsToReturn = [];
   }
 
+  List<Product> _productList = <Product>[];
+  List<Product> get productList => _productList;
+
+  fetchStockBalance() async {
+    var result = await _stockControllerService.getStockBalance();
+    print("in fetch stock balance");
+    print(result);
+    if (result is List<Product>) {
+      _productList = result;
+      return productList;
+    } else if (result is CustomException) {
+      _productList = <Product>[];
+      await _dialogService.showDialog(
+          title: result.title, description: result.description);
+      return <Product>[];
+    }
+  }
+
   returnItems() async {
+    if (itemsToReturn.isEmpty) {
+      var result = await fetchStockBalance();
+      _itemsToReturn = result;
+    }
     StockTransferRequest stockTransferRequest = StockTransferRequest(
         fromWarehouse: userChannel,
         toWarehouse: user.branch,
         items: itemsToReturn);
-    print(stockTransferRequest.toJson());
+    // print(stockTransferRequest.toJson());
     var result = await api.shopReturn(user.token,
         stockTransferData: stockTransferRequest.toJson());
     if (result is String) {
