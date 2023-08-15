@@ -24,7 +24,10 @@ class StockTransferViewmodel extends BaseViewModel with ContextualViewmodel {
   fetchStockBalance() async {
     var result = await _stockControllerService.getStockBalance();
     if (result is List<Product>) {
-      _productList = result;
+      _productList = result
+          .where((product) =>
+              !product.itemName.trim().toLowerCase().contains("crates"))
+          .toList();
       notifyListeners();
     } else if (result is CustomException) {
       _productList = <Product>[];
@@ -34,7 +37,7 @@ class StockTransferViewmodel extends BaseViewModel with ContextualViewmodel {
     }
   }
 
-  bool get enableReturnToBranch => _returnStockService.canReturn;
+  // bool get enableReturnToBranch => _returnStockService.canReturn;
 
   transferStock() async {
     setBusy(true);
