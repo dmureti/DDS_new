@@ -82,22 +82,26 @@ class CreateSalesOrderView extends StatelessWidget {
             ? Center(
                 child: BusyWidget(),
               )
-            : Column(
-                children: [
-                  Expanded(
-                    child: ListView(
-                      padding: EdgeInsets.zero,
-                      children: <Widget>[_ResultsView()],
-                    ),
+            : model.productList.isEmpty
+                ? Center(
+                    child: EmptyContentContainer(label: 'No SKUs found'),
+                  )
+                : Column(
+                    children: [
+                      Expanded(
+                        child: ListView(
+                          padding: EdgeInsets.zero,
+                          children: <Widget>[_ResultsView()],
+                        ),
+                      ),
+                      model.displaySummary
+                          ? Container(
+                              height: 200,
+                              child: SummaryDraggableSheet(model, customer),
+                            )
+                          : Container()
+                    ],
                   ),
-                  model.displaySummary
-                      ? Container(
-                          height: 200,
-                          child: SummaryDraggableSheet(model, customer),
-                        )
-                      : Container()
-                ],
-              ),
       ),
       viewModelBuilder: () => SalesOrderViewModel(customer: customer),
       onModelReady: (model) => model.fetchProducts(),
@@ -442,26 +446,20 @@ class _ResultsView extends HookViewModelWidget<SalesOrderViewModel> {
   _ResultsView();
   @override
   Widget buildViewModelWidget(BuildContext context, SalesOrderViewModel model) {
-    return model.productList.isEmpty
-        ? Center(
-            child: EmptyContentContainer(
-                label:
-                    'There are no SKU items that match this ${model.skuSearchString}'),
-          )
-        : ListView.separated(
-            physics: ClampingScrollPhysics(),
-            separatorBuilder: (context, index) {
-              return Divider(
-                height: 0.1,
-              );
-            },
-            shrinkWrap: true,
-            itemCount: model.productList.length,
-            itemBuilder: (context, index) {
-              return SalesOrderItemWidget(
-                item: model.productList[index],
-                salesOrderViewModel: model,
-              );
-            });
+    return ListView.separated(
+        physics: ClampingScrollPhysics(),
+        separatorBuilder: (context, index) {
+          return Divider(
+            height: 0.1,
+          );
+        },
+        shrinkWrap: true,
+        itemCount: model.productList.length,
+        itemBuilder: (context, index) {
+          return SalesOrderItemWidget(
+            item: model.productList[index],
+            salesOrderViewModel: model,
+          );
+        });
   }
 }
