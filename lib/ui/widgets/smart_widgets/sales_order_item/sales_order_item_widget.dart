@@ -1,12 +1,11 @@
 import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/core/helper.dart';
-import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/product_quantity_container.dart';
 import 'package:distributor/ui/widgets/smart_widgets/manual_input_widget/manual_input_widget.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
-import 'package:flutter/material.dart';
 
 import 'sales_order_item_model.dart';
 
@@ -95,7 +94,8 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
                                           if (model.total >= 0 &&
                                               model.quantity > 0) {
                                             salesOrderViewModel.removeFromTotal(
-                                                model.product.itemPrice);
+                                                model.product.itemPrice,
+                                                item: model.product);
                                           }
                                           model.removeItemQuantity();
 //                    print(salesOrderViewModel.total.toStringAsFixed(2));
@@ -112,8 +112,9 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
                                   num totalDifference =
                                       difference * model.product.itemPrice;
                                   //update the salesOrderViewmodel
-                                  salesOrderViewModel
-                                      .addToTotal(totalDifference);
+                                  salesOrderViewModel.addToTotal(
+                                      totalDifference,
+                                      item: model.product);
                                   // Get the difference in terms of quantity
                                   num differenceInQuantity =
                                       totalDifference / model.product.itemPrice;
@@ -152,7 +153,8 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
                                               .increaseSalesOrderItems(
                                                   model.product, 1);
                                           salesOrderViewModel.addToTotal(
-                                              model.product.itemPrice);
+                                              model.product.itemPrice,
+                                              item: model.product);
                                           model.addItemQuantity();
 //
                                         }

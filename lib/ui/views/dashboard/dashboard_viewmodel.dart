@@ -4,7 +4,6 @@ import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/user_service.dart';
-
 import 'package:distributor/traits/contextual_viewmodel.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
@@ -44,6 +43,14 @@ class DashboardViewModel extends FutureViewModel<List<DeliveryJourney>>
   //Check if user can list journeys
   bool get canListJourneys => _accessControlService.enableJourneyTab;
 
+  bool get isMiniShop {
+    if (user.hasSalesChannel) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future fetchUserJourneys() async {
     var result = await _logisticsService.fetchJourneys();
     return result;
@@ -70,7 +77,11 @@ class DashboardViewModel extends FutureViewModel<List<DeliveryJourney>>
   }
 
   init() async {
-    await _logisticsService.fetchJourneys();
+    // This is not a minishop
+    // Dont fetch user journeys
+    if (!user.hasSalesChannel) {
+      await _logisticsService.fetchJourneys();
+    }
   }
 
   UserSummary _userSummary;

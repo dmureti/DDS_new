@@ -1,8 +1,7 @@
-import 'package:distributor/src/ui/text_styles.dart';
+import 'package:distributor/conf/dds_brand_guide.dart';
 import 'package:distributor/src/ui/views/stock_transfer/stock_transfer_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
-
 import 'package:distributor/ui/widgets/smart_widgets/return_stock_tile/return_stock_tile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -57,14 +56,18 @@ class StockTransferView extends StatelessWidget {
                               child: model.isBusy
                                   ? Center(child: BusyWidget())
                                   : ElevatedButton(
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  kColDDSPrimaryDark)),
                                       child: Text(
-                                        'Return to Branch',
-                                        style: kActiveButtonTextStyle,
+                                        'Return to Branch'.toUpperCase(),
+                                        style: TextStyle(
+                                          fontFamily: 'NerisBlack',
+                                          color: Colors.white,
+                                        ),
                                       ),
-                                      onPressed: model.enableReturnToBranch
-                                          ? () => model.transferStock()
-                                          : null,
-                                    ),
+                                      onPressed: () => model.transferStock()),
                             )
                           ],
                         )

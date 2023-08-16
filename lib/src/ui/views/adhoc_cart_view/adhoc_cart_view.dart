@@ -53,7 +53,7 @@ class AdhocCartView extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    'Security : Kshs ${Helper.formatCurrency(model.security)}',
+                                    'Security : Kshs ${Helper.formatCurrency(model.securityBalance)}',
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       color: (model.total > model.creditLimit)

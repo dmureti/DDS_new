@@ -20,6 +20,8 @@ class AdhocSalesViewModel extends ReactiveViewModel {
   AdhocCartService _adhocCartService = locator<AdhocCartService>();
   JourneyService _journeyService = locator<JourneyService>();
 
+  initializeCustomerDetails() async {}
+
   navigateToCart() async {
     if (isWalkInCustomer) {
       _adhocCartService.setSellingPriceList(posProfile['defaultPriceList']);

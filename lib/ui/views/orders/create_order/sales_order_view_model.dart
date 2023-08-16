@@ -1,13 +1,12 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/product_service.dart';
 import 'package:distributor/services/adhoc_cart_service.dart';
-
 import 'package:distributor/services/order_service.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 enum ProductOrdering { alphaAsc, alphaDesc }
 
@@ -218,16 +217,16 @@ class SalesOrderViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
-  addToTotal(double value) {
+  addToTotal(double value, {Product item}) {
     _total += value;
-    _adhocCartService.addToTotal(value);
+    _adhocCartService.addToTotal(value, item: item);
     notifyListeners();
   }
 
-  removeFromTotal(double value) {
+  removeFromTotal(double value, {Product item}) {
     if (total > 0) {
       _total -= value;
-      _adhocCartService.subtractFromTotal(value);
+      _adhocCartService.subtractFromTotal(value, item: item);
     }
     notifyListeners();
   }

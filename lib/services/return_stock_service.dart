@@ -1,5 +1,4 @@
 import 'package:distributor/app/locator.dart';
-import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/stock_controller_service.dart';
 import 'package:distributor/services/user_service.dart';
@@ -34,7 +33,10 @@ class ReturnStockService {
     var result = await _stockControllerService.getStockBalance();
     if (result is List<Product>) {
       _productList = result;
-      return productList;
+      return productList
+          .where((product) =>
+              !product.itemName.trim().toLowerCase().contains('crate'))
+          .toList();
     } else if (result is CustomException) {
       _productList = <Product>[];
       await _dialogService.showDialog(
@@ -42,6 +44,8 @@ class ReturnStockService {
       return <Product>[];
     }
   }
+
+  var _payload;
 
   returnItems() async {
     DialogResponse dialogResponse = await _dialogService.showConfirmationDialog(
@@ -52,28 +56,31 @@ class ReturnStockService {
     if (dialogResponse.confirmed) {
       if (itemsToReturn.isEmpty) {
         List<Product> result = await fetchStockBalance();
-        _itemsToReturn = result
-            .where(
-                (product) => !product.itemName.toLowerCase().contains("crates"))
-            .toList();
+        _payload = result.map((product) {
+          return {"item": product.toJson(), "quantity": 0};
+        });
+      } else {
+        _payload = itemsToReturn.map((product) {
+          return {"item": product.toJson(), "quantity": product.quantity};
+        });
       }
-      StockTransferRequest stockTransferRequest = StockTransferRequest(
-          fromWarehouse: userChannel,
-          toWarehouse: user.branch,
-          items: itemsToReturn);
-      print(stockTransferRequest.toJson());
-      // var result = await api.shopReturn(user.token,
-      //     stockTransferData: stockTransferRequest.toJson());
-      // if (result is String) {
-      //   await _dialogService.showDialog(title: 'Error', description: result);
-      //   return false;
-      // } else {
-      //   await _dialogService.showDialog(
-      //       title: 'Success',
-      //       description:
-      //           'The stock was returned successfully.Use the Pending Stock Transactions Button to commit this transaction.');
-      //   return true;
-      // }
+      // Data for shop return
+      var data = {
+        "fromWarehouse": userChannel,
+        "items": _payload.toList(),
+        "toWarehouse": user.branch
+      };
+      var result = await api.shopReturn(user.token, stockTransferData: data);
+      if (result is String) {
+        await _dialogService.showDialog(title: 'Error', description: result);
+        return false;
+      } else {
+        await _dialogService.showDialog(
+            title: 'Success',
+            description:
+                'The stock was returned successfully.Use the Pending Stock Transactions Button to commit this transaction.');
+        return true;
+      }
     }
   }
 

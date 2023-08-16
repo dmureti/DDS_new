@@ -47,7 +47,7 @@ class CustomerSecurity {
   CustomerSecurity(this.balanceAmount, this.securityType, this.calcSecurity,
       this.securityAmount);
 
-  factory CustomerSecurity.fromMap(Map<String, dynamic> data) {
+  factory CustomerSecurity.fromMap(var data) {
     double balanceAmount = double.tryParse(data['balance_amount']) ?? 0.0;
     var securityType = data['securityType'].toString().isEmpty
         ? "Fixed"
@@ -62,7 +62,7 @@ class CustomerSecurity {
 class StockTransferRequest {
   // Channel
   String fromWarehouse;
-  List<Product> items;
+  var items;
   // Branch
   String toWarehouse;
 

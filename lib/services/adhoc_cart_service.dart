@@ -1,6 +1,7 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/services/api_service.dart';
+import 'package:distributor/services/customer_service.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/location_repository.dart';
 import 'package:distributor/services/logistics_service.dart';
@@ -17,6 +18,7 @@ class AdhocCartService with ReactiveServiceMixin {
   LogisticsService _logisticsService = locator<LogisticsService>();
   final _locationService = locator<LocationRepository>();
   JourneyService _journeyService = locator<JourneyService>();
+  final _customerService = locator<CustomerService>();
 
   UserLocation _userLocation;
   UserLocation get userLocation => _userLocation;
@@ -72,6 +74,9 @@ class AdhocCartService with ReactiveServiceMixin {
   var _mpesaDetail;
   get mpesaDetail => _mpesaDetail;
 
+  CustomerSecurity _customerSecurity;
+  CustomerSecurity get customerSecurity => _customerSecurity;
+
   init() async {
     if (_logisticsService.currentJourney != null) {
       var mpesaRes =
@@ -94,6 +99,21 @@ class AdhocCartService with ReactiveServiceMixin {
     // await getCurrentLocation();
   }
 
+  initializeCustomerData(
+      Customer customer, List<Product> customerProductList) async {
+    _creditLimit.value = await _customerService.getCustomerLimit(customer.name);
+    _creditBalance.value = _creditLimit.value;
+
+    var result = await _customerService.getCustomerSecurity(customer);
+    _customerSecurity = CustomerSecurity.fromMap(result);
+    _securityBalance.value =
+        double.tryParse(_customerSecurity.securityAmount) ?? 0.0;
+
+    _securityAmount.value =
+        double.tryParse(customerSecurity.securityAmount) ?? 0;
+    _customerProductList = customerProductList;
+  }
+
   getPOSAccount(String modeOfPayment, branchId) async {
     var result = await _apiService.api.getPOSAccount(
         modeOfPayment, _userService.user.token,
@@ -110,6 +130,7 @@ class AdhocCartService with ReactiveServiceMixin {
   Api get api => _apiService.api;
   String get token => _userService.user.token;
 
+  RxValue _customer = RxValue();
   RxValue _total = RxValue(initial: 0);
   RxValue _paymentMode = RxValue(initial: "");
   RxValue _customerId = RxValue(initial: null);
@@ -119,6 +140,61 @@ class AdhocCartService with ReactiveServiceMixin {
   RxValue _remarks = RxValue(initial: "");
   RxValue _customerType = RxValue(initial: "");
   RxValue _warehouse = RxValue(initial: "");
+
+  /// Credit balance of the minishop
+  RxValue _creditBalance = RxValue(initial: 0.0);
+
+  /// Security amount of the minishop customer
+  RxValue _securityAmount = RxValue(initial: 0.0);
+
+  /// Security balance of the minishop customer
+  RxValue _securityBalance = RxValue(initial: 0.0);
+
+  // Credit limit of the customer
+  RxValue _creditLimit = RxValue(initial: 0.0);
+
+  double get securityBalance => _securityBalance.value;
+  double get securityAmount => _securityAmount.value;
+  double get creditBalance => _creditBalance.value;
+  double get creditLimit => _creditLimit.value;
+  Customer get customer => _customer.value;
+  List<Product> _customerProductList;
+  List<Product> get customerProductList => _customerProductList;
+
+  calculateSecurity(Product item, var quantity) {
+    // Is customer calculated for the security? If no, return 0.0
+    if (customerSecurity.calcSecurity.toLowerCase() != "yes") {
+      return _securityAmount.value;
+    }
+    // If it is a fixed security, return the security amount
+    if (customerSecurity.securityType.toLowerCase() != "variable") {
+      return double.parse(customerSecurity.securityAmount);
+    }
+    var securityAmount = double.tryParse(customerSecurity.securityAmount) ?? 0;
+    // var result = (quantity * securityAmount).toDouble();
+
+    var itemFactor = double.tryParse(item.itemFactor) ?? 0.5;
+    var result = (quantity * securityAmount * itemFactor).toDouble();
+    print(result);
+    _securityBalance.value += result;
+    print("This is the security to ADD:::: ${securityBalance}");
+
+    // itemsInCart.forEach((i) {
+    //   // var ite = ddsItemRepository.getItemByCode(item.itemCode!);
+    //   // Now calculate the variable security
+    //   if (i.itemCode.toLowerCase() == item.itemCode.toLowerCase()) {
+    //     print(item.quantity);
+    //
+    //     var quantity = item.quantity ?? 0;
+    //     var securityAmount = int.tryParse(customerSecurity.securityAmount) ?? 0;
+    //     // var result = (quantity * securityAmount * item.itemFactor).toDouble();
+    //     var result = (quantity * securityAmount).toDouble();
+    //     // var result = (quantity * securityAmount).toDouble();
+    //     _securityBalance.value += result;
+    //     print("This is the security to ADD:::: ${securityBalance}");
+    //   }
+    // });
+  }
 
   AdhocCartService() {
     listenToReactiveValues([
@@ -133,7 +209,10 @@ class AdhocCartService with ReactiveServiceMixin {
       _showMPesa,
       _warehouse,
       _customerType,
-      _sellingPriceList
+      _sellingPriceList,
+      _securityBalance,
+      _securityAmount,
+      _creditBalance
     ]);
     init();
   }
@@ -167,6 +246,10 @@ class AdhocCartService with ReactiveServiceMixin {
       _items.value.add(s);
       notifyListeners();
     }
+
+    //@TODO : Calculate the security
+
+    //@TODO : Calculate the credit balance
   }
 
   resetTotal() {
@@ -210,17 +293,25 @@ class AdhocCartService with ReactiveServiceMixin {
     _sellingPriceList.value = val;
   }
 
-  addToTotal(num val) {
+  addToTotal(num val, {Product item}) {
     _total.value = _total.value + val;
+    //Reduce the credit balance
+    _creditBalance.value -= _total.value + val;
+    //Calculate security limit
+    calculateSecurity(item, (val));
   }
 
   setRemarks(String val) {
     _remarks.value = val;
   }
 
-  subtractFromTotal(num val) {
+  subtractFromTotal(num val, {Product item}) {
     if (_total.value != 0) {
       _total.value = _total.value - val;
+      //Update the credit balance
+      _creditBalance.value += _total.value - val;
+      // Update the security
+      calculateSecurity(item, val);
     }
   }
 

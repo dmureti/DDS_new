@@ -40,8 +40,9 @@ class AdhocCartViewModel extends ReactiveViewModel {
   List<Product> _stockBalanceList;
   List<Product> get stockBalanceList => _stockBalanceList;
 
-  double _creditLimit;
-  double get creditLimit => _creditLimit ?? 0;
+  double get creditLimit => _adhocCartService.creditBalance;
+  double get securityBalance => _adhocCartService.securityBalance;
+  double get securityAmount => _adhocCartService.securityAmount;
 
   checkIfStockExists(Product product) {
     Product p = _stockBalanceList.firstWhere(
@@ -64,45 +65,47 @@ class AdhocCartViewModel extends ReactiveViewModel {
   CustomerSecurity get customerSecurity => _customerSecurity;
 
   init() async {
+    if (customer != null) {
+      await _adhocCartService.initializeCustomerData(
+          customer, customerProductList);
+    }
     await fetchStockBalance();
     await fetchProductsByPrice();
-    _creditLimit = await _customerService.getCustomerLimit(customer.name);
+
+    // _creditLimit.value = await _customerService.getCustomerLimit(customer.name);
     var result = await _customerService.getCustomerSecurity(customer);
     _customerSecurity = CustomerSecurity.fromMap(result);
     isWalkin ? await fetchProductsByPrice() : await fetchProducts();
     _customerProductList.removeWhere((item) => stockBalanceList.contains(item));
     // _customerProductList = stockBalanceList;
-    _security = await calculateSecurity(customerSecurity);
+    // _security = await calculateSecurity(customerSecurity);
     notifyListeners();
   }
 
-  double _security = 0.0;
-  double get security => _security;
-
-  double calculateSecurity(CustomerSecurity customerSecurity) {
-    // Is customer calculated for the security? If no, return 0.0
-    if (customerSecurity.calcSecurity.toLowerCase() != "yes") {
-      return security;
-    }
-    // If it is a fixed security, return the security amount
-    if (customerSecurity.securityAmount != "Variable") {
-      return double.parse(customerSecurity.securityAmount);
-    }
-
-    // Now calculate the variable security
-    customerProductList.forEach((customerProductList) {
-      // var ite = ddsItemRepository.getItemByCode(item.itemCode!);
-      var quantity = customerProductList.quantity ?? 0;
-      var securityAmount = int.tryParse(customerSecurity.securityAmount) ?? 0;
-
-      // var result = (quantity * securityAmount * item.itemFactor).toDouble();
-      var result = (quantity * securityAmount).toDouble();
-      _security += result;
-      print("This is the security to ADD:::: ${security}");
-    });
-
-    return security;
-  }
+  // double calculateSecurity(CustomerSecurity customerSecurity) {
+  //   // Is customer calculated for the security? If no, return 0.0
+  //   if (customerSecurity.calcSecurity.toLowerCase() != "yes") {
+  //     return security;
+  //   }
+  //   // If it is a fixed security, return the security amount
+  //   if (customerSecurity.securityAmount != "Variable") {
+  //     return double.parse(customerSecurity.securityAmount);
+  //   }
+  //
+  //   // Now calculate the variable security
+  //   customerProductList.forEach((item) {
+  //     // var ite = ddsItemRepository.getItemByCode(item.itemCode!);
+  //     var quantity = item.quantity ?? 0;
+  //     var securityAmount = int.tryParse(customerSecurity.securityAmount) ?? 0;
+  //
+  //     var result = (quantity * securityAmount * item.itemFactor).toDouble();
+  //     // var result = (quantity * securityAmount).toDouble();
+  //     _security += result;
+  //     print("This is the security to ADD:::: ${security}");
+  //   });
+  //
+  //   return security;
+  // }
 
   getCustomerPending() async {}
 
