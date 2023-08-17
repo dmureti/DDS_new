@@ -15,7 +15,6 @@ import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
 import 'package:distributor/ui/widgets/reactive/transaction_popup/transaction_popup_view.dart';
 import 'package:distributor/ui/widgets/smart_widgets/connection_status/connection_status_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
@@ -40,10 +39,10 @@ class HomeView extends StatelessWidget {
           title: _buildTitle(model.currentIndex),
           actions: <Widget>[
             ConnectionStatusWidget(syncData: model.syncData),
-            IconButton(
-              onPressed: () => model.refresh(),
-              icon: Icon(FontAwesome.refresh),
-            ),
+            // IconButton(
+            //   onPressed: () => model.refresh(),
+            //   icon: Icon(FontAwesome.refresh),
+            // ),
             model.currentIndex == 2
                 ? IconButton(
                     onPressed: () {
