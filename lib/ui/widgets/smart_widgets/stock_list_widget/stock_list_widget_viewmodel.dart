@@ -1,5 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/access_controller_service.dart';
+import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/stock_controller_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -9,6 +10,9 @@ class StockListWidgetViewModel extends BaseViewModel {
   DialogService _dialogService = locator<DialogService>();
   StockControllerService _stockControllerService =
       locator<StockControllerService>();
+  final _apiService = locator<ApiService>();
+
+  Api get _api => _apiService.api;
 
   List<Product> _productList;
 
@@ -35,6 +39,7 @@ class StockListWidgetViewModel extends BaseViewModel {
   get rebuildTree => _rebuildTree ?? false;
 
   init() async {
+    await _api.pushOfflineTransactionsOnViewRefresh(user.token);
     await fetchStockBalance();
   }
 

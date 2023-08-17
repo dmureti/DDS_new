@@ -163,7 +163,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
     //Sync the data
     // await syncData();
     // Clear the cache
-    // await _userService.clearAPPCache();
+    await _userService.clearAPPCache();
 
     //Sync the data
     // _dialogService.showDialog(title: 'Sync In Progress', description: 'Offline data synchronization in progress');

@@ -99,7 +99,7 @@ class AccountsTabViewModel extends ReactiveViewModel {
 
   fetchCustomerAccounts() async {
     await _customerService.getCustomerAccountTransactions(
-        customerId: customer.id);
+        customerId: customer.customerCode);
     notifyListeners();
     if (customerAccount != null) {
       _initialDate =

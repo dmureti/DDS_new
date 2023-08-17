@@ -40,22 +40,25 @@ class OrderConfirmationViewModel extends ReactiveViewModel {
     var dialogResponse = await _dialogService.showConfirmationDialog(
         title: 'Confirm Order',
         description:
-            'Are you sure that the order you are about to place for ${customer.name} is accurate? {$isOnline ? : }',
+            'Are you sure that the order you are about to place for ${customer.name} is accurate?}',
         confirmationTitle: 'Yes',
         cancelTitle: 'NO');
     if (dialogResponse.confirmed) {
       setBusy(true);
       var result;
       // = await _orderService.createSalesOrder(salesOrder, customer,isOnline: isOnline);
-      if (isOnline) {
-        result = await api.createSalesOrder(
-            user.token, salesOrder, customer.customerCode,
-            customerName: customer.name);
-      } else {
-        result = await api.createOfflineOrders(
-            salesOrder, customer.customerCode,
-            customerName: customer.name);
-      }
+      result = await api.createSalesOrder(
+          user.token, salesOrder, customer.customerCode,
+          customerName: customer.name);
+      // if (isOnline) {
+      //   result = await api.createSalesOrder(
+      //       user.token, salesOrder, customer.customerCode,
+      //       customerName: customer.name);
+      // } else {
+      //   result = await api.createOfflineOrders(
+      //       salesOrder, customer.customerCode,
+      //       customerName: customer.name);
+      // }
       setBusy(false);
       if (result is bool) {
         if (result) {

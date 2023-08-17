@@ -23,7 +23,7 @@ class ConnectionStatusWidget extends StatelessWidget {
           onPressed: () => syncData(),
           icon: Icon(
             Icons.sync_outlined,
-            color: Colors.white.withOpacity(0.2),
+            color: Colors.white,
           ));
     }
   }

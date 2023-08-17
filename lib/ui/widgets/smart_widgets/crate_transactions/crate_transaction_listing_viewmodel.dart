@@ -19,6 +19,7 @@ class CrateTransactionListingViewModel extends BaseViewModel {
   CrateTransactionListingViewModel();
 
   get token => _userService.user.token;
+  Api get api => _apiService.api;
 
   List _crateTransactionListings;
   List get crateTransactionListings => _crateTransactionListings ?? [];
@@ -37,6 +38,7 @@ class CrateTransactionListingViewModel extends BaseViewModel {
 
   init() async {
     if (_journeyService.hasJourney && _journeyService.journeyId.isNotEmpty) {
+      await api.pushOfflineTransactionsOnViewRefresh(user.token);
       await getCrateTransactions();
     }
   }

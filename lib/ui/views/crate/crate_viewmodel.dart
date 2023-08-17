@@ -1,6 +1,7 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
+import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/crate_,management_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/user_service.dart';
@@ -13,6 +14,9 @@ class CrateViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _logisticsService = locator<LogisticsService>();
   final _userService = locator<UserService>();
+  final _apiService = locator<ApiService>();
+
+  Api get _api => _apiService.api;
 
   User get user => _userService.user;
 
@@ -39,6 +43,7 @@ class CrateViewModel extends BaseViewModel {
 
   init() async {
     if (hasSelectedJourney) {
+      await _api.pushOfflineTransactionsOnViewRefresh(user.token);
       await _getCrates();
       await _getCrateListing();
     }

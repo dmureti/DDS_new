@@ -1,5 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
+import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/order_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:stacked/stacked.dart';
@@ -10,6 +11,9 @@ class CrewHistoryViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _orderService = locator<OrderService>();
   final _userService = locator<UserService>();
+  final _apiService = locator<ApiService>();
+
+  Api get api => _apiService.api;
 
   String get token => _userService.user.token;
 
@@ -17,15 +21,26 @@ class CrewHistoryViewModel extends BaseViewModel {
   List<SalesOrder> get orders => _orders;
 
   init() async {
-    await fetchOrders();
+    Future.wait([_pushOfflineTransactionsOnViewRefresh(), _fetchOrders()]);
+  }
+
+  Future _pushOfflineTransactionsOnViewRefresh() async {
+    setBusy(true);
+    var result = await api.pushOfflineTransactionsOnViewRefresh(token);
+    setBusy(false);
+    notifyListeners();
+    return result;
   }
 
   //fetch all orders
-  fetchOrders() async {
+  Future _fetchOrders() async {
     setBusy(true);
     var result = await _orderService.fetchOrdersByUser(token);
     if (result is List<SalesOrder>) {
       _orders = result;
+      if (_orders.isNotEmpty) {
+        _orders.sort((b, a) => a.orderNo.compareTo(b.orderNo));
+      }
     }
     setBusy(false);
     notifyListeners();
@@ -38,7 +53,7 @@ class CrewHistoryViewModel extends BaseViewModel {
             salesOrder: salesOrder,
             deliveryJourney: deliveryJourney,
             stopId: stopId));
-    await fetchOrders();
+    await _fetchOrders();
   }
 
   navigateToOrder(SalesOrder salesOrder, DeliveryJourney deliveryJourney,

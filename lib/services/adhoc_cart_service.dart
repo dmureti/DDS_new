@@ -297,8 +297,9 @@ class AdhocCartService with ReactiveServiceMixin {
     _total.value = _total.value + val;
     //Reduce the credit balance
     _creditBalance.value -= _total.value + val;
+
     //Calculate security limit
-    calculateSecurity(item, (val));
+    // calculateSecurity(item, (val));
   }
 
   setRemarks(String val) {
@@ -311,7 +312,7 @@ class AdhocCartService with ReactiveServiceMixin {
       //Update the credit balance
       _creditBalance.value += _total.value - val;
       // Update the security
-      calculateSecurity(item, val);
+      // calculateSecurity(item, val);
     }
   }
 

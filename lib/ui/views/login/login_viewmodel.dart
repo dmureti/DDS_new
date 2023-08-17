@@ -105,7 +105,7 @@ class LoginViewModel extends BaseViewModel {
 
   init() async {
     _rememberMe = _initService.rememberMe;
-    // await initialiseAppEnvironment();
+    await initialiseAppEnvironment();
   }
 
   onDispose() {
@@ -118,7 +118,7 @@ class LoginViewModel extends BaseViewModel {
     await _versionService.getVersion().then((value) async {
       _appVersion = value;
       _versionCode = _appVersion.versionCode.toString();
-      await checkForUpdates();
+      // await checkForUpdates();
     });
     setBusy(false);
     notifyListeners();
@@ -229,9 +229,9 @@ class LoginViewModel extends BaseViewModel {
             arguments: ChangePasswordViewArguments(
                 passwordChangeType: PasswordChangeType.initial));
       } else {
-        // snackBarService.showSnackbar(message: 'Data Synchronization started');
-        // await initializeAppCache(result);
-        // snackBarService.showSnackbar(message: 'Data Synchronization completed');
+        snackBarService.showSnackbar(message: 'Data Synchronization started');
+        await initializeAppCache(result);
+        snackBarService.showSnackbar(message: 'Data Synchronization completed');
         _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
       }
     } else if (result is CustomException) {

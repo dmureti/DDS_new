@@ -1,3 +1,4 @@
+import 'package:distributor/conf/dds_brand_guide.dart';
 import 'package:distributor/core/enums.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
@@ -274,15 +275,13 @@ class OrderConfirmation extends StatelessWidget {
                                   width: MediaQuery.of(context).size.width,
                                   child: ElevatedButton(
                                     style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              kColDDSPrimaryDark),
                                       padding: MaterialStateProperty.all(
                                         EdgeInsets.symmetric(
-                                            horizontal: 25, vertical: 10),
+                                            horizontal: 25, vertical: 15),
                                       ),
-                                      // shape: MaterialStateProperty.all(
-                                      //   RoundedRectangleBorder(
-                                      //       borderRadius:
-                                      //           BorderRadius.circular(8)),
-                                      // )
                                     ),
                                     onPressed: () {
                                       model.createSalesOrder(isConnected);
@@ -290,9 +289,10 @@ class OrderConfirmation extends StatelessWidget {
                                     child: Text(
                                       'place order'.toUpperCase(),
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.white,
-                                          fontSize: 20),
+                                        fontFamily: 'NerisBlack',
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
