@@ -4,13 +4,18 @@ import 'dart:async';
 
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
+import 'package:distributor/services/api_service.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:tripletriocore/tripletriocore.dart';
 
 @lazySingleton
 class TimeoutService {
   final _dialogService = locator<DialogService>();
   final _navigationService = locator<NavigationService>();
+  final _apiService = locator<ApiService>();
+
+  Api get api => _apiService.api;
 
   Timer _timer;
   Timer get timer => _timer;
@@ -24,9 +29,10 @@ class TimeoutService {
   }
 
   void handleTimeout() async {
-    //@TODO Check if there are any unprocessed transactions
-    //@TODO Stop all background services
-    //@TODO Clear the cache
+    await api.syncOfflineData();
+    //@TODO Clear the db
+
+    //@TODO Stop all background services and streams
 
     //Display a dialog that the session has timed out
     await _dialogService.showDialog(
