@@ -21,15 +21,15 @@ class CrewHistoryViewModel extends BaseViewModel {
   List<SalesOrder> get orders => _orders;
 
   init() async {
-    Future.wait([_pushOfflineTransactionsOnViewRefresh(), _fetchOrders()]);
+    await _pushOfflineTransactionsOnViewRefresh();
+    await _fetchOrders();
   }
 
   Future _pushOfflineTransactionsOnViewRefresh() async {
     setBusy(true);
-    var result = await api.pushOfflineTransactionsOnViewRefresh(token);
+    await api.pushOfflineTransactionsOnViewRefresh(token);
     setBusy(false);
     notifyListeners();
-    return result;
   }
 
   //fetch all orders
@@ -39,7 +39,7 @@ class CrewHistoryViewModel extends BaseViewModel {
     if (result is List<SalesOrder>) {
       _orders = result;
       if (_orders.isNotEmpty) {
-        _orders.sort((b, a) => a.orderNo.compareTo(b.orderNo));
+        _orders.sort((b, a) => a.orderDate.compareTo(b.orderDate));
       }
     }
     setBusy(false);

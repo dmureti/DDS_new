@@ -136,7 +136,7 @@ class DeliveryNoteView extends StatelessWidget {
                                                 : Row(
                                                     children: [
                                                       Text(
-                                                        'delivered'
+                                                        'fulfilled'
                                                             .toUpperCase(),
                                                         style: TextStyle(
                                                             color:

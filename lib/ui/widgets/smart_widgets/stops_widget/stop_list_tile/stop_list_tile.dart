@@ -73,7 +73,7 @@ class StopListTile extends StatelessWidget {
                                   width: 5,
                                 ),
                                 Text(
-                                  'delivered'.toUpperCase(),
+                                  'fullfilled'.toUpperCase(),
                                   style: kTileSubtitleTextStyle,
                                 ),
                               ],

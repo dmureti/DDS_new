@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/api_service.dart';
+import 'package:distributor/services/user_service.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -14,6 +15,9 @@ class TimeoutService {
   final _dialogService = locator<DialogService>();
   final _navigationService = locator<NavigationService>();
   final _apiService = locator<ApiService>();
+  final _userService = locator<UserService>();
+
+  User get user => _userService.user;
 
   Api get api => _apiService.api;
 
@@ -21,7 +25,7 @@ class TimeoutService {
   Timer get timer => _timer;
 
   //Timeout in hours
-  final int duration = 2;
+  final int duration = 8;
 
   //Initialize the timer
   init() {
@@ -29,7 +33,7 @@ class TimeoutService {
   }
 
   void handleTimeout() async {
-    await api.syncOfflineData();
+    await api.syncOfflineData(user: user);
     //@TODO Clear the db
 
     //@TODO Stop all background services and streams

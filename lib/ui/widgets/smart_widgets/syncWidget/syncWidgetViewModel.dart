@@ -25,11 +25,12 @@ class SyncWidgetViewModel extends BaseViewModel {
 
   syncData() async {
     setBusy(true);
-    // List customerList =
-    //     await _apiService.api.fetchAllCustomers(_userService.user.token);
-    // await api.synchronizeData(
-    //     user.token, user, _logisticsService.userJourneyList, customerList);
-    // setBusy(false);
+    await api.syncOfflineData(user: user);
+    List customerList =
+        await _apiService.api.fetchAllCustomers(_userService.user.token);
+    await api.synchronizeData(
+        user.token, user, _logisticsService.userJourneyList, customerList);
+    setBusy(false);
     setStatus(true);
   }
 }
