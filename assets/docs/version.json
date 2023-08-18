@@ -7,6 +7,10 @@
     "versionCode": "16.5.3",
     "versionName": "",
     "remoteUrl": "",
-    "changeLog": []
+    "changeLog": [],
+    "timeout": 2,
+    "autoupdate": false,
+    "enableOffline": false,
+    "enableGeofence": false
   }
 }
