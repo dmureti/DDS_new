@@ -5,6 +5,7 @@ import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/location_repository.dart';
 import 'package:distributor/services/user_service.dart';
+import 'package:distributor/ui/views/custom_delivery/custom_delivery_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -70,33 +71,57 @@ class DeliveryNoteViewModel extends BaseViewModel {
 
   handleOrderAction(String action) async {
     switch (action) {
-      case 'full_delivery':
-        if (deliveryStop != null) {}
-        DialogResponse response = await _dialogService.showConfirmationDialog(
-            description:
-                'You are about to close the Sales Order ${deliveryStop.orderId} for ${deliveryStop.customerId}.',
-            title: 'COMPLETE ORDER',
-            confirmationTitle: 'CONFIRM',
-            cancelTitle: 'CANCEL');
-        if (response.confirmed) {
-          setBusy(true);
-          var result = await _journeyService.makeFullSODelivery(
-            deliveryStop.orderId,
-            deliveryStop.stopId,
-            deliveryLocation,
-            deliveryNote: deliveryNote,
+      case 'custom_delivery':
+        if (_journeyService.currentJourney?.journeyId == null) {
+          await _dialogService.showDialog(
+              title: 'Error',
+              description:
+                  'You have not selected a journey.\nYou need to select a journey to fulfill a delivery');
+        } else {
+          await _navigationService.navigateToView(
+            CustomDeliveryView(
+              deliveryNote: deliveryNote,
+              deliveryStop: deliveryStop,
+              customer: customer,
+            ),
           );
-          setBusy(false);
-          if (result is CustomException) {
-            await _dialogService.showDialog(
-                title: result.title, description: result.description);
-          } else {
-            await getDeliveryNote();
-            _snackbarService.showSnackbar(
-                message: 'The delivery was closed successfully',
-                title: 'Success');
-          }
         }
+
+        break;
+      case 'full_delivery':
+        if (_journeyService.currentJourney?.journeyId != null) {
+          DialogResponse response = await _dialogService.showConfirmationDialog(
+              description:
+                  'You are about to close the Sales Order ${deliveryStop.orderId} for ${deliveryStop.customerId}.',
+              title: 'COMPLETE ORDER',
+              confirmationTitle: 'CONFIRM',
+              cancelTitle: 'CANCEL');
+          if (response.confirmed) {
+            setBusy(true);
+            var result = await _journeyService.makeFullSODelivery(
+              deliveryStop.orderId,
+              deliveryStop.stopId,
+              deliveryLocation,
+              deliveryNote: deliveryNote,
+            );
+            setBusy(false);
+            if (result is CustomException) {
+              await _dialogService.showDialog(
+                  title: result.title, description: result.description);
+            } else {
+              await getDeliveryNote();
+              _snackbarService.showSnackbar(
+                  message: 'The delivery was closed successfully',
+                  title: 'Success');
+            }
+          }
+        } else {
+          await _dialogService.showDialog(
+              title: 'Error',
+              description:
+                  'You have not selected a journey.\nYou need to select a journey to fulfill a delivery');
+        }
+
         break;
       case 'partial_delivery':
         var result = await _navigationService.navigateTo(
@@ -160,4 +185,6 @@ class DeliveryNoteViewModel extends BaseViewModel {
         break;
     }
   }
+
+  void printDocument() async {}
 }
