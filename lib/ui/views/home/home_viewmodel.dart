@@ -225,13 +225,14 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   bool get enableCustomerTab => _accessControlService.enableCustomerTab;
 
   init() async {
-    await _logisticsService.fetchJourneys();
-    await _permissionService.init();
-    await fetchAllCustomers();
+    // await fetchAllCustomers();
     // geoFenceService.listenToGeofenceStatusStream();
     //Check if the user has permissions before enabling this
     if (user.hasSalesChannel) {
       await fetchAdhocSales();
+    } else {
+      // await _logisticsService.fetchJourneys();
+      await _permissionService.init();
     }
     return;
   }

@@ -11,7 +11,7 @@ import 'package:distributor/ui/views/home/home_viewmodel.dart';
 import 'package:distributor/ui/views/routes/route_listing_view.dart';
 import 'package:distributor/ui/views/stock/stock_view.dart';
 import 'package:distributor/ui/widgets/drawer.dart';
-import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/reactive/transaction_popup/transaction_popup_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

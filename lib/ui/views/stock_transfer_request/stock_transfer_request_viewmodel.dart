@@ -65,7 +65,7 @@ class StockTransferRequestViewModel extends BaseViewModel {
         (element) =>
             element.itemName.toLowerCase() == product.itemName.toLowerCase(),
         orElse: () => null);
-    return result?.quantity ?? 10;
+    return result?.quantity ?? 0;
   }
 
   commit() async {

@@ -3,7 +3,6 @@ import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/order_service.dart';
 import 'package:distributor/services/payments_service.dart';
-
 import 'package:distributor/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -73,7 +72,22 @@ class JourneySummaryWidgetViewModel extends ReactiveViewModel {
   }
 
   init() async {
-    await getUserSummary();
+    // Check if this is a minishop
+    if (!_user.hasSalesChannel) {
+      await getUserSummary();
+    } else {
+      _userSummary = UserSummary(
+          journeys: 0,
+          delivery_pending: 0,
+          delivery_done: 0,
+          payments: 0,
+          ordersMade: 0);
+      _deliveriesCompleted = userSummary.delivery_done;
+      _deliveriesPending = userSummary.delivery_pending;
+      _ordersMade = userSummary.ordersMade;
+      _paymentsReceived = userSummary.payments;
+      notifyListeners();
+    }
   }
 
   @override

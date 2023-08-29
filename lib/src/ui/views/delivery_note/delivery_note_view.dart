@@ -46,9 +46,22 @@ class DeliveryNoteView extends StatelessWidget {
                   ],
                 ),
                 actions: [
+                  // IconButton(
+                  //     onPressed: model.printDocument, icon: Icon(Icons.print)),
                   PopupMenuButton(
                     itemBuilder: (context) {
                       return <PopupMenuEntry<Object>>[
+                        //@TODO : Critical Disable when printing not available
+                        PopupMenuItem(
+                          child: Text('Make Delivery'),
+                          value: model.deliveryStop.stopId != null &&
+                                  model.deliveryNote.deliveryStatus
+                                          .toLowerCase() ==
+                                      'in journey' &&
+                                  model.isSynced
+                              ? 'custom_delivery'
+                              : 'not_possible',
+                        ),
                         PopupMenuItem(
                           child: Text('Full Delivery'),
                           value: model.deliveryStop.stopId != null &&
@@ -93,7 +106,7 @@ class DeliveryNoteView extends StatelessWidget {
                     onSelected: (x) {
                       model.handleOrderAction(x);
                     },
-                  )
+                  ),
                 ],
               ),
               body: TabBarView(

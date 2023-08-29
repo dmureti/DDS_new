@@ -124,6 +124,13 @@ class LoginViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  ///
+  /// Fetch the application configurations for this application id
+  ///
+  fetchRemoteApplicationConfigurations() async {
+
+  }
+
   checkForUpdates() async {
     setBusy(true);
     AppVersion remoteVersion;

@@ -1,0 +1,104 @@
+import 'package:distributor/app/locator.dart';
+import 'package:distributor/services/journey_service.dart';
+import 'package:flutter/foundation.dart';
+import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+import 'package:tripletriocore/tripletriocore.dart';
+
+class CustomDeliveryViewModel extends BaseViewModel {
+  final _navigationService = locator<NavigationService>();
+  final _dialogService = locator<DialogService>();
+  final _journeyService = locator<JourneyService>();
+
+  final DeliveryNote deliveryNote;
+  final DeliveryStop deliveryStop;
+  final Customer customer;
+
+  List<Product> _items;
+  List<Product> get items => _items;
+
+  List _orderedItems;
+  List get orderedItems => _orderedItems;
+
+  CustomDeliveryViewModel({
+    @required this.deliveryNote,
+    @required this.deliveryStop,
+    @required this.customer,
+  })  : _items = deliveryNote.deliveryItems
+            .map((e) => Product(
+                  id: e['id'],
+                  itemFactor: e['itemFactor'],
+                  itemName: e['itemName'],
+                  itemCode: e['itemCode'],
+                  quantity: e['quantity'],
+                ))
+            .toList(),
+        _orderedItems = deliveryNote.deliveryItems;
+
+  commit() async {
+    setBusy(true);
+    var payload = {
+      "atStopId": "${deliveryStop.stopId}",
+      "deliveryDateTime":
+          "${DateTime.now().add(Duration(hours: 3)).toUtc().toIso8601String()}",
+      "deliveryLocation": "",
+      "deliveryWarehouse": "",
+      "items": items
+          .map((e) => {
+                "item": {
+                  "id": "${e.id}",
+                  "itemCode": "${e.itemCode}",
+                  "itemFactor": "${e.itemFactor}",
+                  "itemName": "${e.itemName}",
+                  "itemPrice": 0,
+                  "itemType": "",
+                  "priceList": ""
+                },
+                "quantity": e.quantity
+              })
+          .toList(),
+      "onJourneyId": "${deliveryStop.journeyId}",
+      "remarks": "",
+      "salesOrderId": "${deliveryStop.orderId}"
+    };
+    await _journeyService.makeCustomDelivery(data: payload);
+    setBusy(false);
+    await _journeyService.printDocument(items: items);
+  }
+
+  // Get the quantity of each element
+  getQuantity(String productName) {
+    var result = _items.firstWhere(
+      (element) => element.itemName.toLowerCase() == productName.toLowerCase(),
+    );
+    return result.quantity;
+  }
+
+  void reduce(var deliveryItem, {var value = 1}) {
+    var item = _items.firstWhere(
+        (element) =>
+            element.itemName.toLowerCase() ==
+            deliveryItem['itemName'].toString().toLowerCase(),
+        orElse: () => deliveryItem);
+    if (item.quantity != 0) {
+      item.updateQuantity(item.quantity - value);
+      notifyListeners();
+    }
+  }
+
+  void add(var deliveryItem, {var value = 1}) {
+    var item = _items.firstWhere(
+        (element) =>
+            element.itemName.toString().toLowerCase() ==
+            deliveryItem['itemName'].toString().toLowerCase(),
+        orElse: () => deliveryItem);
+    // Check if the quantity is not higher then the value ordered
+    var newVal = item.quantity + value;
+    if (item.quantity <= deliveryItem['orderedQty'] &&
+        newVal <= deliveryItem['orderedQty']) {
+      item.updateQuantity(newVal);
+      notifyListeners();
+    }
+    notifyListeners();
+  }
+}
