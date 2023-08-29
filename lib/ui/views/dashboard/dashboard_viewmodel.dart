@@ -52,8 +52,11 @@ class DashboardViewModel extends FutureViewModel<List<DeliveryJourney>>
   }
 
   Future fetchUserJourneys() async {
-    var result = await _logisticsService.fetchJourneys();
-    return result;
+    //Check if this is a minishop
+    if (!user.hasSalesChannel) {
+      var result = await _logisticsService.fetchJourneys();
+      return result;
+    }
   }
 
   @override
