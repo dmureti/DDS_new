@@ -20,8 +20,12 @@ class ProductService {
   }
 
   fetchProductsByDefaultPriceList({@required String defaultStock}) async {
-    print(defaultStock);
     var result = await _api.fetchProductsByPriceList(_user.token, defaultStock);
+    return result;
+  }
+
+  listAllItems() async {
+    var result = await _api.fetchAllProducts(_user.token);
     return result;
   }
 }

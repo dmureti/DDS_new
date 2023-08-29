@@ -95,6 +95,11 @@ android {
             applicationIdSuffix ".internal"
             versionNameSuffix "-internal"
         }
+        miniUganda {
+            dimension "buildGroup"
+            applicationIdSuffix ".miniUganda"
+            versionNameSuffix "-miniUganda"
+        }
     }
     buildToolsVersion '30.0.3'
 

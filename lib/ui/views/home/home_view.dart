@@ -13,7 +13,6 @@ import 'package:distributor/ui/views/stock/stock_view.dart';
 import 'package:distributor/ui/widgets/drawer.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
 import 'package:distributor/ui/widgets/reactive/transaction_popup/transaction_popup_view.dart';
-import 'package:distributor/ui/widgets/smart_widgets/connection_status/connection_status_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
@@ -44,12 +43,32 @@ class HomeView extends StatelessWidget {
             //   icon: Icon(FontAwesome.refresh),
             // ),
             model.currentIndex == 2
-                ? IconButton(
-                    onPressed: () {
-                      model.navigateToAddAdhocSale();
-                    },
-                    icon: Icon(Icons.add_circle_outline),
-                    tooltip: 'Add Adhoc Sale',
+                ? Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          model.navigateToAddAdhocSale();
+                        },
+                        icon: Icon(Icons.add_circle_outline),
+                        tooltip: 'Add Adhoc Sale',
+                      ),
+                      PopupMenuButton(
+                        itemBuilder: (context) => <PopupMenuEntry<Object>>[
+                          PopupMenuItem(
+                            child: Text('Stock Transfer Request'),
+                            value: 'stock_transfer_request',
+                          ),
+                          PopupMenuDivider(),
+                          PopupMenuItem(
+                            child: Text('Stock Transfers'),
+                            value: 'stock_transfers',
+                          )
+                        ],
+                        onSelected: (val) {
+                          model.takeAction(val);
+                        },
+                      )
+                    ],
                   )
                 : model.currentIndex == 3
                     ? TransactionPopupView(
@@ -137,26 +156,26 @@ class HomeView extends StatelessWidget {
           children: [
             // NetworkSensitiveWidget(),
             // LocationWidget(),
-            Container(
-              height: 50,
-              child: Material(
-                elevation: 1,
-                color: Colors.white,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ShowDateFilter(),
-                    IconButton(
-                      onPressed: model.toggleSortAsc,
-                      icon: Icon(
-                        Icons.sort,
-                        color: model.sortAsc ? Colors.grey : Colors.blue,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            // Container(
+            //   height: 50,
+            //   child: Material(
+            //     elevation: 1,
+            //     color: Colors.white,
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.end,
+            //       children: [
+            //         ShowDateFilter(),
+            //         IconButton(
+            //           onPressed: model.toggleSortAsc,
+            //           icon: Icon(
+            //             Icons.sort,
+            //             color: model.sortAsc ? Colors.grey : Colors.blue,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             Expanded(child: AdhocListingView()),
             NetworkSensitiveWidget(),
           ],

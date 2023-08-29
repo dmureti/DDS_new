@@ -19,18 +19,12 @@ void main() async {
   setupSnackbarUi();
   InitService _initService = locator<InitService>();
   _initService.setAvailableEnvList([
-    // AppEnv(
-    //   flavor: Flavor.mini,
-    //   name: 'mini',
-    //   flavorValues: FlavorValues(
-    //       baseUrl: 'https://mbnl.ddsolutions.tech/dds-backend/api/v1'),
-    // ),
     AppEnv(
-      flavor: Flavor.internal,
-      name: 'Mini-Mombasa',
-      flavorValues: FlavorValues(
-          baseUrl: 'https://dds.ddsolutions.tech/dds-backend/api/v1'),
-    ),
+      flavor: Flavor.miniUg,
+      name: 'miniUg',
+      flavorValues:
+          FlavorValues(baseUrl: 'http://34.252.102.87:8888/dds-backend/api/v1'),
+    )
   ]);
   ByteData data =
       await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');

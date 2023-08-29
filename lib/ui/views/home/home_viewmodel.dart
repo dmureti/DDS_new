@@ -21,6 +21,7 @@ import 'package:distributor/ui/views/customers/customer_view.dart';
 import 'package:distributor/ui/views/dashboard/dashboard_view.dart';
 import 'package:distributor/ui/views/routes/route_listing_view.dart';
 import 'package:distributor/ui/views/stock/stock_view.dart';
+import 'package:distributor/ui/views/stock_transfer_request/stock_transfer_request_view.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
@@ -405,5 +406,17 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
 
   void navigateToJourneyInfoView() async {
     await _navigationService.navigateTo(Routes.journeyInfoView);
+  }
+
+  void takeAction(String val) {
+    switch (val.toLowerCase()) {
+      case 'stock_transfer_request':
+        _navigationService.navigateToView(StockTransferRequestView());
+        break;
+      case 'stock_transfers':
+        break;
+      case 'print':
+        break;
+    }
   }
 }

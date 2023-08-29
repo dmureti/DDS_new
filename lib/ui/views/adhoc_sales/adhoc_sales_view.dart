@@ -1,5 +1,5 @@
+import 'package:distributor/conf/dds_brand_guide.dart';
 import 'package:distributor/core/enums.dart';
-import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/ui/views/adhoc_sales/adhoc_sales_viewmodel.dart';
 import 'package:distributor/ui/widgets/smart_widgets/customer_text_input/customer_textinput.dart';
 import 'package:flutter/material.dart';
@@ -131,8 +131,13 @@ class AdhocSalesView extends StatelessWidget {
                                 : null,
                             child: Text(
                               'CONTINUE TO CART',
-                              style: kActiveButtonTextStyle,
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
                             ),
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    kColDDSPrimaryDark)),
                           ),
                         ),
                       )
