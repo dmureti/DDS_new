@@ -1,11 +1,9 @@
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/views/voucher_detail/voucher_detail_viewmodel.dart';
-
 import 'package:distributor/ui/shared/widgets.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/app_bar_column_title.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/product_quantity_container.dart';
-
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -63,7 +61,7 @@ class VoucherDetailView extends StatelessWidget {
                                           items: model.statusStrings
                                               .map(
                                                 (e) => DropdownMenuItem(
-                                                  child: Text(e),
+                                                  child: _buildDropDownIcon(e),
                                                   value: e,
                                                 ),
                                               )
@@ -178,5 +176,45 @@ class VoucherDetailView extends StatelessWidget {
         },
         viewModelBuilder: () => VoucherDetailViewmodel(
             transactionId, voucherType, transactionStatus));
+  }
+
+  _buildDropDownIcon(String e) {
+    switch (e.toLowerCase()) {
+      case 'accept':
+        return Row(
+          children: [
+            Icon(
+              Icons.check_circle,
+              color: Colors.green,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              e,
+              style:
+                  TextStyle(fontWeight: FontWeight.w600, color: Colors.green),
+            )
+          ],
+        );
+        break;
+      case 'cancel':
+        return Row(
+          children: [
+            Icon(
+              Icons.cancel,
+              color: Colors.red,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              e,
+              style: TextStyle(fontWeight: FontWeight.w600, color: Colors.red),
+            )
+          ],
+        );
+        break;
+    }
   }
 }
