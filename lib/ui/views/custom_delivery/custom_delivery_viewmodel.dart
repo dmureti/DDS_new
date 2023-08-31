@@ -1,5 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/journey_service.dart';
+import 'package:distributor/services/location_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -9,6 +10,7 @@ class CustomDeliveryViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _dialogService = locator<DialogService>();
   final _journeyService = locator<JourneyService>();
+  final _locationService = locator<LocationRepository>();
 
   final DeliveryNote deliveryNote;
   final DeliveryStop deliveryStop;
@@ -37,33 +39,37 @@ class CustomDeliveryViewModel extends BaseViewModel {
 
   commit() async {
     setBusy(true);
-    var payload = {
-      "atStopId": "${deliveryStop.stopId}",
-      "deliveryDateTime":
-          "${DateTime.now().add(Duration(hours: 3)).toUtc().toIso8601String()}",
-      "deliveryLocation": "",
-      "deliveryWarehouse": "",
-      "items": items
-          .map((e) => {
-                "item": {
-                  "id": "${e.id}",
-                  "itemCode": "${e.itemCode}",
-                  "itemFactor": "${e.itemFactor}",
-                  "itemName": "${e.itemName}",
-                  "itemPrice": 0,
-                  "itemType": "",
-                  "priceList": ""
-                },
-                "quantity": e.quantity
-              })
-          .toList(),
-      "onJourneyId": "${deliveryStop.journeyId}",
-      "remarks": "",
-      "salesOrderId": "${deliveryStop.orderId}"
-    };
-    await _journeyService.makeCustomDelivery(data: payload);
+    var dialogResponse = await _dialogService.showConfirmationDialog(
+        title: 'Confirm Delivery',
+        description: 'Are you sure you want to deliver the items ? ');
+    if (dialogResponse.confirmed) {
+      var payload = {
+        "atStopId": "${deliveryStop.stopId}",
+        "deliveryDateTime":
+            "${DateTime.now().add(Duration(hours: 3)).toUtc().toIso8601String()}",
+        "deliveryLocation": "${deliveryLocation}",
+        "deliveryWarehouse": "",
+        "items": items
+            .map((e) => {
+                  "item": {
+                    "id": "${e.id}",
+                    "itemCode": "${e.itemCode}",
+                    "itemFactor": "${e.itemFactor}",
+                    "itemName": "${e.itemName}",
+                    "itemPrice": 0,
+                    "itemType": "",
+                    "priceList": ""
+                  },
+                  "quantity": e.quantity
+                })
+            .toList(),
+        "onJourneyId": "${deliveryStop.journeyId}",
+        "remarks": "",
+        "salesOrderId": "${deliveryStop.orderId}"
+      };
+      await _journeyService.makeCustomDelivery(data: payload);
+    }
     setBusy(false);
-    await _journeyService.printDocument(items: items);
   }
 
   // Get the quantity of each element
@@ -100,5 +106,27 @@ class CustomDeliveryViewModel extends BaseViewModel {
       notifyListeners();
     }
     notifyListeners();
+  }
+
+  String _deliveryLocation;
+  String get deliveryLocation => _deliveryLocation;
+
+  getCurrentLocation() async {
+    setBusy(true);
+    var result = await _locationService.getLocation();
+    setBusy(false);
+    if (result != null) {
+      _deliveryLocation = "${result.latitude},${result.longitude}";
+      notifyListeners();
+      return;
+    } else {
+      _deliveryLocation = "";
+      notifyListeners();
+      return;
+    }
+  }
+
+  init() async {
+    await getCurrentLocation();
   }
 }
