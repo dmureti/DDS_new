@@ -1,5 +1,5 @@
+import 'package:distributor/conf/dds_brand_guide.dart';
 import 'package:distributor/core/helper.dart';
-import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/src/ui/views/adhoc_cart_view/adhoc_cart_viewmodel.dart';
 import 'package:distributor/ui/views/orders/create_order/sales_order_view_model.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
@@ -29,17 +29,14 @@ class AdhocCartView extends StatelessWidget {
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (isWalkin)
-                          Container()
-                        else
-                          Container(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12.0, vertical: 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
+                        Container(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                if (model.enforceCreditLimit)
                                   Expanded(
                                     child: Text(
                                       'Available Credit : Kshs ${Helper.formatCurrency(model.creditLimit)}',
@@ -52,6 +49,7 @@ class AdhocCartView extends StatelessWidget {
                                       textAlign: TextAlign.left,
                                     ),
                                   ),
+                                if (model.enforceCustomerSecurity)
                                   Text(
                                     'Security : Kshs ${Helper.formatCurrency(model.securityBalance)}',
                                     style: TextStyle(
@@ -62,10 +60,10 @@ class AdhocCartView extends StatelessWidget {
                                     ),
                                     textAlign: TextAlign.left,
                                   ),
-                                ],
-                              ),
+                              ],
                             ),
                           ),
+                        ),
                         Expanded(
                           child: ListView.builder(
                             itemBuilder: (context, index) {
@@ -101,18 +99,27 @@ class AdhocCartView extends StatelessWidget {
                           height: 50,
                           width: MediaQuery.of(context).size.width,
                           child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    kColDDSPrimaryDark)),
+
                             child: Text(
                               'CONTINUE TO PAYMENT',
-                              style: kActiveButtonTextStyle,
+                              style: TextStyle(color: Colors.white),
                             ),
-                            onPressed: model.total >= model.creditLimit
-                                ? null
-                                : model.total > model.customer.creditLimit
-                                    ? () =>
-                                        model.displayCreditLimitExceedDialog()
-                                    : () {
-                                        model.navigateToAdhocPaymentView();
-                                      },
+                            // onPressed: model.total >= model.creditLimit
+                            //     ? null
+                            //     : model.total > model.customer.creditLimit
+                            //         ? () =>
+                            //             model.displayCreditLimitExceedDialog()
+                            //         : () {
+                            //             model.navigateToAdhocPaymentView();
+                            //           },
+                            onPressed: model.submitStatus == true
+                                ? () {
+                                    model.navigateToAdhocPaymentView();
+                                  }
+                                : null,
                           ),
                         ),
                       ],

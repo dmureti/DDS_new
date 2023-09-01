@@ -12,13 +12,15 @@ import 'package:tripletriocore/tripletriocore.dart';
 
 class AdhocCartViewModel extends ReactiveViewModel {
   AdhocCartService _adhocCartService = locator<AdhocCartService>();
-
   StockControllerService _stockControllerService =
       locator<StockControllerService>();
   DialogService _dialogService = locator<DialogService>();
   ProductService _productService = locator<ProductService>();
   NavigationService _navigationService = locator<NavigationService>();
   final _customerService = locator<CustomerService>();
+
+  bool get enforceCreditLimit => _adhocCartService.enforceCreditLimit;
+  bool get enforceCustomerSecurity => _adhocCartService.enforceCustomerSecurity;
 
   num get total => _adhocCartService.total;
 
@@ -51,6 +53,8 @@ class AdhocCartViewModel extends ReactiveViewModel {
     return p != null;
   }
 
+  bool get submitStatus => _adhocCartService.enableContinueToPayment;
+
   final bool _isWalkin;
   final Customer _customer;
 
@@ -72,9 +76,15 @@ class AdhocCartViewModel extends ReactiveViewModel {
     await fetchStockBalance();
     await fetchProductsByPrice();
 
-    // _creditLimit.value = await _customerService.getCustomerLimit(customer.name);
-    var result = await _customerService.getCustomerSecurity(customer);
-    _customerSecurity = CustomerSecurity.fromMap(result);
+    if (enforceCreditLimit) {
+      // var _creditLimit;
+      // _creditLimit.value = await _customerService.getCustomerLimit(customer.name);
+    }
+    //Check if customer security has been enforced
+    if (enforceCustomerSecurity) {
+      var result = await _customerService.getCustomerSecurity(customer);
+      _customerSecurity = CustomerSecurity.fromMap(result);
+    }
     isWalkin ? await fetchProductsByPrice() : await fetchProducts();
     _customerProductList.removeWhere((item) => stockBalanceList.contains(item));
     // _customerProductList = stockBalanceList;
@@ -107,13 +117,10 @@ class AdhocCartViewModel extends ReactiveViewModel {
   //   return security;
   // }
 
-  getCustomerPending() async {}
-
   Future fetchProductsByPrice() async {
     setBusy(true);
     var result = await _productService.fetchProductsByDefaultPriceList(
         defaultStock: _adhocCartService.sellingPriceList);
-
     setBusy(false);
     if (result is List<Product>) {
       _customerProductList = result;

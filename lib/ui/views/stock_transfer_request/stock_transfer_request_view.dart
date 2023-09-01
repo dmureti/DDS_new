@@ -2,6 +2,7 @@ import 'package:distributor/conf/dds_brand_guide.dart';
 import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/ui/views/stock_transfer_request/stock_transfer_request_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
+import 'package:distributor/ui/widgets/quantity_input/quantity_input_view.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -55,13 +56,30 @@ class StockTransferRequestView extends StatelessWidget {
                                       icon: Icon(Icons.remove_circle_outline),
                                     ),
                                     GestureDetector(
-                                        child: Container(
-                                      width: 25,
-                                      child: Text(
-                                        model.getQuantity(product).toString(),
-                                        textAlign: TextAlign.center,
+                                      child: Container(
+                                        width: 25,
+                                        child: Text(
+                                          model.getQuantity(product).toString(),
+                                          textAlign: TextAlign.center,
+                                        ),
                                       ),
-                                    )),
+                                      onTap: () async {
+                                        var result = await showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return QuantityInput(
+                                                initialQuantity:
+                                                    model.getQuantity(product),
+                                                minQuantity: 0,
+                                                maxQuantity: (1 ~/ 0).toInt(),
+                                              );
+                                            });
+                                        if (result != null) {
+                                          model.updateQuantity(
+                                              product: product, newVal: result);
+                                        }
+                                      },
+                                    ),
                                     IconButton(
                                       onPressed: () {
                                         model.addQuantity(product);
@@ -93,7 +111,9 @@ class StockTransferRequestView extends StatelessWidget {
                         )
                       ],
                     )
-                  : EmptyContentContainer(label: 'No items found.'),
+                  : Center(
+                      child: EmptyContentContainer(
+                          label: 'No SKUs found for the minishop.')),
         );
       },
     );

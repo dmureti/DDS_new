@@ -98,11 +98,12 @@ class StockControllerService {
   }
 
   updateStatus(Transaction t, String status) async {
-    return await _api.updateTransactionStatus(
+    var response = await _api.updateTransactionStatus(
         token: _user.token,
         voucherNo: t.stockTransactionId,
         voucherType: t.voucherType,
         status: status);
+    return response;
   }
 
   confirmStockCollection(

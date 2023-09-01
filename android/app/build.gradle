@@ -110,6 +110,11 @@ android {
             applicationIdSuffix ".miniNrb"
             versionNameSuffix "-miniNrb"
         }
+        demo {
+            dimension "buildGroup"
+            applicationIdSuffix ".demo"
+            versionNameSuffix "-demo"
+        }
     }
     buildToolsVersion '30.0.3'
 

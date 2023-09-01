@@ -92,6 +92,14 @@ class CustomDeliveryViewModel extends BaseViewModel {
     }
   }
 
+  getMaxQuantity(var deliveryItem) {
+    return deliveryItem['orderedQty'];
+  }
+
+  getMinQuantity(var deliveryItem) {
+    return 0;
+  }
+
   void add(var deliveryItem, {var value = 1}) {
     var item = _items.firstWhere(
         (element) =>
@@ -105,6 +113,16 @@ class CustomDeliveryViewModel extends BaseViewModel {
       item.updateQuantity(newVal);
       notifyListeners();
     }
+    notifyListeners();
+  }
+
+  updateQuantity({@required var deliveryItem, @required int newVal}) {
+    var item = _items.firstWhere(
+        (element) =>
+            element.itemName.toString().toLowerCase() ==
+            deliveryItem['itemName'].toString().toLowerCase(),
+        orElse: () => deliveryItem);
+    item.updateQuantity(newVal);
     notifyListeners();
   }
 

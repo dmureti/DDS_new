@@ -18,25 +18,22 @@ void main() async {
   setupLocator();
   setupSnackbarUi();
   InitService _initService = locator<InitService>();
-
-  // Set the application parameters
   ApplicationParameter appParam = ApplicationParameter(
-      enableFullDelivery: false,
-      enforceCreditLimit: false,
-      enableCustomDelivery: true,
-      enforceCustomerSecurity: false,
+      enableFullDelivery: true,
+      enforceCreditLimit: true,
+      enableCustomDelivery: false,
+      enforceCustomerSecurity: true,
       enableAdhocSales: true,
       enableWalkIn: true,
       enableContractCustomers: true);
-
   _initService.setAvailableEnvList([
     AppEnv(
-      flavor: Flavor.miniUg,
-      name: 'miniUg',
+      flavor: Flavor.miniMsa,
+      name: 'Mini-Mombasa',
       flavorValues: FlavorValues(
-          baseUrl: 'http://34.252.102.87:8888/dds-backend/api/v1',
+          baseUrl: 'https://dds.ddsolutions.tech/dds-backend/api/v1',
           applicationParameter: appParam),
-    )
+    ),
   ]);
   ByteData data =
       await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');

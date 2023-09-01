@@ -68,6 +68,18 @@ class StockTransferRequestViewModel extends BaseViewModel {
     return result?.quantity ?? 0;
   }
 
+  ///
+  /// Update the quantity from the input
+  ///
+  updateQuantity({Product product, var newVal}) {
+    var item = _stockTransferItems.firstWhere(
+        (element) =>
+            element.itemName.toLowerCase() == product.itemName.toLowerCase(),
+        orElse: () => product);
+    item.updateQuantity(newVal);
+    notifyListeners();
+  }
+
   commit() async {
     var result =
         await _navigationService.navigateToView(ConfirmStockTransferView(

@@ -21,6 +21,13 @@ class DeliveryNoteViewModel extends BaseViewModel {
   DeliveryStop _deliveryStop;
   ApiService _apiService = locator<ApiService>();
 
+  ApplicationParameter get appParams => _apiService.appParams;
+
+  bool get enablePrint => appParams.enablePrintingService;
+  bool get enableCustomDelivery => appParams.enableCustomDelivery;
+  bool get enableFullDelivery => appParams.enableFullDelivery;
+  bool get enableSalesReturns => appParams.enableSalesReturn;
+
   DeliveryJourney get deliveryJourney => _deliveryJourney;
   DeliveryStop get deliveryStop => _deliveryStop;
   final Customer customer;

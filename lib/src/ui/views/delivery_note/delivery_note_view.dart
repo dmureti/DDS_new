@@ -46,32 +46,35 @@ class DeliveryNoteView extends StatelessWidget {
                   ],
                 ),
                 actions: [
-                  // IconButton(
-                  //     onPressed: model.printDocument, icon: Icon(Icons.print)),
+                  if (model.enablePrint)
+                    IconButton(
+                        onPressed: model.printDocument,
+                        icon: Icon(Icons.print)),
                   PopupMenuButton(
                     itemBuilder: (context) {
                       return <PopupMenuEntry<Object>>[
-                        //@TODO : Critical Disable when printing not available
-                        PopupMenuItem(
-                          child: Text('Make Delivery'),
-                          value: model.deliveryStop.stopId != null &&
-                                  model.deliveryNote.deliveryStatus
-                                          .toLowerCase() ==
-                                      'in journey' &&
-                                  model.isSynced
-                              ? 'custom_delivery'
-                              : 'not_possible',
-                        ),
-                        PopupMenuItem(
-                          child: Text('Full Delivery'),
-                          value: model.deliveryStop.stopId != null &&
-                                  model.deliveryNote.deliveryStatus
-                                          .toLowerCase() ==
-                                      'in journey' &&
-                                  model.isSynced
-                              ? 'full_delivery'
-                              : 'not_possible',
-                        ),
+                        if (model.enableCustomDelivery)
+                          PopupMenuItem(
+                            child: Text('Make Delivery'),
+                            value: model.deliveryStop.stopId != null &&
+                                    model.deliveryNote.deliveryStatus
+                                            .toLowerCase() ==
+                                        'in journey' &&
+                                    model.isSynced
+                                ? 'custom_delivery'
+                                : 'not_possible',
+                          ),
+                        if (model.enableFullDelivery)
+                          PopupMenuItem(
+                            child: Text('Full Delivery'),
+                            value: model.deliveryStop.stopId != null &&
+                                    model.deliveryNote.deliveryStatus
+                                            .toLowerCase() ==
+                                        'in journey' &&
+                                    model.isSynced
+                                ? 'full_delivery'
+                                : 'not_possible',
+                          ),
                         PopupMenuDivider(),
                         PopupMenuItem(
                             child: Text('Collect Crates'),
@@ -79,15 +82,16 @@ class DeliveryNoteView extends StatelessWidget {
                         PopupMenuItem(
                             child: Text('Drop Crates'), value: 'drop_crates'),
                         PopupMenuDivider(),
-                        PopupMenuItem(
-                          child: Text('Sales Returns'),
-                          value: model.deliveryStop.stopId != null &&
-                                  model.deliveryNote.deliveryStatus
-                                          .toLowerCase() ==
-                                      'fullfilled'
-                              ? 'partial_delivery'
-                              : 'not_possible',
-                        ),
+                        if (model.enableSalesReturns)
+                          PopupMenuItem(
+                            child: Text('Sales Returns'),
+                            value: model.deliveryStop.stopId != null &&
+                                    model.deliveryNote.deliveryStatus
+                                            .toLowerCase() ==
+                                        'fullfilled'
+                                ? 'partial_delivery'
+                                : 'not_possible',
+                          ),
                         // PopupMenuItem(
                         //     child: Text('Return Crates'),
                         //     value: 'crates_return'),

@@ -1,3 +1,4 @@
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/src/ui/text_styles.dart';
@@ -21,73 +22,75 @@ class TransactionTile extends StatelessWidget {
           onTap: onTap,
           title: Row(
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        child: Row(
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  child: Text(
-                                    'FR0M : ',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w600),
-                                  ),
-                                  width: 60,
-                                ),
-                                Text(
-                                  transaction.sourceWarehouse,
-                                ),
-                              ],
-                            ),
-                            Text(
-                              transaction.stockTransactionId,
-                              textAlign: TextAlign.right,
-                              style: kListStyleTitle1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 2,
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        child: Text(
-                          'TO :',
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'FR0M : ',
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
-                        width: 60,
-                      ),
-                      Text(
-                        transaction.destinationWarehouse,
-                      ),
-                    ],
-                  ),
-                ],
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                transaction.sourceWarehouse,
+                                style: kTileLeadingTextStyle,
+                              ),
+                              Text(
+                                transaction.stockTransactionId,
+                                // textAlign: TextAlign.right,
+                                style: kTileLeadingSecondaryTextStyle,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          child: Text(
+                            'TO :',
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                          width: 60,
+                        ),
+                        Text(
+                          transaction.destinationWarehouse,
+                          style: kTileLeadingTextStyle,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
-          subtitle: Row(
-            children: [
-              Text(Helper.formatDate(DateTime.parse(transaction.entryDate)),
-                  style: kListStyleSubTitle1),
-              Spacer(),
-              Text(
-                transaction.voucherType.toUpperCase(),
-                style: kListStyleSubTitle1,
-              ),
-            ],
+          subtitle: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5.0),
+            child: Row(
+              children: [
+                Text(Helper.formatDate(DateTime.parse(transaction.entryDate)),
+                    style: kListStyleSubTitle1),
+                Spacer(),
+                Text(
+                  transaction.voucherType.toUpperCase(),
+                  style: kListStyleSubTitle1,
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,5 +1,5 @@
+import 'package:distributor/conf/dds_brand_guide.dart';
 import 'package:distributor/src/ui/views/adhoc_payment/adhoc_payment_viewmodel.dart';
-import 'package:distributor/ui/shared/text_styles.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -57,6 +57,9 @@ class AdhocPaymentView extends StatelessWidget {
                       : Container(
                           width: MediaQuery.of(context).size.width,
                           child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    kColDDSPrimaryDark)),
                             onPressed: model.enableCheckout
                                 ? () {
                                     model.completeAdhoc();
@@ -64,7 +67,9 @@ class AdhocPaymentView extends StatelessWidget {
                                 : null,
                             child: Text(
                               'COMPLETE',
-                              style: kActiveButtonTextStyle,
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),

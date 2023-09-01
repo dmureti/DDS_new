@@ -20,6 +20,11 @@ class AdhocCartService with ReactiveServiceMixin {
   JourneyService _journeyService = locator<JourneyService>();
   final _customerService = locator<CustomerService>();
 
+  ApplicationParameter get appParams => _apiService.appParams;
+
+  bool get enforceCreditLimit => appParams.enforceCreditLimit;
+  bool get enforceCustomerSecurity => appParams.enforceCustomerSecurity;
+
   UserLocation _userLocation;
   UserLocation get userLocation => _userLocation;
 
@@ -67,9 +72,19 @@ class AdhocCartService with ReactiveServiceMixin {
 
   RxValue<bool> _showMPesa = RxValue(initial: false);
   RxValue<bool> _showEquitel = RxValue(initial: false);
+  RxValue<bool> _enableContinueToPayment = RxValue(initial: false);
 
   bool get showMPesa => _showMPesa.value;
   bool get showAirtel => _showEquitel.value;
+  bool get enableContinueToPayment => _enableContinueToPayment.value;
+
+  updateContinueToPayment() {
+    if (total == 0) {
+      _enableContinueToPayment.value = false;
+    } else {
+      _enableContinueToPayment.value = true;
+    }
+  }
 
   var _mpesaDetail;
   get mpesaDetail => _mpesaDetail;
@@ -101,16 +116,21 @@ class AdhocCartService with ReactiveServiceMixin {
 
   initializeCustomerData(
       Customer customer, List<Product> customerProductList) async {
-    _creditLimit.value = await _customerService.getCustomerLimit(customer.name);
-    _creditBalance.value = _creditLimit.value;
+    if (enforceCreditLimit) {
+      _creditLimit.value =
+          await _customerService.getCustomerLimit(customer.name);
+      _creditBalance.value = _creditLimit.value;
+    }
 
-    var result = await _customerService.getCustomerSecurity(customer);
-    _customerSecurity = CustomerSecurity.fromMap(result);
-    _securityBalance.value =
-        double.tryParse(_customerSecurity.securityAmount) ?? 0.0;
+    if (enforceCustomerSecurity) {
+      var result = await _customerService.getCustomerSecurity(customer);
+      _customerSecurity = CustomerSecurity.fromMap(result);
+      _securityBalance.value =
+          double.tryParse(_customerSecurity.securityAmount) ?? 0.0;
 
-    _securityAmount.value =
-        double.tryParse(customerSecurity.securityAmount) ?? 0;
+      _securityAmount.value =
+          double.tryParse(customerSecurity.securityAmount) ?? 0;
+    }
     _customerProductList = customerProductList;
   }
 
@@ -297,6 +317,7 @@ class AdhocCartService with ReactiveServiceMixin {
     _total.value = _total.value + val;
     //Reduce the credit balance
     _creditBalance.value -= _total.value + val;
+    updateContinueToPayment();
 
     //Calculate security limit
     // calculateSecurity(item, (val));
@@ -313,6 +334,8 @@ class AdhocCartService with ReactiveServiceMixin {
       _creditBalance.value += _total.value - val;
       // Update the security
       // calculateSecurity(item, val);
+
+      updateContinueToPayment();
     }
   }
 
