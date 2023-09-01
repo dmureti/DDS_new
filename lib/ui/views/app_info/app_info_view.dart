@@ -1,4 +1,5 @@
 import 'package:distributor/ui/views/app_info/app_info_viewmodel.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -13,19 +14,31 @@ class AppInfoView extends StatelessWidget {
               appBar: AppBar(
                 title: Text('About'),
               ),
-              body: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Image.asset(
-                        'assets/images/dds_logo.png',
-                      ),
+              body: model.isBusy
+                  ? BusyWidget()
+                  : Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                            child: Image.asset(
+                              'assets/images/dds_logo.png',
+                            ),
+                          ),
+                        ),
+                        Text('DDS Version : ${model.appVersion?.versionCode}'),
+                        Divider(),
+                        Text(
+                            'Android Version : ${model.androidDeviceInfo.version.release}'),
+                        Text('Product : ${model.androidDeviceInfo.product}'),
+                        Text('Brand : ${model.androidDeviceInfo.brand}'),
+                        Text(
+                            'Manufacturer : ${model.androidDeviceInfo.manufacturer}'),
+                        Text('Device : ${model.androidDeviceInfo.device}'),
+                        Text(
+                            'Device Id : ${model.androidDeviceInfo.androidId}'),
+                      ],
                     ),
-                  ),
-                  Text('Version : ${model.appVersion.versionCode}')
-                ],
-              ),
             ),
         viewModelBuilder: () => AppInfoViewModel());
   }

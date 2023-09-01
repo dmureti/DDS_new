@@ -68,10 +68,13 @@ class StockTransferRequestView extends StatelessWidget {
                                             context: context,
                                             builder: (context) {
                                               return QuantityInput(
+                                                title: 'Quantity to Request',
+                                                description:
+                                                    '${product.itemName}',
                                                 initialQuantity:
                                                     model.getQuantity(product),
                                                 minQuantity: 0,
-                                                maxQuantity: (1 ~/ 0).toInt(),
+                                                maxQuantity: 1000,
                                               );
                                             });
                                         if (result != null) {

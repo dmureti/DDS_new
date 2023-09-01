@@ -1,10 +1,29 @@
 //Handles initializaton and startup
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 class InitService {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  InitService() {
+    fetchDeviceInfo();
+  }
+
+  DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
   SharedPreferences prefs;
+
+  AndroidDeviceInfo _androidDeviceInfo;
+  AndroidDeviceInfo get androidDeviceInfo => _androidDeviceInfo;
+
+  //Fetch the device info for android
+  fetchDeviceInfo() async {
+    var result = await deviceInfoPlugin.androidInfo;
+    if (result is AndroidDeviceInfo) {
+      _androidDeviceInfo = result;
+    }
+    return result;
+  }
 
   updateAppEnv(AppEnv appEnv) {
     _appEnv = appEnv;
