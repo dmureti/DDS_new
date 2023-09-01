@@ -10,6 +10,10 @@ class StockTransactionViewmodel extends TransactionViewmodel
   getStockTransactions() async {
     setBusy(true);
     _stockTransactionList = await getAllStockTransactions();
+    if (stockTransactionList.isNotEmpty) {
+      _stockTransactionList
+          .sort((b, a) => a.stockTransactionId.compareTo(b.stockTransactionId));
+    }
     setBusy(false);
     notifyListeners();
   }
