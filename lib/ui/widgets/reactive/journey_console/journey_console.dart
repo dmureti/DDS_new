@@ -183,15 +183,15 @@ class JourneyConsole extends StatelessWidget {
                                                 Navigator.pop(context);
                                               },
                                             ),
-                                            ListTile(
-                                              leading: Icon(Icons.location_on),
-                                              title: Text('Show Journey Map'),
-                                              onTap: () async {
-                                                await model
-                                                    .navigateToJourneyMap();
-                                                Navigator.pop(context);
-                                              },
-                                            ),
+                                            // ListTile(
+                                            //   leading: Icon(Icons.location_on),
+                                            //   title: Text('Show Journey Map'),
+                                            //   onTap: () async {
+                                            //     await model
+                                            //         .navigateToJourneyMap();
+                                            //     Navigator.pop(context);
+                                            //   },
+                                            // ),
                                             ListTile(
                                               onTap: () async {
                                                 await model
