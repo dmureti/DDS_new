@@ -22,6 +22,7 @@ import 'package:distributor/ui/views/dashboard/dashboard_view.dart';
 import 'package:distributor/ui/views/routes/route_listing_view.dart';
 import 'package:distributor/ui/views/stock/stock_view.dart';
 import 'package:distributor/ui/views/stock_transfer_request/stock_transfer_request_view.dart';
+import 'package:distributor/ui/views/stock_transfer_request_view/stock_transfer_request_listing.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
@@ -414,9 +415,13 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
       case 'stock_transfer_request':
         _navigationService.navigateToView(StockTransferRequestView());
         break;
-      case 'stock_transfers':
+      case 'view_stock_transfers':
+        _navigationService.navigateToView(StockTransferRequestListing());
         break;
       case 'print':
+        break;
+      case 'make_adhoc_sale':
+        navigateToAddAdhocSale();
         break;
     }
   }

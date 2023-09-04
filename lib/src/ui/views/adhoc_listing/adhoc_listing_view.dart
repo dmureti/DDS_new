@@ -2,7 +2,6 @@ import 'package:distributor/src/strings.dart';
 import 'package:distributor/ui/views/home/home_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/adhoc_sale_list_tile.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
-import 'package:distributor/ui/widgets/dumb_widgets/generic_container.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/misc_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
@@ -12,25 +11,23 @@ class AdhocListingView extends HookViewModelWidget<HomeViewModel> {
 
   @override
   Widget buildViewModelWidget(BuildContext context, HomeViewModel model) {
-    return GenericContainer(
-      child: model.adhocSalesList == null || model.isBusy == true
-          ? BusyWidget()
-          : model.adhocSalesList.isNotEmpty
-              ? ListView.separated(
-                  itemBuilder: (context, index) {
-                    return AdhocSaleListTile(
-                      onTap: model.navigateToAdhocDetail,
-                      adhocSale: model.adhocSalesList[index],
-                    );
-                  },
-                  itemCount: model.adhocSalesList.length,
-                  separatorBuilder: (context, index) {
-                    return Divider(
-                      height: 1,
-                    );
-                  },
-                )
-              : Center(child: EmptyContentContainer(label: kStringNoSales)),
-    );
+    return model.adhocSalesList == null || model.isBusy == true
+        ? BusyWidget()
+        : model.adhocSalesList.isNotEmpty
+            ? ListView.separated(
+                itemBuilder: (context, index) {
+                  return AdhocSaleListTile(
+                    onTap: model.navigateToAdhocDetail,
+                    adhocSale: model.adhocSalesList[index],
+                  );
+                },
+                itemCount: model.adhocSalesList.length,
+                separatorBuilder: (context, index) {
+                  return Divider(
+                    height: 1,
+                  );
+                },
+              )
+            : Center(child: EmptyContentContainer(label: kStringNoSales));
   }
 }

@@ -1,5 +1,5 @@
-import 'package:distributor/conf/dds_brand_guide.dart';
 import 'package:distributor/src/ui/views/stock_transfer/stock_transfer_viewmodel.dart';
+import 'package:distributor/ui/widgets/action_button.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
 import 'package:distributor/ui/widgets/smart_widgets/return_stock_tile/return_stock_tile_widget.dart';
@@ -51,24 +51,13 @@ class StockTransferView extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 50,
-                              child: model.isBusy
-                                  ? Center(child: BusyWidget())
-                                  : ElevatedButton(
-                                      style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  kColDDSPrimaryDark)),
-                                      child: Text(
-                                        'Return to Branch'.toUpperCase(),
-                                        style: TextStyle(
-                                          fontFamily: 'NerisBlack',
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      onPressed: () => model.transferStock()),
-                            )
+                                width: MediaQuery.of(context).size.width,
+                                child: model.isBusy
+                                    ? Center(child: BusyWidget())
+                                    : ActionButton(
+                                        label: 'Return To Branch',
+                                        onPressed: model.transferStock,
+                                      ))
                           ],
                         )
                       : Center(

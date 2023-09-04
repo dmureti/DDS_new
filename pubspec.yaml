@@ -1,6 +1,6 @@
 name: distributor
 description: Digital Distribution System
-version: 16.6.1+16
+version: 16.6.3+16
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:

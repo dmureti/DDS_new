@@ -52,6 +52,16 @@ class StockControllerService {
     }
   }
 
+  getStockTransactionList() async {
+    var result = await _api.getPendingAuthStockTransactions(_user.token,
+        branchId: branchId, journeyId: journeyId);
+    if (result is List) {
+      return result.map((e) => Transaction.fromMap(e)).toList();
+    } else {
+      return <Transaction>[];
+    }
+  }
+
   List<Product> _productList;
   List<Product> get productList => _productList;
 

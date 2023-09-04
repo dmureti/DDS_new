@@ -142,11 +142,7 @@ class JourneyService with ReactiveServiceMixin {
   Future makeCustomDelivery({@required var data}) async {
     var result =
         await _api.createCustomDelivery(token: _user.token, data: data);
-    if (result is String) {
-      _dialogService.showDialog(
-          title: 'Make Delivery Error', description: result.toString());
-    }
-    return;
+    return result;
   }
 
   Future makeFullSODelivery(

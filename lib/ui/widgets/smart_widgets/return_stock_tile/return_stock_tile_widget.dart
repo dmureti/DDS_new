@@ -1,3 +1,4 @@
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/src/ui/text_styles.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/product_quantity_container.dart';
 import 'package:distributor/ui/widgets/smart_widgets/return_stock_tile/return_stock_tile_viewmodel.dart';
@@ -32,12 +33,15 @@ class ReturnStockTileWidget extends StatelessWidget {
                   children: [
                     Text(
                       product.itemName,
-                      style: kListStyleTitle1,
+                      style: kTileLeadingTextStyle,
                       overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(
+                      height: 2,
                     ),
                     Text(
                       product.itemCode,
-                      style: kListStyleSubTitle1,
+                      style: kTileSubtitleTextStyle,
                     ),
                   ],
                 ),

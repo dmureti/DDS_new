@@ -1,8 +1,9 @@
-import 'package:distributor/conf/dds_brand_guide.dart';
 import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/ui/views/confirm_stock_transfer/confirm_stock_transfer_viewmodel.dart';
+import 'package:distributor/ui/widgets/action_button.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/product_quantity_container.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -33,8 +34,8 @@ class ConfirmStockTransferView extends StatelessWidget {
                             var stockTransferItem =
                                 model.stockTransferItems[index];
                             return ListTile(
-                              trailing:
-                                  Text(stockTransferItem.quantity.toString()),
+                              trailing: ProductQuantityContainer(
+                                  quantity: stockTransferItem.quantity),
                               title: Text(
                                 stockTransferItem.itemName,
                                 style: kTileLeadingTextStyle,
@@ -50,16 +51,10 @@ class ConfirmStockTransferView extends StatelessWidget {
                       ),
                       model.isBusy
                           ? BusyWidget()
-                          : Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: ElevatedButton(
-                                onPressed: model.commit,
-                                child: Text('SUBMIT'.toUpperCase()),
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        kColDDSPrimaryDark)),
-                              ),
-                            )
+                          : ActionButton(
+                              label: 'Submit',
+                              onPressed: model.commit,
+                            ),
                     ],
                   ),
           );

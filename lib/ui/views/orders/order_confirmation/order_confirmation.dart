@@ -1,8 +1,8 @@
-import 'package:distributor/conf/dds_brand_guide.dart';
 import 'package:distributor/core/enums.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
+import 'package:distributor/ui/widgets/action_button.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
 import 'package:flutter/material.dart';
@@ -239,27 +239,17 @@ class OrderConfirmation extends StatelessWidget {
                 ),
               ),
               Container(
-                  height: 90,
                   width: MediaQuery.of(context).size.width,
                   color: Colors.white,
-                  padding: EdgeInsets.all(15.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       model.salesOrder.items.isEmpty ||
                               model.salesOrder.total == 0
-                          ? Container(
-                              child: ElevatedButton(
-                                onPressed: () => model.backToPlaceOrder(),
-                                child: Text(
-                                  'Back to Place Order'.toUpperCase(),
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.white,
-                                      fontSize: 20),
-                                ),
-                              ),
+                          ? ActionButton(
+                              label: 'Back To Place Order',
+                              onPressed: model.backToPlaceOrder,
                             )
                           : model.isBusy
                               ? Column(
@@ -271,30 +261,10 @@ class OrderConfirmation extends StatelessWidget {
                                     Text('Please wait..placing order')
                                   ],
                                 )
-                              : Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: ElevatedButton(
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              kColDDSPrimaryDark),
-                                      padding: MaterialStateProperty.all(
-                                        EdgeInsets.symmetric(
-                                            horizontal: 25, vertical: 15),
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      model.createSalesOrder(isConnected);
-                                    },
-                                    child: Text(
-                                      'place order'.toUpperCase(),
-                                      style: TextStyle(
-                                        fontFamily: 'NerisBlack',
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
+                              : ActionButton(
+                                  onPressed: () =>
+                                      model.createSalesOrder(isConnected),
+                                  label: 'Place Order',
                                 ),
                     ],
                   )),

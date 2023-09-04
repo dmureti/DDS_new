@@ -67,9 +67,18 @@ class CustomDeliveryViewModel extends BaseViewModel {
         "remarks": "",
         "salesOrderId": "${deliveryStop.orderId}"
       };
-      await _journeyService.makeCustomDelivery(data: payload);
+      var result = await _journeyService.makeCustomDelivery(data: payload);
+      setBusy(false);
+      if (result is String) {
+        await _dialogService.showDialog(
+            title: 'Make Delivery Error', description: result.toString());
+        _navigationService.back(result: false);
+      } else {
+        await _dialogService.showDialog(
+            title: '', description: 'Delivery updated successfully.');
+        _navigationService.back(result: true);
+      }
     }
-    setBusy(false);
   }
 
   // Get the quantity of each element

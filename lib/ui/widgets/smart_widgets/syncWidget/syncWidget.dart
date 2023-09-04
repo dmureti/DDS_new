@@ -15,7 +15,7 @@ class SyncWidget extends StatelessWidget {
                 ? Container()
                 : Column(
                     children: [
-                      Text("Sync in progress"),
+                      // Text("Sync in progress"),
                       LinearProgressIndicator(
                         minHeight: 5,
                         // color: kColorDDSPrimaryDark,

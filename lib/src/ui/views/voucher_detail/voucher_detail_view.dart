@@ -1,3 +1,4 @@
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/views/voucher_detail/voucher_detail_viewmodel.dart';
 import 'package:distributor/ui/shared/widgets.dart';
@@ -116,51 +117,26 @@ class VoucherDetailView extends StatelessWidget {
                           ),
                           model.stockTransaction.items != null
                               ? Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15.0, vertical: 8),
-                                    child: ListView.builder(
-                                      itemBuilder: (context, index) {
-                                        Product p =
-                                            model.stockTransaction.items[index];
-                                        return Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 2.0),
-                                          child: Row(
-                                            children: [
-                                              Container(
-                                                width: 40,
-                                                child: Text(p.itemCode,
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        fontSize: 12,
-                                                        color: Colors.black54)),
-                                              ),
-                                              SizedBox(
-                                                width: 8,
-                                              ),
-                                              Text(p.itemName,
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 14,
-                                                      color: Colors.black54)),
-                                              Spacer(),
-                                              ProductQuantityContainer(
-                                                quantity: p.quantity,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 14,
-                                                    color: Colors.black87),
-                                              )
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                      itemCount:
-                                          model.stockTransaction.items.length,
-                                    ),
+                                  child: ListView.builder(
+                                    itemBuilder: (context, index) {
+                                      Product p =
+                                          model.stockTransaction.items[index];
+                                      return ListTile(
+                                        title: Text(p.itemName,
+                                            style: kTileLeadingTextStyle),
+                                        subtitle: Text(p.itemCode,
+                                            style: kTileSubtitleTextStyle),
+                                        trailing: ProductQuantityContainer(
+                                          quantity: p.quantity,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 14,
+                                              color: Colors.black87),
+                                        ),
+                                      );
+                                    },
+                                    itemCount:
+                                        model.stockTransaction.items.length,
                                   ),
                                 )
                               : Expanded(

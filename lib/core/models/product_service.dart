@@ -15,7 +15,7 @@ class ProductService {
 
   fetchProductsByPriceList(Customer customer) async {
     var result = await _api.fetchProductsByPriceList(
-        _user.token, customer.defaultPriceList);
+        _user.token, customer?.defaultPriceList ?? "walk in");
     return result;
   }
 

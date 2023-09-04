@@ -55,13 +55,18 @@ class HomeView extends StatelessWidget {
                       PopupMenuButton(
                         itemBuilder: (context) => <PopupMenuEntry<Object>>[
                           PopupMenuItem(
+                            child: Text('Make Adhoc Sale'),
+                            value: 'make_adhoc_sale',
+                          ),
+                          PopupMenuDivider(),
+                          PopupMenuItem(
                             child: Text('Stock Transfer Request'),
                             value: 'stock_transfer_request',
                           ),
                           PopupMenuDivider(),
                           PopupMenuItem(
-                            child: Text('Stock Transfers'),
-                            value: 'stock_transfers',
+                            child: Text('View Transfer Requests'),
+                            value: 'view_stock_transfers',
                           )
                         ],
                         onSelected: (val) {
@@ -74,10 +79,7 @@ class HomeView extends StatelessWidget {
                     ? TransactionPopupView(
                         onSelected: model.onStockBalancePopupSelected)
                     : model.currentIndex == 1
-                        ? IconButton(
-                            icon: Icon(Icons.more_vert),
-                            onPressed: model.navigateToJourneyInfoView,
-                          )
+                        ? Container()
                         : Container(),
 
             // MapIconButton(),

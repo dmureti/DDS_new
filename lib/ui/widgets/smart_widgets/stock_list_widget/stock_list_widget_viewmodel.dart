@@ -48,10 +48,14 @@ class StockListWidgetViewModel extends BaseViewModel {
     var result = await _stockControllerService.getStockBalance();
     setBusy(false);
     if (result is List<Product>) {
-      _productList = result;
-      // .where((element) =>
-      //     element.itemName.toLowerCase().contains('crates') != true)
-      // .toList();
+      if (user.hasSalesChannel) {
+        _productList = result;
+      } else {
+        _productList = result
+            .where((element) =>
+                element.itemName.toLowerCase().contains('crates') != true)
+            .toList();
+      }
       notifyListeners();
     } else if (result is CustomException) {
       _productList = <Product>[];

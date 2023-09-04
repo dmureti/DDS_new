@@ -19,7 +19,17 @@ class ConfirmStockTransferViewModel extends BaseViewModel {
 
   final List<Product> stockTransferItems;
 
-  ConfirmStockTransferViewModel(this.stockTransferItems);
+  List<Product> _modifiedItems;
+  List<Product> get modifiedItems => _modifiedItems;
+
+  ConfirmStockTransferViewModel(this.stockTransferItems)
+      : _modifiedItems = stockTransferItems;
+
+  deleteItem(Product p) {
+    _modifiedItems.remove((element) =>
+        element.itemName.toString().toLowerCase() == p.itemName.toLowerCase());
+    notifyListeners();
+  }
 
   commit() async {
     List items = [];

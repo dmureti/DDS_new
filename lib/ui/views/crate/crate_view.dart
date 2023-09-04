@@ -74,9 +74,6 @@ class CrateView extends StatelessWidget {
                                               Icons.timer_sharp,
                                               size: 12,
                                             ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
                                       Text(
                                         crate.itemCode,
                                         style: kTileSubtitleTextStyle,

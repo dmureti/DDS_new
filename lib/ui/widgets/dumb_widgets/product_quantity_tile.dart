@@ -29,9 +29,6 @@ class ProductQuantityTile extends StatelessWidget {
                     Icons.timer_sharp,
                     size: 12,
                   ),
-            SizedBox(
-              width: 5,
-            ),
             Text(
               product.itemCode.toString() ?? "",
               style: kTileSubtitleTextStyle,

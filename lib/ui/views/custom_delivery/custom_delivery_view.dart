@@ -94,6 +94,14 @@ class CustomDeliveryView extends StatelessWidget {
                                     icon: Icon(Icons.add_circle_outline)),
                               ],
                             ),
+                            subtitle: Row(
+                              children: [
+                                Text(
+                                  '${deliveryItem['itemCode']}'.toUpperCase(),
+                                  style: kTileSubtitleTextStyle,
+                                ),
+                              ],
+                            ),
                           );
                         },
                         itemCount: model.items.length,

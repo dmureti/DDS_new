@@ -36,7 +36,7 @@ class AdhocCartViewModel extends ReactiveViewModel {
     return _productList;
   }
 
-  List<Product> _customerProductList;
+  List<Product> _customerProductList = [];
   List<Product> get customerProductList => _customerProductList;
 
   List<Product> _stockBalanceList;
@@ -143,6 +143,9 @@ class AdhocCartViewModel extends ReactiveViewModel {
           title: 'Error', description: 'An error occurred.');
     }
   }
+
+  bool get shopHasStock => _stockBalanceList.isNotEmpty;
+  bool get customerHasProducts => _customerProductList.isNotEmpty;
 
   Future fetchStockBalance() async {
     var result = await _stockControllerService.getStockBalance();

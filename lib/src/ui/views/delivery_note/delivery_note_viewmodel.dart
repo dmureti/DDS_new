@@ -85,15 +85,15 @@ class DeliveryNoteViewModel extends BaseViewModel {
               description:
                   'You have not selected a journey.\nYou need to select a journey to fulfill a delivery');
         } else {
-          await _navigationService.navigateToView(
+          var result = await _navigationService.navigateToView(
             CustomDeliveryView(
               deliveryNote: deliveryNote,
               deliveryStop: deliveryStop,
               customer: customer,
             ),
           );
+          await getDeliveryNote();
         }
-
         break;
       case 'full_delivery':
         if (_journeyService.currentJourney?.journeyId != null) {
