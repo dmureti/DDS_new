@@ -19,7 +19,7 @@ class StockTransferRequestListingViewModel extends BaseViewModel
   fetchStockTransferRequest() async {
     setBusy(true);
     _stockTransferRequests =
-        await stockControlService.getStockTransactionList();
+        await stockControlService.getMiniShopStockRequests();
     if (_stockTransferRequests.isNotEmpty) {
       _stockTransferRequests
           .sort((b, a) => a.stockTransactionId.compareTo(b.stockTransactionId));

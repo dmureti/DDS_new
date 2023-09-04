@@ -52,9 +52,8 @@ class StockControllerService {
     }
   }
 
-  getStockTransactionList() async {
-    var result = await _api.getPendingAuthStockTransactions(_user.token,
-        branchId: branchId, journeyId: journeyId);
+  getMiniShopStockRequests() async {
+    var result = await _api.getMinishopTransactions(_user.token);
     if (result is List) {
       return result.map((e) => Transaction.fromMap(e)).toList();
     } else {
