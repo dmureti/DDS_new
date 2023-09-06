@@ -37,6 +37,8 @@ class AppInfoView extends StatelessWidget {
                         Text('Device : ${model.androidDeviceInfo.device}'),
                         Text(
                             'Device Id : ${model.androidDeviceInfo.androidId}'),
+                        Text('Battery : ${model.batteryLevel}'),
+                        Text('Network Strength : ${model.batteryLevel}')
                       ],
                     ),
             ),

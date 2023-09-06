@@ -144,7 +144,7 @@ class AdhocCartViewModel extends ReactiveViewModel {
     }
   }
 
-  bool get shopHasStock => _stockBalanceList.isNotEmpty;
+  bool get shopHasStock => _stockBalanceList?.isNotEmpty ?? false;
   bool get customerHasProducts => _customerProductList.isNotEmpty;
 
   Future fetchStockBalance() async {

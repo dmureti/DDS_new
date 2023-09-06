@@ -85,33 +85,18 @@ class AdhocSalesView extends StatelessWidget {
                                                       CircularProgressIndicator(),
                                                 )
                                               : model.customerList.length > 0
-                                                  // ? DropdownButton(
-                                                  //     key: Key(
-                                                  //         'selectCustomerKey'),
-                                                  //     dropdownColor:
-                                                  //         Colors.white,
-                                                  //     isExpanded: true,
-                                                  //     hint: Text(
-                                                  //         'Select customer'),
-                                                  //     value: model.customer,
-                                                  //     onChanged:
-                                                  //         model.updateCustomer,
-                                                  //     items: model.customerList
-                                                  //         .map((e) =>
-                                                  //             DropdownMenuItem(
-                                                  //               child: Text(
-                                                  //                   e.name),
-                                                  //               value: e,
-                                                  //             ))
-                                                  //         .toList(),
-                                                  //   )
                                                   ? CustomerTextInput(
                                                       customerList:
                                                           model.customerList,
                                                       onSelected:
                                                           model.updateCustomer)
                                                   : Text('No customers found')
-                                          : _CustomerNameTextField()
+                                          : TextFormField(
+                                              onChanged:
+                                                  model.updateCustomerName,
+                                              decoration: InputDecoration(
+                                                  hintText: 'Customer Name'),
+                                            )
                                       : Text('Select a customer type'),
                                 ),
                               ],

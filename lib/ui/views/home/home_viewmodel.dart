@@ -224,12 +224,14 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   bool get enableRouteTab => _accessControlService.enableJourneyTab;
   bool get enableProductTab => _accessControlService.enableStockTab;
   bool get enableCustomerTab => _accessControlService.enableCustomerTab;
+  bool get enableAdhocSales =>
+      _initService.appEnv.flavorValues.applicationParameter.enableAdhocSales;
 
   init() async {
     // await fetchAllCustomers();
     // geoFenceService.listenToGeofenceStatusStream();
     //Check if the user has permissions before enabling this
-    if (user.hasSalesChannel) {
+    if (user.hasSalesChannel || enableAdhocSales) {
       await fetchAdhocSales();
     } else {
       // await _logisticsService.fetchJourneys();
@@ -307,6 +309,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   }
 
   fetchAdhocSales({DateTime postingDate}) async {
+    print("--fetching adhoc sales--");
     setBusy(true);
     _adhocSalesList =
         await _adhocCartService.fetchAdhocSalesList(postingDate: postingDate);

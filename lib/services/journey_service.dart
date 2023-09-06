@@ -8,9 +8,6 @@ import 'package:distributor/services/user_service.dart';
 import 'package:distributor/ui/widgets/smart_widgets/info_bar/info_bar_widget_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:observable_ish/observable_ish.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart' as pl;
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -280,51 +277,5 @@ class JourneyService with ReactiveServiceMixin {
     // print(result);
     // print(result.toString());
     return;
-  }
-
-  printDocument({@required List<Product> items, @required customerName}) async {
-    final doc = pw.Document();
-    final image = await pl
-        .flutterImageProvider(AssetImage('assets/images/mini_logo.png'));
-    doc.addPage(pw.Page(
-        pageFormat: PdfPageFormat.a4,
-        build: (pw.Context context) {
-          return pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                pw.Text('MINI BAKERIES(UGANDA) LIMITED'),
-                pw.Text('ORDER CONFIRMATION'),
-                pw.Row(children: [
-                  pw.Text('Document Number'),
-                  pw.Text('Document Date')
-                ]),
-                pw.Row(children: [
-                  pw.Text('Customer Number'),
-                  pw.Text('Document Date')
-                ]),
-                pw.Text(customerName ?? ""),
-                // pw.Image(image),
-                //@TODO : Add Address
-                //@TODO : Add title
-                pw.Text('Delivery Date'),
-                pw.Text('Cancellation Date'),
-                pw.Divider(),
-                pw.Expanded(
-                    child: pw.ListView(
-                        children: items
-                            .map((e) => pw.Row(children: [
-                                  pw.Text(e.itemCode),
-                                  pw.SizedBox(width: 5),
-                                  pw.Expanded(
-                                    child: pw.Text(e.itemName),
-                                  ),
-                                  pw.SizedBox(width: 5),
-                                  pw.Text(e.quantity.toStringAsPrecision(2)),
-                                ]))
-                            .toList())),
-              ]); // Center
-        }));
-    await pl.Printing.layoutPdf(
-        onLayout: (PdfPageFormat format) async => doc.save()); // Page
   }
 }

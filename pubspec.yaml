@@ -1,6 +1,6 @@
 name: distributor
 description: Digital Distribution System
-version: 16.6.4+16
+version: 16.6.6+16
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
@@ -59,9 +59,9 @@ dependencies:
   provider: ^4.3.3
   cloud_firestore: ^0.16.0+1
   geoflutterfire: ^2.2.2
-  easy_geofencing: ^0.1.1
+  easy_geofencing:
   path_provider:
-  printing: ^4.1.0
+#  printing: ^4.1.0
   device_info_plus: 0.5.0
 
 

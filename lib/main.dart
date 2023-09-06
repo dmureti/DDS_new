@@ -97,26 +97,26 @@ ThemeData _buildAppTheme() {
 TextTheme _buildAppTextTheme(TextTheme base) {
   return base
       .copyWith(
-        headline5: base.headline5.copyWith(
+        headlineSmall: base.headlineSmall.copyWith(
           color: kColorDDSPrimaryLight,
           fontFamily: kFontBoldBody,
         ),
-        subtitle1: base.subtitle1.copyWith(
+        titleMedium: base.titleMedium.copyWith(
             fontFamily: kFontThinBody,
             color: kColorDDSColorDark,
             fontSize: kBodyTextSize),
-        headline6: base.headline6.copyWith(
+        titleLarge: base.titleLarge.copyWith(
             fontFamily: kFontThinBody,
             fontSize: kBodyTextSize,
             color: kColorDDSPrimaryDark),
-        caption: base.caption
+        bodySmall: base.bodySmall
             .copyWith(fontFamily: kFontThinBody, fontSize: kBodyTextSize),
-        bodyText1: base.bodyText1.copyWith(
+        bodyLarge: base.bodyLarge.copyWith(
             fontFamily: kFontLightBody,
             fontSize: kBodyTextSize,
             color: kColorDDSColorDark),
-        button: base.button.copyWith(color: kColDDSPrimaryLight),
-        bodyText2: base.bodyText1.copyWith(
+        labelLarge: base.labelLarge.copyWith(color: kColDDSPrimaryLight),
+        bodyMedium: base.bodyMedium.copyWith(
             fontFamily: kFontLightBody,
             fontSize: kBodyTextSize,
             color: kColorDDSColorDark),

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: D./projects/mobile/tripletrio_fix/l1/android/app/lib/ftsdk_api.jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/lib/ftsdk_api.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

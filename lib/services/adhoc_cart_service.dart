@@ -2,6 +2,7 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/customer_service.dart';
+import 'package:distributor/services/init_service.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/location_repository.dart';
 import 'package:distributor/services/logistics_service.dart';
@@ -386,9 +387,20 @@ class AdhocCartService with ReactiveServiceMixin {
     _warehouse.value = branch;
   }
 
+  final _initService = locator<InitService>();
+
+  get enableAdhocSale =>
+      _initService.appEnv.flavorValues.applicationParameter.enableAdhocSales;
+
   fetchAdhocSalesList({DateTime postingDate}) async {
+    String route = "";
+    if (enableAdhocSale && !_userService.user.hasSalesChannel) {
+      route = _journeyService.currentJourney.route;
+    } else {
+      route = _userService.user.salesChannel;
+    }
     List result = await _apiService.api.getAdhocSales(
-        _userService.user.token, _userService.user.salesChannel,
+        _userService.user.token, route,
         postingDate: postingDate ?? DateTime.now());
 
     if (result.isNotEmpty) {
