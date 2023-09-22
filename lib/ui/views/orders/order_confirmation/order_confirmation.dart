@@ -129,7 +129,7 @@ class OrderConfirmation extends StatelessWidget {
                             style: TextStyle(color: Colors.white, fontSize: 20),
                           ),
                           Text(
-                            'Kshs ${Helper.formatCurrency(model.salesOrder.total)}',
+                            '${Helper.formatCurrency(model.salesOrder.total)}',
                             style: TextStyle(color: Colors.white, fontSize: 20),
                           )
                         ],

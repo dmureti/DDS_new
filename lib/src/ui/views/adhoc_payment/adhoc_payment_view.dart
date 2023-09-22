@@ -22,7 +22,7 @@ class AdhocPaymentView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Amount Due : Kshs ${model.total.toStringAsFixed(2)}'),
+                  Text('Amount Due : UGX ${model.total.toStringAsFixed(2)}'),
                   SizedBox(
                     height: 8,
                   ),

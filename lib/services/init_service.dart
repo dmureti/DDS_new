@@ -20,6 +20,7 @@ class InitService {
   }
 
   DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+
   SharedPreferences prefs;
 
   AndroidDeviceInfo _androidDeviceInfo;

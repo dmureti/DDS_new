@@ -1,5 +1,6 @@
 import 'package:distributor/ui/views/app_info/app_info_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/generic_container.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -16,30 +17,63 @@ class AppInfoView extends StatelessWidget {
               ),
               body: model.isBusy
                   ? BusyWidget()
-                  : Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: Image.asset(
-                              'assets/images/dds_logo.png',
+                  : GenericContainer(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(
+                              child: Image.asset(
+                                'assets/images/dds_logo.png',
+                              ),
                             ),
                           ),
-                        ),
-                        Text('DDS Version : ${model.appVersion?.versionCode}'),
-                        Divider(),
-                        Text(
-                            'Android Version : ${model.androidDeviceInfo.version.release}'),
-                        Text('Product : ${model.androidDeviceInfo.product}'),
-                        Text('Brand : ${model.androidDeviceInfo.brand}'),
-                        Text(
-                            'Manufacturer : ${model.androidDeviceInfo.manufacturer}'),
-                        Text('Device : ${model.androidDeviceInfo.device}'),
-                        Text(
-                            'Device Id : ${model.androidDeviceInfo.androidId}'),
-                        Text('Battery : ${model.batteryLevel}'),
-                        Text('Network Strength : ${model.batteryLevel}')
-                      ],
+                          Text(
+                              'DDS Version : ${model.appVersion?.versionCode}'),
+                          Divider(),
+                          Text(
+                              'Android Version : ${model.androidDeviceInfo.version.release}'),
+                          Text('Product : ${model.androidDeviceInfo.product}'),
+                          Text('Brand : ${model.androidDeviceInfo.brand}'),
+                          Text(
+                              'Manufacturer : ${model.androidDeviceInfo.manufacturer}'),
+                          Text('Device : ${model.androidDeviceInfo.device}'),
+                          Text(
+                              'Device Id : ${model.androidDeviceInfo.androidId}'),
+                          Text('Battery : ${model.batteryLevel}'),
+                          Text('Network Strength : ${model.networkStrength}'),
+                          Row(
+                            children: [
+                              Text('Printer status : ${model.printerStatus}'),
+                              IconButton(
+                                  onPressed: model.getPrinterStatus,
+                                  icon: Icon(Icons.print))
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                  child:
+                                      Text('Battery  : ${model.batteryLevel}')),
+                              IconButton(
+                                  onPressed: () => model.getBatteryLevel(),
+                                  icon: Icon(Icons.print))
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                  child: Text(
+                                      'Sensor Available  : ${model.sensorAvailable}')),
+                              IconButton(
+                                  onPressed: () =>
+                                      model.checkSensorAvailability(),
+                                  icon: Icon(Icons.sensors))
+                            ],
+                          )
+                        ],
+                      ),
                     ),
             ),
         viewModelBuilder: () => AppInfoViewModel());

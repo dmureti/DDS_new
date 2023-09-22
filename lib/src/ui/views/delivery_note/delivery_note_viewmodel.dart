@@ -5,7 +5,12 @@ import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/location_repository.dart';
 import 'package:distributor/services/user_service.dart';
+import 'package:distributor/src/ui/views/print_view/print_view.dart';
 import 'package:distributor/ui/views/custom_delivery/custom_delivery_view.dart';
+import 'package:flutter/foundation.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -28,6 +33,34 @@ class DeliveryNoteViewModel extends BaseViewModel {
   bool get enableFullDelivery => appParams.enableFullDelivery;
   bool get enableSalesReturns => appParams.enableSalesReturn;
 
+  Future<Uint8List> generatePdf(PdfPageFormat format, String title) async {
+    String title = "Receipt";
+    final pdf = pw.Document(compress: true);
+    // final font = await PdfGoogleFonts.nunitoExtraLight();
+
+    pdf.addPage(
+      pw.Page(
+        pageFormat: format,
+        build: (context) {
+          return pw.Column(
+            children: [
+              pw.SizedBox(
+                width: double.infinity,
+                child: pw.FittedBox(
+                  child: pw.Text(title),
+                ),
+              ),
+              pw.SizedBox(height: 20),
+              pw.Flexible(child: pw.FlutterLogo())
+            ],
+          );
+        },
+      ),
+    );
+
+    return pdf.save();
+  }
+
   DeliveryJourney get deliveryJourney => _deliveryJourney;
   DeliveryStop get deliveryStop => _deliveryStop;
   final Customer customer;
@@ -43,7 +76,7 @@ class DeliveryNoteViewModel extends BaseViewModel {
       _deliveryNote = result;
       notifyListeners();
     } else {
-      print(result.runtimeType);
+      // debugPrint(result.runtimeType);
     }
   }
 
@@ -66,14 +99,14 @@ class DeliveryNoteViewModel extends BaseViewModel {
       notifyListeners();
       return;
     } else {
-      print(result);
+      // print(result);
       return;
     }
   }
 
   init() async {
     await getDeliveryNote();
-    await getCurrentLocation();
+    // await getCurrentLocation();
   }
 
   handleOrderAction(String action) async {
@@ -193,5 +226,26 @@ class DeliveryNoteViewModel extends BaseViewModel {
     }
   }
 
-  void printDocument() async {}
+  void printDocument() async {
+    final doc = pw.Document();
+
+    doc.addPage(pw.Page(
+        pageFormat: PdfPageFormat.a4,
+        build: (pw.Context context) {
+          return pw.Center(
+            child: pw.Text('Hello World'),
+          ); // Center
+        })); //
+    await Printing.layoutPdf(
+        onLayout: (PdfPageFormat format) async => doc.save());
+  }
+
+  navigateToPreview() async {
+    await _navigationService.navigateToView(PrintView(
+      title: "e-Invoice",
+      deliveryNote: deliveryNote,
+      user: _user,
+      // deliveryStop: deliveryStop,
+    ));
+  }
 }

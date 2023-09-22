@@ -27,6 +27,7 @@ void main() async {
       enforceCustomerSecurity: false,
       enableAdhocSales: true,
       enableWalkIn: true,
+      enablePrintingService: true,
       enableContractCustomers: true);
 
   _initService.setAvailableEnvList([

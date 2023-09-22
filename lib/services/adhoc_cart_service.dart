@@ -41,23 +41,23 @@ class AdhocCartService with ReactiveServiceMixin {
   List<String> get paymentModes {
     List<String> _modes = [];
     if (customerType.toLowerCase() == 'contract') {
-      if (showMPesa) {
-        _modes.add('MPESA');
-      }
-      if (showAirtel) {
-        _modes.add('EQUITEL');
-      }
+      // if (showMPesa) {
+      //   _modes.add('MPESA');
+      // }
+      // if (showAirtel) {
+      //   _modes.add('EQUITEL');
+      // }
       _modes.addAll(
         ['CASH', 'INVOICE'],
       );
       return _modes;
     } else {
-      if (showMPesa) {
-        _modes.add('MPESA');
-      }
-      if (showAirtel) {
-        _modes.add('EQUITEL');
-      }
+      // if (showMPesa) {
+      //   _modes.add('MPESA');
+      // }
+      // if (showAirtel) {
+      //   _modes.add('EQUITEL');
+      // }
       _modes.add('CASH');
       return _modes;
     }
@@ -95,21 +95,21 @@ class AdhocCartService with ReactiveServiceMixin {
 
   init() async {
     if (_logisticsService.currentJourney != null) {
-      var mpesaRes =
-          await getPOSAccount('MPESA', _journeyService.currentJourney.branch);
-      if (mpesaRes is List) {
-        if (mpesaRes.isNotEmpty) {
-          _showMPesa.value = true;
-          _mpesaDetail = mpesaRes;
-        }
-      }
-      var airtelRes =
-          await getPOSAccount('EQUITEL', _journeyService.currentJourney.branch);
-      if (airtelRes is List) {
-        if (airtelRes.isNotEmpty) {
-          _showEquitel.value = true;
-        }
-      }
+      // var mpesaRes =
+      //     await getPOSAccount('MPESA', _journeyService.currentJourney.branch);
+      // if (mpesaRes is List) {
+      //   if (mpesaRes.isNotEmpty) {
+      //     _showMPesa.value = true;
+      //     _mpesaDetail = mpesaRes;
+      //   }
+      // }
+      // var airtelRes =
+      //     await getPOSAccount('EQUITEL', _journeyService.currentJourney.branch);
+      // if (airtelRes is List) {
+      //   if (airtelRes.isNotEmpty) {
+      //     _showEquitel.value = true;
+      //   }
+      // }
       // await getPaymentModes(_journeyService.currentJourney.route);
     }
     // await getCurrentLocation();
@@ -343,7 +343,7 @@ class AdhocCartService with ReactiveServiceMixin {
   get customerName => _customerName.value;
 
   createPayment() async {
-    await getCurrentLocation();
+    // await getCurrentLocation();
     Map<String, dynamic> data = {
       "customerId": customerId,
       "customerName": customerName,

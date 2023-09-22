@@ -28,7 +28,7 @@ class AdhocSaleListTile extends StatelessWidget {
                   style: kTileSubtitleTextStyle),
             ),
             Text(
-              'Kshs ${adhocSale.total.toStringAsFixed(2)}',
+              '${adhocSale.total.toStringAsFixed(2)}',
               style: TextStyle(),
             ),
           ],

@@ -17,20 +17,21 @@ void main() async {
       .then((value) => print(value.name));
   setupLocator();
   setupSnackbarUi();
+  ApplicationParameter appParam = ApplicationParameter(
+      enableFullDelivery: true,
+      enforceCreditLimit: false,
+      enableCustomDelivery: false,
+      enforceCustomerSecurity: false,
+      enableAdhocSales: false,
+      enableWalkIn: true,
+      enableContractCustomers: true);
   InitService _initService = locator<InitService>();
   _initService.setAvailableEnvList([
-    // AppEnv(
-    //   flavor: Flavor.mini,
-    //   name: 'mini',
-    //   flavorValues: FlavorValues(
-    //       baseUrl: 'https://mbnl.ddsolutions.tech/dds-backend/api/v1'),
-    // ),
-    // https://dds.ddsolutions.tech/dds-backend/api/v1
     AppEnv(
       flavor: Flavor.miniNrb,
       name: 'Mini-Nrb',
       flavorValues: FlavorValues(
-          baseUrl: 'https://mbnl.ddsolutions.tech/dds-backend/api/v1'),
+          baseUrl: 'https://mbnl.ddsolutions.tech/dds-backend/api/v1', applicationParameter: appParam),
     ),
   ]);
   ByteData data =

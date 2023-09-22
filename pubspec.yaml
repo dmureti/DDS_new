@@ -1,6 +1,6 @@
 name: distributor
 description: Digital Distribution System
-version: 16.6.6+16
+version: 17.0.4+17
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
@@ -46,6 +46,10 @@ dependencies:
   #    sdk: flutter
   tripletriocore:
     path: '../tripletrio_core'
+#  feitan:
+#    path: '../plugins/feitan'
+#  feitan_phone:
+#    path: '../feitan_phone'
     #    git: 'https://github.com/AlbertKamau/tripletrio_core'
   firebase_core: "^0.7.0"
 #  firebase_crashlytics: "^0.4.0+1"
@@ -63,6 +67,7 @@ dependencies:
   path_provider:
 #  printing: ^4.1.0
   device_info_plus: 0.5.0
+  printing: ^4.1.0
 
 
 

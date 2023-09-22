@@ -61,9 +61,9 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
                     Row(
                       children: [
                         Container(
-                          width: 100,
+                          width: 85,
                           child: Text(
-                            '${model.isEnabled ? 'Kshs ${item.itemPrice.toStringAsFixed(2)}' : ''}',
+                            '${model.isEnabled ? 'UGX ${item.itemPrice.toStringAsFixed(2)}' : ''}',
                             style: TextStyle(
                                 color: Colors.black.withOpacity(0.5),
                                 fontSize: 13),
@@ -72,11 +72,11 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
                         ),
                         Text(
                           model.isEnabled
-                              ? 'Kshs ${Helper.formatCurrency(model.total)}'
+                              ? 'UGX ${Helper.formatCurrency(model.total)}'
                               : '',
                           style: TextStyle(
                               color: Colors.black.withOpacity(0.8),
-                              fontSize: 14),
+                              fontSize: 13),
                         ),
                       ],
                     ),

@@ -296,7 +296,7 @@ class _SummaryDraggableSheetState extends State<SummaryDraggableSheet> {
                 children: [
                   Text('Order Total'),
                   Text(
-                    'Kshs ${Helper.formatCurrency(widget.model.total)}',
+                    'UGX ${Helper.formatCurrency(widget.model.total)}',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ],

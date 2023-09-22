@@ -17,12 +17,21 @@ void main() async {
   setupLocator();
   setupSnackbarUi();
   InitService _initService = locator<InitService>();
+  ApplicationParameter nairobiAppEnv = ApplicationParameter(
+      enableFullDelivery: true,
+      enforceCreditLimit: false,
+      enableCustomDelivery: false,
+      enforceCustomerSecurity: false,
+      enableAdhocSales: false,
+      enableWalkIn: true,
+      enableContractCustomers: true);
   List<AppEnv> _appEnv = [
     AppEnv(
       flavor: Flavor.internal,
       name: 'Encours',
       flavorValues: FlavorValues(
-          baseUrl: 'https://testdds.ddsolutions.tech/spvdev-backend/api/v1'),
+          baseUrl: 'https://testdds.ddsolutions.tech/spvdev-backend/api/v1',
+          applicationParameter: nairobiAppEnv),
     ),
     AppEnv(
       flavor: Flavor.internal,
