@@ -34,6 +34,8 @@ class PrintView extends StatelessWidget {
   }
 
   Future<Uint8List> _generatePdf(PdfPageFormat format, String title) async {
+    const imageProvider = const AssetImage('assets/images/mini_logo.png');
+    final image = await flutterImageProvider(imageProvider);
     final pdf = pw.Document(compress: true);
     // final font = await PdfGoogleFonts.nunitoExtraLight();
     pdf.addPage(
@@ -42,7 +44,7 @@ class PrintView extends StatelessWidget {
         build: (context) {
           return pw.Column(
             children: [
-              _buildHeader(),
+              _buildHeader(image),
               _buildSectionHeader("Section A: Sellers Detail"),
               _buildSellersDetail(user),
               _buildSectionHeader("Section B: URA Information"),
@@ -54,7 +56,7 @@ class PrintView extends StatelessWidget {
               _buildTaxDetails(),
               _buildSectionHeader("Section F: Summary"),
               _buildSummary(),
-              _buildFooter(),
+              // _buildFooter(model),
               // pw.SizedBox(
               //   width: double.infinity,
               //   child: pw.FittedBox(
@@ -72,9 +74,9 @@ class PrintView extends StatelessWidget {
     return pdf.save();
   }
 
-  _buildHeader() {
+  _buildHeader(pw.ImageProvider image) {
     return pw.Row(children: [
-      // pw.Image(image),
+      pw.Container(child: pw.Image(image, height: 50), width: 50, height: 50),
       // pw.Placeholder(fallbackHeight: 50, fallbackWidth: 50),
       pw.SizedBox(width: 10),
       pw.Text(title, style: pw.TextStyle(fontSize: 20)),
@@ -164,7 +166,28 @@ class PrintView extends StatelessWidget {
       pw.Row(
         children: [
           pw.Text('Served By : ', style: pw.TextStyle(fontSize: 15)),
-          pw.Text('Admin', style: pw.TextStyle(fontSize: 15)),
+          pw.Text(user.full_name, style: pw.TextStyle(fontSize: 15)),
+        ],
+      ),
+      pw.Row(
+        children: [
+          pw.Text('Invoice Id : ', style: pw.TextStyle(fontSize: 15)),
+          pw.Text('${deliveryNote.deliveryNoteId}',
+              style: pw.TextStyle(fontSize: 15)),
+        ],
+      ),
+      pw.Row(
+        children: [
+          pw.Text('Delivery Date : ', style: pw.TextStyle(fontSize: 15)),
+          pw.Text('${deliveryNote.deliveryDate}',
+              style: pw.TextStyle(fontSize: 15)),
+        ],
+      ),
+      pw.Row(
+        children: [
+          pw.Text('Delivery Status : ', style: pw.TextStyle(fontSize: 15)),
+          pw.Text('${deliveryNote.deliveryStatus}',
+              style: pw.TextStyle(fontSize: 15)),
         ],
       ),
       _buildSpacer(),
@@ -175,8 +198,8 @@ class PrintView extends StatelessWidget {
     return pw.SizedBox(height: 20);
   }
 
-  _buildFooter() {
-    return pw.SizedBox(height: 20);
+  _buildFooter(model) {
+    return pw.Text(model.androidDeviceInfo.androidId);
   }
 
   _buildSummary() {
@@ -198,6 +221,27 @@ class PrintView extends StatelessWidget {
   }
 
   _buildTaxDetails() {
-    return pw.Column(children: []);
+    final pw.TextStyle style = pw.TextStyle(fontSize: 15);
+    return pw.Column(children: [
+      pw.SizedBox(height: 5),
+      pw.Text('Tax Category', style: style),
+      pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+        children: [
+          pw.Text('Net Amt', style: style),
+          pw.Text('Tax Amt', style: style),
+          pw.Text('Gross Amt', style: style),
+        ],
+      ),
+      pw.Text('A: Standard (18%)'),
+      pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+        children: [
+          pw.Text('', style: style),
+          pw.Text('', style: style),
+          pw.Text('', style: style),
+        ],
+      ),
+    ]);
   }
 }
