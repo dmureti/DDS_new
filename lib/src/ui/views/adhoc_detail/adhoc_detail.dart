@@ -1,4 +1,3 @@
-import 'package:distributor/core/helper.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/src/ui/views/adhoc_detail/adhoc_detail_viewmodel.dart';
 import 'package:distributor/ui/shared/text_styles.dart';
@@ -33,6 +32,9 @@ class AdhocDetailView extends StatelessWidget {
           appBar: AppBar(
             title: Text(referenceNo),
             actions: [
+              IconButton(
+                  onPressed: () => model.navigateToPrint(),
+                  icon: Icon(Icons.print)),
               PopupMenuButton(
                   onSelected: (x) {
                     // model.navigateToPage(x);
@@ -108,7 +110,7 @@ class AdhocDetailView extends StatelessWidget {
                           ReportFieldRow(
                               field: 'Total',
                               value:
-                                  'Kshs ${model.adhocDetail.total.toStringAsFixed(2)}'),
+                                  '${model.adhocDetail.total.toStringAsFixed(2)}'),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

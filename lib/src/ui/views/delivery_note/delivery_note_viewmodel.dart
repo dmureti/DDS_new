@@ -75,8 +75,6 @@ class DeliveryNoteViewModel extends BaseViewModel {
     if (result is DeliveryNote) {
       _deliveryNote = result;
       notifyListeners();
-    } else {
-      // debugPrint(result.runtimeType);
     }
   }
 
@@ -245,6 +243,8 @@ class DeliveryNoteViewModel extends BaseViewModel {
       title: "e-Invoice",
       deliveryNote: deliveryNote,
       user: _user,
+      orderId: deliveryStop.orderId,
+
       // deliveryStop: deliveryStop,
     ));
   }

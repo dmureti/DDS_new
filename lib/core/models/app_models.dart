@@ -130,6 +130,8 @@ class AdhocSale {
 // "saleItems":[{"erpId":"8ca79f04aa","parentId":"PK-21-03161","itemCode":"FG003","itemName":"200g White Bread","unitOfMeasure":"Nos","index":1,"quantity":6,"itemRate":22.5,"lineAmount":135.0,"warehouseId":"Likoni:Minishop Likoni"}]}
 class AdhocDetail {
   final String referenceNo;
+  String deliveryNoteId;
+  String salesOrderId;
   final String baseType;
   final String deliveryType;
   String customerId;
@@ -140,6 +142,10 @@ class AdhocDetail {
   String transactionStatus;
   String sellingPriceList;
   List saleItems;
+
+  get deliveryDate => transactionDate;
+  get deliveryStatus => "";
+  get deliveryItems => saleItems;
 
   AdhocDetail(
       {this.referenceNo,
@@ -152,7 +158,8 @@ class AdhocDetail {
       this.total,
       this.transactionStatus,
       this.sellingPriceList,
-      this.saleItems});
+      this.saleItems})
+      : deliveryNoteId = referenceNo;
 
   factory AdhocDetail.fromResponse(Map<String, dynamic> data) {
     return AdhocDetail(

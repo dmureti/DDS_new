@@ -232,11 +232,9 @@ class LoginViewModel extends BaseViewModel {
             arguments: ChangePasswordViewArguments(
                 passwordChangeType: PasswordChangeType.initial));
       } else {
-        snackBarService.showSnackbar(
-            message: 'Data Synchronization started', title: "");
-        await initializeAppCache(result);
-        snackBarService.showSnackbar(
-            message: 'Data Synchronization completed', title: "");
+        // snackBarService.showSnackbar(message: 'Data Synchronization started', title: "");
+        // await initializeAppCache(result);
+        // snackBarService.showSnackbar(message: 'Data Synchronization completed', title: "");
         _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
       }
     } else if (result is CustomException) {

@@ -3,6 +3,7 @@ import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/services/adhoc_cart_service.dart';
 import 'package:distributor/services/stock_controller_service.dart';
 import 'package:distributor/services/user_service.dart';
+import 'package:distributor/src/ui/views/print_view/print_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -251,5 +252,13 @@ class AdhocDetailViewModel extends BaseViewModel {
   bool get isChanged {
     return memento !=
         adhocDetail.saleItems.map((e) => SaleItem.fromMap(e)).toList();
+  }
+
+  void navigateToPrint() {
+    _navigationService.navigateToView(PrintView(
+      deliveryNote: adhocDetail,
+      title: 'e-Receipt',
+      user: _userService.user,
+    ));
   }
 }

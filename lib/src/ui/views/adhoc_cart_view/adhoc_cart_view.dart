@@ -42,7 +42,7 @@ class AdhocCartView extends StatelessWidget {
                                   if (model.enforceCreditLimit)
                                     Expanded(
                                       child: Text(
-                                        'Available Credit : Kshs ${Helper.formatCurrency(model.creditLimit)}',
+                                        'Available Credit : ${Helper.formatCurrency(model.creditLimit)}',
                                         style: TextStyle(
                                           fontWeight: FontWeight.w500,
                                           color:
@@ -55,7 +55,7 @@ class AdhocCartView extends StatelessWidget {
                                     ),
                                   if (model.enforceCustomerSecurity)
                                     Text(
-                                      'Security : Kshs ${Helper.formatCurrency(model.securityBalance)}',
+                                      'Security : ${Helper.formatCurrency(model.securityBalance)}',
                                       style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         color: (model.total > model.creditLimit)

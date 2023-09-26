@@ -1,5 +1,4 @@
 import 'package:distributor/core/enums.dart';
-import 'package:distributor/ui/widgets/smart_widgets/syncWidget/syncWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +27,8 @@ class NetworkSensitiveWidget extends StatelessWidget {
         ),
       );
     } else {
-      return SyncWidget();
+      // return SyncWidget();
+      return Container();
     }
   }
 }

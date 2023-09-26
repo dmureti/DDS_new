@@ -11,8 +11,16 @@ import 'package:tripletriocore/tripletriocore.dart';
 class PrintView extends StatelessWidget {
   final String title;
   final User user;
-  final DeliveryNote deliveryNote;
-  const PrintView({Key key, this.title, @required this.deliveryNote, this.user})
+  var deliveryNote;
+  String orderId;
+  List items;
+  PrintView(
+      {Key key,
+      this.title,
+      @required this.deliveryNote,
+      this.user,
+      this.orderId = "",
+      List items})
       : super(key: key);
 
   @override
@@ -23,7 +31,7 @@ class PrintView extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(title: Text(title)),
           body: PdfPreview(
-            build: (format) => _generatePdf(format, title),
+            build: (format) => _generatePdf(format, title, model),
           ),
         );
       },
@@ -33,7 +41,8 @@ class PrintView extends StatelessWidget {
     );
   }
 
-  Future<Uint8List> _generatePdf(PdfPageFormat format, String title) async {
+  Future<Uint8List> _generatePdf(
+      PdfPageFormat format, String title, PrintViewModel model) async {
     const imageProvider = const AssetImage('assets/images/mini_logo.png');
     final image = await flutterImageProvider(imageProvider);
     final pdf = pw.Document(compress: true);
@@ -45,18 +54,20 @@ class PrintView extends StatelessWidget {
           return pw.Column(
             children: [
               _buildHeader(image),
+              // _buildSummary(model),
+              // ..._buildGoodsAndServices(deliveryNote.deliveryItems),
               _buildSectionHeader("Section A: Sellers Detail"),
               _buildSellersDetail(user),
               _buildSectionHeader("Section B: URA Information"),
               _buildSectionHeader("Section C: Buyers Details"),
               _buildBuyerDetails(),
               _buildSectionHeader("Section D: Goods and Services Details"),
-              ..._buildGoodsAndServices(deliveryNote.deliveryItems),
+              ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems),
               _buildSectionHeader("Section E: Tax Details"),
-              _buildTaxDetails(),
+              _buildTaxDetails(model),
               _buildSectionHeader("Section F: Summary"),
-              _buildSummary(),
-              // _buildFooter(model),
+              _buildSummary(model),
+              _buildFooter(model),
               // pw.SizedBox(
               //   width: double.infinity,
               //   child: pw.FittedBox(
@@ -76,10 +87,15 @@ class PrintView extends StatelessWidget {
 
   _buildHeader(pw.ImageProvider image) {
     return pw.Row(children: [
-      pw.Container(child: pw.Image(image, height: 50), width: 50, height: 50),
+      pw.Padding(
+        child: pw.Container(
+            child: pw.Image(image, height: 80), width: 100, height: 80),
+        padding: pw.EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+      ),
       // pw.Placeholder(fallbackHeight: 50, fallbackWidth: 50),
-      pw.SizedBox(width: 10),
-      pw.Text(title, style: pw.TextStyle(fontSize: 20)),
+      pw.SizedBox(width: 20),
+      pw.Text(title,
+          style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
       //DDS Logo
       //Title
     ]);
@@ -114,6 +130,10 @@ class PrintView extends StatelessWidget {
                     child: pw.Text(deliveryItem['quantity'].toString(),
                         style: style, textAlign: pw.TextAlign.right),
                   ),
+                  pw.Container(
+                    child: pw.Text(" x ",
+                        style: style, textAlign: pw.TextAlign.right),
+                  ),
                   pw.SizedBox(width: 5),
                   pw.Text('${deliveryItem['itemRate']}'.toString(),
                       style: style),
@@ -139,7 +159,10 @@ class PrintView extends StatelessWidget {
   }
 
   _buildSellersDetail(User user) {
-    final pw.TextStyle textStyle = pw.TextStyle(fontSize: 20);
+    var deliveryNoteId = deliveryNote.deliveryNoteId == null
+        ? deliveryNote.referenceNo
+        : orderId;
+    final pw.TextStyle textStyle = pw.TextStyle(fontSize: 18);
     return pw.Column(children: [
       // _buildSpacer(),
       pw.Row(
@@ -171,9 +194,8 @@ class PrintView extends StatelessWidget {
       ),
       pw.Row(
         children: [
-          pw.Text('Invoice Id : ', style: pw.TextStyle(fontSize: 15)),
-          pw.Text('${deliveryNote.deliveryNoteId}',
-              style: pw.TextStyle(fontSize: 15)),
+          pw.Text('Order Id : ', style: pw.TextStyle(fontSize: 15)),
+          pw.Text('${deliveryNoteId}', style: pw.TextStyle(fontSize: 15)),
         ],
       ),
       pw.Row(
@@ -199,28 +221,28 @@ class PrintView extends StatelessWidget {
   }
 
   _buildFooter(model) {
-    return pw.Text(model.androidDeviceInfo.androidId);
+    return pw.Text("Powered by DDS");
   }
 
-  _buildSummary() {
+  _buildSummary(PrintViewModel model) {
     return pw.Column(children: [
       pw.SizedBox(height: 5),
       pw.Row(children: [
         pw.Text('Net Amount', style: pw.TextStyle(fontSize: 15)),
-        pw.Text('', style: pw.TextStyle(fontSize: 15))
+        pw.Text('${model.netAmount}', style: pw.TextStyle(fontSize: 15))
       ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
       pw.Row(children: [
         pw.Text('Tax Amount', style: pw.TextStyle(fontSize: 15)),
-        pw.Text('', style: pw.TextStyle(fontSize: 15)),
+        pw.Text('${model.taxAmount}', style: pw.TextStyle(fontSize: 15)),
       ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
       pw.Row(children: [
         pw.Text('Gross Amount', style: pw.TextStyle(fontSize: 15)),
-        pw.Text('', style: pw.TextStyle(fontSize: 15))
+        pw.Text('${model.grossAmount}', style: pw.TextStyle(fontSize: 15))
       ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
     ]);
   }
 
-  _buildTaxDetails() {
+  _buildTaxDetails(PrintViewModel model) {
     final pw.TextStyle style = pw.TextStyle(fontSize: 15);
     return pw.Column(children: [
       pw.SizedBox(height: 5),
@@ -237,9 +259,9 @@ class PrintView extends StatelessWidget {
       pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
-          pw.Text('', style: style),
-          pw.Text('', style: style),
-          pw.Text('', style: style),
+          pw.Text('${model.netAmount}', style: style),
+          pw.Text('${model.taxAmount}', style: style),
+          pw.Text('${model.grossAmount}', style: style),
         ],
       ),
     ]);

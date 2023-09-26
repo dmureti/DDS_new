@@ -1,6 +1,8 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/location_repository.dart';
+import 'package:distributor/services/user_service.dart';
+import 'package:distributor/src/ui/views/print_view/print_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -11,6 +13,7 @@ class CustomDeliveryViewModel extends BaseViewModel {
   final _dialogService = locator<DialogService>();
   final _journeyService = locator<JourneyService>();
   final _locationService = locator<LocationRepository>();
+  final _userService = locator<UserService>();
 
   final DeliveryNote deliveryNote;
   final DeliveryStop deliveryStop;
@@ -56,7 +59,7 @@ class CustomDeliveryViewModel extends BaseViewModel {
                     "itemCode": "${e.itemCode}",
                     "itemFactor": "${e.itemFactor}",
                     "itemName": "${e.itemName}",
-                    "itemPrice": 0,
+                    "itemPrice": e.itemPrice ?? 0,
                     "itemType": "",
                     "priceList": ""
                   },

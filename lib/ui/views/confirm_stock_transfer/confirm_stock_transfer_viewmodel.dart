@@ -59,7 +59,17 @@ class ConfirmStockTransferViewModel extends BaseViewModel {
         cancelTitle: 'NO',
         confirmationTitle: 'Yes');
     if (dialogResponse.confirmed) {
-      await api.makeStockTransferRequest(token: user.token, payload: payload);
+      var response = await api.makeStockTransferRequest(
+          token: user.token, payload: payload);
+      if (response is bool) {
+        await _dialogService.showDialog(
+            title: 'Success',
+            description: 'Your stock transfer request was successful.');
+      } else {
+        await _dialogService.showDialog(
+            title: 'Stock Transfer failed',
+            description: 'Your stock transfer request was not successful.');
+      }
       _navigationService.pushNamedAndRemoveUntil(Routes.homeView,
           arguments: HomeViewArguments(index: 2));
     }

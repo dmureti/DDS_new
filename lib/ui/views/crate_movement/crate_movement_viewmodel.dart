@@ -48,6 +48,7 @@ class CrateMovementViewModel extends BaseViewModel {
     setBusy(true);
     var response = await _apiService.api
         .getDeliveryJourneyBranches(token, _journeyService.journeyId);
+    print(response);
     if (response is String) {
       await _dialogService.showDialog(title: 'Error', description: response);
       _navigationService.back(result: false);
@@ -69,6 +70,7 @@ class CrateMovementViewModel extends BaseViewModel {
     setBusy(true);
     _warehouseList = await _apiService.api.getWarehouseListByJourney(
         token: token, journeyId: _journeyService.currentJourney?.journeyId);
+    print(warehouseList);
     setBusy(false);
   }
 
@@ -280,7 +282,9 @@ class CrateMovementViewModel extends BaseViewModel {
       var result = await _crateManagementService.cratesReturn(
           expectedCrates: _crateList,
           reason: reason,
-          actualReturnedCrates: actualReturned,
+          actualReturnedCrates: actualReturned
+              .where((salesOrderItem) => salesOrderItem.quantity > 0)
+              .toList(),
           branch: branch,
           route: warehouse);
       setBusy(false);
