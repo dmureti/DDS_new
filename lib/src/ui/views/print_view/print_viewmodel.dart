@@ -1,6 +1,8 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/core/models/app_version.dart';
 import 'package:distributor/services/init_service.dart';
+import 'package:distributor/services/version_service.dart';
 import 'package:stacked/stacked.dart';
 
 enum SummaryAmount { Net, Tax, Gross }
@@ -9,6 +11,7 @@ enum TaxCategory { Net, Tax, Gross }
 
 class PrintViewModel extends BaseViewModel {
   final _initService = locator<InitService>();
+  final _versionService = locator<VersionService>();
 
   calculateAmounts(SummaryAmount summaryAmount) {
     switch (summaryAmount) {
@@ -41,9 +44,28 @@ class PrintViewModel extends BaseViewModel {
 
   AndroidDeviceInfo get androidDeviceInfo => _initService.androidDeviceInfo;
 
+  AppVersion _appVersion;
+  String _versionCode = "";
+
+  AppVersion get appVersion => _appVersion;
+
+  String get deviceId => androidDeviceInfo.androidId ?? "";
+  String get versionCode => _versionCode;
+
+  _getVersion() async {
+    setBusy(true);
+    await _versionService.getVersion().then((value) async {
+      _appVersion = value;
+      _versionCode = _appVersion.versionCode.toString();
+      // await checkForUpdates();
+    });
+    setBusy(false);
+  }
+
   init() async {
     setBusy(true);
     await fetchDeviceInfo();
+    await _getVersion();
     calculateGrossAmount();
     setBusy(false);
   }
@@ -58,11 +80,6 @@ class PrintViewModel extends BaseViewModel {
       _grossAmount = unitSum + grossAmount;
       notifyListeners();
     }
-    // deliveryItems.forEach((element) {
-    //   var unitSum = element['itemRate'] * element['quantity'];
-    //   total += unitSum;
-    // });
-    // _grossAmount = total;
     _taxAmount = 0.18 * grossAmount;
   }
 

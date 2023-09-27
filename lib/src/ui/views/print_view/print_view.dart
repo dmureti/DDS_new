@@ -1,7 +1,6 @@
-import 'dart:typed_data';
-
 import 'package:distributor/src/ui/views/print_view/print_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -45,59 +44,88 @@ class PrintView extends StatelessWidget {
       PdfPageFormat format, String title, PrintViewModel model) async {
     const imageProvider = const AssetImage('assets/images/mini_logo.png');
     final image = await flutterImageProvider(imageProvider);
-    final pdf = pw.Document(compress: true);
-    // final font = await PdfGoogleFonts.nunitoExtraLight();
-    pdf.addPage(
-      pw.Page(
-        pageFormat: format,
-        build: (context) {
-          return pw.Column(
-            children: [
-              _buildHeader(image),
-              // _buildSummary(model),
-              // ..._buildGoodsAndServices(deliveryNote.deliveryItems),
-              _buildSectionHeader("Section A: Sellers Detail"),
-              _buildSellersDetail(user),
-              _buildSectionHeader("Section B: URA Information"),
-              _buildSectionHeader("Section C: Buyers Details"),
-              _buildBuyerDetails(),
-              _buildSectionHeader("Section D: Goods and Services Details"),
-              ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems),
-              _buildSectionHeader("Section E: Tax Details"),
-              _buildTaxDetails(model),
-              _buildSectionHeader("Section F: Summary"),
-              _buildSummary(model),
-              _buildFooter(model),
-              // pw.SizedBox(
-              //   width: double.infinity,
-              //   child: pw.FittedBox(
-              //     child: pw.Text(title),
-              //   ),
-              // ),
-              // pw.SizedBox(height: 20),
-              // pw.Flexible(child: pw.FlutterLogo())
-            ],
-          );
-        },
-      ),
-    );
+    final font =
+        await rootBundle.load("assets/fonts/proxima_nova/normal/proxima.ttf");
+    final ttf = pw.Font.ttf(font);
+    final pdf = pw.Document(
+        compress: false,
+        theme: pw.ThemeData(
+            defaultTextStyle: pw.TextStyle(font: ttf, fontSize: 14)));
+    // pdf.addPage(
+    //   pw.Page(
+    //     pageFormat: format,
+    //     build: (context) {
+    //       return pw.Column(
+    //         children: [
+    //           _buildPrintRef(model),
+    //           _buildHeader(image),
+    //           // _buildSummary(model),
+    //           // ..._buildGoodsAndServices(deliveryNote.deliveryItems),
+    //           _buildSectionHeader("Section A: Sellers Detail"),
+    //           _buildSellersDetail(user),
+    //           _buildSectionHeader("Section B: URA Information"),
+    //           _buildSectionHeader("Section C: Buyers Details"),
+    //           _buildBuyerDetails(),
+    //           _buildSectionHeader("Section D: Goods and Services Details"),
+    //           ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems),
+    //           _buildSectionHeader("Section E: Tax Details"),
+    //           _buildTaxDetails(model),
+    //           _buildSectionHeader("Section F: Summary"),
+    //           _buildSummary(model),
+    //           _buildFooter(model),
+    //           // pw.SizedBox(
+    //           //   width: double.infinity,
+    //           //   child: pw.FittedBox(
+    //           //     child: pw.Text(title),
+    //           //   ),
+    //           // ),
+    //           // pw.SizedBox(height: 20),
+    //           // pw.Flexible(child: pw.FlutterLogo())
+    //         ],
+    //       );
+    //     },
+    //   ),
+    // );
+    pdf.addPage(pw.MultiPage(
+      build: (context) {
+        return [
+          _buildPrintRef(model),
+          pw.Wrap(children: [
+            _buildHeader(image),
+            _buildSectionHeader("Section A: Sellers Detail"),
+            _buildSellersDetail(user),
+            _buildSectionHeader("Section B: URA Information"),
+            _buildSectionHeader("Section C: Buyers Details"),
+            _buildBuyerDetails(),
+            _buildSectionHeader("Section D: Goods and Services Details"),
+            ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems),
+            _buildSectionHeader("Section E: Tax Details"),
+            _buildTaxDetails(model),
+            _buildSectionHeader("Section F: Summary"),
+            _buildSummary(model),
+            _buildFooter(model)
+          ]),
+        ];
+      },
+    ));
 
     return pdf.save();
   }
 
+  ///
+  /// Build the header of the invoice
+  ///
   _buildHeader(pw.ImageProvider image) {
     return pw.Row(children: [
       pw.Padding(
         child: pw.Container(
-            child: pw.Image(image, height: 80), width: 100, height: 80),
+            child: pw.Image(image, height: 70), width: 100, height: 70),
         padding: pw.EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       ),
       // pw.Placeholder(fallbackHeight: 50, fallbackWidth: 50),
       pw.SizedBox(width: 20),
       pw.Text(title,
           style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
-      //DDS Logo
-      //Title
     ]);
   }
 
@@ -162,7 +190,7 @@ class PrintView extends StatelessWidget {
     var deliveryNoteId = deliveryNote.deliveryNoteId == null
         ? deliveryNote.referenceNo
         : orderId;
-    final pw.TextStyle textStyle = pw.TextStyle(fontSize: 18);
+    final pw.TextStyle textStyle = pw.TextStyle(fontSize: 14);
     return pw.Column(children: [
       // _buildSpacer(),
       pw.Row(
@@ -181,37 +209,51 @@ class PrintView extends StatelessWidget {
       pw.SizedBox(height: 10),
       pw.Row(
         children: [
-          pw.Text('Seller\'s Reference No : ',
-              style: pw.TextStyle(fontSize: 15)),
-          pw.Text(user.full_name, style: pw.TextStyle(fontSize: 15)),
+          pw.Text(
+            'Seller\'s Reference No : ',
+          ),
+          pw.Text(
+            user.full_name,
+          ),
         ],
       ),
       pw.Row(
         children: [
-          pw.Text('Served By : ', style: pw.TextStyle(fontSize: 15)),
-          pw.Text(user.full_name, style: pw.TextStyle(fontSize: 15)),
+          pw.Text(
+            'Served By : ',
+          ),
+          pw.Text(
+            user.full_name,
+          ),
         ],
       ),
       pw.Row(
         children: [
-          pw.Text('Order Id : ', style: pw.TextStyle(fontSize: 15)),
-          pw.Text('${deliveryNoteId}', style: pw.TextStyle(fontSize: 15)),
+          pw.Text(
+            'Transaction Id : ',
+          ),
+          pw.Text(
+            '${deliveryNoteId}',
+          ),
         ],
       ),
       pw.Row(
         children: [
-          pw.Text('Delivery Date : ', style: pw.TextStyle(fontSize: 15)),
-          pw.Text('${deliveryNote.deliveryDate}',
-              style: pw.TextStyle(fontSize: 15)),
+          pw.Text(
+            'Transaction Date : ',
+          ),
+          pw.Text(
+            '${deliveryNote.deliveryDate}',
+          ),
         ],
       ),
-      pw.Row(
-        children: [
-          pw.Text('Delivery Status : ', style: pw.TextStyle(fontSize: 15)),
-          pw.Text('${deliveryNote.deliveryStatus}',
-              style: pw.TextStyle(fontSize: 15)),
-        ],
-      ),
+      // pw.Row(
+      //   children: [
+      //     pw.Text('Status : ', style: pw.TextStyle(fontSize: 15)),
+      //     pw.Text('${deliveryNote.deliveryStatus}',
+      //         style: pw.TextStyle(fontSize: 15)),
+      //   ],
+      // ),
       _buildSpacer(),
     ]);
   }
@@ -220,8 +262,15 @@ class PrintView extends StatelessWidget {
     return pw.SizedBox(height: 20);
   }
 
-  _buildFooter(model) {
-    return pw.Text("Powered by DDS");
+  _buildFooter(PrintViewModel model) {
+    return pw.Column(children: [
+      pw.Center(
+        child: pw.Text(model.deviceId, style: pw.TextStyle(fontSize: 14)),
+      ),
+      pw.SizedBox(height: 2),
+      pw.Text("Powered by DDS ver:${model.versionCode}",
+          style: pw.TextStyle(fontWeight: pw.FontWeight.bold))
+    ], crossAxisAlignment: pw.CrossAxisAlignment.center);
   }
 
   _buildSummary(PrintViewModel model) {
@@ -265,5 +314,16 @@ class PrintView extends StatelessWidget {
         ],
       ),
     ]);
+  }
+
+  ///
+  /// Build printer information
+  /// Build version info
+  ///
+  _buildPrintRef(PrintViewModel model) {
+    return pw.Row(children: [
+      pw.Text("${model.versionCode}-${model.deviceId}",
+          style: pw.TextStyle(fontSize: 10)),
+    ], mainAxisAlignment: pw.MainAxisAlignment.end);
   }
 }

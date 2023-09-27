@@ -427,4 +427,6 @@ class AdhocCartService with ReactiveServiceMixin {
     return await _apiService.api.reverseSale(referenceNo, token, "Pick Up",
         POSSaleRequest: POSSaleRequest);
   }
+
+  void resetCart() {}
 }

@@ -29,6 +29,4 @@ class AddAdhocSaleViewModel extends BaseViewModel {
   Customer get customer => _customer;
 
   AddAdhocSaleViewModel(Customer customer) : _customer = customer;
-
-  getSaleItems() {}
 }

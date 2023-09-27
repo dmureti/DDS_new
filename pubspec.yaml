@@ -1,6 +1,6 @@
 name: distributor
 description: Digital Distribution System
-version: 23.0.2+23
+version: 23.0.3+23
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
@@ -113,6 +113,9 @@ flutter:
     - family: ProximaNovaRegular
       fonts:
         - asset: assets/fonts/proxima_nova/normal/ProximaNovaAltRegular.otf
+    - family: ProximaTTF
+      fonts:
+        - asset: assets/fonts/proxima_nova/normal/proxima.ttf
     - family: ProximaNova500
       fonts:
         - asset: assets/fonts/proxima_nova/normal/ProximaNovaAltSemibold.otf

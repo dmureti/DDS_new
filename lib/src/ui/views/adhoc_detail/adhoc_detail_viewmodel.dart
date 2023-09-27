@@ -1,5 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/app_models.dart';
+import 'package:distributor/core/models/invoice.dart';
 import 'package:distributor/services/adhoc_cart_service.dart';
 import 'package:distributor/services/stock_controller_service.dart';
 import 'package:distributor/services/user_service.dart';
@@ -255,10 +256,16 @@ class AdhocDetailViewModel extends BaseViewModel {
   }
 
   void navigateToPrint() {
+    // CustomerDetail customerDetail = CustomerDetail.fromCustomer(customer);
+    Invoice _invoice = Invoice(
+        transactionDate: adhocDetail.transactionDate,
+        id: referenceNo,
+        items: []);
     _navigationService.navigateToView(PrintView(
       deliveryNote: adhocDetail,
-      title: 'e-Receipt',
+      title: 'e-Invoice',
       user: _userService.user,
+      orderId: referenceNo,
     ));
   }
 }

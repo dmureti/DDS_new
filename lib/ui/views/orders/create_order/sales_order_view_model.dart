@@ -37,6 +37,18 @@ class SalesOrderViewModel extends ReactiveViewModel {
 
   get customerName => _adhocCartService.customerName ?? "Walk In Customer";
 
+  // Check if the cart has items
+  bool get cartHasItems => _adhocCartService.items.isNotEmpty;
+
+  // Get the item count
+  int get itemCount => _adhocCartService.items.length;
+
+  // Reset the items in the cart
+  resetCart() {
+    _adhocCartService.resetCart();
+    notifyListeners();
+  }
+
   updateSearchString(String val) {
     skuSearchString = val.trim();
     search();
