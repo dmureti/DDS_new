@@ -26,10 +26,6 @@ class StockTransferRequestView extends StatelessWidget {
               : model.productList.isNotEmpty
                   ? Column(
                       children: [
-                        //@Todo Transfer Type
-                        //@Todo Source branch
-                        //@Todo Destination shop
-                        //@Todo Items to transfer
                         Expanded(
                           child: ListView.separated(
                             itemBuilder: (context, index) {

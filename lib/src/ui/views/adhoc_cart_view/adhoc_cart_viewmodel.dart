@@ -19,6 +19,14 @@ class AdhocCartViewModel extends ReactiveViewModel {
   NavigationService _navigationService = locator<NavigationService>();
   final _customerService = locator<CustomerService>();
 
+  getQuantity(Product product) {
+    var result = _stockBalanceList.firstWhere(
+        (element) =>
+            element.itemName.toLowerCase() == product.itemName.toLowerCase(),
+        orElse: () => null);
+    return result?.quantity ?? 0;
+  }
+
   bool get enforceCreditLimit => _adhocCartService.enforceCreditLimit;
   bool get enforceCustomerSecurity => _adhocCartService.enforceCustomerSecurity;
 
