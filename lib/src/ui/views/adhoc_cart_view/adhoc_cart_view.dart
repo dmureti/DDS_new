@@ -160,8 +160,11 @@ class AdhocCartView extends StatelessWidget {
                         ),
                       ),
                       ActionButton(
-                          label: 'Continue to Payment',
-                          onPressed: () => model.navigateToAdhocPaymentView()),
+                        label: 'Continue to Payment',
+                        onPressed: model.cartHasItems
+                            ? () => model.navigateToAdhocPaymentView()
+                            : null,
+                      )
                     ],
                   ),
       ),
