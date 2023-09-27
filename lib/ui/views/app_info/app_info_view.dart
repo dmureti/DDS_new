@@ -41,37 +41,6 @@ class AppInfoView extends StatelessWidget {
                           Text('Device : ${model.androidDeviceInfo.device}'),
                           Text(
                               'Device Id : ${model.androidDeviceInfo.androidId}'),
-                          Text('Battery : ${model.batteryLevel}'),
-                          Text('Network Strength : ${model.networkStrength}'),
-                          Row(
-                            children: [
-                              Text('Printer status : ${model.printerStatus}'),
-                              IconButton(
-                                  onPressed: model.getPrinterStatus,
-                                  icon: Icon(Icons.print))
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                  child:
-                                      Text('Battery  : ${model.batteryLevel}')),
-                              IconButton(
-                                  onPressed: () => model.getBatteryLevel(),
-                                  icon: Icon(Icons.print))
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                  child: Text(
-                                      'Sensor Available  : ${model.sensorAvailable}')),
-                              IconButton(
-                                  onPressed: () =>
-                                      model.checkSensorAvailability(),
-                                  icon: Icon(Icons.sensors))
-                            ],
-                          )
                         ],
                       ),
                     ),
