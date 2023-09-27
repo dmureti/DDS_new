@@ -24,7 +24,8 @@ class AdhocSalesViewModel extends ReactiveViewModel {
 
   navigateToCart() async {
     if (isWalkInCustomer) {
-      _adhocCartService.setSellingPriceList(posProfile['defaultPriceList']);
+      //@TODO Convert to the init service default database
+      _adhocCartService.setSellingPriceList("walk in");
     }
     await _navigationService.navigateTo(Routes.adhocCartView,
         arguments: AdhocCartViewArguments(
@@ -75,7 +76,6 @@ class AdhocSalesViewModel extends ReactiveViewModel {
 
   updateCustomerType(String val) {
     _customerType = val.trim();
-    print(customerType);
     _adhocCartService.setCustomerType(val);
     notifyListeners();
   }
@@ -94,7 +94,7 @@ class AdhocSalesViewModel extends ReactiveViewModel {
   }
 
   bool get isWalkInCustomer {
-    if (customerType.toLowerCase() == 'walk-in') {
+    if (customerType.toLowerCase() == 'walk_in') {
       return true;
     } else {
       return false;
@@ -139,7 +139,7 @@ class AdhocSalesViewModel extends ReactiveViewModel {
   }
 
   String _customerName;
-  String get customerName => _customerName ?? "Customer";
+  String get customerName => _customerName ?? "Walk In";
   updateCustomerName(String val) {
     if (val.isNotEmpty) {
       _customerName = val;

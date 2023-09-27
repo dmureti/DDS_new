@@ -1,7 +1,9 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/models/product_service.dart';
 import 'package:distributor/services/adhoc_cart_service.dart';
 import 'package:distributor/services/order_service.dart';
+import 'package:distributor/services/stock_controller_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
@@ -12,6 +14,8 @@ enum ProductOrdering { alphaAsc, alphaDesc }
 
 class SalesOrderViewModel extends ReactiveViewModel {
   AdhocCartService _adhocCartService = locator<AdhocCartService>();
+  StockControllerService _stockControllerService =
+      locator<StockControllerService>();
 
   /// This is used to convert the local time to UTC.
   /// The [DatePicker] returns a date object with a default time of 00:00
@@ -30,6 +34,8 @@ class SalesOrderViewModel extends ReactiveViewModel {
 
   String skuSearchString = "";
   List<Product> filteredProductList = <Product>[];
+
+  get customerName => _adhocCartService.customerName ?? "Walk In Customer";
 
   updateSearchString(String val) {
     skuSearchString = val.trim();
@@ -86,7 +92,9 @@ class SalesOrderViewModel extends ReactiveViewModel {
   Customer _customer;
   Customer get customer => _customer;
 
-  SalesOrderViewModel({@required Customer customer}) : _customer = customer;
+  SalesOrderViewModel({@required Customer customer, bool isWalkIn})
+      : _customer = customer,
+        _isWalkIn = isWalkIn;
 
   String _remarks = "";
   String get remarks => _remarks;
@@ -95,18 +103,21 @@ class SalesOrderViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
-  List<Product> _productList;
+  List<Product> _productList = [];
 
   List<Product> get productList {
-    switch (_productOrdering) {
-      case ProductOrdering.alphaAsc:
-        _productList.sort((a, b) => a.itemName.compareTo(b.itemName));
-        break;
-      case ProductOrdering.alphaDesc:
-        _productList.sort((b, a) => a.itemName.compareTo(b.itemName));
-        break;
+    if (_productList.isNotEmpty) {
+      switch (_productOrdering) {
+        case ProductOrdering.alphaAsc:
+          _productList.sort((a, b) => a.itemName.compareTo(b.itemName));
+          break;
+        case ProductOrdering.alphaDesc:
+          _productList.sort((b, a) => a.itemName.compareTo(b.itemName));
+          break;
+      }
+      return _productList.where((product) => product.itemPrice > 0).toList();
     }
-    return _productList.where((product) => product.itemPrice > 0).toList();
+    return _productList;
   }
 
   resetSearch() {
@@ -251,12 +262,93 @@ class SalesOrderViewModel extends ReactiveViewModel {
   List<ReactiveServiceMixin> get reactiveServices => [_adhocCartService];
 
   onEditComplete() {
-    print('Edit Completed');
     notifyListeners();
   }
 
   onFieldSubmitted(String val) {
     print(val);
     print('Field Submitted');
+  }
+
+  final bool _isWalkIn;
+  bool get isWalkIn => _isWalkIn;
+
+  initializeAdhoc() async {
+    if (customer != null) {
+      await _adhocCartService.initializeCustomerData(
+          customer, customerProductList);
+    }
+    // await fetchProductsByPrice();
+    isWalkIn ? await fetchProductsByPrice() : await fetchProducts();
+    await fetchStockBalance();
+
+    // await fetchProductsByPrice();
+    //Set products
+    if (stockBalanceList.isNotEmpty && productList.isNotEmpty) {
+      getAvailableItems();
+    }
+  }
+
+  List<Product> _availableItems = <Product>[];
+
+  getAvailableItems() {
+    //Compare the two items
+    Set<Product> temp = {};
+    _productList.forEach((p) {
+      //Loop through the stocks and see if it has a corresponding item
+      _stockBalanceList.forEach((element) {
+        if (element.itemCode.toLowerCase() == p.itemCode.toLowerCase()) ;
+        //Add this to the customerProductList
+        temp.add(element);
+      });
+    });
+    _availableItems.addAll(temp.toList());
+    notifyListeners();
+  }
+
+  List<Product> get availableItems => _availableItems;
+
+  Future fetchProductsByPrice() async {
+    setBusy(true);
+    var result = await _productService.fetchProductsByDefaultPriceList(
+        defaultStock: _adhocCartService.sellingPriceList);
+    setBusy(false);
+    if (result is List<Product>) {
+      _productList = result;
+      notifyListeners();
+    } else {
+      _productList = <Product>[];
+    }
+  }
+
+  double getQuantity(Product product) {
+    var result = _stockBalanceList.firstWhere(
+        (element) =>
+            element.itemCode.toLowerCase() == product.itemCode.toLowerCase(),
+        orElse: () => null);
+    return result?.quantity ?? 0;
+  }
+
+  Future fetchStockBalance() async {
+    var result = await _stockControllerService.getStockBalance();
+    if (result is List<Product>) {
+      _stockBalanceList = result;
+      notifyListeners();
+    } else if (result is CustomException) {
+      _stockBalanceList = <Product>[];
+      notifyListeners();
+      await _dialogService.showDialog(
+          title: result.title, description: result.description);
+    }
+  }
+
+  List<Product> _customerProductList = [];
+  List<Product> get customerProductList => _customerProductList;
+
+  List<Product> _stockBalanceList = [];
+  List<Product> get stockBalanceList => _stockBalanceList;
+
+  navigateToAdhocPaymentView() async {
+    await _navigationService.navigateTo(Routes.adhocPaymentView);
   }
 }

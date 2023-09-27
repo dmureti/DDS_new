@@ -377,9 +377,7 @@ class AdhocCartService with ReactiveServiceMixin {
         modeOfPayment: paymentMode == 'INVOICE' ? 'ACCOUNT' : paymentMode,
         data: data,
         token: token);
-    if (result is bool) {
-      resetTotal();
-    }
+
     return result;
   }
 

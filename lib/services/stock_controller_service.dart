@@ -102,7 +102,6 @@ class StockControllerService {
   getUserPOSProfile() async {
     var result =
         await _api.getUserPOSProfile(token: _user.token, userId: _user.id);
-
     return result;
   }
 
