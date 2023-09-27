@@ -61,9 +61,9 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
                     Row(
                       children: [
                         Container(
-                          width: 85,
+                          width: 60,
                           child: Text(
-                            '${model.isEnabled ? 'UGX ${item.itemPrice.toStringAsFixed(2)}' : ''}',
+                            '${model.isEnabled ? '${item.itemPrice.toStringAsFixed(2)}' : ''}',
                             style: TextStyle(
                                 color: Colors.black.withOpacity(0.5),
                                 fontSize: 13),
