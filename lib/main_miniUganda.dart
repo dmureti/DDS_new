@@ -24,6 +24,7 @@ void main() async {
       enableFullDelivery: false,
       enforceCreditLimit: false,
       enableCustomDelivery: true,
+      defaultPriceList: "walk in",
       enforceCustomerSecurity: false,
       enableAdhocSales: true,
       enableWalkIn: true,
