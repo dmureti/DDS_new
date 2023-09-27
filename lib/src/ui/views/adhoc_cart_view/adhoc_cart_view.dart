@@ -142,6 +142,10 @@ class AdhocCartView extends StatelessWidget {
             mainTitle: 'Cart',
             subTitle: isWalkin ? model.customerName : customer.name,
           ),
+          actions: [
+            // IconButton(
+            //     onPressed: () => model.resetCart(), icon: Icon(Icons.delete))
+          ],
         ),
         body: model.isBusy
             ? Center(
