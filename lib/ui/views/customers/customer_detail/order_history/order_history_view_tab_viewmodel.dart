@@ -1,6 +1,7 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/customer_service.dart';
+import 'package:distributor/services/init_service.dart';
 import 'package:distributor/services/order_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
@@ -13,6 +14,7 @@ class OrderHistoryTabViewModel extends ReactiveViewModel {
   NavigationService _navigationService = locator<NavigationService>();
   OrderService _orderService = locator<OrderService>();
   SnackbarService _snackbarService = locator<SnackbarService>();
+  InitService _initService = locator<InitService>();
 
   final Customer customer;
 
@@ -23,6 +25,9 @@ class OrderHistoryTabViewModel extends ReactiveViewModel {
 
   List<SalesOrder> _customerSalesOrders = [];
   List<SalesOrder> get customerSalesOrders => _customerSalesOrders;
+
+  bool get enableOffline => _initService
+      .appEnv.flavorValues.applicationParameter.enableOfflineService;
 
   Future fetchCustomerOrders() async {
     setBusy(true);
