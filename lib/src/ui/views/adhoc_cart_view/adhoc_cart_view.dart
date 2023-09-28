@@ -191,7 +191,7 @@ class _ResultsView extends HookViewModelWidget<SalesOrderViewModel> {
           );
         },
         shrinkWrap: true,
-        itemCount: model.productList.length,
+        itemCount: model.stockBalanceList.length,
         itemBuilder: (context, index) {
           Product product = model.productList[index];
           return SalesOrderItemWidget(
