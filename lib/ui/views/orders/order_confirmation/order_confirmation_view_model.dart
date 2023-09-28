@@ -3,6 +3,7 @@ import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/activity_service.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/customer_service.dart';
+import 'package:distributor/services/init_service.dart';
 import 'package:distributor/services/order_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,11 @@ class OrderConfirmationViewModel extends ReactiveViewModel {
       {@required this.customer, SalesOrderRequest salesOrderRequest})
       : assert(customer != null),
         _salesOrder = salesOrderRequest;
+
+  final InitService _initService = locator<InitService>();
+
+  bool get enableOffline => _initService
+      .appEnv.flavorValues.applicationParameter.enableOfflineService;
 
   navigateToProductSelection() async {
     _navigationService.popRepeated(1);
