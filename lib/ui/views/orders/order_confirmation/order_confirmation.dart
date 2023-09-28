@@ -45,7 +45,11 @@ class OrderConfirmation extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              NetworkSensitiveWidget(),
+              model.enableOffline
+                  ? NetworkSensitiveWidget()
+                  : Container(
+                      height: 0,
+                    ),
               Material(
                 elevation: 4,
                 color: kColorMiniDarkBlue,
