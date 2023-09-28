@@ -20,7 +20,7 @@ class Helper {
   }
 
   static formatToTime(DateTime dateTime) {
-    var formatter = DateFormat('HH:mm');
+    var formatter = DateFormat.jm();
     String formatted = formatter.format(dateTime);
     return formatted;
   }
