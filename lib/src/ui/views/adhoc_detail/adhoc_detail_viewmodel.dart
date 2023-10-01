@@ -256,12 +256,17 @@ class AdhocDetailViewModel extends BaseViewModel {
   }
 
   void navigateToPrint() {
-    // CustomerDetail customerDetail = CustomerDetail.fromCustomer(customer);
-    Invoice _invoice = Invoice(
-        transactionDate: adhocDetail.transactionDate,
-        id: referenceNo,
-        items: []);
+    CustomerDetail customerDetail = CustomerDetail.fromCustomer(
+      Customer(
+        id: customerId,
+        name: adhocDetail.customerName,
+        taxId: "",
+      ),
+    );
+    Invoice _invoice =
+        Invoice.fromAdhocDetail(adhocDetail, customerDetail: customerDetail);
     _navigationService.navigateToView(PrintView(
+      invoice: _invoice,
       deliveryNote: adhocDetail,
       title: 'e-Invoice',
       user: _userService.user,

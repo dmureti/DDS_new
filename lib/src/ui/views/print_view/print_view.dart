@@ -1,4 +1,5 @@
 import 'package:distributor/core/helper.dart';
+import 'package:distributor/core/models/invoice.dart';
 import 'package:distributor/src/ui/views/print_view/print_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +11,7 @@ import 'package:tripletriocore/tripletriocore.dart';
 
 class PrintView extends StatelessWidget {
   final String title;
+  final Invoice invoice;
   final User user;
   var deliveryNote;
   String orderId;
@@ -17,6 +19,7 @@ class PrintView extends StatelessWidget {
 
   PrintView(
       {Key key,
+      this.invoice,
       this.title,
       @required this.deliveryNote,
       this.user,
@@ -34,14 +37,16 @@ class PrintView extends StatelessWidget {
           body: LayoutBuilder(
             builder: (context, constraints) {
               double height = constraints.maxHeight;
+              double printHeight = 300.0 * PdfPageFormat.mm;
               return PdfPreview(
-                // onPrinted: (context) => _printInvoice(model),
-                initialPageFormat: PdfPageFormat.a4,
-                build: (format) => _generatePdf(format, title, model, height),
+                maxPageWidth: MediaQuery.of(context).size.width,
+                // initialPageFormat: PdfPageFormat.a4,
+                build: (format) => _generatePdf(
+                    format.copyWith(height: printHeight), title, model, height),
                 pageFormats: <String, PdfPageFormat>{
+                  'roll57': PdfPageFormat.roll57,
                   'A4': PdfPageFormat.a4,
                   'Letter': PdfPageFormat.letter,
-                  'roll57': PdfPageFormat.roll57,
                 },
               );
             },
@@ -49,85 +54,50 @@ class PrintView extends StatelessWidget {
         );
       },
       viewModelBuilder: () {
-        return PrintViewModel(deliveryNote);
+        return PrintViewModel(deliveryNote, invoice);
       },
     );
   }
 
   Future<Uint8List> _generatePdf(PdfPageFormat format, String title,
       PrintViewModel model, double widgetHeight) async {
-    // final font =
-    //     await rootBundle.load("assets/fonts/proxima_nova/normal/proxima.ttf");
-    // final ttf = pw.Font.ttf(font);
-
+    final font =
+        await rootBundle.load("assets/fonts/proxima_nova/normal/proxima.ttf");
+    final ttf = pw.Font.ttf(font);
     const imageProvider = const AssetImage('assets/images/mini_logo.png');
     final image = await flutterImageProvider(imageProvider);
-    const width = 57.0 * PdfPageFormat.mm;
+    const width = 2.28346457 * PdfPageFormat.inch;
     double height = widgetHeight * PdfPageFormat.mm;
-    //Margins
-    const marginTop = 5 * PdfPageFormat.mm;
-    const marginBottom = 5 * PdfPageFormat.mm;
-    const marginLeft = 5 * PdfPageFormat.mm;
-    const marginRight = 5 * PdfPageFormat.mm;
+
     final pdf = pw.Document();
-    final pw.TextStyle style = pw.TextStyle.defaultStyle();
+    final pw.TextStyle style = pw.TextStyle(font: ttf, fontSize: 16);
+
     pdf.addPage(pw.MultiPage(
-      pageTheme: pw.PageTheme(
-          pageFormat: format.copyWith(height: height),
-          theme: pw.ThemeData(
-            defaultTextStyle: pw.TextStyle.defaultStyle(),
-          )),
+      pageFormat: format,
       build: (context) {
-        return [_buildDoc(model, style, image)];
+        return [
+          _buildPrintRef(model, style),
+          _buildHeader(image, model, style),
+          _buildSectionHeader("Section A: Sellers Detail", style),
+          _buildSellersDetail(user, style, model),
+          _buildSectionHeader("Section B: URA Information", style),
+          _buildURAInformation(style, model),
+          _buildSectionHeader("Section C: Buyers Details", style),
+          _buildBuyerDetails(model, style),
+          _buildSectionHeader("Section D: Goods and Services Details", style),
+          ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
+          _buildSpacer(),
+          _buildSectionHeader("Section E: Tax Details", style),
+          _buildTaxDetails(model, style),
+          _buildSectionHeader("Section F: Summary",
+              style.copyWith(fontWeight: pw.FontWeight.bold)),
+          _buildSummary(model, style),
+          _buildSpacer(),
+          _buildFooter(model, style)
+        ];
       },
     ));
-    // pdf.addPage(pw.Page(
-    //   pageTheme: pw.PageTheme(
-    //     clip: false,
-    //     pageFormat: format.copyWith(
-    //         height: height, marginLeft: marginLeft, marginRight: marginRight),
-    //     // theme: pw.ThemeData(
-    //     //     defaultTextStyle: pw.TextStyle(fontSize: 8),
-    //     //     paragraphStyle: pw.TextStyle(fontSize: 10),
-    //     //     softWrap: true),
-    //   ),
-    //   build: (context) {
-    //     return _buildDoc(model, style, image);
-    //   },
-    // ));
-
     return pdf.save();
-  }
-
-  _buildDoc(PrintViewModel model, pw.TextStyle style, pw.ImageProvider image) {
-    return pw.Wrap(children: [
-      _buildPrintRef(model, style),
-      _buildHeader(image, model, style),
-      _buildSectionHeader("Section A: Sellers Detail", style),
-      _buildSellersDetail(user, style),
-      _buildSectionHeader("Section B: URA Information", style),
-      _buildURAInformation(style, model),
-      _buildURAInformation(style, model),
-      _buildURAInformation(style, model),
-      _buildURAInformation(style, model),
-      // _buildURAInformation(style, model),
-      // _buildURAInformation(style, model),
-      // _buildURAInformation(style, model),
-      _buildURAInformation(style, model),
-      _buildURAInformation(style, model),
-      _buildSectionHeader("Section C: Buyers Details", style),
-      _buildBuyerDetails(model, style),
-      _buildSectionHeader("Section D: Goods and Services Details", style),
-      ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems),
-      _buildSpacer(),
-      _buildSectionHeader("Section E: Tax Details", style),
-      _buildTaxDetails(model, style),
-      _buildSectionHeader(
-          "Section F: Summary", style.copyWith(fontWeight: pw.FontWeight.bold)),
-      _buildSummary(model, style),
-      _buildSpacer(),
-      _buildFooter(model, style)
-    ]);
   }
 
   ///
@@ -144,12 +114,14 @@ class PrintView extends StatelessWidget {
       // pw.Placeholder(fallbackHeight: 50, fallbackWidth: 50),
       pw.SizedBox(width: 20),
       pw.Column(children: [
-        pw.Text(title, style: style),
+        pw.Text(title,
+            style:
+                style.copyWith(fontSize: 18, fontWeight: pw.FontWeight.bold)),
         pw.Row(
           children: [
-            pw.Text("Date: "),
-            pw.Text("${Helper.formatToTime(model.dateTime)} "),
-            pw.Text("${Helper.formatDate(model.dateTime)} "),
+            pw.Text("Date: ", style: style),
+            pw.Text("${Helper.formatToTime(model.dateTime)} ", style: style),
+            pw.Text("${Helper.formatDate(model.dateTime)} ", style: style),
           ],
         )
       ], crossAxisAlignment: pw.CrossAxisAlignment.start)
@@ -162,62 +134,67 @@ class PrintView extends StatelessWidget {
         pw.Text('Customer Name :', style: style),
         pw.Text(deliveryNote.customerName ?? "", style: style)
       ]),
+      // pw.Row(children: [
+      //   pw.Text('Customer ID :', style: style),
+      //   pw.Text(model.customerTIN ?? "", style: style)
+      // ]),
+      pw.Row(
+        children: [
+          pw.Text('Customer Address :', style: style),
+          pw.Text("", style: style)
+        ],
+      ),
       pw.Row(children: [
         pw.Text('Customer TIN :', style: style),
-        pw.Text(model.customerTIN ?? "", style: style)
+        pw.Text("", style: style)
       ]),
-      _buildSpacer()
     ]);
   }
 
-  _buildGoodsAndServices(List deliveryItems) {
-    final pw.TextStyle style = pw.TextStyle(fontSize: 8);
-    return deliveryItems
-        .map(
-          (deliveryItem) => pw.Padding(
-            padding: pw.EdgeInsets.symmetric(vertical: 2),
-            child: pw.Column(children: [
-              pw.Row(
-                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                children: [
-                  // pw.Text(deliveryItem['itemCode'], style: style),
+  _buildGoodsAndServices(List deliveryItems, pw.TextStyle style) {
+    return deliveryItems.map((deliveryItem) {
+      num deliveredQty =
+          deliveryItem['deliveredQty'] ?? deliveryItem['quantity'] ?? 0.0;
+      num total = deliveredQty * deliveryItem['itemRate'];
+      return pw.Padding(
+        padding: pw.EdgeInsets.symmetric(vertical: 2),
+        child: pw.Column(children: [
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            children: [
+              // pw.Text(deliveryItem['itemCode'], style: style),
 
-                  pw.Expanded(
-                    child: pw.Text(deliveryItem['itemName'], style: style),
-                  ),
-                  pw.Container(
-                    child: pw.Text(deliveryItem['quantity'].toString(),
-                        style: style, textAlign: pw.TextAlign.right),
-                  ),
-                  pw.Container(
-                    child: pw.Text(" x ",
-                        style: style, textAlign: pw.TextAlign.right),
-                  ),
-                  pw.SizedBox(width: 5),
-                  pw.Text('${deliveryItem['itemRate']}'.toString(),
-                      style: style),
-                  pw.SizedBox(width: 5),
-                  _buildCurrencyWidget(
-                      deliveryItem['itemRate'] * deliveryItem['quantity'],
-                      style),
-                ],
-              )
-            ]),
-          ),
-        )
-        .toList();
+              pw.Expanded(
+                child: pw.Text(deliveryItem['itemName'], style: style),
+              ),
+              pw.Container(
+                child: pw.Text(deliveredQty.toString(),
+                    style: style, textAlign: pw.TextAlign.right),
+              ),
+              pw.Container(
+                child:
+                    pw.Text(" x ", style: style, textAlign: pw.TextAlign.right),
+              ),
+              pw.SizedBox(width: 5),
+              pw.Text('${deliveryItem['itemRate']}'.toString(), style: style),
+              pw.SizedBox(width: 5),
+              _buildCurrencyWidget(total, style),
+            ],
+          )
+        ]),
+      );
+    }).toList();
   }
 
   _buildSectionHeader(final String sectionHeader, pw.TextStyle style) {
     return pw.Column(children: [
       pw.Divider(),
-      pw.Text(sectionHeader,
-          style: style.copyWith(fontWeight: pw.FontWeight.bold)),
+      pw.Text(sectionHeader),
       pw.Divider(),
     ]);
   }
 
-  _buildSellersDetail(User user, pw.TextStyle textStyle) {
+  _buildSellersDetail(User user, pw.TextStyle textStyle, PrintViewModel model) {
     var deliveryNoteId = deliveryNote.deliveryNoteId == null
         ? deliveryNote.referenceNo
         : orderId;
@@ -236,10 +213,9 @@ class PrintView extends StatelessWidget {
       pw.Text('Kampala Nakawa Division'.toUpperCase(), style: textStyle),
       pw.Text('Nakawa Division Bugolobi'.toUpperCase(), style: textStyle),
       pw.Text(user.branch.toUpperCase(), style: textStyle),
-      pw.SizedBox(height: 10),
       pw.Row(
         children: [
-          pw.Text('Seller\'s Reference No : ', style: textStyle),
+          pw.Text('Seller\'s Reference : ', style: textStyle),
           pw.Text(user.full_name, style: textStyle),
         ],
       ),
@@ -252,23 +228,27 @@ class PrintView extends StatelessWidget {
       pw.Row(
         children: [
           pw.Text('Transaction Id : ', style: textStyle),
-          pw.Text('${deliveryNoteId}', style: textStyle),
+          pw.Text('${model.invoice.id}', style: textStyle),
         ],
       ),
       pw.Row(
         children: [
           pw.Text('Transaction Date : ', style: textStyle),
-          pw.Text('${deliveryNote.deliveryDate}', style: textStyle),
+          pw.Text('${model.invoice.transactionDate}', style: textStyle),
         ],
       ),
-      // pw.Row(
-      //   children: [
-      //     pw.Text('Status : ', style: pw.TextStyle(fontSize: 15)),
-      //     pw.Text('${deliveryNote.deliveryStatus}',
-      //         style: pw.TextStyle(fontSize: 15)),
-      //   ],
-      // ),
-      _buildSpacer(),
+      pw.Row(
+        children: [
+          pw.Text('Type : ', style: textStyle),
+          pw.Text('${model.invoice.transactionType}', style: textStyle),
+        ],
+      ),
+      pw.Row(
+        children: [
+          pw.Text('Transaction Status : ', style: textStyle),
+          pw.Text('${model.invoice.transactionStatus}', style: textStyle),
+        ],
+      ),
     ]);
   }
 
@@ -292,15 +272,15 @@ class PrintView extends StatelessWidget {
       pw.SizedBox(height: 5),
       pw.Row(children: [
         pw.Text('Net Amount', style: style),
-        _buildCurrencyWidget(model.netAmount, style),
+        _buildCurrencyWidget(model.invoice.net, style),
       ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
       pw.Row(children: [
         pw.Text('Tax Amount', style: style),
-        _buildCurrencyWidget(model.taxAmount, style),
+        _buildCurrencyWidget(model.invoice.tax, style),
       ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
       pw.Row(children: [
         pw.Text('Gross Amount', style: style),
-        _buildCurrencyWidget(model.grossAmount, style),
+        _buildCurrencyWidget(model.invoice.gross, style),
       ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
     ]);
   }
@@ -327,16 +307,16 @@ class PrintView extends StatelessWidget {
       pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
-          _buildCurrencyWidget(model.netAmount, style),
-          _buildCurrencyWidget(model.taxAmount, style),
-          _buildCurrencyWidget(model.grossAmount, style),
+          _buildCurrencyWidget(model.invoice.net, style),
+          _buildCurrencyWidget(model.invoice.tax, style),
+          _buildCurrencyWidget(model.invoice.gross, style),
         ],
       ),
     ]);
   }
 
-  _buildCurrencyWidget(num val, pw.TextStyle style) {
-    return pw.Text('${val.toStringAsFixed(2)}', style: style);
+  _buildCurrencyWidget(num val, pw.TextStyle style, {String currency = "UGX"}) {
+    return pw.Text('${currency} ${val.toStringAsFixed(2)}', style: style);
   }
 
   ///
@@ -358,19 +338,21 @@ class PrintView extends StatelessWidget {
       ),
       pw.Row(
         children: [
-          pw.Text('Issued Date : ${Helper.formatDate(model.dateTime)} ',
+          pw.Text(
+              'Issued Date : ${Helper.formatDateFromString(model.invoice.transactionDate)} ',
               style: style),
         ],
       ),
       pw.Row(
         children: [
-          pw.Text('Time : ${Helper.formatToTime(model.dateTime)} ',
+          pw.Text(
+              'Time : ${Helper.formatTimeFromString(model.invoice.transactionDate)} ',
               style: style),
         ],
       ),
       pw.Row(
         children: [
-          pw.Text('Device No: ${model.deviceId}', style: style),
+          pw.Text('Device No: ${model.invoice.deviceNo}', style: style),
         ],
       ),
       pw.Row(
@@ -378,7 +360,6 @@ class PrintView extends StatelessWidget {
           pw.Text('FDN: ${model.FDN}', style: style),
         ],
       ),
-      pw.SizedBox(height: 8),
       pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.center,
         children: [

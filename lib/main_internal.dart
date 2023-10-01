@@ -61,8 +61,21 @@ void main() async {
     AppEnv(
       flavor: Flavor.internal,
       name: 'Test - Mini-Uganda',
-      flavorValues:
-          FlavorValues(baseUrl: 'http://34.252.102.87:8888/dds-backend/api/v1'),
+      flavorValues: FlavorValues(
+          baseUrl: 'https://testdds.ddsolutions.tech/spvdev-backend/api/v1/',
+          applicationParameter: ApplicationParameter(
+              enableOfflineService: false,
+              enableFullDelivery: false,
+              enforceCreditLimit: false,
+              enableCustomDelivery: true,
+              currency: "UGX",
+              taxRate: 0.18,
+              defaultPriceList: "walk in",
+              enforceCustomerSecurity: false,
+              enableAdhocSales: true,
+              enableWalkIn: true,
+              enablePrintingService: true,
+              enableContractCustomers: true)),
     ),
 
     // AppEnv(

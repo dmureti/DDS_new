@@ -1,11 +1,12 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/app_version.dart';
+import 'package:distributor/core/models/invoice.dart';
 import 'package:distributor/services/init_service.dart';
 import 'package:distributor/services/version_service.dart';
-import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 enum SummaryAmount { Net, Tax, Gross }
@@ -13,6 +14,8 @@ enum SummaryAmount { Net, Tax, Gross }
 enum TaxCategory { Net, Tax, Gross }
 
 class PrintViewModel extends BaseViewModel {
+  final _navigationService = locator<NavigationService>();
+  final Invoice invoice;
   final InitService _initService = locator<InitService>();
   final _versionService = locator<VersionService>();
 
@@ -42,11 +45,6 @@ class PrintViewModel extends BaseViewModel {
 
   List<Printer> _printerList = [];
   List<Printer> get printerList => _printerList;
-
-  final width = 2.28346457 * PdfPageFormat.inch;
-  final height = 300.0 * PdfPageFormat.mm;
-
-  get pageFormat => PdfPageFormat(width, height);
 
   ///
   /// Get the list of available printers
@@ -104,7 +102,7 @@ class PrintViewModel extends BaseViewModel {
 
   DeviceInfoPlugin _deviceInfo;
 
-  PrintViewModel(this.deliveryNote);
+  PrintViewModel(this.deliveryNote, this.invoice);
   DeviceInfoPlugin get deviceInfo => _deviceInfo;
 
   final deliveryNote;
@@ -133,9 +131,8 @@ class PrintViewModel extends BaseViewModel {
     setBusy(true);
     await fetchDeviceInfo();
     await _getVersion();
-    calculateGrossAmount();
+    // calculateGrossAmount();
     getCurrentDateTime();
-    await findPrinters();
     setBusy(false);
   }
 
@@ -168,4 +165,9 @@ class PrintViewModel extends BaseViewModel {
   // Image get image => _image;
 
   fetchLogo() async {}
+
+  onPrinted() async {
+    print('printed');
+    await _navigationService.back();
+  }
 }

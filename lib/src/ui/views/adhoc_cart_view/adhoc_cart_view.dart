@@ -36,7 +36,7 @@ class AdhocCartView extends StatelessWidget {
             ? Center(
                 child: BusyWidget(),
               )
-            : model.stockBalanceList.isEmpty
+            : model.productList.isEmpty
                 ? Center(
                     child: EmptyContentContainer(label: 'No SKUs found'),
                   )
@@ -76,7 +76,7 @@ class _ResultsView extends HookViewModelWidget<SalesOrderViewModel> {
           );
         },
         shrinkWrap: true,
-        itemCount: model.stockBalanceList.length,
+        itemCount: model.productList.length,
         itemBuilder: (context, index) {
           Product product = model.productList[index];
           return SalesOrderItemWidget(

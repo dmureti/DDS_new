@@ -41,11 +41,8 @@ class Invoice {
       : _transactionDate = transactionDate ?? DateTime.now().toIso8601String();
 
   factory Invoice.fromAdhocDetail(AdhocDetail adhocDetail,
-      {SellerDetail sellerDetail}) {
+      {SellerDetail sellerDetail, CustomerDetail customerDetail}) {
     String id = adhocDetail.referenceNo;
-    CustomerDetail customerDetail = CustomerDetail(
-        customerName: adhocDetail.customerName,
-        customerId: adhocDetail.customerId);
     return Invoice(
         customerDetail: customerDetail,
         warehouse: adhocDetail.warehouseId,

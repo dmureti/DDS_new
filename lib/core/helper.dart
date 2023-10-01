@@ -19,6 +19,20 @@ class Helper {
     return formatted;
   }
 
+  static formatDateFromString(String val) {
+    DateTime dateTime = DateTime.parse(val);
+    var formatter = DateFormat('dd MMM yyyy');
+    String formatted = formatter.format(dateTime);
+    return formatted;
+  }
+
+  static formatTimeFromString(String val) {
+    DateTime dateTime = DateTime.parse(val);
+    var formatter = DateFormat.jm();
+    String formatted = formatter.format(dateTime);
+    return formatted;
+  }
+
   static formatToTime(DateTime dateTime) {
     var formatter = DateFormat.jm();
     String formatted = formatter.format(dateTime);

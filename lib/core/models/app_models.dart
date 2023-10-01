@@ -114,6 +114,12 @@ class AdhocSale {
 
   factory AdhocSale.fromResponse(Map<String, dynamic> data) {
     return AdhocSale(
+      gross: data['gross'] ?? 0.00,
+      net: data['net'] ?? 0.00,
+      deviceNo: data['deviceNo'] ?? "",
+      tax: data['tax'] ?? 0.00,
+      sellingPriceList: data['sellingPriceList'] ?? "",
+      saleItems: data['saleItems'],
       referenceNo: data['referenceNo'],
       baseType: data['baseType'],
       transactionStatus: data['transactionStatus'],
@@ -147,6 +153,8 @@ class AdhocDetail {
   String transactionDate;
   String warehouseId;
   num total;
+  double gross, net, tax = 0.00;
+  String deviceNo;
   String transactionStatus;
   String sellingPriceList;
   List saleItems;
@@ -159,9 +167,14 @@ class AdhocDetail {
       {this.referenceNo,
       this.customerId,
       this.warehouseId,
+        this.customerName,
+      this.gross,
+      this.net,
+      this.deviceNo,
+      this.tax,
       this.baseType,
       this.deliveryType,
-      this.customerName,
+
       this.transactionDate,
       this.total,
       this.transactionStatus,
@@ -179,7 +192,11 @@ class AdhocDetail {
       transactionDate: data['transactionDate'],
       customerId: data['customerId'] ?? data['customerName'],
       total: data['total'],
-      transactionStatus: data['transactionStatus'],
+      gross: data['gross'] ?? 0.00,
+      tax: data['tax'] ?? 0.00,
+      deviceNo: data['deviceNo'] ?? "",
+      net: data['net'] ?? 0.00,
+      transactionStatus: data['transactionStatus'] ?? "",
       sellingPriceList: data['sellingPriceList'],
       saleItems: data['saleItems'],
     );
