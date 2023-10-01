@@ -26,6 +26,18 @@ class PrintViewModel extends BaseViewModel {
 
   DateTime get dateTime => DateTime.now();
 
+  String _fdn = "";
+  String get FDN => _fdn;
+
+  String _verificationCode = "";
+  String get verificationCode => _verificationCode;
+
+  String _documentType = "Original";
+  String get documentType => _documentType;
+
+  String _customerTIN = "";
+  String get customerTIN => _customerTIN;
+
   getCurrentDateTime() {
     _dateTime = DateTime.now();
     var day = _dateTime.day.toString();

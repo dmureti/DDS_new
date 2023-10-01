@@ -32,7 +32,7 @@ class PrintView extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(title: Text(title)),
           body: PdfPreview(
-            initialPageFormat: PdfPageFormat.letter,
+            initialPageFormat: PdfPageFormat.roll57,
             build: (format) => _generatePdf(format, title, model),
             pageFormats: <String, PdfPageFormat>{
               'A4': PdfPageFormat.a4,
@@ -52,37 +52,34 @@ class PrintView extends StatelessWidget {
       PdfPageFormat format, String title, PrintViewModel model) async {
     const imageProvider = const AssetImage('assets/images/mini_logo.png');
     final image = await flutterImageProvider(imageProvider);
-    final font =
-        await rootBundle.load("assets/fonts/proxima_nova/normal/proxima.ttf");
-    final ttf = pw.Font.ttf(font);
-    final pdf = pw.Document(
-        pageMode: PdfPageMode.none,
-        compress: false,
-        theme: pw.ThemeData(
-            defaultTextStyle: pw.TextStyle(font: ttf, fontSize: 14)));
-    pdf.addPage(pw.MultiPage(
-      // pageFormat: PdfPageFormat.roll57,
+    // final font =
+    //     await rootBundle.load("assets/fonts/proxima_nova/normal/proxima.ttf");
+    // final ttf = pw.Font.ttf(font);
+    final pdf = pw.Document();
+    final pw.TextStyle style = pw.TextStyle(fontSize: 16);
+    pdf.addPage(pw.Page(
+      pageFormat: format,
       build: (context) {
-        return [
+        return pw.Column(children: [
           _buildPrintRef(model),
-          pw.Wrap(children: [
-            _buildHeader(image, model),
-            _buildSectionHeader("Section A: Sellers Detail"),
-            _buildSellersDetail(user),
-            _buildSectionHeader("Section B: URA Information"),
-            _buildSectionHeader("Section C: Buyers Details"),
-            _buildBuyerDetails(),
-            _buildSectionHeader("Section D: Goods and Services Details"),
-            ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems),
-            _buildSpacer(),
-            _buildSectionHeader("Section E: Tax Details"),
-            _buildTaxDetails(model),
-            _buildSectionHeader("Section F: Summary"),
-            _buildSummary(model),
-            _buildSpacer(),
-            _buildFooter(model)
-          ]),
-        ];
+          _buildHeader(image, model),
+          _buildSectionHeader("Section A: Sellers Detail"),
+          _buildSellersDetail(user, style),
+          _buildSectionHeader("Section B: URA Information"),
+          _buildURAInformation(style, model),
+          _buildSectionHeader("Section C: Buyers Details"),
+          _buildBuyerDetails(model),
+          _buildSectionHeader("Section D: Goods and Services Details"),
+          ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems),
+          _buildSpacer(),
+          _buildSectionHeader("Section E: Tax Details"),
+          _buildTaxDetails(model),
+          _buildSectionHeader("Section F: Summary"),
+          _buildSummary(model),
+          _buildSpacer(),
+          _buildFooter(model)
+        ]);
+        ;
       },
     ));
 
@@ -115,12 +112,16 @@ class PrintView extends StatelessWidget {
     ]);
   }
 
-  _buildBuyerDetails() {
+  _buildBuyerDetails(PrintViewModel model) {
     return pw.Column(children: [
       pw.Row(children: [
         pw.Text('Customer Name :', style: pw.TextStyle(fontSize: 15)),
         pw.Text(deliveryNote.customerName ?? "",
             style: pw.TextStyle(fontSize: 15))
+      ]),
+      pw.Row(children: [
+        pw.Text('Customer TIN :', style: pw.TextStyle(fontSize: 15)),
+        pw.Text(model.customerTIN ?? "", style: pw.TextStyle(fontSize: 15))
       ]),
       _buildSpacer()
     ]);
@@ -172,11 +173,10 @@ class PrintView extends StatelessWidget {
     ]);
   }
 
-  _buildSellersDetail(User user) {
+  _buildSellersDetail(User user, pw.TextStyle textStyle) {
     var deliveryNoteId = deliveryNote.deliveryNoteId == null
         ? deliveryNote.referenceNo
         : orderId;
-    final pw.TextStyle textStyle = pw.TextStyle(fontSize: 14);
     return pw.Column(children: [
       // _buildSpacer(),
       pw.Row(
@@ -195,42 +195,26 @@ class PrintView extends StatelessWidget {
       pw.SizedBox(height: 10),
       pw.Row(
         children: [
-          pw.Text(
-            'Seller\'s Reference No : ',
-          ),
-          pw.Text(
-            user.full_name,
-          ),
+          pw.Text('Seller\'s Reference No : ', style: textStyle),
+          pw.Text(user.full_name, style: textStyle),
         ],
       ),
       pw.Row(
         children: [
-          pw.Text(
-            'Served By : ',
-          ),
-          pw.Text(
-            user.full_name,
-          ),
+          pw.Text('Served By : ', style: textStyle),
+          pw.Text(user.full_name, style: textStyle),
         ],
       ),
       pw.Row(
         children: [
-          pw.Text(
-            'Transaction Id : ',
-          ),
-          pw.Text(
-            '${deliveryNoteId}',
-          ),
+          pw.Text('Transaction Id : ', style: textStyle),
+          pw.Text('${deliveryNoteId}', style: textStyle),
         ],
       ),
       pw.Row(
         children: [
-          pw.Text(
-            'Transaction Date : ',
-          ),
-          pw.Text(
-            '${deliveryNote.deliveryDate}',
-          ),
+          pw.Text('Transaction Date : ', style: textStyle),
+          pw.Text('${deliveryNote.deliveryDate}', style: textStyle),
         ],
       ),
       // pw.Row(
@@ -323,5 +307,44 @@ class PrintView extends StatelessWidget {
       pw.Text("${model.versionCode}-${model.deviceId}",
           style: pw.TextStyle(fontSize: 10)),
     ], mainAxisAlignment: pw.MainAxisAlignment.end);
+  }
+
+  _buildURAInformation(pw.TextStyle style, PrintViewModel model) {
+    return pw.Column(children: [
+      pw.Row(
+        children: [
+          pw.Text('Document Type : ${model.documentType}', style: style),
+        ],
+      ),
+      pw.Row(
+        children: [
+          pw.Text('Issued Date : ${Helper.formatDate(model.dateTime)} ',
+              style: style),
+        ],
+      ),
+      pw.Row(
+        children: [
+          pw.Text('Time : ${Helper.formatToTime(model.dateTime)} ',
+              style: style),
+        ],
+      ),
+      pw.Row(
+        children: [
+          pw.Text('Device No: ${model.deviceId}', style: style),
+        ],
+      ),
+      pw.Row(
+        children: [
+          pw.Text('FDN: ${model.FDN}', style: style),
+        ],
+      ),
+      pw.SizedBox(height: 8),
+      pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.center,
+        children: [
+          pw.Text('Verification Code: ${model.verificationCode}', style: style),
+        ],
+      ),
+    ]);
   }
 }
