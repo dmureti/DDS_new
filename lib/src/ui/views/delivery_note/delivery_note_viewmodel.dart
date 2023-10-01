@@ -1,6 +1,7 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
+import 'package:distributor/core/models/invoice.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/location_repository.dart';
@@ -239,7 +240,9 @@ class DeliveryNoteViewModel extends BaseViewModel {
   }
 
   navigateToPreview() async {
+    Invoice _invoice = Invoice.fromDeliveryNote(deliveryNote);
     await _navigationService.navigateToView(PrintView(
+      invoice: _invoice,
       title: "e-Invoice",
       deliveryNote: deliveryNote,
       user: _user,
