@@ -88,6 +88,10 @@ class AdhocSale {
   String transactionDate;
   String customerName;
   num total;
+  double gross;
+  double net;
+  double tax;
+  String deviceNo;
   String transactionStatus;
   String sellingPriceList;
   List saleItems;
@@ -95,6 +99,10 @@ class AdhocSale {
   AdhocSale(
       {this.referenceNo,
       this.baseType,
+      this.gross,
+      this.net,
+      this.tax,
+      this.deviceNo,
       this.transactionWarehouse,
       this.transactionDate,
       this.customerId,
