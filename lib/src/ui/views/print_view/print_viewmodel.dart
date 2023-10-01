@@ -3,6 +3,8 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/app_version.dart';
 import 'package:distributor/services/init_service.dart';
 import 'package:distributor/services/version_service.dart';
+import 'package:pdf/pdf.dart';
+import 'package:printing/printing.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
@@ -37,6 +39,34 @@ class PrintViewModel extends BaseViewModel {
 
   String _customerTIN = "";
   String get customerTIN => _customerTIN;
+
+  List<Printer> _printerList = [];
+  List<Printer> get printerList => _printerList;
+
+  final width = 2.28346457 * PdfPageFormat.inch;
+  final height = 300.0 * PdfPageFormat.mm;
+
+  get pageFormat => PdfPageFormat(width, height);
+
+  ///
+  /// Get the list of available printers
+  ///
+  Future<List<Printer>> findPrinters() async {
+    setBusy(true);
+    var result = await Printing.listPrinters();
+    print(result);
+    if (result is List<Printer>) {
+      print(result);
+      _printerList = result;
+      notifyListeners();
+    }
+    setBusy(false);
+    return result;
+  }
+
+  printInvoice() async {
+    print("printing");
+  }
 
   getCurrentDateTime() {
     _dateTime = DateTime.now();
@@ -105,6 +135,7 @@ class PrintViewModel extends BaseViewModel {
     await _getVersion();
     calculateGrossAmount();
     getCurrentDateTime();
+    await findPrinters();
     setBusy(false);
   }
 

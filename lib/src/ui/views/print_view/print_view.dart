@@ -31,13 +31,19 @@ class PrintView extends StatelessWidget {
       builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(title: Text(title)),
-          body: PdfPreview(
-            initialPageFormat: PdfPageFormat.roll57,
-            build: (format) => _generatePdf(format, title, model),
-            pageFormats: <String, PdfPageFormat>{
-              'A4': PdfPageFormat.a4,
-              'Letter': PdfPageFormat.letter,
-              'Roll 57': PdfPageFormat.roll57
+          body: LayoutBuilder(
+            builder: (context, constraints) {
+              double height = constraints.maxHeight;
+              return PdfPreview(
+                // onPrinted: (context) => _printInvoice(model),
+                initialPageFormat: PdfPageFormat.a4,
+                build: (format) => _generatePdf(format, title, model, height),
+                pageFormats: <String, PdfPageFormat>{
+                  'A4': PdfPageFormat.a4,
+                  'Letter': PdfPageFormat.letter,
+                  'roll57': PdfPageFormat.roll57,
+                },
+              );
             },
           ),
         );
@@ -48,48 +54,87 @@ class PrintView extends StatelessWidget {
     );
   }
 
-  Future<Uint8List> _generatePdf(
-      PdfPageFormat format, String title, PrintViewModel model) async {
-    const imageProvider = const AssetImage('assets/images/mini_logo.png');
-    final image = await flutterImageProvider(imageProvider);
+  Future<Uint8List> _generatePdf(PdfPageFormat format, String title,
+      PrintViewModel model, double widgetHeight) async {
     // final font =
     //     await rootBundle.load("assets/fonts/proxima_nova/normal/proxima.ttf");
     // final ttf = pw.Font.ttf(font);
+
+    const imageProvider = const AssetImage('assets/images/mini_logo.png');
+    final image = await flutterImageProvider(imageProvider);
+    const width = 57.0 * PdfPageFormat.mm;
+    double height = widgetHeight * PdfPageFormat.mm;
+    //Margins
+    const marginTop = 5 * PdfPageFormat.mm;
+    const marginBottom = 5 * PdfPageFormat.mm;
+    const marginLeft = 5 * PdfPageFormat.mm;
+    const marginRight = 5 * PdfPageFormat.mm;
     final pdf = pw.Document();
-    final pw.TextStyle style = pw.TextStyle(fontSize: 16);
-    pdf.addPage(pw.Page(
-      pageFormat: format,
+    final pw.TextStyle style = pw.TextStyle.defaultStyle();
+    pdf.addPage(pw.MultiPage(
+      pageTheme: pw.PageTheme(
+          pageFormat: format.copyWith(height: height),
+          theme: pw.ThemeData(
+            defaultTextStyle: pw.TextStyle.defaultStyle(),
+          )),
       build: (context) {
-        return pw.Column(children: [
-          _buildPrintRef(model),
-          _buildHeader(image, model),
-          _buildSectionHeader("Section A: Sellers Detail"),
-          _buildSellersDetail(user, style),
-          _buildSectionHeader("Section B: URA Information"),
-          _buildURAInformation(style, model),
-          _buildSectionHeader("Section C: Buyers Details"),
-          _buildBuyerDetails(model),
-          _buildSectionHeader("Section D: Goods and Services Details"),
-          ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems),
-          _buildSpacer(),
-          _buildSectionHeader("Section E: Tax Details"),
-          _buildTaxDetails(model),
-          _buildSectionHeader("Section F: Summary"),
-          _buildSummary(model),
-          _buildSpacer(),
-          _buildFooter(model)
-        ]);
-        ;
+        return [_buildDoc(model, style, image)];
       },
     ));
+    // pdf.addPage(pw.Page(
+    //   pageTheme: pw.PageTheme(
+    //     clip: false,
+    //     pageFormat: format.copyWith(
+    //         height: height, marginLeft: marginLeft, marginRight: marginRight),
+    //     // theme: pw.ThemeData(
+    //     //     defaultTextStyle: pw.TextStyle(fontSize: 8),
+    //     //     paragraphStyle: pw.TextStyle(fontSize: 10),
+    //     //     softWrap: true),
+    //   ),
+    //   build: (context) {
+    //     return _buildDoc(model, style, image);
+    //   },
+    // ));
 
     return pdf.save();
+  }
+
+  _buildDoc(PrintViewModel model, pw.TextStyle style, pw.ImageProvider image) {
+    return pw.Wrap(children: [
+      _buildPrintRef(model, style),
+      _buildHeader(image, model, style),
+      _buildSectionHeader("Section A: Sellers Detail", style),
+      _buildSellersDetail(user, style),
+      _buildSectionHeader("Section B: URA Information", style),
+      _buildURAInformation(style, model),
+      _buildURAInformation(style, model),
+      _buildURAInformation(style, model),
+      _buildURAInformation(style, model),
+      // _buildURAInformation(style, model),
+      // _buildURAInformation(style, model),
+      // _buildURAInformation(style, model),
+      _buildURAInformation(style, model),
+      _buildURAInformation(style, model),
+      _buildSectionHeader("Section C: Buyers Details", style),
+      _buildBuyerDetails(model, style),
+      _buildSectionHeader("Section D: Goods and Services Details", style),
+      ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems),
+      _buildSpacer(),
+      _buildSectionHeader("Section E: Tax Details", style),
+      _buildTaxDetails(model, style),
+      _buildSectionHeader(
+          "Section F: Summary", style.copyWith(fontWeight: pw.FontWeight.bold)),
+      _buildSummary(model, style),
+      _buildSpacer(),
+      _buildFooter(model, style)
+    ]);
   }
 
   ///
   /// Build the header of the invoice
   ///
-  _buildHeader(pw.ImageProvider image, PrintViewModel model) {
+  _buildHeader(
+      pw.ImageProvider image, PrintViewModel model, pw.TextStyle style) {
     return pw.Row(children: [
       pw.Padding(
         child: pw.Container(
@@ -99,8 +144,7 @@ class PrintView extends StatelessWidget {
       // pw.Placeholder(fallbackHeight: 50, fallbackWidth: 50),
       pw.SizedBox(width: 20),
       pw.Column(children: [
-        pw.Text(title,
-            style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
+        pw.Text(title, style: style),
         pw.Row(
           children: [
             pw.Text("Date: "),
@@ -112,23 +156,22 @@ class PrintView extends StatelessWidget {
     ]);
   }
 
-  _buildBuyerDetails(PrintViewModel model) {
+  _buildBuyerDetails(PrintViewModel model, pw.TextStyle style) {
     return pw.Column(children: [
       pw.Row(children: [
-        pw.Text('Customer Name :', style: pw.TextStyle(fontSize: 15)),
-        pw.Text(deliveryNote.customerName ?? "",
-            style: pw.TextStyle(fontSize: 15))
+        pw.Text('Customer Name :', style: style),
+        pw.Text(deliveryNote.customerName ?? "", style: style)
       ]),
       pw.Row(children: [
-        pw.Text('Customer TIN :', style: pw.TextStyle(fontSize: 15)),
-        pw.Text(model.customerTIN ?? "", style: pw.TextStyle(fontSize: 15))
+        pw.Text('Customer TIN :', style: style),
+        pw.Text(model.customerTIN ?? "", style: style)
       ]),
       _buildSpacer()
     ]);
   }
 
   _buildGoodsAndServices(List deliveryItems) {
-    final pw.TextStyle style = pw.TextStyle(fontSize: 15);
+    final pw.TextStyle style = pw.TextStyle(fontSize: 8);
     return deliveryItems
         .map(
           (deliveryItem) => pw.Padding(
@@ -165,10 +208,11 @@ class PrintView extends StatelessWidget {
         .toList();
   }
 
-  _buildSectionHeader(final String sectionHeader) {
+  _buildSectionHeader(final String sectionHeader, pw.TextStyle style) {
     return pw.Column(children: [
       pw.Divider(),
-      pw.Text(sectionHeader, style: pw.TextStyle(fontSize: 16)),
+      pw.Text(sectionHeader,
+          style: style.copyWith(fontWeight: pw.FontWeight.bold)),
       pw.Divider(),
     ]);
   }
@@ -232,39 +276,36 @@ class PrintView extends StatelessWidget {
     return pw.SizedBox(height: 20);
   }
 
-  _buildFooter(PrintViewModel model) {
+  _buildFooter(PrintViewModel model, pw.TextStyle style) {
     return pw.Column(children: [
       _buildSpacer(),
       pw.Center(
-        child: pw.Text(model.deviceId, style: pw.TextStyle(fontSize: 14)),
+        child: pw.Text(model.deviceId, style: style),
       ),
       pw.SizedBox(height: 2),
-      pw.Text("Powered by DDS ver:${model.versionCode}",
-          style: pw.TextStyle(fontWeight: pw.FontWeight.bold))
+      pw.Text("Powered by DDS ver:${model.versionCode}", style: style)
     ], crossAxisAlignment: pw.CrossAxisAlignment.center);
   }
 
-  _buildSummary(PrintViewModel model) {
-    final pw.TextStyle style = pw.TextStyle(fontSize: 15);
+  _buildSummary(PrintViewModel model, pw.TextStyle style) {
     return pw.Column(children: [
       pw.SizedBox(height: 5),
       pw.Row(children: [
-        pw.Text('Net Amount', style: pw.TextStyle(fontSize: 15)),
+        pw.Text('Net Amount', style: style),
         _buildCurrencyWidget(model.netAmount, style),
       ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
       pw.Row(children: [
-        pw.Text('Tax Amount', style: pw.TextStyle(fontSize: 15)),
+        pw.Text('Tax Amount', style: style),
         _buildCurrencyWidget(model.taxAmount, style),
       ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
       pw.Row(children: [
-        pw.Text('Gross Amount', style: pw.TextStyle(fontSize: 15)),
+        pw.Text('Gross Amount', style: style),
         _buildCurrencyWidget(model.grossAmount, style),
       ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
     ]);
   }
 
-  _buildTaxDetails(PrintViewModel model) {
-    final pw.TextStyle style = pw.TextStyle(fontSize: 15);
+  _buildTaxDetails(PrintViewModel model, pw.TextStyle style) {
     return pw.Column(children: [
       pw.SizedBox(height: 5),
       pw.Row(
@@ -302,10 +343,9 @@ class PrintView extends StatelessWidget {
   /// Build printer information
   /// Build version info
   ///
-  _buildPrintRef(PrintViewModel model) {
+  _buildPrintRef(PrintViewModel model, pw.TextStyle style) {
     return pw.Row(children: [
-      pw.Text("${model.versionCode}-${model.deviceId}",
-          style: pw.TextStyle(fontSize: 10)),
+      pw.Text("${model.versionCode}-${model.deviceId}"),
     ], mainAxisAlignment: pw.MainAxisAlignment.end);
   }
 
