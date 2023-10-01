@@ -36,13 +36,29 @@ class PrintView extends StatelessWidget {
           appBar: AppBar(title: Text(title)),
           body: LayoutBuilder(
             builder: (context, constraints) {
-              double height = constraints.maxHeight;
+              double height = constraints.maxHeight * PdfPageFormat.mm;
+              double width = constraints.maxWidth;
+              double margin = 5 * PdfPageFormat.mm;
+              double marginTop = 8 * PdfPageFormat.mm;
+              double marginBottom = 8 * PdfPageFormat.mm;
               double printHeight = 300.0 * PdfPageFormat.mm;
+              var pageFormat = PdfPageFormat(width, height);
               return PdfPreview(
+                onPrinted: (_)=>model.finalizeOrder(),
                 maxPageWidth: MediaQuery.of(context).size.width,
                 // initialPageFormat: PdfPageFormat.a4,
                 build: (format) => _generatePdf(
-                    format.copyWith(height: printHeight), title, model, height),
+                  format.copyWith(
+                      height: height,
+                      width: width,
+                      marginLeft: margin,
+                      marginRight: margin,
+                      marginTop: marginTop,
+                      marginBottom: marginBottom),
+                  title,
+                  model,
+                  height,
+                ),
                 pageFormats: <String, PdfPageFormat>{
                   'roll57': PdfPageFormat.roll57,
                   'A4': PdfPageFormat.a4,
@@ -59,6 +75,8 @@ class PrintView extends StatelessWidget {
     );
   }
 
+
+
   Future<Uint8List> _generatePdf(PdfPageFormat format, String title,
       PrintViewModel model, double widgetHeight) async {
     final font =
@@ -73,12 +91,15 @@ class PrintView extends StatelessWidget {
     final pw.TextStyle style = pw.TextStyle(font: ttf, fontSize: 16);
 
     pdf.addPage(pw.MultiPage(
-      pageFormat: format,
+      pageFormat: format.copyWith(height: widgetHeight),
       build: (context) {
         return [
           _buildPrintRef(model, style),
           _buildHeader(image, model, style),
           _buildSectionHeader("Section A: Sellers Detail", style),
+          _buildSellersDetail(user, style, model),
+          _buildSellersDetail(user, style, model),
+          _buildSellersDetail(user, style, model),
           _buildSellersDetail(user, style, model),
           _buildSectionHeader("Section B: URA Information", style),
           _buildURAInformation(style, model),
