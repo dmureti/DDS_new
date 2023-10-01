@@ -4,14 +4,39 @@ import 'package:distributor/core/models/app_version.dart';
 import 'package:distributor/services/init_service.dart';
 import 'package:distributor/services/version_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:tripletriocore/tripletriocore.dart';
 
 enum SummaryAmount { Net, Tax, Gross }
 
 enum TaxCategory { Net, Tax, Gross }
 
 class PrintViewModel extends BaseViewModel {
-  final _initService = locator<InitService>();
+  final InitService _initService = locator<InitService>();
   final _versionService = locator<VersionService>();
+
+  AppEnv get appEnv => _initService.appEnv;
+  FlavorValues get flavourValues => appEnv.flavorValues;
+
+  double get taxRate => flavourValues.applicationParameter.taxRate;
+  String get currency => flavourValues.applicationParameter.currency;
+
+  DateTime _dateTime;
+  String _date = "";
+  String _time = "";
+
+  DateTime get dateTime => DateTime.now();
+
+  getCurrentDateTime() {
+    _dateTime = DateTime.now();
+    var day = _dateTime.day.toString();
+    var month = _dateTime.month.toString();
+    var year = _dateTime.year.toString();
+    _date = "$day - $month- $year";
+    notifyListeners();
+  }
+
+  String get getTime => _time;
+  String get getDate => _date;
 
   calculateAmounts(SummaryAmount summaryAmount) {
     switch (summaryAmount) {
@@ -67,6 +92,7 @@ class PrintViewModel extends BaseViewModel {
     await fetchDeviceInfo();
     await _getVersion();
     calculateGrossAmount();
+    getCurrentDateTime();
     setBusy(false);
   }
 
@@ -80,13 +106,13 @@ class PrintViewModel extends BaseViewModel {
       _grossAmount = unitSum + grossAmount;
       notifyListeners();
     }
-    _taxAmount = 0.18 * grossAmount;
+    _taxAmount = taxRate * grossAmount;
   }
 
   num _taxAmount = 0;
   num get taxAmount => _taxAmount;
 
-  get netAmount => grossAmount - _taxAmount;
+  num get netAmount => grossAmount - _taxAmount;
 
   fetchDeviceInfo() async {
     setBusy(true);

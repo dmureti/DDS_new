@@ -117,7 +117,7 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
                             icon: Icon(Icons.remove_circle),
                             visualDensity: VisualDensity.compact,
                           ),
-                          GestureDetector(
+                          InkWell(
                             onTap: () async {
                               var difference = await showQuantityDialog(
                                   quantity: model.quantity, model: model);

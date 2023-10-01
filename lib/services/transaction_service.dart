@@ -2,9 +2,8 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/stock_controller_service.dart';
-import 'package:distributor/services/user_service.dart';
-import 'package:stacked/stacked.dart';
 import 'package:observable_ish/observable_ish.dart';
+import 'package:stacked/stacked.dart';
 
 class TransactionService with ReactiveServiceMixin {
   final journeyService = locator<JourneyService>();
@@ -25,7 +24,6 @@ class TransactionService with ReactiveServiceMixin {
 
   init() async {
     var result = await stockControlService.getTransactionsPendingAuth();
-    print(stockControlService.branchId);
     _pendingTransactions.value = result;
   }
 }

@@ -131,8 +131,6 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  _buildSyncWidget() {}
-
   _buildContent(int index, HomeViewModel model) {
     switch (index) {
       case 0:
@@ -149,48 +147,23 @@ class HomeView extends StatelessWidget {
           children: [
             // LocationWidget(),
             Expanded(child: RoutesListingView()),
-            NetworkSensitiveWidget(),
+            model.enableOffline ? NetworkSensitiveWidget() : Container(),
           ],
         );
         break;
       case 2:
         return Column(
           children: [
-            // NetworkSensitiveWidget(),
-            // LocationWidget(),
-            // Container(
-            //   height: 50,
-            //   child: Material(
-            //     elevation: 1,
-            //     color: Colors.white,
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.end,
-            //       children: [
-            //         ShowDateFilter(),
-            //         IconButton(
-            //           onPressed: model.toggleSortAsc,
-            //           icon: Icon(
-            //             Icons.sort,
-            //             color: model.sortAsc ? Colors.grey : Colors.blue,
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
             Expanded(child: AdhocListingView()),
-            NetworkSensitiveWidget(),
+            model.enableOffline ? NetworkSensitiveWidget() : Container(),
           ],
         );
-        // return AdhocSalesView();
         break;
       case 3:
         return Column(
           children: [
-            // NetworkSensitiveWidget(),
-            // LocationWidget(),
             Expanded(child: StockView()),
-            NetworkSensitiveWidget(),
+            model.enableOffline ? NetworkSensitiveWidget() : Container(),
           ],
         );
         break;
@@ -199,7 +172,7 @@ class HomeView extends StatelessWidget {
           children: [
             // LocationWidget(),
             Expanded(child: CustomerView()),
-            NetworkSensitiveWidget(),
+            model.enableOffline ? NetworkSensitiveWidget() : Container(),
           ],
         );
         break;

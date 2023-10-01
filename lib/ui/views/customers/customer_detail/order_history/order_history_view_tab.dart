@@ -68,7 +68,7 @@ class OrderHistoryTab extends StatelessWidget {
                               },
                             ),
                           ),
-                NetworkSensitiveWidget()
+                model.enableOffline ? NetworkSensitiveWidget() : Container(),
               ],
             )),
       viewModelBuilder: () => OrderHistoryTabViewModel(customer: customer),

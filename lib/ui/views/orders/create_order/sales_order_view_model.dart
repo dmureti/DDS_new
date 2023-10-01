@@ -146,8 +146,6 @@ class SalesOrderViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
-  int get availableProducts =>
-      _productList.where((product) => product.itemPrice > 0).length;
   int get totalNoOfProducts => _productList.length;
 
   double _total = 0.00;
@@ -262,9 +260,11 @@ class SalesOrderViewModel extends ReactiveViewModel {
     setBusy(false);
     if (result is List<Product>) {
       _productList = result;
+      _customerProductList = result;
       filteredProductList = productList;
       return _productList;
     } else {
+      _customerProductList = <Product>[];
       await _dialogService.showDialog(
           title: 'Error', description: 'An error occurred.');
     }
@@ -290,35 +290,11 @@ class SalesOrderViewModel extends ReactiveViewModel {
       await _adhocCartService.initializeCustomerData(
           customer, customerProductList);
     }
+    await fetchStockBalance();
     // await fetchProductsByPrice();
     isWalkIn ? await fetchProductsByPrice() : await fetchProducts();
-    await fetchStockBalance();
-
-    // await fetchProductsByPrice();
-    //Set products
-    if (stockBalanceList.isNotEmpty && productList.isNotEmpty) {
-      getAvailableItems();
-    }
+    // _productList.removeWhere((item) => stockBalanceList.contains(item));
   }
-
-  List<Product> _availableItems = <Product>[];
-
-  getAvailableItems() {
-    //Compare the two items
-    Set<Product> temp = {};
-    _productList.forEach((p) {
-      //Loop through the stocks and see if it has a corresponding item
-      _stockBalanceList.forEach((element) {
-        if (element.itemCode.toLowerCase() == p.itemCode.toLowerCase()) ;
-        //Add this to the customerProductList
-        temp.add(element);
-      });
-    });
-    _availableItems.addAll(temp.toList());
-    notifyListeners();
-  }
-
-  List<Product> get availableItems => _availableItems;
 
   Future fetchProductsByPrice() async {
     setBusy(true);
@@ -327,17 +303,22 @@ class SalesOrderViewModel extends ReactiveViewModel {
     setBusy(false);
     if (result is List<Product>) {
       _productList = result;
+      _customerProductList = result;
       notifyListeners();
     } else {
       _productList = <Product>[];
+      _customerProductList = <Product>[];
     }
   }
 
-  double getQuantity(Product product) {
-    var result = _stockBalanceList.firstWhere(
-        (element) =>
-            element.itemCode.toLowerCase() == product.itemCode.toLowerCase(),
-        orElse: () => null);
+  getQuantity(Product product) {
+    print(product.itemCode);
+    var result = stockBalanceList.firstWhere((element) {
+      print(element.itemCode);
+      return element.itemCode.toString().toLowerCase() ==
+          product.itemCode.toString().toLowerCase();
+    }, orElse: () => null);
+    print(result.runtimeType);
     return result?.quantity ?? 0;
   }
 
@@ -345,6 +326,9 @@ class SalesOrderViewModel extends ReactiveViewModel {
     var result = await _stockControllerService.getStockBalance();
     if (result is List<Product>) {
       _stockBalanceList = result;
+      _stockBalanceList.removeWhere(
+          (element) => element.itemName.toLowerCase().contains("crate"));
+      print(stockBalanceList.length);
       notifyListeners();
     } else if (result is CustomException) {
       _stockBalanceList = <Product>[];

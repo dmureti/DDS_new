@@ -26,6 +26,9 @@ class LoginViewModel extends BaseViewModel {
   final locationService = locator<LocationRepository>();
   final dialogService = locator<DialogService>();
 
+  bool get enableOffline => _initService
+      .appEnv.flavorValues.applicationParameter.enableOfflineService;
+
   // final geofenceService = locator<GeoFenceService>();
 
   AppVersion _appVersion;
@@ -232,9 +235,13 @@ class LoginViewModel extends BaseViewModel {
             arguments: ChangePasswordViewArguments(
                 passwordChangeType: PasswordChangeType.initial));
       } else {
-        // snackBarService.showSnackbar(message: 'Data Synchronization started', title: "");
-        // await initializeAppCache(result);
-        // snackBarService.showSnackbar(message: 'Data Synchronization completed', title: "");
+        if (enableOffline) {
+          snackBarService.showSnackbar(
+              message: 'Data Synchronization started', title: "");
+          await initializeAppCache(result);
+          snackBarService.showSnackbar(
+              message: 'Data Synchronization completed', title: "");
+        }
         _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
       }
     } else if (result is CustomException) {

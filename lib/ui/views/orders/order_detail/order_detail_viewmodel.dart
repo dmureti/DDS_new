@@ -53,8 +53,8 @@ class OrderDetailViewModel extends ReactiveViewModel {
 
   init() async {
     await retrieveSalesOrder();
-    await getCurrentLocation();
     await getDeliveryNote();
+    await getCurrentLocation();
   }
 
   List<SalesOrderRequestItem> _salesOrderRequestItems =

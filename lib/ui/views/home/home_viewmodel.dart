@@ -14,7 +14,6 @@ import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/permission_service.dart';
 import 'package:distributor/services/timeout_service.dart';
 import 'package:distributor/services/user_service.dart';
-import 'package:distributor/services/version_service.dart';
 import 'package:distributor/traits/contextual_viewmodel.dart';
 import 'package:distributor/ui/views/adhoc_sales/adhoc_sales_view.dart';
 import 'package:distributor/ui/views/customers/customer_view.dart';
@@ -54,6 +53,10 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   NavigationService _navigationService = locator<NavigationService>();
   InitService _initService = locator<InitService>();
   AccessControlService _accessControlService = locator<AccessControlService>();
+
+  bool get enableOffline => _initService
+      .appEnv.flavorValues.applicationParameter.enableOfflineService;
+
   final _dialogService = locator<DialogService>();
 
   fetchAllCustomers() async {
@@ -81,12 +84,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
     });
     //Fetch the data
     setBusy(false);
-    print(result);
   }
-
-  final _versionService = locator<VersionService>();
-
-  // String get versionCode => _versionService.appVersion.versionCode;
 
   HomeViewModel(int index, ConnectivityStatus connectivityStatus)
       : _currentIndex = index,
@@ -309,7 +307,6 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   }
 
   fetchAdhocSales({DateTime postingDate}) async {
-    print("--fetching adhoc sales--");
     setBusy(true);
     _adhocSalesList =
         await _adhocCartService.fetchAdhocSalesList(postingDate: postingDate);

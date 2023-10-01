@@ -26,8 +26,6 @@ class SyncWidgetViewModel extends BaseViewModel {
   syncData() async {
     setBusy(true);
     await api.syncOfflineData(user: user);
-    // Check if this is a minishop
-
     List customerList =
         await _apiService.api.fetchAllCustomers(_userService.user.token);
     await api.synchronizeData(

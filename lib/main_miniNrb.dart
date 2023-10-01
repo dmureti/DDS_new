@@ -31,7 +31,8 @@ void main() async {
       flavor: Flavor.miniNrb,
       name: 'Mini-Nrb',
       flavorValues: FlavorValues(
-          baseUrl: 'https://mbnl.ddsolutions.tech/dds-backend/api/v1', applicationParameter: appParam),
+          baseUrl: 'https://mbnl.ddsolutions.tech/dds-backend/api/v1',
+          applicationParameter: appParam),
     ),
   ]);
   ByteData data =

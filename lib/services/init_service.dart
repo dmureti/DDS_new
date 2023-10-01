@@ -1,19 +1,18 @@
 //Handles initializaton and startup
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 class InitService {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
-  //Battery method channel
-  static const methodChannel = MethodChannel("tech.ddsolutions.app/method");
-
-  static const batteryChannel = EventChannel("tech.ddsolutions.app/battery");
-
-  static const networkConnectivityChannel =
-      EventChannel("tech.ddsolutions.app/network");
+  // //Battery method channel
+  // static const methodChannel = MethodChannel("tech.ddsolutions.app/method");
+  //
+  // static const batteryChannel = EventChannel("tech.ddsolutions.app/battery");
+  //
+  // static const networkConnectivityChannel =
+  //     EventChannel("tech.ddsolutions.app/network");
 
   InitService() {
     fetchDeviceInfo();
