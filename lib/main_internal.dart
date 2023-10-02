@@ -66,10 +66,10 @@ void main() async {
       flavor: Flavor.internal,
       name: 'Test - Mini-Uganda',
       flavorValues: FlavorValues(
-          baseUrl: 'https://testdds.ddsolutions.tech/spvdev-backend/api/v1/',
+          baseUrl: 'https://testdds.ddsolutions.tech/spvdev-backend/api/v1',
           applicationParameter: ApplicationParameter(
-              returnEmptyStock: true,
-              returnEmptyCrates: true,
+              returnEmptyStock: false,
+              returnEmptyCrates: false,
               enableOfflineService: false,
               enableFullDelivery: false,
               enforceCreditLimit: false,

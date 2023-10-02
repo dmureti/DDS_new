@@ -19,7 +19,10 @@ class StockTransferRequestView extends StatelessWidget {
       builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('Stock Transfer Request'),
+            title: Text(
+              'Stock Transfer Request',
+              style: kAppBarTextStyle,
+            ),
           ),
           body: model.isBusy
               ? Center(child: BusyWidget())

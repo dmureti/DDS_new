@@ -22,6 +22,10 @@ void main() async {
       enforceCreditLimit: false,
       enableCustomDelivery: false,
       enforceCustomerSecurity: false,
+      enableOfflineService: false,
+      returnEmptyCrates: true,
+      returnEmptyStock: true,
+      currency: "Kshs",
       enableAdhocSales: false,
       enableWalkIn: true,
       enableContractCustomers: true);

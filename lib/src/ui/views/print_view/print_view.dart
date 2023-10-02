@@ -43,17 +43,25 @@ class PrintView extends StatelessWidget {
           body: LayoutBuilder(
             builder: (context, constraints) {
               double height = constraints.maxHeight * PdfPageFormat.mm;
-              double width = PdfPageFormat.roll57.width;
+              double width = constraints.maxWidth;
+              // const width = 2.28346457 * PdfPageFormat.inch;
               double margin = 5 * PdfPageFormat.mm;
               double marginTop = 8 * PdfPageFormat.mm;
-              double marginBottom = 20 * PdfPageFormat.mm;
-
+              double marginBottom = 8 * PdfPageFormat.mm;
+              double printHeight = 300.0 * PdfPageFormat.mm;
               return PdfPreview(
                 onPrinted: (_) => model.finalizeOrder(),
                 maxPageWidth: MediaQuery.of(context).size.width,
                 // initialPageFormat: PdfPageFormat.a4,
                 build: (format) => _generatePdf(
-                  format,
+                  format.copyWith(
+                    height: height * 0.74,
+                    width: width,
+                    marginLeft: margin,
+                    marginRight: margin,
+                    marginTop: marginTop,
+                    marginBottom: marginBottom,
+                  ),
                   title,
                   model,
                   height,
@@ -83,11 +91,11 @@ class PrintView extends StatelessWidget {
     final ttf = pw.Font.ttf(font);
     const imageProvider = const AssetImage('assets/images/mini_logo.png');
     final image = await flutterImageProvider(imageProvider);
-    final width = PdfPageFormat.roll57.width * PdfPageFormat.mm;
+    final width = PdfPageFormat.roll57.availableWidth * PdfPageFormat.mm;
     final marginBottom = 20.0 * PdfPageFormat.mm;
-    final marginLeft = 0.0 * PdfPageFormat.mm;
-    final marginRight = 0.0 * PdfPageFormat.mm;
-    final pdf = pw.Document(compress: true);
+    final marginLeft = 5.0 * PdfPageFormat.mm;
+    final marginRight = 5.0 * PdfPageFormat.mm;
+    final pdf = pw.Document(compress: false);
     final pw.TextStyle style = pw.TextStyle.defaultStyle().copyWith(
       font: ttf,
       fontSize: 16,
@@ -122,7 +130,8 @@ class PrintView extends StatelessWidget {
     pdf.addPage(
       pw.Page(
           theme: pw.ThemeData(
-              defaultTextStyle: pw.TextStyle(fontSize: 14, font: ttf)),
+              paragraphStyle: pw.TextStyle(font: ttf, fontSize: 14),
+              defaultTextStyle: pw.TextStyle(font: ttf, fontSize: 14)),
           pageFormat: PdfPageFormat.roll57.copyWith(
               width: width,
               marginBottom: marginBottom,
@@ -228,8 +237,7 @@ class PrintView extends StatelessWidget {
       pw.SizedBox(height: 2),
       pw.Divider(
           borderStyle: pw.BorderStyle(pattern: [0, 1, 0, 1]), thickness: 0.5),
-      pw.Text(sectionHeader,
-          style: style.copyWith(fontWeight: pw.FontWeight.bold)),
+      pw.Text(sectionHeader, style: style),
       pw.Divider(
           borderStyle: pw.BorderStyle(pattern: [0, 1, 0, 1]), thickness: 0.5),
       pw.SizedBox(height: 2),
@@ -255,6 +263,7 @@ class PrintView extends StatelessWidget {
       pw.Text('Kampala Nakawa Division'.toUpperCase(), style: textStyle),
       pw.Text('Nakawa Division Bugolobi'.toUpperCase(), style: textStyle),
       pw.Text(user.branch.toUpperCase(), style: textStyle),
+      _buildSpacer(),
       pw.Row(
         children: [
           pw.Text('Seller\'s Reference : ', style: textStyle),
