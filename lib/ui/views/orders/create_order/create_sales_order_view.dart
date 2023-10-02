@@ -1,6 +1,7 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/helper.dart';
+import 'package:distributor/services/init_service.dart';
 import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/app_bar_column_title.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
@@ -256,7 +257,7 @@ class _SummaryDraggableSheetState extends State<SummaryDraggableSheet> {
                 children: [
                   Text('Order Total'),
                   Text(
-                    'UGX ${Helper.formatCurrency(widget.model.total)}',
+                    '${model.currency} ${Helper.formatCurrency(widget.model.total)}',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ],
@@ -364,6 +365,10 @@ class _SummaryDraggableSheetState extends State<SummaryDraggableSheet> {
 
 class SummaryDraggableSheetViewModel extends BaseViewModel {
   NavigationService _navigationService = locator<NavigationService>();
+  final _initService = locator<InitService>();
+
+  String get currency =>
+      _initService.appEnv.flavorValues.applicationParameter.currency;
 
   Future placeOrder(
       {Customer customer, SalesOrderRequest salesOrderRequest}) async {
