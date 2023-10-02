@@ -1,3 +1,4 @@
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/src/ui/views/stock_transfer/stock_transfer_viewmodel.dart';
 import 'package:distributor/ui/widgets/action_button.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
@@ -18,7 +19,10 @@ class StockTransferView extends StatelessWidget {
         builder: (context, model, child) {
           return Scaffold(
             appBar: AppBar(
-              title: Text('Return Stock To Branch'),
+              title: Text(
+                'Return Stock To Branch',
+                style: kAppBarTextStyle,
+              ),
               actions: [
                 // IconButton(
                 //   icon: Icon(Icons.clear),

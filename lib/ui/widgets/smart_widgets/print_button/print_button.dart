@@ -42,7 +42,7 @@ class PrintButton extends StatelessWidget {
         // widgets.add(container);
         // widgets.add(pw.SizedBox(height: 20));
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
           widgets.add(
             pw.Text(
               'Heading',
@@ -59,22 +59,30 @@ class PrintButton extends StatelessWidget {
               style: const pw.TextStyle(color: PdfColors.grey),
             ),
           );
-          widgets.add(pw.SizedBox(height: 10));
+          widgets.add(pw.SizedBox(height: 20));
         }
 
         final pdf = pw.Document();
         final width = PdfPageFormat.roll57.availableWidth * PdfPageFormat.mm;
         final height = 300.0 * PdfPageFormat.mm;
         final marginTop = 5.0 * PdfPageFormat.mm;
-        final marginBottom = 5.0 * PdfPageFormat.mm;
+        final marginBottom = 20.0 * PdfPageFormat.mm;
+        final roll57Format = PdfPageFormat(width, 300.0 * PdfPageFormat.mm);
+
         final pageFormat = PdfPageFormat(width, height,
             marginTop: marginTop, marginBottom: marginBottom);
         pdf.addPage(
-          pw.MultiPage(
-              pageFormat: pageFormat,
-              build: (pw.Context context) => [pw.Wrap(children: widgets)]),
+          pw.Page(
+              pageFormat: PdfPageFormat.roll57
+                  .copyWith(width: width, marginBottom: marginBottom),
+              build: (pw.Context context) => pw.Column(
+                  children: widgets,
+                  crossAxisAlignment: pw.CrossAxisAlignment.stretch)),
         );
-        await Printing.layoutPdf(onLayout: (_) async => pdf.save());
+        await Printing.layoutPdf(
+          onLayout: (PdfPageFormat format) async => pdf.save(),
+          // format: roll57Format,
+        );
       },
       icon: Icon(Icons.print),
       color: Colors.yellow,

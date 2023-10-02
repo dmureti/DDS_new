@@ -43,25 +43,17 @@ class PrintView extends StatelessWidget {
           body: LayoutBuilder(
             builder: (context, constraints) {
               double height = constraints.maxHeight * PdfPageFormat.mm;
-              double width = constraints.maxWidth;
-              // const width = 2.28346457 * PdfPageFormat.inch;
+              double width = PdfPageFormat.roll57.width;
               double margin = 5 * PdfPageFormat.mm;
               double marginTop = 8 * PdfPageFormat.mm;
-              double marginBottom = 8 * PdfPageFormat.mm;
-              double printHeight = 300.0 * PdfPageFormat.mm;
+              double marginBottom = 20 * PdfPageFormat.mm;
+
               return PdfPreview(
                 onPrinted: (_) => model.finalizeOrder(),
                 maxPageWidth: MediaQuery.of(context).size.width,
                 // initialPageFormat: PdfPageFormat.a4,
                 build: (format) => _generatePdf(
-                  format.copyWith(
-                    height: height * 0.74,
-                    width: width,
-                    marginLeft: margin,
-                    marginRight: margin,
-                    marginTop: marginTop,
-                    marginBottom: marginBottom,
-                  ),
+                  format,
                   title,
                   model,
                   height,
@@ -82,78 +74,10 @@ class PrintView extends StatelessWidget {
     );
   }
 
-  _printDirect(PrintViewModel model) async {
-    List<pw.Widget> widgets = [];
-    // const width = 2.28346457 * PdfPageFormat.inch;
-    double width = PdfPageFormat.roll57.availableWidth;
-    double height = PdfPageFormat.roll57.availableHeight;
-
-    const marginLeft = 2 * PdfPageFormat.mm;
-    const marginRight = 2 * PdfPageFormat.mm;
-    const marginTop = 8 * PdfPageFormat.mm;
-    final marginBottom = 20.0 * PdfPageFormat.mm;
-    final font =
-        await rootBundle.load("assets/fonts/proxima_nova/normal/proxima.ttf");
-    final ttf = pw.Font.ttf(font);
-    const imageProvider = const AssetImage('assets/images/mini_logo.png');
-    final image = await flutterImageProvider(imageProvider);
-    final pw.TextStyle style =
-        pw.TextStyle.defaultStyle().copyWith(font: ttf, fontSize: 15);
-
-    _buildWidgetTree() {
-      List<pw.Widget> tree = [
-        _buildPrintRef(model, style),
-        _buildHeader(image, model, style),
-        _buildSectionHeader("Section A: Sellers Detail", style),
-        _buildSellersDetail(user, style, model),
-        _buildSectionHeader("Section B: URA Information", style),
-        _buildURAInformation(style, model),
-        _buildSectionHeader("Section C: Buyers Details", style),
-        _buildBuyerDetails(model, style),
-        _buildSectionHeader("Section D: Goods and Services Details", style),
-        ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
-        _buildSpacer(),
-        _buildSectionHeader("Section E: Tax Details", style),
-        _buildTaxDetails(model, style),
-        _buildSectionHeader("Section F: Summary",
-            style.copyWith(fontWeight: pw.FontWeight.bold)),
-        _buildSummary(model, style),
-        _buildSpacer(),
-        _buildFooter(model, style)
-      ];
-      widgets.addAll(tree);
-    }
-
-    _buildWidgetTree();
-
-    final pdf = pw.Document(
-      compress: true,
-      title: model.invoice.id,
-    );
-
-    pdf.addPage(pw.MultiPage(
-      pageFormat: PdfPageFormat.roll57
-          .copyWith(width: width, marginBottom: marginBottom),
-      theme: pw.ThemeData(
-          textAlign: pw.TextAlign.center,
-          defaultTextStyle: pw.TextStyle(fontSize: 15, font: ttf)),
-      build: (context) => widgets,
-    ));
-
-    var result = await Printing.layoutPdf(
-      format: PdfPageFormat.roll57.copyWith(
-        height: 300 * PdfPageFormat.cm,
-        width: width * PdfPageFormat.mm,
-      ),
-      onLayout: (_) async => await pdf.save(),
-    );
-
-    print(result);
-  }
-
   Future<Uint8List> _generatePdf(PdfPageFormat format, String title,
       PrintViewModel model, double widgetHeight) async {
     List<pw.Widget> widgets = [];
+
     final font =
         await rootBundle.load("assets/fonts/proxima_nova/normal/proxima.ttf");
     final ttf = pw.Font.ttf(font);
@@ -161,10 +85,13 @@ class PrintView extends StatelessWidget {
     final image = await flutterImageProvider(imageProvider);
     final width = PdfPageFormat.roll57.width * PdfPageFormat.mm;
     final marginBottom = 20.0 * PdfPageFormat.mm;
-    final marginLeft = 5.0 * PdfPageFormat.mm;
-    final marginRight = 5.0 * PdfPageFormat.mm;
-    final pdf = pw.Document();
-    final pw.TextStyle style = pw.TextStyle(font: ttf, fontSize: 16);
+    final marginLeft = 0.0 * PdfPageFormat.mm;
+    final marginRight = 0.0 * PdfPageFormat.mm;
+    final pdf = pw.Document(compress: true);
+    final pw.TextStyle style = pw.TextStyle.defaultStyle().copyWith(
+      font: ttf,
+      fontSize: 16,
+    );
     _buildWidgetTree() {
       List<pw.Widget> tree = [
         _buildPrintRef(model, style),
@@ -176,11 +103,6 @@ class PrintView extends StatelessWidget {
         _buildSectionHeader("Section C: Buyers Details", style),
         _buildBuyerDetails(model, style),
         _buildSectionHeader("Section D: Goods and Services Details", style),
-        ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
-        ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
-        ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
-        ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
-        ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
         ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
         _buildSpacer(),
         _buildSectionHeader("Section E: Tax Details", style),
@@ -199,14 +121,18 @@ class PrintView extends StatelessWidget {
 
     pdf.addPage(
       pw.Page(
+          theme: pw.ThemeData(
+              defaultTextStyle: pw.TextStyle(fontSize: 14, font: ttf)),
           pageFormat: PdfPageFormat.roll57.copyWith(
               width: width,
               marginBottom: marginBottom,
               marginLeft: marginLeft,
               marginRight: marginRight),
-          build: (pw.Context context) => pw.Column(
-              children: widgets,
-              crossAxisAlignment: pw.CrossAxisAlignment.stretch)),
+          build: (pw.Context context) => pw.Center(
+              child: pw.Column(
+                  mainAxisSize: pw.MainAxisSize.max,
+                  children: widgets,
+                  crossAxisAlignment: pw.CrossAxisAlignment.stretch))),
     );
     return pdf.save();
   }
@@ -299,9 +225,14 @@ class PrintView extends StatelessWidget {
 
   _buildSectionHeader(final String sectionHeader, pw.TextStyle style) {
     return pw.Column(children: [
-      pw.Divider(),
-      pw.Text(sectionHeader),
-      pw.Divider(),
+      pw.SizedBox(height: 2),
+      pw.Divider(
+          borderStyle: pw.BorderStyle(pattern: [0, 1, 0, 1]), thickness: 0.5),
+      pw.Text(sectionHeader,
+          style: style.copyWith(fontWeight: pw.FontWeight.bold)),
+      pw.Divider(
+          borderStyle: pw.BorderStyle(pattern: [0, 1, 0, 1]), thickness: 0.5),
+      pw.SizedBox(height: 2),
     ]);
   }
 

@@ -35,6 +35,7 @@ class AdhocDetailView extends StatelessWidget {
               style: kAppBarTextStyle,
             ),
             actions: [
+              // PrintButton(),
               IconButton(
                   onPressed: () => model.navigateToPrint(),
                   icon: Icon(Icons.print)),
