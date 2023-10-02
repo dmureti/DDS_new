@@ -91,7 +91,7 @@ class PrintView extends StatelessWidget {
     const marginLeft = 2 * PdfPageFormat.mm;
     const marginRight = 2 * PdfPageFormat.mm;
     const marginTop = 8 * PdfPageFormat.mm;
-    const marginBottom = 10 * PdfPageFormat.mm;
+    final marginBottom = 20.0 * PdfPageFormat.mm;
     final font =
         await rootBundle.load("assets/fonts/proxima_nova/normal/proxima.ttf");
     final ttf = pw.Font.ttf(font);
@@ -132,14 +132,8 @@ class PrintView extends StatelessWidget {
     );
 
     pdf.addPage(pw.MultiPage(
-      pageFormat: PdfPageFormat(
-        width * PdfPageFormat.mm,
-        300 * PdfPageFormat.mm,
-        // marginLeft: marginLeft,
-        // marginRight: marginRight,
-        // marginTop: 5 * PdfPageFormat.mm,
-        // marginBottom: 10 * PdfPageFormat.mm,
-      ),
+      pageFormat: PdfPageFormat.roll57
+          .copyWith(width: width, marginBottom: marginBottom),
       theme: pw.ThemeData(
           textAlign: pw.TextAlign.center,
           defaultTextStyle: pw.TextStyle(fontSize: 15, font: ttf)),
@@ -159,44 +153,61 @@ class PrintView extends StatelessWidget {
 
   Future<Uint8List> _generatePdf(PdfPageFormat format, String title,
       PrintViewModel model, double widgetHeight) async {
+    List<pw.Widget> widgets = [];
     final font =
         await rootBundle.load("assets/fonts/proxima_nova/normal/proxima.ttf");
     final ttf = pw.Font.ttf(font);
     const imageProvider = const AssetImage('assets/images/mini_logo.png');
     final image = await flutterImageProvider(imageProvider);
-    const width = 2.28346457 * PdfPageFormat.inch;
-    double height = widgetHeight * PdfPageFormat.mm;
-
+    final width = PdfPageFormat.roll57.width * PdfPageFormat.mm;
+    final marginBottom = 20.0 * PdfPageFormat.mm;
+    final marginLeft = 5.0 * PdfPageFormat.mm;
+    final marginRight = 5.0 * PdfPageFormat.mm;
     final pdf = pw.Document();
-    final pw.TextStyle style = pw.TextStyle(font: ttf, fontSize: 14);
+    final pw.TextStyle style = pw.TextStyle(font: ttf, fontSize: 16);
+    _buildWidgetTree() {
+      List<pw.Widget> tree = [
+        _buildPrintRef(model, style),
+        _buildHeader(image, model, style),
+        _buildSectionHeader("Section A: Sellers Detail", style),
+        _buildSellersDetail(user, style, model),
+        _buildSectionHeader("Section B: URA Information", style),
+        _buildURAInformation(style, model),
+        _buildSectionHeader("Section C: Buyers Details", style),
+        _buildBuyerDetails(model, style),
+        _buildSectionHeader("Section D: Goods and Services Details", style),
+        ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
+        ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
+        ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
+        ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
+        ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
+        ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
+        _buildSpacer(),
+        _buildSectionHeader("Section E: Tax Details", style),
+        _buildTaxDetails(model, style),
+        _buildSectionHeader("Section F: Summary",
+            style.copyWith(fontWeight: pw.FontWeight.bold)),
+        _buildSummary(model, style),
+        _buildSpacer(),
+        _buildFooter(model, style),
+        _buildSpacer(),
+      ];
+      widgets.addAll(tree);
+    }
 
-    pdf.addPage(pw.Page(
-      pageFormat: format.copyWith(height: widgetHeight),
-      build: (context) {
-        return pw.Expanded(
-            child: pw.Container(
-                child: pw.Column(mainAxisSize: pw.MainAxisSize.min, children: [
-          _buildPrintRef(model, style),
-          _buildHeader(image, model, style),
-          _buildSectionHeader("Section A: Sellers Detail", style),
-          _buildSellersDetail(user, style, model),
-          _buildSectionHeader("Section B: URA Information", style),
-          _buildURAInformation(style, model),
-          _buildSectionHeader("Section C: Buyers Details", style),
-          _buildBuyerDetails(model, style),
-          _buildSectionHeader("Section D: Goods and Services Details", style),
-          ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
-          _buildSpacer(),
-          _buildSectionHeader("Section E: Tax Details", style),
-          _buildTaxDetails(model, style),
-          _buildSectionHeader("Section F: Summary",
-              style.copyWith(fontWeight: pw.FontWeight.bold)),
-          _buildSummary(model, style),
-          _buildSpacer(),
-          _buildFooter(model, style)
-        ])));
-      },
-    ));
+    _buildWidgetTree();
+
+    pdf.addPage(
+      pw.Page(
+          pageFormat: PdfPageFormat.roll57.copyWith(
+              width: width,
+              marginBottom: marginBottom,
+              marginLeft: marginLeft,
+              marginRight: marginRight),
+          build: (pw.Context context) => pw.Column(
+              children: widgets,
+              crossAxisAlignment: pw.CrossAxisAlignment.stretch)),
+    );
     return pdf.save();
   }
 
