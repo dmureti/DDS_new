@@ -68,7 +68,8 @@ class ConfirmStockTransferViewModel extends BaseViewModel {
       } else {
         await _dialogService.showDialog(
             title: 'Stock Transfer failed',
-            description: 'Your stock transfer request was not successful.');
+            description:
+                'Your stock transfer request was not successful.\n${response.toString()}');
       }
       _navigationService.pushNamedAndRemoveUntil(Routes.homeView,
           arguments: HomeViewArguments(index: 2));
