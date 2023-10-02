@@ -137,38 +137,38 @@ class _CustomerDetailViewState extends State<CustomerDetailView>
                         ),
                         value: 'place_order',
                       ),
-                      PopupMenuItem(
-                        child: Text(
-                          'Make Adhoc sale',
-                          style: TextStyle(
-                              color: model.enableAdhocSale
-                                  ? Colors.black
-                                  : Colors.black.withOpacity(0.3)),
-                        ),
-                        value: 'make_adhoc_sale',
-                      ),
+                      // PopupMenuItem(
+                      //   child: Text(
+                      //     'Make Adhoc sale',
+                      //     style: TextStyle(
+                      //         color: model.enableAdhocSale
+                      //             ? Colors.black
+                      //             : Colors.black.withOpacity(0.3)),
+                      //   ),
+                      //   value: 'make_adhoc_sale',
+                      // ),
                       PopupMenuDivider(),
-                      PopupMenuItem(
-                        child: Text(
-                          'Add Payment',
-                          style: TextStyle(
-                              color: model.enableAddPayment
-                                  ? Colors.black
-                                  : Colors.black.withOpacity(0.3)),
-                        ),
-                        value: 'add_payment',
-                      ),
-                      PopupMenuItem(
-                        child: Text(
-                          'Link Payment',
-                          style: TextStyle(
-                              color: model.enableLinkPayment
-                                  ? Colors.black
-                                  : Colors.black.withOpacity(0.3)),
-                        ),
-                        value: 'link_payment',
-                      ),
-                      PopupMenuDivider(),
+                      // PopupMenuItem(
+                      //   child: Text(
+                      //     'Add Payment',
+                      //     style: TextStyle(
+                      //         color: model.enableAddPayment
+                      //             ? Colors.black
+                      //             : Colors.black.withOpacity(0.3)),
+                      //   ),
+                      //   value: 'add_payment',
+                      // ),
+                      // PopupMenuItem(
+                      //   child: Text(
+                      //     'Link Payment',
+                      //     style: TextStyle(
+                      //         color: model.enableLinkPayment
+                      //             ? Colors.black
+                      //             : Colors.black.withOpacity(0.3)),
+                      //   ),
+                      //   value: 'link_payment',
+                      // ),
+                      // PopupMenuDivider(),
                       PopupMenuItem(
                         child: Text(
                           'Add Issue',
