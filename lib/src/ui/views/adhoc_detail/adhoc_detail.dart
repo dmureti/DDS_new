@@ -1,3 +1,4 @@
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/src/ui/views/adhoc_detail/adhoc_detail_viewmodel.dart';
@@ -29,7 +30,10 @@ class AdhocDetailView extends StatelessWidget {
       builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(referenceNo),
+            title: Text(
+              referenceNo,
+              style: kAppBarTextStyle,
+            ),
             actions: [
               IconButton(
                   onPressed: () => model.navigateToPrint(),
