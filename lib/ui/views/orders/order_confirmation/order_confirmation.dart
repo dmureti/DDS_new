@@ -1,3 +1,4 @@
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/core/enums.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
@@ -38,7 +39,10 @@ class OrderConfirmation extends StatelessWidget {
           //     model.navigateToProductSelection();
           //   },
           // ),
-          title: Text('Order Summary'.toUpperCase()),
+          title: Text(
+            'Order Summary',
+            style: kAppBarTextStyle,
+          ),
         ),
         body: Container(
           height: MediaQuery.of(context).size.height - 80,
