@@ -47,6 +47,18 @@ class ReturnStockService {
 
   var _payload;
 
+  // Return an empty list of items
+  returnEmpty() async {
+    // Data for shop return
+    var data = {
+      "fromWarehouse": userChannel,
+      "items": [],
+      "toWarehouse": user.branch
+    };
+    var result = await api.shopReturn(user.token, stockTransferData: data);
+    return result;
+  }
+
   returnItems() async {
     DialogResponse dialogResponse = await _dialogService.showConfirmationDialog(
         title: 'Stock Return Confirmation',
