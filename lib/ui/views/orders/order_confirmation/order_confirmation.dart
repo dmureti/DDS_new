@@ -6,7 +6,6 @@ import 'package:distributor/ui/widgets/action_button.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -33,12 +32,12 @@ class OrderConfirmation extends StatelessWidget {
           customer: customer, salesOrderRequest: salesOrderRequest),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(FontAwesomeIcons.chevronLeft),
-            onPressed: () async {
-              model.navigateToProductSelection();
-            },
-          ),
+          // leading: IconButton(
+          //   icon: Icon(FontAwesomeIcons.chevronLeft),
+          //   onPressed: () async {
+          //     model.navigateToProductSelection();
+          //   },
+          // ),
           title: Text('Order Summary'.toUpperCase()),
         ),
         body: Container(
