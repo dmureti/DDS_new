@@ -1,5 +1,6 @@
 import 'package:distributor/conf/style/lib/colors.dart';
 import 'package:distributor/conf/style/lib/fonts.dart';
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/ui/config/brand.dart';
 import 'package:distributor/ui/views/customers/customer_detail/accounts_tab/accounts_tab.dart';
@@ -104,7 +105,7 @@ class _CustomerDetailViewState extends State<CustomerDetailView>
         appBar: AppBar(
           actionsIconTheme: IconThemeData(color: Colors.white),
           title: Text(
-            '${widget.customer.name}',
+            '${widget.customer.name}',style: kAppBarTextStyle,
           ),
           automaticallyImplyLeading: true,
 //          leading: IconButton(
