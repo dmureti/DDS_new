@@ -27,6 +27,7 @@ class OrderConfirmation extends StatelessWidget {
     var connectionStatus = Provider.of<ConnectivityStatus>(context);
 
     bool isConnected = connectionStatus != ConnectivityStatus.Offline;
+    final TextStyle textStyle = TextStyle(fontSize: 13, color: Colors.white);
     return ViewModelBuilder<OrderConfirmationViewModel>.reactive(
       viewModelBuilder: () => OrderConfirmationViewModel(
           customer: customer, salesOrderRequest: salesOrderRequest),
@@ -63,14 +64,11 @@ class OrderConfirmation extends StatelessWidget {
                         children: [
                           Text(
                             'Customer'.toUpperCase(),
-                            style: TextStyle(color: Colors.white),
+                            style: textStyle,
                           ),
                           Text(
                             salesOrderRequest.customer,
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                            style: textStyle,
                           ),
                         ],
                       ),
@@ -79,11 +77,11 @@ class OrderConfirmation extends StatelessWidget {
                         children: [
                           Text(
                             'Due Date'.toUpperCase(),
-                            style: TextStyle(color: Colors.white),
+                            style: textStyle,
                           ),
                           Text(
                             '${Helper.getDay(salesOrderRequest.dueDate)}',
-                            style: TextStyle(color: Colors.white),
+                            style: textStyle,
                           )
                         ],
                       ),
@@ -92,11 +90,11 @@ class OrderConfirmation extends StatelessWidget {
                         children: [
                           Text(
                             'Number Of Items'.toUpperCase(),
-                            style: TextStyle(color: Colors.white),
+                            style: textStyle,
                           ),
                           Text(
                             '${model.salesOrder.items.length}',
-                            style: TextStyle(color: Colors.white),
+                            style: textStyle,
                           )
                         ],
                       ),
@@ -105,7 +103,7 @@ class OrderConfirmation extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             'Remarks'.toUpperCase(),
-                            style: TextStyle(color: Colors.white),
+                            style: textStyle,
                           ),
                           SizedBox(
                             width: 10,
@@ -116,25 +114,22 @@ class OrderConfirmation extends StatelessWidget {
                               '${salesOrderRequest.remarks}',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(color: Colors.white),
+                              style: textStyle,
                               textAlign: TextAlign.right,
                             ),
                           ),
                         ],
-                      ),
-                      Container(
-                        height: 10,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             'Order Total'.toUpperCase(),
-                            style: TextStyle(color: Colors.white, fontSize: 20),
+                            style: textStyle,
                           ),
                           Text(
-                            '${Helper.formatCurrency(model.salesOrder.total)}',
-                            style: TextStyle(color: Colors.white, fontSize: 20),
+                            '${model.currency} ${Helper.formatCurrency(model.salesOrder.total)}',
+                            style: textStyle,
                           )
                         ],
                       )
@@ -142,27 +137,26 @@ class OrderConfirmation extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 5,
-              ),
               Container(
                 child: Expanded(
                   child: model.salesOrder.items.isEmpty
                       ? Center(
                           child: EmptyContentContainer(
-                            label: 'There are no items left',
+                            label: 'There are no items left in the order.',
                           ),
                         )
                       : ListView.separated(
                           itemCount: model.salesOrder.items.length,
                           scrollDirection: Axis.vertical,
-                          separatorBuilder: (context, index) => Container(
-                            height: 1,
-                            color: Colors.black.withOpacity(0.5),
-                          ),
+                          separatorBuilder: (context, index) {
+                            return Divider(
+                              height: 2,
+                            );
+                          },
                           itemBuilder: (context, index) {
                             return Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 8),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
@@ -173,8 +167,8 @@ class OrderConfirmation extends StatelessWidget {
                                           '${salesOrderRequest.items[index].quantity}',
                                           style: TextStyle(
                                               color: kColorMiniDarkBlue,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w700),
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500),
                                         ),
                                       ),
                                       Padding(
@@ -189,8 +183,8 @@ class OrderConfirmation extends StatelessWidget {
                                       '${salesOrderRequest.items[index].item.itemName}',
                                       style: TextStyle(
                                           color: kColorMiniDarkBlue,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w700),
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500),
                                     ),
                                   ),
                                   SizedBox(
@@ -204,8 +198,8 @@ class OrderConfirmation extends StatelessWidget {
                                         '${Helper.formatCurrency((salesOrderRequest.items[index].quantity * salesOrderRequest.items[index].item.itemPrice))}',
                                         style: TextStyle(
                                             color: kColorMiniDarkBlue,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700),
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500),
                                       ),
                                       SizedBox(
                                         width: 15,
@@ -222,8 +216,8 @@ class OrderConfirmation extends StatelessWidget {
                                             type: MaterialType.card,
                                             color: Colors.grey.withOpacity(0.5),
                                             child: SizedBox(
-                                              width: 35,
-                                              height: 35,
+                                              width: 30,
+                                              height: 30,
                                               child: Icon(
                                                 Icons.delete_forever_sharp,
                                                 color: Colors.white,
