@@ -96,7 +96,7 @@ class PrintView extends StatelessWidget {
     final marginLeft = 5.0 * PdfPageFormat.mm;
     final marginRight = 5.0 * PdfPageFormat.mm;
     final pdf = pw.Document(compress: false);
-    final pw.TextStyle style = pw.TextStyle.defaultStyle().copyWith(
+    final pw.TextStyle style = pw.TextStyle(
       font: ttf,
       fontSize: 16,
     );
@@ -237,7 +237,7 @@ class PrintView extends StatelessWidget {
       pw.SizedBox(height: 2),
       pw.Divider(
           borderStyle: pw.BorderStyle(pattern: [0, 1, 0, 1]), thickness: 0.5),
-      pw.Text(sectionHeader, style: style),
+      pw.Text(sectionHeader, style: style.copyWith(fontSize: 16)),
       pw.Divider(
           borderStyle: pw.BorderStyle(pattern: [0, 1, 0, 1]), thickness: 0.5),
       pw.SizedBox(height: 2),
