@@ -86,7 +86,8 @@ class PrintView extends StatelessWidget {
     List<pw.Widget> widgets = [];
     // const width = 2.28346457 * PdfPageFormat.inch;
     double width = PdfPageFormat.roll57.availableWidth;
-    const height = 300.0 * PdfPageFormat.mm;
+    double height = PdfPageFormat.roll57.availableHeight;
+
     const marginLeft = 2 * PdfPageFormat.mm;
     const marginRight = 2 * PdfPageFormat.mm;
     const marginTop = 8 * PdfPageFormat.mm;
@@ -104,9 +105,6 @@ class PrintView extends StatelessWidget {
         _buildPrintRef(model, style),
         _buildHeader(image, model, style),
         _buildSectionHeader("Section A: Sellers Detail", style),
-        _buildSellersDetail(user, style, model),
-        _buildSellersDetail(user, style, model),
-        _buildSellersDetail(user, style, model),
         _buildSellersDetail(user, style, model),
         _buildSectionHeader("Section B: URA Information", style),
         _buildURAInformation(style, model),
@@ -133,31 +131,30 @@ class PrintView extends StatelessWidget {
       title: model.invoice.id,
     );
 
-    print(width);
-
     pdf.addPage(pw.MultiPage(
       pageFormat: PdfPageFormat(
         width * PdfPageFormat.mm,
         300 * PdfPageFormat.mm,
         // marginLeft: marginLeft,
         // marginRight: marginRight,
-        marginTop: 5 * PdfPageFormat.mm,
-        marginBottom: 10 * PdfPageFormat.mm,
+        // marginTop: 5 * PdfPageFormat.mm,
+        // marginBottom: 10 * PdfPageFormat.mm,
       ),
       theme: pw.ThemeData(
           textAlign: pw.TextAlign.center,
-          defaultTextStyle: pw.TextStyle(fontSize: 14, font: ttf)),
+          defaultTextStyle: pw.TextStyle(fontSize: 15, font: ttf)),
       build: (context) => widgets,
     ));
 
-    Printing.layoutPdf(
+    var result = await Printing.layoutPdf(
       format: PdfPageFormat.roll57.copyWith(
-          height: 130 * PdfPageFormat.cm,
-          // width: 80 * PdfPageFormat.mm,
-          marginTop: 5 * PdfPageFormat.mm,
-          marginBottom: 10 * PdfPageFormat.mm),
-      onLayout: (_) async => pdf.save(),
+        height: 300 * PdfPageFormat.cm,
+        width: width * PdfPageFormat.mm,
+      ),
+      onLayout: (_) async => await pdf.save(),
     );
+
+    print(result);
   }
 
   Future<Uint8List> _generatePdf(PdfPageFormat format, String title,
@@ -182,9 +179,6 @@ class PrintView extends StatelessWidget {
           _buildPrintRef(model, style),
           _buildHeader(image, model, style),
           _buildSectionHeader("Section A: Sellers Detail", style),
-          _buildSellersDetail(user, style, model),
-          _buildSellersDetail(user, style, model),
-          _buildSellersDetail(user, style, model),
           _buildSellersDetail(user, style, model),
           _buildSectionHeader("Section B: URA Information", style),
           _buildURAInformation(style, model),
