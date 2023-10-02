@@ -38,6 +38,9 @@ class OrderConfirmationViewModel extends ReactiveViewModel {
   bool get enableOffline => _initService
       .appEnv.flavorValues.applicationParameter.enableOfflineService;
 
+  String get currency =>
+      _initService.appEnv.flavorValues.applicationParameter.currency;
+
   navigateToProductSelection() async {
     _navigationService.popRepeated(1);
   }

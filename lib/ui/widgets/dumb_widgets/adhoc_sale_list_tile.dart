@@ -4,10 +4,14 @@ import 'package:distributor/core/models/app_models.dart';
 import 'package:flutter/material.dart';
 
 class AdhocSaleListTile extends StatelessWidget {
+  final String currency;
   final AdhocSale adhocSale;
   final Function onTap;
   const AdhocSaleListTile(
-      {Key key, @required this.adhocSale, @required this.onTap})
+      {Key key,
+      @required this.adhocSale,
+      @required this.onTap,
+      this.currency = ""})
       : super(key: key);
 
   @override
@@ -30,7 +34,7 @@ class AdhocSaleListTile extends StatelessWidget {
                   style: kTileSubtitleTextStyle),
             ),
             Text(
-              Helper.formatCurrency(adhocSale.total),
+              "${currency} ${Helper.formatCurrency(adhocSale.total)}",
               style: TextStyle(),
             ),
           ],

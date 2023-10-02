@@ -2,6 +2,7 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/core/models/invoice.dart';
 import 'package:distributor/services/adhoc_cart_service.dart';
+import 'package:distributor/services/init_service.dart';
 import 'package:distributor/services/stock_controller_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:distributor/src/ui/views/print_view/print_view.dart';
@@ -15,8 +16,12 @@ class AdhocDetailViewModel extends BaseViewModel {
   final _userService = locator<UserService>();
   final _navigationService = locator<NavigationService>();
   final _dialogService = locator<DialogService>();
+  final _initService = locator<InitService>();
   StockControllerService _stockControllerService =
       locator<StockControllerService>();
+
+  String get currency =>
+      _initService.appEnv.flavorValues.applicationParameter.currency;
 
   List<Product> _productList;
   List<Product> get productList => _productList;
