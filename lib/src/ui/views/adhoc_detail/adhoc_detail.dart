@@ -93,6 +93,14 @@ class AdhocDetailView extends StatelessWidget {
                               : Container(
                                   child: Text('Transaction Date'),
                                 ),
+                          model.adhocDetail.transactionDate != null
+                              ? ReportFieldRow(
+                                  field: 'Transaction Time',
+                                  value: Helper.formatTimeFromString(
+                                      model.adhocDetail.transactionDate))
+                              : Container(
+                                  child: Text('Transaction Date'),
+                                ),
                           ReportFieldRow(
                               field: 'Customer Name',
                               value: model.adhocDetail.customerName),
@@ -110,7 +118,7 @@ class AdhocDetailView extends StatelessWidget {
                           ReportFieldRow(
                               field: 'Total',
                               value:
-                                  '${Helper.formatCurrency(model.adhocDetail.total)}'),
+                                  '${model.currency} ${Helper.formatCurrency(model.adhocDetail.total)}'),
                           Divider(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
