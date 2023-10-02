@@ -36,7 +36,9 @@ class CrateMovementView extends StatelessWidget {
                   ? Center(child: BusyWidget())
                   : Column(
                       children: [
-                        Text(_buildLead(crateTxnType), style: kLeadingBodyText),
+                        if (model.crateList.isNotEmpty)
+                          Text(_buildLead(crateTxnType),
+                              style: kLeadingBodyText),
                         crateTxnType == CrateTxnType.Return &&
                                 model.crateList.isNotEmpty
                             ? CheckboxListTile(
