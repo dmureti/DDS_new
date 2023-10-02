@@ -33,28 +33,35 @@ class PrintView extends StatelessWidget {
       onModelReady: (model) => model.init(),
       builder: (context, model, child) {
         return Scaffold(
-          appBar: AppBar(title: Text(title)),
+          appBar: AppBar(
+            title: Text(title),
+            actions: [
+              IconButton(
+                  onPressed: () => _printDirect(model), icon: Icon(Icons.print))
+            ],
+          ),
           body: LayoutBuilder(
             builder: (context, constraints) {
               double height = constraints.maxHeight * PdfPageFormat.mm;
               double width = constraints.maxWidth;
+              // const width = 2.28346457 * PdfPageFormat.inch;
               double margin = 5 * PdfPageFormat.mm;
               double marginTop = 8 * PdfPageFormat.mm;
               double marginBottom = 8 * PdfPageFormat.mm;
               double printHeight = 300.0 * PdfPageFormat.mm;
-              var pageFormat = PdfPageFormat(width, height);
               return PdfPreview(
-                onPrinted: (_)=>model.finalizeOrder(),
+                onPrinted: (_) => model.finalizeOrder(),
                 maxPageWidth: MediaQuery.of(context).size.width,
                 // initialPageFormat: PdfPageFormat.a4,
                 build: (format) => _generatePdf(
                   format.copyWith(
-                      height: height,
-                      width: width,
-                      marginLeft: margin,
-                      marginRight: margin,
-                      marginTop: marginTop,
-                      marginBottom: marginBottom),
+                    height: height * 0.74,
+                    width: width,
+                    marginLeft: margin,
+                    marginRight: margin,
+                    marginTop: marginTop,
+                    marginBottom: marginBottom,
+                  ),
                   title,
                   model,
                   height,
@@ -75,7 +82,83 @@ class PrintView extends StatelessWidget {
     );
   }
 
+  _printDirect(PrintViewModel model) async {
+    List<pw.Widget> widgets = [];
+    // const width = 2.28346457 * PdfPageFormat.inch;
+    double width = PdfPageFormat.roll57.availableWidth;
+    const height = 300.0 * PdfPageFormat.mm;
+    const marginLeft = 2 * PdfPageFormat.mm;
+    const marginRight = 2 * PdfPageFormat.mm;
+    const marginTop = 8 * PdfPageFormat.mm;
+    const marginBottom = 10 * PdfPageFormat.mm;
+    final font =
+        await rootBundle.load("assets/fonts/proxima_nova/normal/proxima.ttf");
+    final ttf = pw.Font.ttf(font);
+    const imageProvider = const AssetImage('assets/images/mini_logo.png');
+    final image = await flutterImageProvider(imageProvider);
+    final pw.TextStyle style =
+        pw.TextStyle.defaultStyle().copyWith(font: ttf, fontSize: 15);
 
+    _buildWidgetTree() {
+      List<pw.Widget> tree = [
+        _buildPrintRef(model, style),
+        _buildHeader(image, model, style),
+        _buildSectionHeader("Section A: Sellers Detail", style),
+        _buildSellersDetail(user, style, model),
+        _buildSellersDetail(user, style, model),
+        _buildSellersDetail(user, style, model),
+        _buildSellersDetail(user, style, model),
+        _buildSectionHeader("Section B: URA Information", style),
+        _buildURAInformation(style, model),
+        _buildSectionHeader("Section C: Buyers Details", style),
+        _buildBuyerDetails(model, style),
+        _buildSectionHeader("Section D: Goods and Services Details", style),
+        ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
+        _buildSpacer(),
+        _buildSectionHeader("Section E: Tax Details", style),
+        _buildTaxDetails(model, style),
+        _buildSectionHeader("Section F: Summary",
+            style.copyWith(fontWeight: pw.FontWeight.bold)),
+        _buildSummary(model, style),
+        _buildSpacer(),
+        _buildFooter(model, style)
+      ];
+      widgets.addAll(tree);
+    }
+
+    _buildWidgetTree();
+
+    final pdf = pw.Document(
+      compress: true,
+      title: model.invoice.id,
+    );
+
+    print(width);
+
+    pdf.addPage(pw.MultiPage(
+      pageFormat: PdfPageFormat(
+        width * PdfPageFormat.mm,
+        300 * PdfPageFormat.mm,
+        // marginLeft: marginLeft,
+        // marginRight: marginRight,
+        marginTop: 5 * PdfPageFormat.mm,
+        marginBottom: 10 * PdfPageFormat.mm,
+      ),
+      theme: pw.ThemeData(
+          textAlign: pw.TextAlign.center,
+          defaultTextStyle: pw.TextStyle(fontSize: 14, font: ttf)),
+      build: (context) => widgets,
+    ));
+
+    Printing.layoutPdf(
+      format: PdfPageFormat.roll57.copyWith(
+          height: 130 * PdfPageFormat.cm,
+          // width: 80 * PdfPageFormat.mm,
+          marginTop: 5 * PdfPageFormat.mm,
+          marginBottom: 10 * PdfPageFormat.mm),
+      onLayout: (_) async => pdf.save(),
+    );
+  }
 
   Future<Uint8List> _generatePdf(PdfPageFormat format, String title,
       PrintViewModel model, double widgetHeight) async {
@@ -88,12 +171,14 @@ class PrintView extends StatelessWidget {
     double height = widgetHeight * PdfPageFormat.mm;
 
     final pdf = pw.Document();
-    final pw.TextStyle style = pw.TextStyle(font: ttf, fontSize: 16);
+    final pw.TextStyle style = pw.TextStyle(font: ttf, fontSize: 14);
 
-    pdf.addPage(pw.MultiPage(
+    pdf.addPage(pw.Page(
       pageFormat: format.copyWith(height: widgetHeight),
       build: (context) {
-        return [
+        return pw.Expanded(
+            child: pw.Container(
+                child: pw.Column(mainAxisSize: pw.MainAxisSize.min, children: [
           _buildPrintRef(model, style),
           _buildHeader(image, model, style),
           _buildSectionHeader("Section A: Sellers Detail", style),
@@ -115,7 +200,7 @@ class PrintView extends StatelessWidget {
           _buildSummary(model, style),
           _buildSpacer(),
           _buildFooter(model, style)
-        ];
+        ])));
       },
     ));
     return pdf.save();
@@ -337,7 +422,7 @@ class PrintView extends StatelessWidget {
   }
 
   _buildCurrencyWidget(num val, pw.TextStyle style, {String currency = "UGX"}) {
-    return pw.Text('${currency} ${val.toStringAsFixed(2)}', style: style);
+    return pw.Text('${currency} ${Helper.formatCurrency(val)}', style: style);
   }
 
   ///

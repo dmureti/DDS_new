@@ -2,7 +2,9 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/app_version.dart';
 import 'package:distributor/core/models/invoice.dart';
+import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/init_service.dart';
+import 'package:distributor/services/user_service.dart';
 import 'package:distributor/services/version_service.dart';
 import 'package:printing/printing.dart';
 import 'package:stacked/stacked.dart';
@@ -15,6 +17,28 @@ enum TaxCategory { Net, Tax, Gross }
 
 class PrintViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final _apiService = locator<ApiService>();
+  final _userService = locator<UserService>();
+  final _dialogService = locator<DialogService>();
+
+  Api get api => _apiService.api;
+  User get user => _userService.user;
+
+  String get token => user.token;
+
+  ///
+  /// Finalize the order
+  ///
+  finalizeOrder() async {
+    APIResponse result =
+        await api.finalizeSale(token: token, invoiceId: invoice.id);
+    if (result.isSuccess) {
+    } else {
+      await _dialogService.showDialog(
+          title: result.error, description: result.message);
+    }
+  }
+
   final Invoice invoice;
   final InitService _initService = locator<InitService>();
   final _versionService = locator<VersionService>();

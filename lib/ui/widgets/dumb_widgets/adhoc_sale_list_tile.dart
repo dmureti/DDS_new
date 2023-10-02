@@ -1,4 +1,5 @@
 import 'package:distributor/conf/style/lib/text_styles.dart';
+import 'package:distributor/core/helper.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +29,7 @@ class AdhocSaleListTile extends StatelessWidget {
                   style: kTileSubtitleTextStyle),
             ),
             Text(
-              '${adhocSale.total.toStringAsFixed(2)}',
+              Helper.formatCurrency(adhocSale.total),
               style: TextStyle(),
             ),
           ],

@@ -1,3 +1,4 @@
+import 'package:distributor/core/helper.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/src/ui/views/adhoc_detail/adhoc_detail_viewmodel.dart';
 import 'package:distributor/ui/shared/text_styles.dart';
@@ -322,7 +323,7 @@ class SaleItemWidget extends HookViewModelWidget<AdhocDetailViewModel> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  saleItem.itemRate.toStringAsFixed(2),
+                  Helper.formatCurrency(saleItem.itemRate),
                   // textAlign: TextAlign.center,
                   style: TextStyle(),
                 ),
