@@ -88,15 +88,16 @@ class AdhocDetailView extends StatelessWidget {
                           model.adhocDetail.transactionDate != null
                               ? ReportFieldRow(
                                   field: 'Transaction Date',
-                                  value: model.adhocDetail.transactionDate)
+                                  value: Helper.formatDateFromString(
+                                      model.adhocDetail.transactionDate))
                               : Container(
                                   child: Text('Transaction Date'),
                                 ),
                           ReportFieldRow(
-                              field: 'Customer Id', value: model.customerId),
-                          ReportFieldRow(
                               field: 'Customer Name',
                               value: model.adhocDetail.customerName),
+                          ReportFieldRow(
+                              field: 'Customer Id', value: model.customerId),
                           ReportFieldRow(
                               field: 'Reference No',
                               value: model.adhocDetail.referenceNo),
@@ -109,7 +110,7 @@ class AdhocDetailView extends StatelessWidget {
                           ReportFieldRow(
                               field: 'Total',
                               value:
-                                  '${model.adhocDetail.total.toStringAsFixed(2)}'),
+                                  '${Helper.formatCurrency(model.adhocDetail.total)}'),
                           Divider(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

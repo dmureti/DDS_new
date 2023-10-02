@@ -17,6 +17,13 @@ class SalesOrderViewModel extends ReactiveViewModel {
   StockControllerService _stockControllerService =
       locator<StockControllerService>();
 
+  checkIfStockExists(Product product) {
+    Product p = _stockBalanceList.firstWhere(
+        (element) => element.itemCode == product.itemCode,
+        orElse: () => null);
+    return p != null;
+  }
+
   /// This is used to convert the local time to UTC.
   /// The [DatePicker] returns a date object with a default time of 00:00
   ///

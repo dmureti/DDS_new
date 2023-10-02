@@ -13,12 +13,13 @@ class AdhocSaleListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      visualDensity: VisualDensity.compact,
       onTap: () {
         onTap(adhocSale.referenceNo, adhocSale.customerId, adhocSale.baseType);
       },
       // isThreeLine: true,
       subtitle: Padding(
-        padding: EdgeInsets.only(bottom: 8),
+        padding: EdgeInsets.only(bottom: 0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

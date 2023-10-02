@@ -36,8 +36,8 @@ class PrintView extends StatelessWidget {
           appBar: AppBar(
             title: Text(title),
             actions: [
-              IconButton(
-                  onPressed: () => _printDirect(model), icon: Icon(Icons.print))
+              // IconButton(
+              //     onPressed: () => _printDirect(model), icon: Icon(Icons.print))
             ],
           ),
           body: LayoutBuilder(

@@ -79,11 +79,16 @@ class _ResultsView extends HookViewModelWidget<SalesOrderViewModel> {
         itemCount: model.productList.length,
         itemBuilder: (context, index) {
           Product product = model.productList[index];
-          return SalesOrderItemWidget(
-            item: product,
-            salesOrderViewModel: model,
-            quantity: model.getQuantity(product),
-          );
+          //Check if the user has this item in stock
+          if (model.checkIfStockExists(product)) {
+            return SalesOrderItemWidget(
+              item: product,
+              salesOrderViewModel: model,
+              quantity: model.getQuantity(product),
+            );
+          } else {
+            return Container(height: 0);
+          }
         });
   }
 }

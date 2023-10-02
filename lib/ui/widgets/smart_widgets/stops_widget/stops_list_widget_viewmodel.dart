@@ -61,6 +61,5 @@ class StopsListWidgetViewModel extends BaseViewModel {
         arguments: StockCollectionViewArguments(deliveryStop: deliveryStop));
     await getJourneyDetails();
     notifyListeners();
-    print('refreshed');
   }
 }
