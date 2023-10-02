@@ -24,6 +24,10 @@ void main() async {
       enforceCustomerSecurity: false,
       enableAdhocSales: false,
       enableWalkIn: true,
+      currency: "Kshs",
+      returnEmptyStock: true,
+      returnEmptyCrates: true,
+      enableOfflineService: false,
       enableContractCustomers: true);
   List<AppEnv> _appEnv = [
     AppEnv(
@@ -64,6 +68,8 @@ void main() async {
       flavorValues: FlavorValues(
           baseUrl: 'https://testdds.ddsolutions.tech/spvdev-backend/api/v1/',
           applicationParameter: ApplicationParameter(
+              returnEmptyStock: true,
+              returnEmptyCrates: true,
               enableOfflineService: false,
               enableFullDelivery: false,
               enforceCreditLimit: false,
