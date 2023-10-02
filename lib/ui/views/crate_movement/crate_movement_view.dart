@@ -28,6 +28,7 @@ class CrateMovementView extends StatelessWidget {
             appBar: AppBar(
               title: Text(
                 _buildTitle(crateTxnType),
+                style: kAppBarTextStyle,
               ),
             ),
             body: GenericContainer(
