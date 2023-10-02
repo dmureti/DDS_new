@@ -30,6 +30,7 @@ class StopListTile extends StatelessWidget {
                 type: MaterialType.card,
                 // elevation: 1,
                 child: ListTile(
+                  visualDensity: VisualDensity.compact,
                   onTap: () async {
                     await model.navigateToDeliveryDetailView(
                         deliveryJourney, deliveryStop);
@@ -59,8 +60,7 @@ class StopListTile extends StatelessWidget {
                     children: [
                       model.deliveryNote.isSynced
                           ? Text(
-                              '${model.deliveryNote.deliveryStatus}'
-                                  .toUpperCase(),
+                              '${model.deliveryStop.orderStatus}'.toUpperCase(),
                               style: kTileSubtitleTextStyle,
                             )
                           : Row(

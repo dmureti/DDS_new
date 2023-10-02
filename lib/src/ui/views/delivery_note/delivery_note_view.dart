@@ -230,20 +230,16 @@ class DeliveryNoteView extends StatelessWidget {
                       ? BusyWidget()
                       : Container(
                           margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-                          child: Material(
-                            elevation: 3,
-                            color: Colors.white,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Expanded(
-                                  child: OrderParticular(
-                                    deliveryNote: model.deliveryNote,
-                                  ),
-                                )
-                              ],
-                            ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Expanded(
+                                child: OrderParticular(
+                                  deliveryNote: model.deliveryNote,
+                                ),
+                              )
+                            ],
                           ),
                         ),
                 ],

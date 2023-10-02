@@ -185,7 +185,7 @@ class OrderConfirmation extends StatelessWidget {
                                     child: Text(
                                       '${salesOrderRequest.items[index].item.itemName}',
                                       style: TextStyle(
-                                          color: kColorMiniDarkBlue,
+                                          color: Color(0xFF212427),
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500),
                                     ),
@@ -200,7 +200,7 @@ class OrderConfirmation extends StatelessWidget {
                                       Text(
                                         '${Helper.formatCurrency((salesOrderRequest.items[index].quantity * salesOrderRequest.items[index].item.itemPrice))}',
                                         style: TextStyle(
-                                            color: kColorMiniDarkBlue,
+                                            color: Color(0xFF212427),
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500),
                                       ),
