@@ -72,7 +72,7 @@ class SalesOrderItemWidget<T> extends StatelessWidget {
                         ),
                         Text(
                           model.isEnabled
-                              ? 'UGX ${Helper.formatCurrency(model.total)}'
+                              ? '${model.currency} ${Helper.formatCurrency(model.total)}'
                               : '',
                           style: TextStyle(
                               color: Colors.black.withOpacity(0.8),
