@@ -42,6 +42,10 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
 
   ConnectivityStatus _connectivityStatus;
   ConnectivityStatus get connectivityStatus => _connectivityStatus;
+
+  String get currency =>
+      _initService.appEnv.flavorValues.applicationParameter.currency;
+
   updateConnectivityStatus(ConnectivityStatus connectivityStatus) {
     _connectivityStatus = connectivityStatus;
     notifyListeners();
