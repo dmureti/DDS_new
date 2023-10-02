@@ -1,12 +1,13 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/services/init_service.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import 'package:tripletriocore/tripletriocore.dart';
-import 'package:flutter/material.dart';
 
 class SalesOrderItemModel extends BaseViewModel {
   NavigationService _navigationService = locator<NavigationService>();
+  final _initService = locator<InitService>();
   final Product product;
 //  SalesOrderItem salesOrderItem;
   double _total = 0.00;
@@ -22,6 +23,9 @@ class SalesOrderItemModel extends BaseViewModel {
         _maxQuantity = maxQuantity;
 
   bool get isEnabled => product.itemPrice > 0;
+
+  String get currency =>
+      _initService.appEnv.flavorValues.applicationParameter.currency;
 
   /// If the item has a price enable the add item quantity
   addItemQuantity({int val}) {
