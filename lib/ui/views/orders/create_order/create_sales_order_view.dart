@@ -27,12 +27,12 @@ class CreateSalesOrderView extends StatelessWidget {
     return ViewModelBuilder<SalesOrderViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(FontAwesomeIcons.chevronLeft),
-            onPressed: () async {
-              Navigator.pop(context, false);
-            },
-          ),
+          // leading: IconButton(
+          //   icon: Icon(FontAwesomeIcons.chevronLeft),
+          //   onPressed: () async {
+          //     Navigator.pop(context, false);
+          //   },
+          // ),
           title: AppBarColumnTitle(
             mainTitle: 'Place Order',
             subTitle: customer.name,
