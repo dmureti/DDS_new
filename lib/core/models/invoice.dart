@@ -18,6 +18,7 @@ class Invoice {
   String deviceNo;
   String warehouse;
   String sellingPriceList;
+  String currency;
 
   String get customerName => customerDetail.customerName;
   String get sellerName => sellerDetail.sellerName;
@@ -27,6 +28,7 @@ class Invoice {
       {@required this.items,
       @required this.id,
       this.transactionStatus,
+      this.currency,
       this.warehouse,
       this.net,
       this.tax,
@@ -40,10 +42,11 @@ class Invoice {
       String transactionDate})
       : _transactionDate = transactionDate ?? DateTime.now().toIso8601String();
 
-  factory Invoice.fromAdhocDetail(AdhocDetail adhocDetail,
+  factory Invoice.fromAdhocDetail(AdhocDetail adhocDetail, String currency,
       {SellerDetail sellerDetail, CustomerDetail customerDetail}) {
     String id = adhocDetail.referenceNo;
     return Invoice(
+        currency: currency,
         customerDetail: customerDetail,
         warehouse: adhocDetail.warehouseId,
         gross: adhocDetail.gross,
@@ -60,7 +63,7 @@ class Invoice {
         tax: adhocDetail.tax);
   }
 
-  factory Invoice.fromDeliveryNote(DeliveryNote deliveryNote,
+  factory Invoice.fromDeliveryNote(DeliveryNote deliveryNote, String currency,
       {SellerDetail sellerDetail}) {
     CustomerDetail customerDetail = CustomerDetail(
         customerId: deliveryNote.customerId.toString(),
@@ -68,6 +71,7 @@ class Invoice {
         customerAddress: deliveryNote.address);
     return Invoice(
         warehouse: deliveryNote.deliveryWarehouse,
+        currency: currency,
         gross: deliveryNote.gross,
         net: deliveryNote.net,
         total: deliveryNote.total,
