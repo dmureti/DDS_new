@@ -19,6 +19,11 @@ class Invoice {
   String warehouse;
   String sellingPriceList;
   String currency;
+  String qrCode;
+  String fdn;
+  String verificationCode;
+  String remarks;
+  String mode;
 
   String get customerName => customerDetail.customerName;
   String get sellerName => sellerDetail.sellerName;
@@ -27,7 +32,12 @@ class Invoice {
   Invoice(
       {@required this.items,
       @required this.id,
+      this.fdn = "",
+      this.qrCode = "",
+      this.verificationCode = "",
+      this.remarks = "",
       this.transactionStatus,
+      this.mode = "Online",
       this.currency,
       this.warehouse,
       this.net,
@@ -46,6 +56,11 @@ class Invoice {
       {SellerDetail sellerDetail, CustomerDetail customerDetail}) {
     String id = adhocDetail.referenceNo;
     return Invoice(
+        mode: adhocDetail.mode,
+        fdn: adhocDetail.fdn,
+        qrCode: adhocDetail.qrCode,
+        remarks: adhocDetail.remarks,
+        verificationCode: adhocDetail.verificationCode,
         currency: currency,
         customerDetail: customerDetail,
         warehouse: adhocDetail.warehouseId,
@@ -72,6 +87,11 @@ class Invoice {
     return Invoice(
         warehouse: deliveryNote.deliveryWarehouse,
         currency: currency,
+        verificationCode: deliveryNote.verificationCode,
+        remarks: deliveryNote.remarks,
+        qrCode: deliveryNote.qrCode,
+        fdn: deliveryNote.fdn,
+        mode: deliveryNote.mode,
         gross: deliveryNote.gross,
         net: deliveryNote.net,
         total: deliveryNote.total,
