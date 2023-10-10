@@ -42,7 +42,7 @@ class Invoice {
       this.warehouse,
       this.net,
       this.tax,
-      this.deviceNo,
+      this.deviceNo = "",
       this.total,
       this.gross,
       this.sellingPriceList,
@@ -78,7 +78,8 @@ class Invoice {
         tax: adhocDetail.tax);
   }
 
-  factory Invoice.fromDeliveryNote(DeliveryNote deliveryNote, String currency,
+  factory Invoice.fromDeliveryNote(
+      DeliveryNote deliveryNote, String currency, String orderId,
       {SellerDetail sellerDetail}) {
     CustomerDetail customerDetail = CustomerDetail(
         customerId: deliveryNote.customerId.toString(),
@@ -103,7 +104,7 @@ class Invoice {
         customerDetail: customerDetail,
         sellingPriceList: deliveryNote.sellingPriceList,
         transactionStatus: deliveryNote.deliveryStatus,
-        id: deliveryNote.deliveryNoteId,
+        id: orderId,
         items: deliveryNote.deliveryItems);
   }
 

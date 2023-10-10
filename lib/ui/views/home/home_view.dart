@@ -55,7 +55,7 @@ class HomeView extends StatelessWidget {
                       PopupMenuButton(
                         itemBuilder: (context) => <PopupMenuEntry<Object>>[
                           PopupMenuItem(
-                            child: Text('Make Adhoc Sale'),
+                            child: Text('Make Sale'),
                             value: 'make_adhoc_sale',
                           ),
                           PopupMenuDivider(),
@@ -204,7 +204,7 @@ class HomeView extends StatelessWidget {
         break;
       case 2:
         return Text(
-          'Adhoc Sales',
+          'Selling',
           style: kAppBarTextStyle,
         );
         break;

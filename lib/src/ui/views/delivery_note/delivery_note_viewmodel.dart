@@ -34,6 +34,8 @@ class DeliveryNoteViewModel extends BaseViewModel {
   bool get enableFullDelivery => appParams.enableFullDelivery;
   bool get enableSalesReturns => appParams.enableSalesReturn;
 
+  String get currency => appParams.currency;
+
   Future<Uint8List> generatePdf(PdfPageFormat format, String title) async {
     String title = "Receipt";
     final pdf = pw.Document(compress: true);
@@ -240,14 +242,15 @@ class DeliveryNoteViewModel extends BaseViewModel {
   }
 
   navigateToPreview() async {
-    Invoice _invoice = Invoice.fromDeliveryNote(deliveryNote);
+    Invoice _invoice =
+        Invoice.fromDeliveryNote(deliveryNote, currency, deliveryStop.orderId);
     await _navigationService.navigateToView(PrintView(
       invoice: _invoice,
       title: "e-Invoice",
       deliveryNote: deliveryNote,
       user: _user,
       orderId: deliveryStop.orderId,
-
+      customerTIN: deliveryNote.customerTIN,
       // deliveryStop: deliveryStop,
     ));
   }

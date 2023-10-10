@@ -95,7 +95,7 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
                 // ),
                 DrawerListTile(
                   isEnabled: model.enableAdhocTab,
-                  label: 'Adhoc Sales',
+                  label: 'Selling',
                   onTap: () {
                     Navigator.pop(context);
                     model.navigateToHome(2);

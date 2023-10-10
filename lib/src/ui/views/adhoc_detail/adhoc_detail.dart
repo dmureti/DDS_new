@@ -47,7 +47,7 @@ class AdhocDetailView extends StatelessWidget {
                   itemBuilder: (context) => <PopupMenuEntry<Object>>[
                         PopupMenuItem(
                           child: Text(
-                            'Edit Adhoc Sale',
+                            'Edit Sale',
                             style: TextStyle(color: Colors.black),
                           ),
                           value: 'edit_adhoc_sale',
@@ -56,7 +56,7 @@ class AdhocDetailView extends StatelessWidget {
                         if (model.adhocDetail != null && !model.isCancelled)
                           PopupMenuItem(
                             child: Text(
-                              'Cancel Adhoc Sale',
+                              'Cancel Sale',
                               style: TextStyle(
                                 color: Colors.black,
                               ),

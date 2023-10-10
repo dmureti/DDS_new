@@ -27,7 +27,7 @@ class AdhocSalesView extends StatelessWidget {
         builder: (context, model, child) {
           return Scaffold(
             appBar: AppBar(
-              title: Text('Adhoc Sales'),
+              title: Text('Selling'),
             ),
             body: model.userHasJourneys
                 ? Container(

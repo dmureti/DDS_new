@@ -36,6 +36,12 @@ class AdhocCartService with ReactiveServiceMixin {
     }
   }
 
+  finalizeOrder(String invoiceId) async {
+    var response =
+        await _apiService.api.finalizeSale(token: token, invoiceId: invoiceId);
+    return response;
+  }
+
   List<String> _paymentModes;
 
   List<String> get paymentModes {

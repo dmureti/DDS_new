@@ -26,8 +26,10 @@ class LoginViewModel extends BaseViewModel {
   final locationService = locator<LocationRepository>();
   final dialogService = locator<DialogService>();
 
-  bool get enableOffline => _initService
-      .appEnv.flavorValues.applicationParameter.enableOfflineService;
+  bool get enableOffline =>
+      _initService
+          .appEnv.flavorValues.applicationParameter?.enableOfflineService ??
+      false;
 
   // final geofenceService = locator<GeoFenceService>();
 

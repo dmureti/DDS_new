@@ -39,9 +39,10 @@ void main() async {
     ),
     AppEnv(
       flavor: Flavor.internal,
-      name: 'SPV',
+      name: 'Test-Nairobi-SPV',
       flavorValues: FlavorValues(
-          baseUrl: 'https://testdds.ddsolutions.tech/spv-backend/api/v1'),
+          baseUrl: 'http://63.34.178.251:8484/spv-backend/api/v1',
+          applicationParameter: nairobiAppEnv),
     ),
     AppEnv(
       flavor: Flavor.internal,

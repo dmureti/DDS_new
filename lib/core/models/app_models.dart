@@ -150,11 +150,17 @@ class AdhocDetail {
   final String deliveryType;
   String customerId;
   String customerName;
+  String _customerTIN;
   String transactionDate;
   String warehouseId;
   num total;
   double gross, net, tax = 0.00;
-  String deviceNo;
+  String deviceNo = "";
+  String qrCode = "-";
+  String fdn;
+  String verificationCode;
+  String remarks;
+  String mode;
   String transactionStatus;
   String sellingPriceList;
   List saleItems;
@@ -167,40 +173,53 @@ class AdhocDetail {
       {this.referenceNo,
       this.customerId,
       this.warehouseId,
-        this.customerName,
+      this.customerName,
       this.gross,
       this.net,
       this.deviceNo,
       this.tax,
       this.baseType,
       this.deliveryType,
-
       this.transactionDate,
+      String customerTIN,
       this.total,
       this.transactionStatus,
       this.sellingPriceList,
-      this.saleItems})
-      : deliveryNoteId = referenceNo;
+      this.saleItems,
+      this.mode = "Online",
+      this.remarks = "",
+      this.verificationCode = "",
+      this.fdn = "",
+      this.qrCode = "-"})
+      : deliveryNoteId = referenceNo,
+        _customerTIN = customerTIN ?? "";
 
   factory AdhocDetail.fromResponse(Map<String, dynamic> data) {
     return AdhocDetail(
-      baseType: data['baseType'],
-      referenceNo: data['referenceNo'],
-      warehouseId: data['warehouseId'],
-      deliveryType: data['deliveryType'],
-      customerName: data['customerName'] ?? data['customerId'],
-      transactionDate: data['transactionDate'],
-      customerId: data['customerId'] ?? data['customerName'],
-      total: data['total'],
-      gross: data['gross'] ?? 0.00,
-      tax: data['tax'] ?? 0.00,
-      deviceNo: data['deviceNo'] ?? "",
-      net: data['net'] ?? 0.00,
-      transactionStatus: data['transactionStatus'] ?? "",
-      sellingPriceList: data['sellingPriceList'],
-      saleItems: data['saleItems'],
-    );
+        baseType: data['baseType'],
+        referenceNo: data['referenceNo'],
+        warehouseId: data['warehouseId'],
+        deliveryType: data['deliveryType'],
+        customerName: data['customerName'] ?? data['customerId'],
+        transactionDate: data['transactionDate'],
+        customerTIN: data['customerTIN'] ?? "",
+        customerId: data['customerId'] ?? data['customerName'],
+        total: data['total'],
+        gross: data['gross'] ?? 0.00,
+        tax: data['tax'] ?? 0.00,
+        deviceNo: data['deviceNo'] ?? "",
+        net: data['net'] ?? 0.00,
+        transactionStatus: data['transactionStatus'] ?? "",
+        sellingPriceList: data['sellingPriceList'],
+        saleItems: data['saleItems'],
+        remarks: data['remarks'] ?? "",
+        fdn: data['fdn'] ?? "",
+        mode: data['mode'] ?? "Online",
+        qrCode: data['qrCode'] ?? "-",
+        verificationCode: data['verificationCode'] ?? "");
   }
+
+  String get customerTIN => _customerTIN;
 }
 
 // {"message":"Success",
