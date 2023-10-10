@@ -1,6 +1,7 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/adhoc_cart_service.dart';
+import 'package:distributor/services/init_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -9,6 +10,10 @@ class AdhocPaymentViewmodel extends ReactiveViewModel {
   AdhocCartService _adhocCartService = locator<AdhocCartService>();
   NavigationService _navigationService = locator<NavigationService>();
   DialogService _dialogService = locator<DialogService>();
+  final _initService = locator<InitService>();
+
+  String get currency =>
+      _initService.appEnv.flavorValues.applicationParameter.currency;
 
   @override
   List<ReactiveServiceMixin> get reactiveServices => [_adhocCartService];
@@ -50,7 +55,7 @@ class AdhocPaymentViewmodel extends ReactiveViewModel {
     setBusy(false);
     if (result is bool) {
       await _dialogService.showDialog(
-          title: 'Success', description: 'The adhoc sale was successful');
+          title: 'Success', description: 'The sale was posted successfully.');
       if (result is bool) {
         _adhocCartService.resetTotal();
       }
