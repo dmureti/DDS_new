@@ -16,7 +16,7 @@ class AdhocPaymentView extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text(
-                'Adhoc Sales : Payment',
+                'Selling : Payment',
                 style: kAppBarTextStyle,
               ),
             ),
@@ -26,7 +26,8 @@ class AdhocPaymentView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Amount Due : UGX ${model.total.toStringAsFixed(2)}'),
+                  Text(
+                      'Amount Due :  ${model.currency} ${model.total.toStringAsFixed(2)}'),
                   SizedBox(
                     height: 8,
                   ),
