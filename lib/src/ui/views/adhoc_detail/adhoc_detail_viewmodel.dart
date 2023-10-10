@@ -17,6 +17,7 @@ class AdhocDetailViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _dialogService = locator<DialogService>();
   final _initService = locator<InitService>();
+
   StockControllerService _stockControllerService =
       locator<StockControllerService>();
 
@@ -268,14 +269,15 @@ class AdhocDetailViewModel extends BaseViewModel {
         taxId: "",
       ),
     );
-    Invoice _invoice =
-        Invoice.fromAdhocDetail(adhocDetail, customerDetail: customerDetail);
+    Invoice _invoice = Invoice.fromAdhocDetail(adhocDetail, currency,
+        customerDetail: customerDetail);
     _navigationService.navigateToView(PrintView(
       invoice: _invoice,
       deliveryNote: adhocDetail,
       title: 'e-Invoice',
       user: _userService.user,
       orderId: referenceNo,
+      customerTIN: adhocDetail.customerTIN,
     ));
   }
 }
