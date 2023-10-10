@@ -31,6 +31,12 @@ class PrintView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // assets/fonts/proxima_nova/normal/proxima.ttf
+    // assets/fonts/jetbrains_mono/JetBrainsMono-Medium.ttf
+    // "assets/fonts/jetbrains_mono/JetBrainsMono-Regular.ttf";
+    final String fontRoot =
+        "assets/fonts/jetbrains_mono/JetBrainsMono-Medium.ttf";
+    final double fontSize = 15.0;
     return ViewModelBuilder<PrintViewModel>.reactive(
       onModelReady: (model) => model.init(),
       builder: (context, model, child) {
@@ -39,7 +45,8 @@ class PrintView extends StatelessWidget {
             title: Text(title),
             actions: [
               IconButton(
-                  onPressed: () => _print(model), icon: Icon(Icons.print))
+                  onPressed: () => _print(model, fontRoot, fontSize),
+                  icon: Icon(Icons.print))
             ],
           ),
           body: LayoutBuilder(
@@ -62,18 +69,19 @@ class PrintView extends StatelessWidget {
                 // maxPageWidth: MediaQuery.of(context).size.width,
                 // initialPageFormat: PdfPageFormat.a4,
                 build: (format) => _generatePdf(
-                  format.copyWith(
-                    // height: height * 0.74,
-                    // width: width,
-                    marginLeft: margin,
-                    marginRight: margin,
-                    marginTop: marginTop,
-                    marginBottom: marginBottom,
-                  ),
-                  title,
-                  model,
-                  height,
-                ),
+                    format.copyWith(
+                      // height: height * 0.74,
+                      // width: width,
+                      marginLeft: margin,
+                      marginRight: margin,
+                      marginTop: marginTop,
+                      marginBottom: marginBottom,
+                    ),
+                    title,
+                    model,
+                    height,
+                    fontRoot,
+                    fontSize),
                 pageFormats: <String, PdfPageFormat>{
                   'roll57': PdfPageFormat.roll57,
                   'A4': PdfPageFormat.a4,
@@ -90,10 +98,9 @@ class PrintView extends StatelessWidget {
     );
   }
 
-  _print(PrintViewModel model) async {
+  _print(PrintViewModel model, String fontRoot, double fontSize) async {
     var result = await model.confirmSale();
-    final font =
-        await rootBundle.load("assets/fonts/proxima_nova/normal/proxima.ttf");
+    final font = await rootBundle.load(fontRoot);
     final ttf = pw.Font.ttf(font);
     if (result) {
       const imageProvider = const AssetImage('assets/images/mini_logo.png');
@@ -102,10 +109,10 @@ class PrintView extends StatelessWidget {
       final marginBottom = 15.0 * PdfPageFormat.mm;
       final marginLeft = 0.0 * PdfPageFormat.mm;
       final marginRight = 0.0 * PdfPageFormat.mm;
-      final pdf = pw.Document(compress: false);
+      final pdf = pw.Document(compress: true);
       final pw.TextStyle style = pw.TextStyle(
         font: ttf,
-        fontSize: 16,
+        fontSize: fontSize,
       );
       List<pw.Widget> widgets = [];
       _buildWidgetTree() {
@@ -142,8 +149,8 @@ class PrintView extends StatelessWidget {
       pdf.addPage(
         pw.Page(
             theme: pw.ThemeData(
-                paragraphStyle: pw.TextStyle(fontSize: 18, font: ttf),
-                defaultTextStyle: pw.TextStyle(fontSize: 18, font: ttf)),
+                paragraphStyle: pw.TextStyle(fontSize: fontSize, font: ttf),
+                defaultTextStyle: pw.TextStyle(fontSize: fontSize, font: ttf)),
             pageFormat: PdfPageFormat.roll57.copyWith(
                 width: width,
                 // width: PdfPageFormat.roll80.width * PdfPageFormat.mm,
@@ -162,12 +169,15 @@ class PrintView extends StatelessWidget {
     }
   }
 
-  Future<Uint8List> _generatePdf(PdfPageFormat format, String title,
-      PrintViewModel model, double widgetHeight) async {
+  Future<Uint8List> _generatePdf(
+      PdfPageFormat format,
+      String title,
+      PrintViewModel model,
+      double widgetHeight,
+      String fontRoot,
+      double fontSize) async {
     List<pw.Widget> widgets = [];
-
-    final font =
-        await rootBundle.load("assets/fonts/proxima_nova/normal/proxima.ttf");
+    final font = await rootBundle.load(fontRoot);
     final ttf = pw.Font.ttf(font);
     const imageProvider = const AssetImage('assets/images/mini_logo.png');
     final image = await flutterImageProvider(imageProvider);
@@ -175,10 +185,10 @@ class PrintView extends StatelessWidget {
     final marginBottom = 10.0 * PdfPageFormat.mm;
     final marginLeft = 5.0 * PdfPageFormat.mm;
     final marginRight = 5.0 * PdfPageFormat.mm;
-    final pdf = pw.Document(compress: false);
+    final pdf = pw.Document(compress: true);
     final pw.TextStyle style = pw.TextStyle(
       font: ttf,
-      fontSize: 15,
+      fontSize: fontSize,
     );
     _buildWidgetTree() {
       List<pw.Widget> tree = [
@@ -186,14 +196,10 @@ class PrintView extends StatelessWidget {
         _buildHeader(image, model, style),
         _buildSectionHeader("Sellers Detail", style),
         _buildSellersDetail(user, style, model),
-        // _buildSectionHeader("URA Information", style),
-        // _buildURAInformation(style, model),
         _buildSectionHeader("Buyers Details", style),
         _buildBuyerDetails(model, style),
         _buildSectionHeader("Goods and Services Details", style),
         ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
-        // ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
-        // ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
         _buildSpacer(),
         _buildSectionHeader("Tax Details", style),
         _buildTaxDetails(model, style),
@@ -201,7 +207,6 @@ class PrintView extends StatelessWidget {
             "Summary", style.copyWith(fontWeight: pw.FontWeight.bold)),
         _buildSummary(model, style),
         _buildSpacer(),
-        // _drawQRCode(model),
         _buildFooter(model, style),
         _buildSpacer(),
       ];
@@ -213,8 +218,9 @@ class PrintView extends StatelessWidget {
     pdf.addPage(
       pw.Page(
           theme: pw.ThemeData(
-              paragraphStyle: pw.TextStyle(fontSize: 14),
-              defaultTextStyle: pw.TextStyle(fontSize: 14)),
+              header0: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+              paragraphStyle: pw.TextStyle(fontSize: fontSize),
+              defaultTextStyle: pw.TextStyle(fontSize: fontSize)),
           pageFormat: PdfPageFormat.roll57.copyWith(
               width: width,
               marginBottom: marginBottom,
