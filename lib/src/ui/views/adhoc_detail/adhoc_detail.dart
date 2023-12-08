@@ -2,6 +2,7 @@ import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/core/models/app_models.dart';
 import 'package:distributor/src/ui/views/adhoc_detail/adhoc_detail_viewmodel.dart';
+import 'package:distributor/ui/shared/text_styles.dart';
 import 'package:distributor/ui/shared/widgets.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
+import 'package:tripletriocore/tripletriocore.dart';
 
 class AdhocDetailView extends StatelessWidget {
   final String referenceNo;
@@ -36,9 +38,9 @@ class AdhocDetailView extends StatelessWidget {
             ),
             actions: [
               // PrintButton(),
-              IconButton(
-                  onPressed: () => model.navigateToPrint(),
-                  icon: Icon(Icons.print)),
+              // IconButton(
+              //     onPressed: () => model.navigateToPrint(),
+              //     icon: Icon(Icons.print)),
               PopupMenuButton(
                   onSelected: (x) {
                     // model.navigateToPage(x);
@@ -134,14 +136,14 @@ class AdhocDetailView extends StatelessWidget {
                                 child:
                                     Text('Items In Transaction'.toUpperCase()),
                               ),
-                              // IconButton(
-                              //   onPressed: () {
-                              //     model.toggleEditState();
-                              //   },
-                              //   icon: model.inEditState
-                              //       ? Icon(Icons.cancel)
-                              //       : Icon(Icons.edit),
-                              // ),
+                              IconButton(
+                                onPressed: () {
+                                  model.toggleEditState();
+                                },
+                                icon: model.inEditState
+                                    ? Icon(Icons.cancel)
+                                    : Icon(Icons.edit),
+                              ),
                             ],
                           ),
                           model.memento != null
@@ -204,149 +206,110 @@ class SaleItemWidget extends HookViewModelWidget<AdhocDetailViewModel> {
         child: ListTile(
           contentPadding: EdgeInsets.zero,
           visualDensity: VisualDensity.comfortable,
-          // leading: Container(
+          leading: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  '${saleItem.itemCode}',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                GestureDetector(
+                  onTap: model.inEditState
+                      ? () async {
+                          var result = await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return SimpleDialog(
+                                  insetPadding:
+                                      EdgeInsets.symmetric(horizontal: 12),
+                                  title: Text(
+                                      'How many pieces would you like to reverse for  ${saleItem.itemName}'),
+                                  children: [
+                                    Divider(),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                          'Allowed range is 0 to ${model.getMax(saleItem)}'),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        controller: textEditingController,
+                                        onChanged: (val) {
+                                          model.updateProduct(val);
+                                        },
 
-          //   child: Column(
+                                        decoration:
+                                            InputDecoration(filled: false),
+                                        onFieldSubmitted: (val) {
+                                          model.updateMemento(
+                                              saleItem, val, index);
+                                        },
+                                        // onSubmitted: (val) {
+                                        //   model.updateProduct(val);
+                                        // },
+                                        keyboardType: TextInputType.number,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          model.updateMemento(
+                                              saleItem,
+                                              textEditingController.text,
+                                              index);
+                                          // Navigator.pop(context);
+                                          //
+                                          // onChange(model.delive);
 
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     crossAxisAlignment: CrossAxisAlignment.center,
+                                          // Navigator.pop(context, model.product);
+                                        },
+                                        child: Text(
+                                          'Submit',
+                                          style: kActiveButtonTextStyle,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              });
 
-          //     children: [
+                          if (result is Product) {
+                            model.updateProduct(
+                                result.quantity.toStringAsFixed(0));
 
-          //       Text(
-          //         '${saleItem.itemCode}',
-          //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-          //       ),
-          //       SizedBox(
-          //         height: 4,
-          //       ),
-          //       GestureDetector(
-          //         onTap: model.inEditState
-          //             ? () async {
-          //                 var result = await showDialog(
-          //                     context: context,
-          //                     builder: (context) {
-          //                       return SimpleDialog(
-          //                         insetPadding:
-          //                             EdgeInsets.symmetric(horizontal: 12),
-          //                         title: Text(
-          //                             'How many pieces would you like to reverse for  ${saleItem.itemName}'),
-          //                         children: [
-          //                           Divider(),
-          //                           Padding(
-          //                             padding: const EdgeInsets.all(8.0),
-          //                             child: Text(
-          //                                 'Allowed range is 0 to ${model.getMax(saleItem)}'),
-          //                           ),
-          //                           Padding(
-          //                             padding: const EdgeInsets.all(8.0),
-          //                             child: TextFormField(
-          //                               controller: textEditingController,
-          //                               onChanged: (val) {
-          //                                 model.updateProduct(val);
-          //                               },
-          //
-          //
-          //                               decoration:
-          //                                   InputDecoration(filled: false),
-          //                               onFieldSubmitted: (val) {
-          //                                 model.updateMemento(
-          //                                     saleItem, val, index);
-          //                               },
-          //                               // onSubmitted: (val) {
-          //                               //   model.updateProduct(val);
-          //                               // },
-          //                               keyboardType: TextInputType.number,
-          //                             ),
-          //                           ),
-          //                           Padding(
-          //                             pa
-          //                             dding: const EdgeInsets.all(8.0),
-          //                             child: ElevatedButton(
-          //
-          //                               onPressed: () {
-          //
-          //                                 model.updateMemento(
-          //
-          //                                     saleItem,
-          //
-          //                                     textEditingController.text,
-          //                                     index);
-          //                                 Navi
-          //                                 gator.pop(context);
-          //
-          // onChange(model.delive);
-          //
-          // Navigator.pop(context, model.product);
-          //
-          //                               },
-          //                               child: Text(
-          //
-          //                                 'Submit',
-          //
-          //                                 style: kActiveButtonTextStyle,
-          //                               ),
+                            // onChange(result);
 
-          //                             ),
-
-          //                           ),
-          //                         ],
-
-          //                       );
-
-          //                     });
-
-          //
-
-          //                 if (result is Product) {
-          //                   model.updateProduct(
-
-          //                       result.quantity.toStringAsFixed(0));
-
-          //                   // onChange(result);
-
-          //                   model.notifyListeners();
-
-          //                 }
-          //               }
-
-          //             : () {},
-
-          //         child: model.inEditState
-
-          //             ? Container(
-
-          //                 width: 50,
-          //                 child: Row(
-
-          //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-          //                   children: [
-
-          //                     Icon(
-
-          //                       Icons.edit,
-
-          //                       size: 18,
-          //                     ),
-
-          //                     Text(saleItem.quantity.toString()),
-
-          //                   ],
-
-          //                 ),
-
-          //               )
-          //             : Text(model.adhocDetail.saleItems[index]['quantity']
-
-          //                 .toString()),
-
-          //       ),
-
-          //     ],
-
-          //   ),
-          // ),
+                            model.notifyListeners();
+                          }
+                        }
+                      : () {},
+                  child: model.inEditState
+                      ? Container(
+                          width: 50,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Icon(
+                                Icons.edit,
+                                size: 18,
+                              ),
+                              Text(saleItem.quantity.toString()),
+                            ],
+                          ),
+                        )
+                      : Text(model.adhocDetail.saleItems[index]['quantity']
+                          .toString()),
+                ),
+              ],
+            ),
+          ),
 
           title: Container(
             child: Column(

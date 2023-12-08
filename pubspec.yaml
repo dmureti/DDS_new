@@ -1,6 +1,6 @@
 name: distributor
 description: Digital Distribution System
-version: 29.0.6+29
+version: 47.1.7+47
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
@@ -12,6 +12,7 @@ dependencies:
   #badges
   badges: ^1.1.1
   url_launcher: ^5.4.11
+  unique_identifier: ^0.3.0
 
 
 
@@ -69,6 +70,7 @@ dependencies:
 #  printing: ^4.1.0
   device_info_plus: 0.5.0
   printing: ^4.1.0
+  flutter_device_identifier: ^0.0.1
 
 
 
@@ -123,3 +125,12 @@ flutter:
     - family: ProximaNova700
       fonts:
         - asset: assets/fonts/proxima_nova/normal/ProximaNovaAltExtrabold.otf
+    - family: Jetbrains
+      fonts:
+          - asset: assets/fonts/jetbrains_mono/JetBrainsMono-Regular.ttf
+    - family: JetbrainsMedium
+      fonts:
+        - asset: assets/fonts/jetbrains_mono/JetBrainsMono-Medium.ttf
+    - family: Ubuntu
+      fonts:
+        - asset: assets/fonts/ubuntu_mono/UbuntuMono-R.ttf

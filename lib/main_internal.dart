@@ -72,6 +72,7 @@ void main() async {
               returnEmptyStock: false,
               returnEmptyCrates: false,
               enableOfflineService: false,
+              enableReceivedReturns: true,
               enableFullDelivery: false,
               enforceCreditLimit: false,
               enableCustomDelivery: true,

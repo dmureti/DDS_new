@@ -36,6 +36,8 @@ class DeliveryNoteViewModel extends BaseViewModel {
 
   String get currency => appParams.currency;
 
+  bool get enableReceivedReturns => appParams.enableReceivedReturns;
+
   Future<Uint8List> generatePdf(PdfPageFormat format, String title) async {
     String title = "Receipt";
     final pdf = pw.Document(compress: true);
@@ -112,6 +114,32 @@ class DeliveryNoteViewModel extends BaseViewModel {
 
   handleOrderAction(String action) async {
     switch (action) {
+      case 'received_returns':
+        DialogResponse response = await _dialogService.showConfirmationDialog(
+            description:
+                'You are about to return SKUs for the Delivery note ${deliveryStop.deliveryNoteId} for ${deliveryStop.customerId}.',
+            title: 'RECEIVED RETURNS',
+            confirmationTitle: 'CONFIRM',
+            cancelTitle: 'CANCEL');
+        if (response.confirmed) {
+          setBusy(true);
+          var result = await _journeyService.receivedReturns(
+            deliveryStop.orderId,
+            deliveryStop.stopId,
+            deliveryLocation,
+            deliveryNote: deliveryNote,
+          );
+          setBusy(false);
+          if (result is CustomException) {
+            await _dialogService.showDialog(
+                title: "${result.title}", description: result.description);
+          } else {
+            await getDeliveryNote();
+            _snackbarService.showSnackbar(
+                message: 'Actioned performed successfully', title: 'Success');
+          }
+        }
+        break;
       case 'custom_delivery':
         if (_journeyService.currentJourney?.journeyId == null) {
           await _dialogService.showDialog(

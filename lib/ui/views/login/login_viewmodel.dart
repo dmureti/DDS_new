@@ -155,9 +155,9 @@ class LoginViewModel extends BaseViewModel {
         snackBarService.showSnackbar(message: 'Download started');
         await _versionService.downloadAndUpdate(
             remoteVersion.remoteUrl, remoteVersion.versionCode);
-        snackBarService.showSnackbar(
-            message: 'Download Completed',
-            onTap: (_) => _versionService.openFile());
+        // snackBarService.showSnackbar(
+        //     message: 'Download Completed',
+        //     onTap: (_) => _versionService.openFile());
       }
     }
   }

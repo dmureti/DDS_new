@@ -17,6 +17,8 @@ class SalesOrderViewModel extends ReactiveViewModel {
   StockControllerService _stockControllerService =
       locator<StockControllerService>();
 
+  bool get isVariable => _adhocCartService.isVariable ?? false;
+
   checkIfStockExists(Product product) {
     Product p = _stockBalanceList.firstWhere(
         (element) => element.itemCode == product.itemCode,
@@ -128,10 +130,10 @@ class SalesOrderViewModel extends ReactiveViewModel {
     if (_productList.isNotEmpty) {
       switch (_productOrdering) {
         case ProductOrdering.alphaAsc:
-          _productList.sort((a, b) => a.itemName.compareTo(b.itemName));
+          _productList.sort((a, b) => a.itemCode.compareTo(b.itemCode));
           break;
         case ProductOrdering.alphaDesc:
-          _productList.sort((b, a) => a.itemName.compareTo(b.itemName));
+          _productList.sort((b, a) => a.itemCode.compareTo(b.itemCode));
           break;
       }
       return _productList.where((product) => product.itemPrice > 0).toList();
@@ -303,6 +305,10 @@ class SalesOrderViewModel extends ReactiveViewModel {
     // _productList.removeWhere((item) => stockBalanceList.contains(item));
   }
 
+  double get securityBalance => _adhocCartService.securityBalance;
+  double get securityAmount => _adhocCartService.securityAmount;
+  double get creditLimit => _adhocCartService.creditLimit;
+
   Future fetchProductsByPrice() async {
     setBusy(true);
     var result = await _productService.fetchProductsByDefaultPriceList(
@@ -351,7 +357,27 @@ class SalesOrderViewModel extends ReactiveViewModel {
   List<Product> _stockBalanceList = [];
   List<Product> get stockBalanceList => _stockBalanceList;
 
+  compareValues() {
+    print("Credit Limit----$creditLimit---");
+    print("Total ----$total---");
+    print("Security Amount ----$securityAmount---");
+    print("Security Balance ----$securityBalance---");
+    return (creditLimit - (total + securityBalance)) >= 0;
+  }
+
   navigateToAdhocPaymentView() async {
-    await _navigationService.navigateTo(Routes.adhocPaymentView);
+    //Compare security
+    if (!compareValues()) {
+      num security =
+          isVariable ? (securityBalance - securityAmount) : securityAmount;
+
+      num exceededLimit = -1 * (creditLimit - (total + security));
+      await _dialogService.showDialog(
+          title: 'Credit Limit Exceeded',
+          description:
+              'Available Limit :$creditLimit\nTotal : $total\nSecurity : $security\n\nYou have exceeded the credit limit allocated by $exceededLimit');
+    } else {
+      await _navigationService.navigateTo(Routes.adhocPaymentView);
+    }
   }
 }

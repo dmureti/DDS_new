@@ -1,3 +1,4 @@
+import 'package:distributor/core/helper.dart';
 import 'package:distributor/ui/views/orders/create_order/sales_order_view_model.dart';
 import 'package:distributor/ui/widgets/action_button.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/app_bar_column_title.dart';
@@ -42,6 +43,47 @@ class AdhocCartView extends StatelessWidget {
                   )
                 : Column(
                     children: [
+                      if (isWalkin)
+                        Container()
+                      else
+                        Container(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    'Available Credit : Kshs ${Helper.formatCurrency(model.creditLimit - (model.total))}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: ((model.creditLimit -
+                                                  (model.total +
+                                                      model.securityBalance)) >=
+                                              0)
+                                          ? Colors.green
+                                          : Colors.red,
+                                    ),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                                Text(
+                                  model.isVariable
+                                      ? 'Security : Kshs ${Helper.formatCurrency(model.securityBalance - model.securityAmount)} '
+                                      : 'Security : Kshs ${model.securityAmount}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: (model.total > model.creditLimit)
+                                        ? Colors.red
+                                        : Colors.green,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       Expanded(
                         child: ListView(
                           padding: EdgeInsets.zero,

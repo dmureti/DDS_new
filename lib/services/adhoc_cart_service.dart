@@ -99,6 +99,9 @@ class AdhocCartService with ReactiveServiceMixin {
   CustomerSecurity _customerSecurity;
   CustomerSecurity get customerSecurity => _customerSecurity;
 
+  bool _isVariable;
+  bool get isVariable => _isVariable;
+
   init() async {
     if (_logisticsService.currentJourney != null) {
       // var mpesaRes =
@@ -132,6 +135,9 @@ class AdhocCartService with ReactiveServiceMixin {
     if (enforceCustomerSecurity) {
       var result = await _customerService.getCustomerSecurity(customer);
       _customerSecurity = CustomerSecurity.fromMap(result);
+      _isVariable = _customerSecurity.securityType.toLowerCase() == "variable"
+          ? true
+          : false;
       _securityBalance.value =
           double.tryParse(_customerSecurity.securityAmount) ?? 0.0;
 
@@ -189,6 +195,7 @@ class AdhocCartService with ReactiveServiceMixin {
   List<Product> get customerProductList => _customerProductList;
 
   calculateSecurity(Product item, var quantity) {
+    num defaultSecurity = double.tryParse(customerSecurity.securityAmount);
     // Is customer calculated for the security? If no, return 0.0
     if (customerSecurity.calcSecurity.toLowerCase() != "yes") {
       return _securityAmount.value;
@@ -202,25 +209,21 @@ class AdhocCartService with ReactiveServiceMixin {
 
     var itemFactor = double.tryParse(item.itemFactor) ?? 0.5;
     var result = (quantity * securityAmount * itemFactor).toDouble();
-    print(result);
     _securityBalance.value += result;
-    print("This is the security to ADD:::: ${securityBalance}");
+    itemsInCart.forEach((i) {
+      // var ite = ddsItemRepository.getItemByCode(item.itemCode!);
+      // Now calculate the variable security
+      if (i.itemCode.toLowerCase() == item.itemCode.toLowerCase()) {
+        print(item.quantity);
 
-    // itemsInCart.forEach((i) {
-    //   // var ite = ddsItemRepository.getItemByCode(item.itemCode!);
-    //   // Now calculate the variable security
-    //   if (i.itemCode.toLowerCase() == item.itemCode.toLowerCase()) {
-    //     print(item.quantity);
-    //
-    //     var quantity = item.quantity ?? 0;
-    //     var securityAmount = int.tryParse(customerSecurity.securityAmount) ?? 0;
-    //     // var result = (quantity * securityAmount * item.itemFactor).toDouble();
-    //     var result = (quantity * securityAmount).toDouble();
-    //     // var result = (quantity * securityAmount).toDouble();
-    //     _securityBalance.value += result;
-    //     print("This is the security to ADD:::: ${securityBalance}");
-    //   }
-    // });
+        var quantity = item.quantity ?? 0;
+        var securityAmount = int.tryParse(customerSecurity.securityAmount) ?? 0;
+        // var result = (quantity * securityAmount * item.itemFactor).toDouble();
+        var result = (quantity * securityAmount).toDouble();
+        // var result = (quantity * securityAmount).toDouble();
+        _securityBalance.value += result;
+      }
+    });
   }
 
   AdhocCartService() {
@@ -264,6 +267,7 @@ class AdhocCartService with ReactiveServiceMixin {
         if (_items.value[i].item == p) {
           // Increase the value of the sales order item
           _items.value[i].quantity += quantity;
+          calculateSecurity(p, quantity);
           notifyListeners();
         }
       }
@@ -271,12 +275,9 @@ class AdhocCartService with ReactiveServiceMixin {
       _itemsInCart.value.add(p);
       SalesOrderItem s = SalesOrderItem(item: p, quantity: quantity);
       _items.value.add(s);
+      calculateSecurity(p, quantity);
       notifyListeners();
     }
-
-    //@TODO : Calculate the security
-
-    //@TODO : Calculate the credit balance
   }
 
   resetTotal() {
@@ -301,6 +302,7 @@ class AdhocCartService with ReactiveServiceMixin {
         }
       }
     }
+    calculateSecurity(p, -quantity);
     notifyListeners();
   }
 

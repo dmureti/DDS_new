@@ -1,15 +1,15 @@
 {
   "version": {
-    "buildNumber": 2907,
+    "buildNumber": 4717,
     "tenantId": "default",
     "appName": "DDS",
     "packageName": "",
-    "versionCode": "29.0.7",
+    "versionCode": "47.1.7",
     "versionName": "",
     "remoteUrl": "",
     "changeLog": [],
     "timeout": 2,
-    "autoupdate": false,
+    "autoupdate": true,
     "enableOffline": false,
     "enableGeofence": false
   }

@@ -27,6 +27,7 @@ void main() async {
       enableCustomDelivery: true,
       currency: "UGX",
       taxRate: 0.18,
+      enableReceivedReturns: true,
       defaultPriceList: "walk in",
       enforceCustomerSecurity: false,
       enableAdhocSales: true,
