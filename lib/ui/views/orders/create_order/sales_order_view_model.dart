@@ -295,6 +295,7 @@ class SalesOrderViewModel extends ReactiveViewModel {
   bool get isWalkIn => _isWalkIn;
 
   initializeAdhoc() async {
+    setBusy(true);
     if (customer != null) {
       await _adhocCartService.initializeCustomerData(
           customer, customerProductList);
@@ -303,6 +304,7 @@ class SalesOrderViewModel extends ReactiveViewModel {
     // await fetchProductsByPrice();
     isWalkIn ? await fetchProductsByPrice() : await fetchProducts();
     // _productList.removeWhere((item) => stockBalanceList.contains(item));
+    setBusy(false);
   }
 
   double get securityBalance => _adhocCartService.securityBalance;
