@@ -88,7 +88,7 @@ class StockTransferRequestView extends StatelessWidget {
                                                 initialQuantity:
                                                     model.getQuantity(product),
                                                 minQuantity: 0,
-                                                maxQuantity: 1000,
+                                                maxQuantity: 100000,
                                               );
                                             });
                                         if (result != null) {
