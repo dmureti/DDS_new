@@ -100,54 +100,54 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
                     style: TextStyle(
                         fontFamily: 'NerisBlack', color: kColDDSPrimaryDark),
                   ),
-                  subtitle: Wrap(
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            model.navigateToAddAdhocSale();
-                          },
-                          child: Text(
-                            'Depot'.toUpperCase(),
-                            style: TextStyle(
-                                fontFamily: 'NerisBlack',
-                                color: kColDDSPrimaryDark),
-                          )),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            model.navigateToAddAdhocSale();
-                          },
-                          child: Text(
-                            'Mini-shop'.toUpperCase(),
-                            style: TextStyle(
-                                fontFamily: 'NerisBlack',
-                                color: kColDDSPrimaryDark),
-                          )),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            model.navigateToAddAdhocSale();
-                          },
-                          child: Text(
-                            'Key Accounts'.toUpperCase(),
-                            style: TextStyle(
-                                fontFamily: 'NerisBlack',
-                                color: kColDDSPrimaryDark),
-                          )),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            model.navigateToAddAdhocSale();
-                          },
-                          child: Text(
-                            'Van Sales'.toUpperCase(),
-                            style: TextStyle(
-                                fontFamily: 'NerisBlack',
-                                color: kColDDSPrimaryDark),
-                          ))
-                    ],
-                  ),
+                  // subtitle: Wrap(
+                  //   children: [
+                  //     TextButton(
+                  //         onPressed: () {
+                  //           Navigator.pop(context);
+                  //           model.navigateToAddAdhocSale();
+                  //         },
+                  //         child: Text(
+                  //           'Depot'.toUpperCase(),
+                  //           style: TextStyle(
+                  //               fontFamily: 'NerisBlack',
+                  //               color: kColDDSPrimaryDark),
+                  //         )),
+                  //     TextButton(
+                  //         onPressed: () {
+                  //           Navigator.pop(context);
+                  //           model.navigateToAddAdhocSale();
+                  //         },
+                  //         child: Text(
+                  //           'Mini-shop'.toUpperCase(),
+                  //           style: TextStyle(
+                  //               fontFamily: 'NerisBlack',
+                  //               color: kColDDSPrimaryDark),
+                  //         )),
+                  //     TextButton(
+                  //         onPressed: () {
+                  //           Navigator.pop(context);
+                  //           model.navigateToAddAdhocSale();
+                  //         },
+                  //         child: Text(
+                  //           'Key Accounts'.toUpperCase(),
+                  //           style: TextStyle(
+                  //               fontFamily: 'NerisBlack',
+                  //               color: kColDDSPrimaryDark),
+                  //         )),
+                  //     TextButton(
+                  //         onPressed: () {
+                  //           Navigator.pop(context);
+                  //           model.navigateToAddAdhocSale();
+                  //         },
+                  //         child: Text(
+                  //           'Van Sales'.toUpperCase(),
+                  //           style: TextStyle(
+                  //               fontFamily: 'NerisBlack',
+                  //               color: kColDDSPrimaryDark),
+                  //         ))
+                  //   ],
+                  // ),
                   onTap: () {
                     Navigator.pop(context);
                     model.navigateToHome(2);
