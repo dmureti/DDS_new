@@ -234,7 +234,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
     // geoFenceService.listenToGeofenceStatusStream();
     //Check if the user has permissions before enabling this
     if (user.hasSalesChannel || enableAdhocSales) {
-      // await fetchAdhocSales();
+      await fetchAdhocSales();
     } else {
       // await _logisticsService.fetchJourneys();
       await _permissionService.init();
