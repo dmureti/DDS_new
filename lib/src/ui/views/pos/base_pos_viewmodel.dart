@@ -1,0 +1,31 @@
+import 'package:distributor/app/locator.dart';
+import 'package:distributor/services/stock_controller_service.dart';
+import 'package:distributor/src/ui/views/pos/checkout/checkout_view.dart';
+import 'package:distributor/src/ui/views/pos/confirm_cart/confirm_cart_view.dart';
+import 'package:distributor/src/ui/views/pos/item_view/pos_item_view.dart';
+import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+
+class BasePOSViewModel extends BaseViewModel {
+  final _navigationService = locator<NavigationService>();
+  StockControllerService stockControllerService =
+      locator<StockControllerService>();
+
+  navigateToItem(var item) async {
+    await _navigationService.navigateToView(POSItemView(
+      item: item,
+    ));
+  }
+
+  fetchItems() async {
+    return stockControllerService.fetchProducts();
+  }
+
+  void navigateToCart() async {
+    await _navigationService.navigateToView(ConfirmCartView());
+  }
+
+  void navigateToCheckOut() async {
+    await _navigationService.navigateToView(CheckoutView());
+  }
+}

@@ -3,6 +3,7 @@ import 'package:distributor/core/enums.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
 import 'package:distributor/src/ui/views/adhoc_listing/adhoc_listing_view.dart';
+import 'package:distributor/src/ui/views/pos/item_selection/pos_view.dart';
 import 'package:distributor/ui/access_controllers/global/bottom_navbar/bottom_nav_bar.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:distributor/ui/views/customers/customer_view.dart';
@@ -47,7 +48,7 @@ class HomeView extends StatelessWidget {
                     children: [
                       IconButton(
                         onPressed: () {
-                          model.navigateToAddAdhocSale();
+                          model.navigateToAddPOSSale();
                         },
                         icon: Icon(Icons.add_circle_outline),
                         tooltip: 'Add Adhoc Sale',

@@ -111,6 +111,11 @@ android {
             applicationIdSuffix ".miniNrb"
             versionNameSuffix "-miniNrb"
         }
+        dds_4Sum {
+            dimension "buildGroup"
+            applicationIdSuffix ".dds_4Sum"
+            versionNameSuffix "-dds_4Sum"
+        }
         demo {
             dimension "buildGroup"
             applicationIdSuffix ".demo"

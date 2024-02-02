@@ -14,6 +14,7 @@ import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/permission_service.dart';
 import 'package:distributor/services/timeout_service.dart';
 import 'package:distributor/services/user_service.dart';
+import 'package:distributor/src/ui/views/pos/item_selection/pos_view.dart';
 import 'package:distributor/traits/contextual_viewmodel.dart';
 import 'package:distributor/ui/views/adhoc_sales/adhoc_sales_view.dart';
 import 'package:distributor/ui/views/customers/customer_view.dart';
@@ -302,6 +303,16 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
 
   void navigateToAddAdhocSale() async {
     var result = await _navigationService.navigateTo(Routes.adhocSalesView);
+    if (result is bool) {
+      setBusy(true);
+      _startDate = DateTime.now();
+      await fetchAdhocSales();
+      setBusy(false);
+    }
+  }
+
+  void navigateToAddPOSSale() async {
+    var result = await _navigationService.navigateToView(POSView());
     if (result is bool) {
       setBusy(true);
       _startDate = DateTime.now();
