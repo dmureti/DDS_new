@@ -19,7 +19,7 @@ class InitService {
 
   InitService() {
     fetchDeviceInfo();
-    getSerial();
+    // getSerial();
   }
 
   DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
@@ -56,7 +56,7 @@ class InitService {
   AppEnv get appEnv {
     if (_appEnv == null) {
       _appEnv = _availableEnvList.first;
-      _appEnv.flavorValues.applicationParameter.deviceId = _identifier;
+      // _appEnv.flavorValues.applicationParameter.deviceId = _identifier;
     }
 
     return _appEnv;
@@ -77,8 +77,8 @@ class InitService {
     bool result = await FlutterDeviceIdentifier.requestPermission();
     if (result) {
       _identifier = await FlutterDeviceIdentifier.serialCode;
-      _appEnv.flavorValues.applicationParameter.deviceId =
-          _identifier ?? "5cb4d5dcf4ddbc7428";
+      // _appEnv.flavorValues.applicationParameter.deviceId =
+      //     _identifier ?? "5cb4d5dcf4ddbc7428";
     }
   }
 

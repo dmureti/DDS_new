@@ -121,7 +121,7 @@ class LoginViewModel extends BaseViewModel {
     await _versionService.getVersion().then((value) async {
       _appVersion = value;
       _versionCode = _appVersion.versionCode.toString();
-      await checkForUpdates();
+      // await checkForUpdates();
       // Future.delayed(Duration(seconds: 5), await checkForUpdates());
     });
     setBusy(false);
