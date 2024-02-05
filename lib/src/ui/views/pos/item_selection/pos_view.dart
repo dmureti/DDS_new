@@ -1,6 +1,6 @@
-import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/src/ui/views/pos/item_selection/pos_viewmodel.dart';
 import 'package:distributor/src/ui/views/pos/pos_card_widget.dart';
+import 'package:distributor/src/ui/views/pos/styles/text.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,8 +22,17 @@ class POSView extends StatelessWidget {
             title: Text('Make New Sale'),
             actions: [
               IconButton(
-                  onPressed: () => model.navigateToCart(model.itemsInCart),
-                  icon: Icon(Icons.shopping_cart))
+                  onPressed: model.itemsInCart.isEmpty
+                      ? null
+                      : () => model.navigateToCart(model.itemsInCart),
+                  icon: Badge(
+                    child: Icon(Icons.shopping_cart),
+                    label: Text(model.itemsInCart.length.toString()),
+                    isLabelVisible: !model.itemsInCart.isEmpty,
+                    backgroundColor: model.itemsInCart.isEmpty
+                        ? Colors.transparent
+                        : Colors.red,
+                  ))
             ],
           ),
           body: Column(
@@ -31,10 +40,8 @@ class POSView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  IconButton(onPressed: model.search, icon: Icon(Icons.search)),
-                  IconButton(onPressed: model.sort, icon: Icon(Icons.sort)),
-                  IconButton(
-                      onPressed: model.vert, icon: Icon(Icons.more_vert)),
+                  // IconButton(onPressed: model.search, icon: Icon(Icons.search)),
+                  // IconButton(onPressed: model.sort, icon: Icon(Icons.sort)),
                   IconButton(
                     onPressed: model.toggleView,
                     icon: Icon(
@@ -42,6 +49,8 @@ class POSView extends StatelessWidget {
                       color: model.isToggled ? Colors.red : Colors.black,
                     ),
                   ),
+                  IconButton(
+                      onPressed: model.vert, icon: Icon(Icons.more_vert)),
                 ],
               ),
               model.isBusy
@@ -52,9 +61,27 @@ class POSView extends StatelessWidget {
                               itemCount: model.items.length,
                               itemBuilder: (context, index) {
                                 var item = model.items[index];
-                                return GestureDetector(
-                                  onPanUpdate: (details) {},
-                                  key: key,
+                                return Dismissible(
+                                  confirmDismiss: (direction) async {
+                                    if (direction ==
+                                        DismissDirection.startToEnd) {
+                                      //Add to the quantity
+                                      var newVal = item.quantity + 1;
+                                      model.updateQuantity(
+                                          product: item, newVal: newVal);
+                                    }
+                                    if (direction ==
+                                        DismissDirection.endToStart) {
+                                      //Reduce the quantity
+                                      var newVal = item.quantity - 1;
+                                      if (newVal >= 0) {
+                                        model.updateQuantity(
+                                            product: item, newVal: newVal);
+                                      }
+                                    }
+                                    return false;
+                                  },
+                                  key: Key(item.itemCode),
                                   child: ListTile(
                                     onLongPress: () =>
                                         model.navigateToItem(item),
@@ -87,7 +114,7 @@ class POSView extends StatelessWidget {
                                     ),
                                     title: Text(
                                       item.itemName,
-                                      style: kTileLeadingTextStyle,
+                                      style: productNameTextStyle,
                                     ),
                                     subtitle: Row(
                                       mainAxisAlignment:
@@ -114,11 +141,34 @@ class POSView extends StatelessWidget {
                                     SliverGridDelegateWithMaxCrossAxisExtent(
                                         maxCrossAxisExtent: 150,
                                         crossAxisSpacing: 10,
-                                        mainAxisExtent: 200),
+                                        mainAxisExtent: 170),
                                 itemBuilder: (context, index) {
                                   var item = model.items[index];
-                                  return POSCardWidget(
-                                    item: item,
+                                  return GestureDetector(
+                                    onTap: () async {
+                                      var result = await showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return QuantityInput(
+                                            title: 'Enter Quantity',
+                                            minQuantity: 0,
+                                            maxQuantity: 200000,
+                                            description:
+                                                'How many pcs for ${item.itemName} would you like to order ?',
+                                            initialQuantity:
+                                                model.getQuantity(item),
+                                          );
+                                        },
+                                      );
+                                      print(result);
+                                      if (result != null) {
+                                        model.updateQuantity(
+                                            product: item, newVal: result);
+                                      }
+                                    },
+                                    child: POSCardWidget(
+                                      item: item,
+                                    ),
                                   );
                                 },
                                 itemCount: model.items.length,

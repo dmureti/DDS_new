@@ -1,3 +1,4 @@
+import 'package:distributor/src/ui/views/pos/shared/dashboard_cta.dart';
 import 'package:distributor/ui/views/dashboard/dashboard_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:flutter/material.dart';
@@ -93,32 +94,49 @@ class DashboardView extends StatelessWidget {
                                   //     ? ShopNameWidget(
                                   //         storeName: model.salesChannel)
                                   //     : Container(),
-                                  ListTile(
-                                    title: Text('Post Sale'),
-                                    onTap: () => null,
+                                  Container(
+                                    height: 140,
+                                    child: GridView.count(
+                                      crossAxisCount: 3,
+                                      children: [
+                                        DashboardCTAButton(
+                                          label: 'Place Order',
+                                          onTap: () =>
+                                              model.navigateToPostSale(),
+                                        ),
+                                        DashboardCTAButton(
+                                          label: 'Stock Transfer Request',
+                                          onTap: () => model
+                                              .navigateToStockTransferRequest(),
+                                        ),
+                                        DashboardCTAButton(
+                                            label: 'Pending Transactions',
+                                            onTap: () => model
+                                                .navigateToPendingTransactions()),
+                                      ],
+                                    ),
                                   ),
-                                  ListTile(
-                                    title: Text('Make Requisition'),
-                                    onTap: () => null,
-                                  ),
-                                  ListTile(
-                                    title: Text('Stock Transfer Request'),
-                                    onTap: () => null,
-                                  ),
-                                  ListTile(
-                                    title: Text('Pending Transactions'),
-                                    onTap: () => null,
-                                  ),
+
                                   Divider(),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
-                                      child: Text(
-                                        "History".toUpperCase(),
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontFamily: 'NerisBlack',
-                                            color: kColDDSPrimaryLight),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Recent Transactions".toUpperCase(),
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontFamily: 'NerisBlack',
+                                                color: kColDDSPrimaryLight),
+                                          ),
+                                          Spacer(),
+                                          GestureDetector(
+                                            child: Text('View All'),
+                                            onTap: () =>
+                                                model.navigateToSalesTab(),
+                                          )
+                                        ],
                                       ),
                                     ),
                                   )

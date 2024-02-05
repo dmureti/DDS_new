@@ -1,4 +1,5 @@
 import 'package:distributor/src/ui/views/pos/confirm_cart/confirm_cart_viewmodel.dart';
+import 'package:distributor/src/ui/views/pos/styles/text.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -16,7 +17,7 @@ class ConfirmCartView extends StatelessWidget {
             title: Text('Confirm Items'),
             actions: [
               IconButton(
-                  onPressed: () => print("delete"), icon: Icon(Icons.clear))
+                  onPressed: () => model.clearCart(), icon: Icon(Icons.delete))
             ],
           ),
           body: Container(
@@ -29,14 +30,30 @@ class ConfirmCartView extends StatelessWidget {
                     return ListTile(
                       title: Row(
                         children: [
-                          Text(item.quantity.toString()),
+                          Expanded(
+                            child: Text(item.quantity.toString()),
+                            flex: 1,
+                          ),
                           SizedBox(
                             width: 10,
                           ),
-                          Text(item.itemName),
-                          Spacer(),
-                          Text((item.quantity * item.itemPrice)
-                              .toStringAsFixed(2)),
+                          Expanded(
+                            flex: 9,
+                            child: Text(
+                              item.itemName,
+                              style: productNameTextStyle,
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              (item.quantity * item.itemPrice)
+                                  .toStringAsFixed(2),
+                              style: productLinePriceTextStyle,
+                              textAlign: TextAlign.right,
+                            ),
+                          ),
+                          // IconButton(onPressed: null, icon: Icon(Icons.delete))
                         ],
                       ),
                     );
@@ -45,7 +62,10 @@ class ConfirmCartView extends StatelessWidget {
                 )),
                 Container(
                   child: ElevatedButton(
-                      child: Text('Proceed to Checkout'),
+                      child: Text(
+                        'Proceed to Checkout',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       onPressed: model.navigateToCheckOut),
                 )
               ],

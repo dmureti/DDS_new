@@ -436,7 +436,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
       case 'print':
         break;
       case 'make_adhoc_sale':
-        navigateToAddAdhocSale();
+        navigateToAddPOSSale();
         break;
     }
   }

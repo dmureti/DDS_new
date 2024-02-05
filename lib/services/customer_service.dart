@@ -161,7 +161,7 @@ class CustomerService with ReactiveServiceMixin {
       notifyListeners();
     } else {
       await _dialogService.showDialog(
-          title: result.title, description: result.description);
+          title: result.label, description: result.description);
       _customerAccount.value = CustomerAccount();
       notifyListeners();
     }

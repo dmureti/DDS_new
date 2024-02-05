@@ -4,7 +4,10 @@ import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/user_service.dart';
+import 'package:distributor/src/ui/views/pos/item_selection/pos_view.dart';
+import 'package:distributor/src/ui/views/stock_transaction/stock_transaction_list_view.dart';
 import 'package:distributor/traits/contextual_viewmodel.dart';
+import 'package:distributor/ui/views/stock_transfer_request/stock_transfer_request_view.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -89,4 +92,27 @@ class DashboardViewModel extends FutureViewModel<List<DeliveryJourney>>
 
   UserSummary _userSummary;
   UserSummary get userSummary => _userSummary;
+
+  navigateToPostSale() async {
+    _navigationService.navigateToView(POSView());
+  }
+
+  navigateToSalesTab() async {
+    _navigationService.navigateTo(
+      Routes.homeView,
+      arguments: HomeViewArguments(index: 1),
+    );
+  }
+
+  navigateToPendingTransactions() async {
+    _navigationService.navigateToView(
+      StockTransactionListView(),
+    );
+  }
+
+  navigateToStockTransferRequest() async {
+    _navigationService.navigateToView(
+      StockTransferRequestView(),
+    );
+  }
 }
