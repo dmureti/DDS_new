@@ -1,12 +1,12 @@
-import 'package:distributor/src/ui/views/pos/pos_card_widget.dart';
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/src/ui/views/pos/item_selection/pos_viewmodel.dart';
-import 'package:distributor/src/ui/views/pos/shared/clickable.dart';
-import 'package:distributor/src/ui/views/pos/shared/image_clipper.dart';
+import 'package:distributor/src/ui/views/pos/pos_card_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tripletriocore/tripletriocore.dart';
+
+import '../../../../../ui/widgets/quantity_input/quantity_input_view.dart';
 
 class POSView extends StatelessWidget {
   const POSView({Key key}) : super(key: key);
@@ -48,53 +48,69 @@ class POSView extends StatelessWidget {
                   ? BusyWidget()
                   : Expanded(
                       child: model.isToggled
-                          ? ListView(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Clickable(
-                                    onTap: () => model.navigateToCart(),
-                                    child: SizedBox(
-                                      height: 200,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          ClippedImage(
-                                            'playlist.cover.image',
-                                            width: 50,
-                                            height: 200,
-                                          ),
-                                          Expanded(
-                                            child: Center(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(20),
-                                                child: buildDetails(
-                                                    context,
-                                                    Item(
-                                                        name: 'test',
-                                                        itemCode: '2300')),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                          ? ListView.builder(
+                              itemCount: model.items.length,
+                              itemBuilder: (context, index) {
+                                var item = model.items[index];
+                                return GestureDetector(
+                                  onPanUpdate: (details) {
+                                    if (details.delta.dx > 0) {
+                                      print("added 1 ${item.itemName}");
+                                    } else {
+                                      print("removed 1");
+                                    }
+                                  },
+                                  key: key,
+                                  child: ListTile(
+                                    onLongPress: () =>
+                                        model.navigateToItem(item),
+                                    onTap: () async {
+                                      var result = await showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return QuantityInput(
+                                              title: 'Enter Quantity',
+                                              minQuantity: 0,
+                                              maxQuantity: 200000,
+                                              description:
+                                                  'How many pcs for ${item.itemName} would you like to order ?',
+                                              initialQuantity: 0,
+                                            );
+                                          });
+                                    },
+                                    leading: Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(width: 0.2)),
                                     ),
+                                    title: Text(
+                                      item.itemName,
+                                      style: kTileLeadingTextStyle,
+                                    ),
+                                    subtitle: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                            'Kshs ${item.itemPrice.toStringAsFixed(2)}'),
+                                        Text('Kshs 0.00')
+                                      ],
+                                    ),
+                                    trailing: Text('0'),
                                   ),
-                                )
-                              ],
+                                );
+                              },
                             )
                           : Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                                  const EdgeInsets.symmetric(horizontal: 4.0),
                               child: GridView.builder(
                                 gridDelegate:
                                     SliverGridDelegateWithMaxCrossAxisExtent(
-                                        maxCrossAxisExtent: 150),
+                                        maxCrossAxisExtent: 150,
+                                        crossAxisSpacing: 10,
+                                        mainAxisExtent: 200),
                                 itemBuilder: (context, index) {
                                   var item = model.items[index];
                                   return POSCardWidget(

@@ -51,7 +51,7 @@ class ReturnStockService {
   returnEmpty() async {
     // Data for shop return
     var data = {
-      "fromWarehouse": userChannel,
+      "fromWarehouse": userChannel.isEmpty ? user.branch : userChannel,
       "items": [],
       "toWarehouse": user.branch
     };
