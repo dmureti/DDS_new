@@ -1,7 +1,5 @@
 import 'package:distributor/ui/views/dashboard/dashboard_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
-import 'package:distributor/ui/widgets/dumb_widgets/shop_name.dart';
-import 'package:distributor/ui/widgets/smart_widgets/dashboard_controller/dashboard_view_controller_view.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -71,15 +69,6 @@ class DashboardView extends StatelessWidget {
                                     margin: EdgeInsets.all(5.0),
                                     child: Row(
                                       children: <Widget>[
-                                        Container(
-                                          child: Text(
-                                            "Today\'s Summary".toUpperCase(),
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontFamily: 'NerisBlack',
-                                                color: kColDDSPrimaryLight),
-                                          ),
-                                        ),
                                         Spacer(),
                                         Container(
                                           child: Text(
@@ -100,11 +89,41 @@ class DashboardView extends StatelessWidget {
 
                                   //Display the shop details
 
-                                  model.showShop
-                                      ? ShopNameWidget(
-                                          storeName: model.salesChannel)
-                                      : Container(),
-                                  DashboardViewControllerView(),
+                                  // model.showShop
+                                  //     ? ShopNameWidget(
+                                  //         storeName: model.salesChannel)
+                                  //     : Container(),
+                                  ListTile(
+                                    title: Text('Post Sale'),
+                                    onTap: () => null,
+                                  ),
+                                  ListTile(
+                                    title: Text('Make Requisition'),
+                                    onTap: () => null,
+                                  ),
+                                  ListTile(
+                                    title: Text('Stock Transfer Request'),
+                                    onTap: () => null,
+                                  ),
+                                  ListTile(
+                                    title: Text('Pending Transactions'),
+                                    onTap: () => null,
+                                  ),
+                                  Divider(),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      child: Text(
+                                        "History".toUpperCase(),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontFamily: 'NerisBlack',
+                                            color: kColDDSPrimaryLight),
+                                      ),
+                                    ),
+                                  )
+
+                                  // DashboardViewControllerView(),
                                 ],
                               ),
                             ),

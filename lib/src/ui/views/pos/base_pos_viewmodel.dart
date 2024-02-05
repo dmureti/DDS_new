@@ -21,8 +21,10 @@ class BasePOSViewModel extends BaseViewModel {
     return stockControllerService.fetchProducts();
   }
 
-  void navigateToCart() async {
-    await _navigationService.navigateToView(ConfirmCartView());
+  void navigateToCart(List orderedItems) async {
+    await _navigationService.navigateToView(ConfirmCartView(
+      orderedItems: orderedItems,
+    ));
   }
 
   void navigateToCheckOut() async {

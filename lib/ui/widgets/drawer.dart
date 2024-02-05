@@ -75,15 +75,15 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
                   },
                   iconData: Icons.home,
                 ),
-                DrawerListTile(
-                  label: 'Journey',
-                  onTap: () {
-                    Navigator.pop(context);
-                    model.navigateToHome(1);
-                  },
-                  iconData: Icons.swap_calls,
-                  isEnabled: model.enableJourneyTab,
-                ),
+                // DrawerListTile(
+                //   label: 'Journey',
+                //   onTap: () {
+                //     Navigator.pop(context);
+                //     model.navigateToHome(1);
+                //   },
+                //   iconData: Icons.swap_calls,
+                //   isEnabled: model.enableJourneyTab,
+                // ),
                 // DrawerListTile(
                 //   label: 'Territories',
                 //   onTap: () {

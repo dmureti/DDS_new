@@ -22,7 +22,7 @@ class POSView extends StatelessWidget {
             title: Text('Make New Sale'),
             actions: [
               IconButton(
-                  onPressed: model.navigateToCart,
+                  onPressed: () => model.navigateToCart(model.itemsInCart),
                   icon: Icon(Icons.shopping_cart))
             ],
           ),
@@ -53,30 +53,31 @@ class POSView extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 var item = model.items[index];
                                 return GestureDetector(
-                                  onPanUpdate: (details) {
-                                    if (details.delta.dx > 0) {
-                                      print("added 1 ${item.itemName}");
-                                    } else {
-                                      print("removed 1");
-                                    }
-                                  },
+                                  onPanUpdate: (details) {},
                                   key: key,
                                   child: ListTile(
                                     onLongPress: () =>
                                         model.navigateToItem(item),
                                     onTap: () async {
                                       var result = await showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return QuantityInput(
-                                              title: 'Enter Quantity',
-                                              minQuantity: 0,
-                                              maxQuantity: 200000,
-                                              description:
-                                                  'How many pcs for ${item.itemName} would you like to order ?',
-                                              initialQuantity: 0,
-                                            );
-                                          });
+                                        context: context,
+                                        builder: (context) {
+                                          return QuantityInput(
+                                            title: 'Enter Quantity',
+                                            minQuantity: 0,
+                                            maxQuantity: 200000,
+                                            description:
+                                                'How many pcs for ${item.itemName} would you like to order ?',
+                                            initialQuantity:
+                                                model.getQuantity(item),
+                                          );
+                                        },
+                                      );
+                                      print(result);
+                                      if (result != null) {
+                                        model.updateQuantity(
+                                            product: item, newVal: result);
+                                      }
                                     },
                                     leading: Container(
                                       width: 30,
@@ -93,11 +94,14 @@ class POSView extends StatelessWidget {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                            'Kshs ${item.itemPrice.toStringAsFixed(2)}'),
-                                        Text('Kshs 0.00')
+                                            '${item.itemPrice.toStringAsFixed(2)}'),
+                                        Text(model
+                                            .getTotal(item)
+                                            .toStringAsFixed(2))
                                       ],
                                     ),
-                                    trailing: Text('0'),
+                                    trailing: Text(
+                                        model.getQuantity(item).toString()),
                                   ),
                                 );
                               },

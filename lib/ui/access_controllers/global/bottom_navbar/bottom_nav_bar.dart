@@ -47,32 +47,32 @@ class BottomNavBar extends StatelessWidget {
               ),
               label: 'Home'.toUpperCase(),
             ),
-            BottomNavigationBarItem(
-              backgroundColor: Color(0xFF182848),
-              icon: IconButton(
-                splashColor: kColorDDSPrimaryDark,
-                icon: Icon(Icons.swap_calls),
-                onPressed: model.isEnabled(1)
-                    ? model.onJourneyTabTap()
-                        ? () {
-                            model.updateIndex(1);
-                            onTap(model.index);
-                            // onTap(Pages.routes, "Routes");
-                          }
-                        : null
-                    : null,
-              ),
-              label: 'Journey'.toUpperCase(),
-            ),
+            // BottomNavigationBarItem(
+            //   backgroundColor: Color(0xFF182848),
+            //   icon: IconButton(
+            //     splashColor: kColorDDSPrimaryDark,
+            //     icon: Icon(Icons.swap_calls),
+            //     onPressed: model.isEnabled(1)
+            //         ? model.onJourneyTabTap()
+            //             ? () {
+            //                 model.updateIndex(1);
+            //                 onTap(model.index);
+            //                 // onTap(Pages.routes, "Routes");
+            //               }
+            //             : null
+            //         : null,
+            //   ),
+            //   label: 'Journey'.toUpperCase(),
+            // ),
             BottomNavigationBarItem(
               backgroundColor: Color(0xFF182848),
               icon: IconButton(
                 splashColor: kColorDDSPrimaryDark,
                 icon: Icon(Icons.add_shopping_cart),
-                onPressed: model.isEnabled(2)
+                onPressed: model.isEnabled(1)
                     ? model.onStockBalanceTap()
                         ? () {
-                            model.updateIndex(2);
+                            model.updateIndex(1);
                             onTap(model.index);
                             // onTap(Pages.adhoc, "Adhoc Sales");
                           }
@@ -86,10 +86,10 @@ class BottomNavBar extends StatelessWidget {
               icon: IconButton(
                 splashColor: kColorDDSPrimaryDark,
                 icon: Icon(Icons.apps),
-                onPressed: model.isEnabled(3)
+                onPressed: model.isEnabled(2)
                     ? model.onStockBalanceTap()
                         ? () {
-                            model.updateIndex(3);
+                            model.updateIndex(2);
                             // onTap(Pages.products, "Stock Balance");
                             onTap(model.index);
                           }
@@ -102,10 +102,10 @@ class BottomNavBar extends StatelessWidget {
               backgroundColor: Color(0xFF182848),
               icon: IconButton(
                 splashColor: kColorDDSPrimaryDark,
-                onPressed: model.isEnabled(4)
+                onPressed: model.isEnabled(3)
                     ? model.onCustomerTabTap()
                         ? () {
-                            model.updateIndex(4);
+                            model.updateIndex(3);
                             onTap(model.index);
                             // onTap(Pages.customers, "Customers");
                           }

@@ -1,13 +1,15 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/src/ui/views/pos/base_pos_viewmodel.dart';
-import 'package:distributor/src/ui/views/pos/confirm_cart/confirm_cart_view.dart';
-import 'package:distributor/src/ui/views/pos/item_view/pos_item_view.dart';
-import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:tripletriocore/tripletriocore.dart';
 
 class POSViewmodel extends BasePOSViewModel {
   final _navigationService = locator<NavigationService>();
-  List itemsInCart = [];
+
+  List _itemsInCart = [];
+  List get itemsInCart =>
+      _itemsInCart.where((element) => element.quantity > 0).toList();
+
   List items = [];
   List views = ['Grid', 'List'];
 
@@ -16,6 +18,7 @@ class POSViewmodel extends BasePOSViewModel {
   init() async {
     setBusy(true);
     items = await fetchItems();
+    _itemsInCart = items;
     setBusy(false);
   }
 
@@ -32,10 +35,40 @@ class POSViewmodel extends BasePOSViewModel {
     notifyListeners();
   }
 
-  addItemToCart() async {}
-  removeItemFromCart() async {}
+  addItemToCart(var item) async {}
+  removeItemFromCart(var item) async {}
+  updateItemInCart(var item) async {}
+
+  // Get the quantity of each element
+  getQuantity(Product product) {
+    var result = _itemsInCart.firstWhere(
+        (element) =>
+            element.itemName.toLowerCase() == product.itemName.toLowerCase(),
+        orElse: () => null);
+    return result?.quantity ?? 0;
+  }
+
+  getTotal(Product product) {
+    var result = _itemsInCart.firstWhere(
+        (element) =>
+            element.itemName.toLowerCase() == product.itemName.toLowerCase(),
+        orElse: () => null);
+    return result?.quantity == null ? 0 : result.quantity * product.itemPrice;
+  }
 
   void search() async {}
   void sort() async {}
   void vert() async {}
+
+  ///
+  /// Update the quantity from the input
+  ///
+  updateQuantity({Product product, var newVal}) {
+    var item = _itemsInCart.firstWhere(
+        (element) =>
+            element.itemName.toLowerCase() == product.itemName.toLowerCase(),
+        orElse: () => product);
+    item.updateQuantity(newVal);
+    notifyListeners();
+  }
 }

@@ -3,13 +3,11 @@ import 'package:distributor/core/enums.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
 import 'package:distributor/src/ui/views/adhoc_listing/adhoc_listing_view.dart';
-import 'package:distributor/src/ui/views/pos/item_selection/pos_view.dart';
 import 'package:distributor/ui/access_controllers/global/bottom_navbar/bottom_nav_bar.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:distributor/ui/views/customers/customer_view.dart';
 import 'package:distributor/ui/views/dashboard/dashboard_view.dart';
 import 'package:distributor/ui/views/home/home_viewmodel.dart';
-import 'package:distributor/ui/views/routes/route_listing_view.dart';
 import 'package:distributor/ui/views/stock/stock_view.dart';
 import 'package:distributor/ui/widgets/drawer.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
@@ -43,7 +41,7 @@ class HomeView extends StatelessWidget {
             //   onPressed: () => model.refresh(),
             //   icon: Icon(FontAwesome.refresh),
             // ),
-            model.currentIndex == 2
+            model.currentIndex == 1
                 ? Row(
                     children: [
                       IconButton(
@@ -76,7 +74,7 @@ class HomeView extends StatelessWidget {
                       )
                     ],
                   )
-                : model.currentIndex == 3
+                : model.currentIndex == 2
                     ? TransactionPopupView(
                         onSelected: model.onStockBalancePopupSelected)
                     : model.currentIndex == 1
@@ -137,22 +135,11 @@ class HomeView extends StatelessWidget {
       case 0:
         return Stack(
           children: [
-            // LocationWidget(),
             DashboardView(),
-            // NetworkSensitiveWidget(),
           ],
         );
         break;
       case 1:
-        return Column(
-          children: [
-            // LocationWidget(),
-            Expanded(child: RoutesListingView()),
-            model.enableOffline ? NetworkSensitiveWidget() : Container(),
-          ],
-        );
-        break;
-      case 2:
         return Column(
           children: [
             Expanded(child: AdhocListingView()),
@@ -160,7 +147,7 @@ class HomeView extends StatelessWidget {
           ],
         );
         break;
-      case 3:
+      case 2:
         return Column(
           children: [
             Expanded(child: StockView()),
@@ -168,7 +155,7 @@ class HomeView extends StatelessWidget {
           ],
         );
         break;
-      case 4:
+      case 3:
         return Column(
           children: [
             // LocationWidget(),
@@ -197,25 +184,25 @@ class HomeView extends StatelessWidget {
           style: kAppBarTextStyle,
         );
         break;
+      // case 1:
+      //   return Text(
+      //     'Journey',
+      //     style: kAppBarTextStyle,
+      //   );
+      //   break;
       case 1:
-        return Text(
-          'Journey',
-          style: kAppBarTextStyle,
-        );
-        break;
-      case 2:
         return Text(
           'Selling',
           style: kAppBarTextStyle,
         );
         break;
-      case 3:
+      case 2:
         return Text(
           'Stock Balance',
           style: kAppBarTextStyle,
         );
         break;
-      case 4:
+      case 3:
         return Text(
           'Customers',
           style: kAppBarTextStyle,
