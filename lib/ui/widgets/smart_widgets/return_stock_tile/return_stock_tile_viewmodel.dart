@@ -39,7 +39,12 @@ class ReturnStockTileViewmodel extends BaseViewModel {
         notifyListeners();
       }
     }
+  }
 
+  bool _isValidInput = true;
+  bool get isValidInput => _isValidInput;
+  setIsValidInput(bool val) {
+    _isValidInput = val;
     notifyListeners();
   }
 

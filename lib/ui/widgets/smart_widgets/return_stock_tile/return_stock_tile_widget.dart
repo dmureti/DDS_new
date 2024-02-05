@@ -91,7 +91,13 @@ class ReturnStockTileWidget extends StatelessWidget {
                                           padding: const EdgeInsets.all(8.0),
                                           child: TextField(
                                             onChanged: (val) {
-                                              model.updateProduct(val);
+                                              if (int.parse(val) >
+                                                  model.maxQuantity) {
+                                                model.setIsValidInput(false);
+                                              } else {
+                                                model.setIsValidInput(true);
+                                                model.updateProduct(val);
+                                              }
                                             },
                                             decoration:
                                                 InputDecoration(filled: false),
@@ -105,9 +111,11 @@ class ReturnStockTileWidget extends StatelessWidget {
                                           padding: const EdgeInsets.all(8.0),
                                           child: ElevatedButton(
                                             onPressed: () {
-                                              onChange(model.product);
-                                              Navigator.pop(
-                                                  context, model.product);
+                                              if (model.isValidInput) {
+                                                onChange(model.product);
+                                                Navigator.pop(
+                                                    context, model.product);
+                                              }
                                             },
                                             child: Text(
                                               'Submit',
