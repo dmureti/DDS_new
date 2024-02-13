@@ -54,19 +54,20 @@ class _LoginViewState extends State<LoginView> {
         extendBodyBehindAppBar: true,
         body: Container(
           decoration: BoxDecoration(
-              // image: DecorationImage(
-              //     image: AssetImage('assets/images/login_bg.jpg'),
-              //     fit: BoxFit.cover),
-              color: kColDDSPrimaryDark
-              // gradient: LinearGradient(
-              //   begin: Alignment.topCenter,
-              //   end: Alignment.bottomCenter,
-              //   colors: [
-              //     kDarkNeutral,
-              //     kDarkNeutral20,
-              //   ],
-              // ),
-              ),
+            image: DecorationImage(
+                opacity: 0.1,
+                image: AssetImage('assets/images/background.jpg'),
+                fit: BoxFit.fitHeight),
+            color: kColDDSPrimaryDark,
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                kColDDSPrimaryDark.withOpacity(0.8),
+                kColDDSPrimaryDark,
+              ],
+            ),
+          ),
           height: MediaQuery.of(context).size.height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
