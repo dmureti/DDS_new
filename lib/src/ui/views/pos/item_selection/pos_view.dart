@@ -19,7 +19,7 @@ class POSView extends StatelessWidget {
       builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('Make New Sale'),
+            title: Text('Post New Sale'),
             actions: [
               IconButton(
                   onPressed: model.itemsInCart.isEmpty
