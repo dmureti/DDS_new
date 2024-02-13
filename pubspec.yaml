@@ -1,6 +1,6 @@
 name: distributor
 description: Digital Distribution System
-version: 47.2.9+47
+version: 47.3.1+47
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
@@ -102,6 +102,7 @@ flutter:
     - assets/images/mini_logo.png
     - assets/ca/
     - assets/docs/version.json
+    - assets/images/background.jpg
   fonts:
     - family: BenderRegular
       fonts:
