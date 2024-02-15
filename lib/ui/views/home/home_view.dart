@@ -54,7 +54,7 @@ class HomeView extends StatelessWidget {
                       PopupMenuButton(
                         itemBuilder: (context) => <PopupMenuEntry<Object>>[
                           PopupMenuItem(
-                            child: Text('Make Sale'),
+                            child: Text('Post Sale'),
                             value: 'make_adhoc_sale',
                           ),
                           PopupMenuDivider(),
@@ -64,8 +64,8 @@ class HomeView extends StatelessWidget {
                           ),
                           PopupMenuDivider(),
                           PopupMenuItem(
-                            child: Text('View Transfer Requests'),
-                            value: 'view_stock_transfers',
+                            child: Text('Inter Outlet Transfer Request'),
+                            value: 'inter_outlet_transfer_request',
                           )
                         ],
                         onSelected: (val) {

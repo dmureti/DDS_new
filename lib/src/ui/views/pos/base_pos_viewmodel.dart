@@ -18,7 +18,7 @@ class BasePOSViewModel extends BaseViewModel {
   }
 
   fetchItems() async {
-    return stockControllerService.fetchProducts();
+    return stockControllerService.getStockBalance();
   }
 
   void navigateToCart(List orderedItems) async {

@@ -87,28 +87,31 @@ class DashboardView extends StatelessWidget {
                                     color: Colors.transparent,
                                     height: 10,
                                   ),
-
-                                  //Display the shop details
-
-                                  // model.showShop
-                                  //     ? ShopNameWidget(
-                                  //         storeName: model.salesChannel)
-                                  //     : Container(),
+                                  Divider(),
                                   Container(
-                                    height: 140,
+                                    height: 260,
                                     child: GridView.count(
                                       crossAxisCount: 3,
                                       children: [
                                         DashboardCTAButton(
-                                          label: 'Place Order',
+                                          label: 'Post Sale',
                                           onTap: () =>
                                               model.navigateToPostSale(),
                                         ),
+                                        DashboardCTAButton(
+                                            label: 'Create Quotation',
+                                            onTap: null),
+                                        DashboardCTAButton(
+                                            label: 'Sales Returns',
+                                            onTap: null),
                                         DashboardCTAButton(
                                           label: 'Stock Transfer Request',
                                           onTap: () => model
                                               .navigateToStockTransferRequest(),
                                         ),
+                                        DashboardCTAButton(
+                                            label: 'InterOutlet Stock Request',
+                                            onTap: null),
                                         DashboardCTAButton(
                                             label: 'Pending Transactions',
                                             onTap: () => model
@@ -124,7 +127,7 @@ class DashboardView extends StatelessWidget {
                                       child: Row(
                                         children: [
                                           Text(
-                                            "Recent Transactions".toUpperCase(),
+                                            "Today\'s Sales".toUpperCase(),
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 fontFamily: 'NerisBlack',
