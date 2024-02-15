@@ -46,8 +46,9 @@ class DashboardView extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(20.0),
-                                  topLeft: Radius.circular(20.0)),
+                                topRight: Radius.circular(20.0),
+                                topLeft: Radius.circular(20.0),
+                              ),
                             ),
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(
