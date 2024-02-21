@@ -100,8 +100,10 @@ class DashboardView extends StatelessWidget {
                                               model.navigateToPostSale(),
                                         ),
                                         DashboardCTAButton(
-                                            label: 'Create Quotation',
-                                            onTap: null),
+                                          label: 'Create Quotation',
+                                          onTap: () => model
+                                              .navigateToCreateQuotationView(),
+                                        ),
                                         DashboardCTAButton(
                                             label: 'Sales Returns',
                                             onTap: null),
@@ -110,9 +112,10 @@ class DashboardView extends StatelessWidget {
                                           onTap: () => model
                                               .navigateToStockTransferRequest(),
                                         ),
-                                        DashboardCTAButton(
-                                            label: 'InterOutlet Stock Request',
-                                            onTap: null),
+                                        // DashboardCTAButton(
+                                        //     label: 'InterOutlet Stock Request',
+                                        //     onTap: () => model
+                                        //         .navigateToStockTransferRequest()),
                                         DashboardCTAButton(
                                             label: 'Pending Transactions',
                                             onTap: () => model

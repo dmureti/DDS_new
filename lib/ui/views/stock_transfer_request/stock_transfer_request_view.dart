@@ -18,118 +18,145 @@ class StockTransferRequestView extends StatelessWidget {
       viewModelBuilder: () => StockTransferRequestViewModel(),
       builder: (context, model, child) {
         return Scaffold(
-          appBar: AppBar(
-            title: Text(
-              'Stock Transfer Request',
-              style: kAppBarTextStyle,
+            appBar: AppBar(
+              title: Text(
+                'Stock Transfer Request',
+                style: kAppBarTextStyle,
+              ),
             ),
-          ),
-          body: model.isBusy
-              ? Center(child: BusyWidget())
-              : model.productList.isNotEmpty
-                  ? Column(
-                      children: [
-                        Expanded(
-                          child: ListView.separated(
-                            itemBuilder: (context, index) {
-                              var product = model.productList[index];
-                              return ListTile(
-                                visualDensity: VisualDensity.compact,
-                                isThreeLine: false,
-                                subtitle: Text(
-                                  '${product.itemCode}',
-                                  style: kTileSubtitleTextStyle,
-                                ),
-                                title: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        '${product.itemName}',
-                                        style: kTileLeadingTextStyle,
-                                      ),
+            body: model.isBusy
+                ? Center(child: BusyWidget())
+                : Column(
+                    children: [
+                      Container(
+                        height: 100,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: RadioListTile(
+                                value: 'main',
+                                onChanged: model.updateStockTransferType,
+                                groupValue: model.stockTransferType,
+                                title: Text('Main Branch'),
+                              ),
+                            ),
+                            Expanded(
+                              child: RadioListTile(
+                                value: 'interoutlet',
+                                onChanged: model.updateStockTransferType,
+                                groupValue: model.stockTransferType,
+                                title: Text('Interoutlet'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      model.productList.isNotEmpty
+                          ? Expanded(
+                              child: ListView.separated(
+                                itemBuilder: (context, index) {
+                                  var product = model.productList[index];
+                                  return ListTile(
+                                    visualDensity: VisualDensity.compact,
+                                    isThreeLine: false,
+                                    subtitle: Text(
+                                      '${product.itemCode}',
+                                      style: kTileSubtitleTextStyle,
                                     ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        model.removeQuantity(product);
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child:
-                                            Icon(Icons.remove_circle_outline),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: Colors.grey.withOpacity(0.1),
-                                            border: Border.all(
-                                              color:
-                                                  Colors.grey.withOpacity(0.1),
-                                            )),
-                                        width: 60,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                                    title: Row(
+                                      children: [
+                                        Expanded(
                                           child: Text(
-                                            model
-                                                .getQuantity(product)
-                                                .toString(),
-                                            textAlign: TextAlign.center,
+                                            '${product.itemName}',
+                                            style: kTileLeadingTextStyle,
                                           ),
                                         ),
-                                      ),
-                                      onTap: () async {
-                                        var result = await showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return QuantityInput(
-                                                title: 'Quantity to Request',
-                                                description:
-                                                    '${product.itemName}',
-                                                initialQuantity:
-                                                    model.getQuantity(product),
-                                                minQuantity: 0,
-                                                maxQuantity: 100000,
-                                              );
-                                            });
-                                        if (result != null) {
-                                          model.updateQuantity(
-                                              product: product, newVal: result);
-                                        }
-                                      },
+                                        GestureDetector(
+                                          onTap: () {
+                                            model.removeQuantity(product);
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Icon(
+                                                Icons.remove_circle_outline),
+                                          ),
+                                        ),
+                                        GestureDetector(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color: Colors.grey
+                                                    .withOpacity(0.1),
+                                                border: Border.all(
+                                                  color: Colors.grey
+                                                      .withOpacity(0.1),
+                                                )),
+                                            width: 60,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                model
+                                                    .getQuantity(product)
+                                                    .toString(),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                          ),
+                                          onTap: () async {
+                                            var result = await showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return QuantityInput(
+                                                    title:
+                                                        'Quantity to Request',
+                                                    description:
+                                                        '${product.itemName}',
+                                                    initialQuantity: model
+                                                        .getQuantity(product),
+                                                    minQuantity: 0,
+                                                    maxQuantity: 100000,
+                                                  );
+                                                });
+                                            if (result != null) {
+                                              model.updateQuantity(
+                                                  product: product,
+                                                  newVal: result);
+                                            }
+                                          },
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            model.addQuantity(product);
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child:
+                                                Icon(Icons.add_circle_outline),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        model.addQuantity(product);
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Icon(Icons.add_circle_outline),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                            itemCount: model.productList.length,
-                            separatorBuilder: (context, index) {
-                              return Divider(
-                                height: 1,
-                              );
-                            },
-                          ),
-                        ),
-                        ActionButton(
-                          label: 'Continue',
-                          onPressed: model.stockTransferItems.isNotEmpty
-                              ? model.commit
-                              : null,
-                        ),
-                      ],
-                    )
-                  : Center(
-                      child: EmptyContentContainer(
-                          label: 'No SKUs found for the minishop.')),
-        );
+                                  );
+                                },
+                                itemCount: model.productList.length,
+                                separatorBuilder: (context, index) {
+                                  return Divider(
+                                    height: 1,
+                                  );
+                                },
+                              ),
+                            )
+                          : Center(
+                              child: EmptyContentContainer(
+                                  label: 'No SKUs found for the minishop.')),
+                      ActionButton(
+                        label: 'Continue',
+                        onPressed: model.stockTransferItems.isNotEmpty
+                            ? model.commit
+                            : null,
+                      ),
+                    ],
+                  ));
       },
     );
   }

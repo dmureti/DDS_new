@@ -15,8 +15,23 @@ class StockTransferRequestViewModel extends BaseViewModel {
     return _productList.where((product) => product.itemPrice > 0).toList();
   }
 
+  String _stockTransferType;
+  String get stockTransferType => _stockTransferType;
+
+  updateStockTransferType(String val) async {
+    _stockTransferType = val;
+    if (val == "main") {
+      await fetchItems();
+      notifyListeners();
+    }
+    if (val == "interoutlet") {
+      await fetchItems();
+      notifyListeners();
+    }
+  }
+
   init() async {
-    await fetchItems();
+    // await fetchItems();
   }
 
   fetchItems() async {

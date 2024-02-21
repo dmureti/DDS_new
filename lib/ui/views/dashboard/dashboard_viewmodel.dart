@@ -5,6 +5,7 @@ import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:distributor/src/ui/views/pos/item_selection/pos_view.dart';
+import 'package:distributor/src/ui/views/quotation_view/quotation_view.dart';
 import 'package:distributor/src/ui/views/stock_transaction/stock_transaction_list_view.dart';
 import 'package:distributor/traits/contextual_viewmodel.dart';
 import 'package:distributor/ui/views/stock_transfer_request/stock_transfer_request_view.dart';
@@ -113,6 +114,12 @@ class DashboardViewModel extends FutureViewModel<List<DeliveryJourney>>
   navigateToStockTransferRequest() async {
     _navigationService.navigateToView(
       StockTransferRequestView(),
+    );
+  }
+
+  navigateToCreateQuotationView() async {
+    _navigationService.navigateToView(
+      QuotationView(),
     );
   }
 }
