@@ -36,6 +36,10 @@ class StockControllerService {
     }
   }
 
+  getSalesReturns() async {
+    return await _api.getSalesReturns(_user.token);
+  }
+
 //	Stock balance tab on L1 app is enabled if the user has
 //	"virtual_stock_balance.view".
 //	When the balances are displayed, the specific column "value of stock"
