@@ -105,8 +105,10 @@ class DashboardView extends StatelessWidget {
                                               .navigateToCreateQuotationView(),
                                         ),
                                         DashboardCTAButton(
-                                            label: 'Sales Returns',
-                                            onTap: null),
+                                          label: 'Sales Returns',
+                                          onTap: () =>
+                                              model.navigateToSalesReturns(),
+                                        ),
                                         DashboardCTAButton(
                                           label: 'Stock Transfer Request',
                                           onTap: () => model

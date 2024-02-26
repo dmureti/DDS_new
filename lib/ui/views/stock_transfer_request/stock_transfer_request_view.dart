@@ -29,7 +29,7 @@ class StockTransferRequestView extends StatelessWidget {
                 : Column(
                     children: [
                       Container(
-                        height: 100,
+                        height: 50,
                         child: Row(
                           children: [
                             Expanded(
@@ -51,6 +51,39 @@ class StockTransferRequestView extends StatelessWidget {
                           ],
                         ),
                       ),
+                      model.stockTransferType != null
+                          ? model.stockTransferType.toLowerCase() ==
+                                  "interoutlet"
+                              ? Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Source Outlet : ",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Expanded(
+                                          child: DropdownButton(
+                                        onChanged: model.updateSelectedOutlet,
+                                        isExpanded: true,
+                                        value: model.selectedOutlet,
+                                        items: model.outletList
+                                            .map(
+                                              (e) => DropdownMenuItem(
+                                                child: Text(e.name),
+                                                value: e,
+                                              ),
+                                            )
+                                            .toList(),
+                                      ))
+                                    ],
+                                  ),
+                                )
+                              : Container()
+                          : Container(),
+                      Divider(),
                       model.productList.isNotEmpty
                           ? Expanded(
                               child: ListView.separated(

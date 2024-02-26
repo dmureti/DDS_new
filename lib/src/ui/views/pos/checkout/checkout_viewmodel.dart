@@ -1,11 +1,16 @@
+import 'package:distributor/app/locator.dart';
+import 'package:distributor/services/customer_service.dart';
 import 'package:distributor/src/ui/views/pos/base_pos_viewmodel.dart';
+import 'package:tripletriocore/tripletriocore.dart';
 
 enum CustomerTypesDisplay { none, walkin, contract }
 
-enum PaymentModeDisplay { none, mobile, cash, mixed }
+enum PaymentModeDisplay { none, mobile, cash, mixed, cheque }
 
 class CheckOutViewModel extends BasePOSViewModel {
-  final List<String> paymentMethods = ["Cash", "Mpesa", "Mixed"];
+  final _customerService = locator<CustomerService>();
+
+  final List<String> paymentMethods = ["Cash", "Mpesa", "Mixed", "Cheque"];
 
   String _customerType;
   PaymentModeDisplay _paymentModeDisplay = PaymentModeDisplay.none;
@@ -58,8 +63,11 @@ class CheckOutViewModel extends BasePOSViewModel {
       case 'mixed':
         _paymentModeDisplay = PaymentModeDisplay.mixed;
         break;
+      case 'cheque':
+        _paymentModeDisplay = PaymentModeDisplay.cheque;
+        break;
       default:
-        _customerTypesDisplay = CustomerTypesDisplay.none;
+        _paymentModeDisplay = PaymentModeDisplay.none;
     }
     notifyListeners();
   }
@@ -108,7 +116,27 @@ class CheckOutViewModel extends BasePOSViewModel {
     setBusy(false);
   }
 
-  confirmPaymentReceipt(){
+  confirmPaymentReceipt() {
     notifyListeners();
+  }
+
+  List<Customer> _customerList = <Customer>[];
+  List<Customer> get customersList => _customerList;
+
+  fetchCustomers() async {
+    setBusy(true);
+    _customerList = await _customerService.fetchCustomers();
+    setBusy(false);
+  }
+
+  Customer _contractCustomer;
+  Customer get contractCustomer => _contractCustomer;
+  updateContractCustomer(Customer c) {
+    _contractCustomer = c;
+    notifyListeners();
+  }
+
+  init() async {
+    await fetchCustomers();
   }
 }

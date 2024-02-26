@@ -11,6 +11,7 @@ class CheckoutView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<CheckOutViewModel>.reactive(
+        onModelReady: (model) => model.init(),
         builder: (context, model, child) {
           return Scaffold(
             appBar: AppBar(
@@ -34,7 +35,7 @@ class CheckoutView extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          'Kshs ${model.total.toStringAsFixed(2)}',
+                          'Kshs ',
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
@@ -91,7 +92,7 @@ class CheckoutView extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('Payment Info'),
-                                Row(
+                                Wrap(
                                   children: [
                                     Expanded(
                                       child: RadioListTile(
@@ -116,6 +117,15 @@ class CheckoutView extends StatelessWidget {
                                         dense: true,
                                         title: Text('Mixed'),
                                         value: 'mixed',
+                                        onChanged: model.setPaymentMode,
+                                        groupValue: model.paymentMode,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: RadioListTile(
+                                        dense: true,
+                                        title: Text('Cheque'),
+                                        value: 'cheque',
                                         onChanged: model.setPaymentMode,
                                         groupValue: model.paymentMode,
                                       ),
@@ -165,6 +175,8 @@ class CheckoutView extends StatelessWidget {
         return _MixedPaymentWidget();
       case PaymentModeDisplay.mobile:
         return _MpesaConfirmationWidget();
+      case PaymentModeDisplay.cheque:
+        return _ChequeConfirmationWidget();
       default:
         return Container();
     }
@@ -196,7 +208,18 @@ class _WalkinWidget extends HookViewModelWidget<CheckOutViewModel> {
 class _CustomerWidget extends HookViewModelWidget<CheckOutViewModel> {
   @override
   Widget buildViewModelWidget(BuildContext context, CheckOutViewModel model) {
-    return TextFormField();
+    return DropdownButton(
+      onChanged: model.updateContractCustomer,
+      value: model.contractCustomer,
+      hint: Text('Customer Name'),
+      isExpanded: true,
+      items: model.customersList
+          .map((e) => DropdownMenuItem(
+                child: Text(e.name),
+                value: e,
+              ))
+          .toList(),
+    );
   }
 }
 
@@ -212,6 +235,31 @@ class _MpesaConfirmationWidget extends HookViewModelWidget<CheckOutViewModel> {
                 'Enter confirmation message',
               ),
               suffixIcon: Icon(Icons.arrow_right_alt_sharp)),
+        ),
+      ],
+    );
+  }
+}
+
+class _ChequeConfirmationWidget extends HookViewModelWidget<CheckOutViewModel> {
+  @override
+  Widget buildViewModelWidget(
+      BuildContext context, CheckOutViewModel viewModel) {
+    return Column(
+      children: [
+        TextFormField(
+          decoration: InputDecoration(
+              label: Text(
+                'Enter Cheque Number',
+              ),
+              suffixIcon: Icon(Icons.camera_alt)),
+        ),
+        TextFormField(
+          decoration: InputDecoration(
+              label: Text(
+                'Enter Maturity Date',
+              ),
+              suffixIcon: Icon(Icons.calendar_month)),
         ),
       ],
     );

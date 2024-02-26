@@ -10,16 +10,26 @@ class POSViewmodel extends BasePOSViewModel {
   List get itemsInCart =>
       _itemsInCart.where((element) => element.quantity > 0).toList();
 
-  List items = [];
+  List _items = [];
+  List get items => _items;
+
   List views = ['Grid', 'List'];
 
   bool isToggled = false;
 
   init() async {
     setBusy(true);
-    items = await fetchItems();
+    await fetchItems();
     _itemsInCart = items;
     setBusy(false);
+    notifyListeners();
+  }
+
+  _getItems() async {
+    setBusy(true);
+    _items = await fetchItems();
+    setBusy(false);
+    notifyListeners();
   }
 
   String _view;

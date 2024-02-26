@@ -5,6 +5,7 @@ import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:distributor/src/ui/views/pos/item_selection/pos_view.dart';
+import 'package:distributor/src/ui/views/pos/sales_returns/sales_returns_view.dart';
 import 'package:distributor/src/ui/views/quotation_view/quotation_view.dart';
 import 'package:distributor/src/ui/views/stock_transaction/stock_transaction_list_view.dart';
 import 'package:distributor/traits/contextual_viewmodel.dart';
@@ -103,6 +104,10 @@ class DashboardViewModel extends FutureViewModel<List<DeliveryJourney>>
       Routes.homeView,
       arguments: HomeViewArguments(index: 1),
     );
+  }
+
+  navigateToSalesReturns() async {
+    await _navigationService.navigateToView(SalesReturnsView());
   }
 
   navigateToPendingTransactions() async {

@@ -50,6 +50,13 @@ class POSView extends StatelessWidget {
                     ),
                   ),
                   IconButton(
+                    onPressed: null,
+                    tooltip: 'Use Barcode',
+                    icon: Icon(
+                      Icons.barcode_reader,
+                    ),
+                  ),
+                  IconButton(
                       onPressed: model.vert, icon: Icon(Icons.more_vert)),
                 ],
               ),

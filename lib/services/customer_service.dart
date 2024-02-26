@@ -185,7 +185,6 @@ class CustomerService with ReactiveServiceMixin {
 
   listWarehouses() async {
     var result = await api.listWarehouses(user.token);
-    print(result);
-    return result;
+    return result.map<Warehouse>((e) => Warehouse.fromMap(e)).toList();
   }
 }
