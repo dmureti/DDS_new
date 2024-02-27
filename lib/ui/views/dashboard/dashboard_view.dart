@@ -29,11 +29,11 @@ class DashboardView extends StatelessWidget {
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.only(
-                            left: 15.0, right: 15.0, top: 20.0, bottom: 20.0),
+                            left: 15.0, right: 15.0, top: 10.0, bottom: 10.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            UIHelper.verticalSpaceLarge,
+                            // UIHelper.verticalSpaceLarge,
                             _buildUserDetail(model)
                           ],
                         ),
@@ -64,53 +64,39 @@ class DashboardView extends StatelessWidget {
                                       width: 50.0,
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 5.0,
-                                  ),
+
                                   Container(
-                                    margin: EdgeInsets.all(5.0),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Spacer(),
-                                        Container(
-                                          child: Text(
-                                            '${model.formattedDate}',
-                                            style: TextStyle(
-                                                fontSize: 16.0,
-                                                fontFamily: 'NerisBlack',
-                                                color: kColDDSPrimaryDark),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    color: Colors.transparent,
-                                    height: 10,
-                                  ),
-                                  Divider(),
-                                  Container(
-                                    height: 260,
+                                    height: 245,
                                     child: GridView.count(
                                       crossAxisCount: 3,
                                       children: [
                                         DashboardCTAButton(
+                                          color: Colors.red,
                                           label: 'Post Sale',
                                           onTap: () =>
                                               model.navigateToPostSale(),
                                         ),
                                         DashboardCTAButton(
                                           label: 'Create Quotation',
+                                          color: Colors.orange,
                                           onTap: () => model
                                               .navigateToCreateQuotationView(),
                                         ),
                                         DashboardCTAButton(
                                           label: 'Sales Returns',
+                                          color: Colors.yellow,
                                           onTap: () =>
                                               model.navigateToSalesReturns(),
                                         ),
                                         DashboardCTAButton(
                                           label: 'Stock Transfer Request',
+                                          color: Colors.green,
+                                          onTap: () => model
+                                              .navigateToStockTransferRequest(),
+                                        ),
+                                        DashboardCTAButton(
+                                          label: 'Receive Stocks',
+                                          color: Colors.blue,
                                           onTap: () => model
                                               .navigateToStockTransferRequest(),
                                         ),
@@ -119,24 +105,45 @@ class DashboardView extends StatelessWidget {
                                         //     onTap: () => model
                                         //         .navigateToStockTransferRequest()),
                                         DashboardCTAButton(
+                                            color: Colors.purple,
                                             label: 'Pending Transactions',
                                             onTap: () => model
                                                 .navigateToPendingTransactions()),
                                       ],
                                     ),
                                   ),
-
-                                  Divider(),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
                                       child: Row(
                                         children: [
                                           Text(
-                                            "Today\'s Sales".toUpperCase(),
+                                            "Reports".toUpperCase(),
                                             style: TextStyle(
-                                                fontSize: 16,
-                                                fontFamily: 'NerisBlack',
+                                                fontSize: 13,
+                                                // fontFamily: 'NerisBlack',
+                                                color: kColDDSPrimaryLight),
+                                          ),
+                                          Spacer(),
+                                          GestureDetector(
+                                            child: Text('View All'),
+                                            onTap: () =>
+                                                model.navigateToSalesTab(),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Day Summary".toUpperCase(),
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                // fontFamily: 'NerisBlack',
                                                 color: kColDDSPrimaryLight),
                                           ),
                                           Spacer(),
@@ -168,7 +175,7 @@ class DashboardView extends StatelessWidget {
     return Text(
       'Welcome back' + ', ${model.user.full_name}',
       style: TextStyle(
-          color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.w500),
+          color: Colors.white, fontSize: 15.0, fontWeight: FontWeight.w500),
     );
   }
 }

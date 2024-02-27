@@ -1,5 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/src/ui/views/pos/base_pos_viewmodel.dart';
+import 'package:distributor/src/ui/views/pos/scanner/scanner_view.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
@@ -80,5 +81,9 @@ class POSViewmodel extends BasePOSViewModel {
         orElse: () => product);
     item.updateQuantity(newVal);
     notifyListeners();
+  }
+
+  void navigateToScannerView() async {
+    var result = await _navigationService.navigateToView(ScannerView());
   }
 }

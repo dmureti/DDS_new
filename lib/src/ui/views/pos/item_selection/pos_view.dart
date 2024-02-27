@@ -22,6 +22,13 @@ class POSView extends StatelessWidget {
             title: Text('Post New Sale'),
             actions: [
               IconButton(
+                onPressed: model.navigateToScannerView,
+                tooltip: 'Use Barcode',
+                icon: Icon(
+                  Icons.barcode_reader,
+                ),
+              ),
+              IconButton(
                   onPressed: model.itemsInCart.isEmpty
                       ? null
                       : () => model.navigateToCart(model.itemsInCart),
@@ -49,15 +56,39 @@ class POSView extends StatelessWidget {
                       color: model.isToggled ? Colors.red : Colors.black,
                     ),
                   ),
+
                   IconButton(
-                    onPressed: null,
-                    tooltip: 'Use Barcode',
-                    icon: Icon(
-                      Icons.barcode_reader,
-                    ),
-                  ),
-                  IconButton(
-                      onPressed: model.vert, icon: Icon(Icons.more_vert)),
+                      onPressed: () async {
+                        var result = showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return Container(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("Filter By Category",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                          IconButton(
+                                              onPressed: () =>
+                                                  Navigator.of(context).pop(),
+                                              icon: Icon(Icons.close))
+                                        ],
+                                      ),
+                                      Center(child: Text("No categories found"))
+                                    ],
+                                  ),
+                                ),
+                              );
+                            });
+                      },
+                      icon: Icon(Icons.more_vert)),
                 ],
               ),
               model.isBusy

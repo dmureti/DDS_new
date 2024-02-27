@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class DashboardCTAButton extends StatelessWidget {
   final String label;
   final Function onTap;
-  const DashboardCTAButton({Key key, @required this.label, this.onTap})
+  final Color color;
+  const DashboardCTAButton(
+      {Key key, @required this.label, this.onTap, @required this.color})
       : super(key: key);
 
   @override
@@ -11,6 +13,7 @@ class DashboardCTAButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Card(
+        color: color,
         elevation: 3,
         child: Center(
           child: Column(
@@ -22,8 +25,14 @@ class DashboardCTAButton extends StatelessWidget {
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
+                  border: Border.all(
+                      color: Colors.white.withOpacity(0.3), width: 3),
                   shape: BoxShape.circle,
-                  color: Colors.grey.withOpacity(0.5),
+                  color: Colors.white,
+                  // gradient: LinearGradient(colors: [
+                  //   Colors.white.withOpacity(0.05),
+                  //   color,
+                  // ], begin: Alignment.bottomCenter, end: Alignment.topCenter),
                 ),
               ),
               SizedBox(
@@ -32,7 +41,10 @@ class DashboardCTAButton extends StatelessWidget {
               Text(
                 label,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 12),
               ),
             ],
           ),
