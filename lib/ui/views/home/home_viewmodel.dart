@@ -4,6 +4,7 @@ import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';
 import 'package:distributor/core/models/app_models.dart';
+import 'package:distributor/core/models/product_service.dart';
 import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/activity_service.dart';
 import 'package:distributor/services/adhoc_cart_service.dart';
@@ -15,6 +16,7 @@ import 'package:distributor/services/permission_service.dart';
 import 'package:distributor/services/timeout_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:distributor/src/ui/views/pos/item_selection/pos_view.dart';
+import 'package:distributor/src/ui/views/quotation_view/quotation_detail_view.dart';
 import 'package:distributor/src/ui/views/quotation_view/quotation_view.dart';
 import 'package:distributor/traits/contextual_viewmodel.dart';
 import 'package:distributor/ui/views/adhoc_sales/adhoc_sales_view.dart';
@@ -39,11 +41,18 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   AdhocCartService _adhocCartService = locator<AdhocCartService>();
   final _timeoutService = locator<TimeoutService>();
   final _snackbarService = locator<SnackbarService>();
+  final _productService = locator<ProductService>();
   Timer get timer => _timeoutService.timer;
   // final geoFenceService = locator<GeoFenceService>();
 
   ConnectivityStatus _connectivityStatus;
   ConnectivityStatus get connectivityStatus => _connectivityStatus;
+
+  navigateToQuotationDetailView(var quotation) async {
+    await _navigationService.navigateToView(QuotationDetailView(
+      quotation: quotation,
+    ));
+  }
 
   String get currency =>
       _initService.appEnv.flavorValues.applicationParameter.currency;
@@ -232,6 +241,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
       _initService.appEnv.flavorValues.applicationParameter.enableAdhocSales;
 
   init() async {
+    await fetchQuotations();
     // await fetchAllCustomers();
     // geoFenceService.listenToGeofenceStatusStream();
     //Check if the user has permissions before enabling this
@@ -261,6 +271,14 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   navigateToHome(int index) {
     _navigationService.clearStackAndShow(Routes.homeView,
         arguments: HomeViewArguments(index: index));
+  }
+
+  List _quotations = [];
+  List get quotations => _quotations;
+  fetchQuotations() async {
+    setBusy(true);
+    _quotations = await _productService.fetchQuotationList();
+    setBusy(false);
   }
 
   int _currentIndex;

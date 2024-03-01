@@ -157,6 +157,7 @@ class HomeView extends StatelessWidget {
         return Column(
           children: [
             Expanded(child: QuotationListingView()),
+            model.enableOffline ? NetworkSensitiveWidget() : Container(),
           ],
         );
         break;

@@ -19,6 +19,10 @@ class ProductService {
     return result;
   }
 
+  fetchQuotationList() async {
+    return await _api.fetchQuotations(_user.token);
+  }
+
   fetchProductsByDefaultPriceList({@required String defaultStock}) async {
     var result = await _api.fetchProductsByPriceList(_user.token, defaultStock);
     return result;

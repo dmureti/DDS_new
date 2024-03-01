@@ -143,8 +143,8 @@ class QuotationView extends StatelessWidget {
                             ),
                           ),
                           ActionButton(
-                            onPressed: model.generateQuotation,
-                            label: 'Generate Quotation',
+                            onPressed: model.navigateToConfirmQuotationView,
+                            label: 'Preview Quotation',
                           )
                         ],
                       )

@@ -1,5 +1,9 @@
+import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/services/customer_service.dart';
+import 'package:distributor/src/ui/views/quotation_view/confirm_quotation_view.dart';
+import 'package:distributor/ui/views/home/home_view.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 import '../../../../app/locator.dart';
@@ -10,6 +14,7 @@ enum CustomerTypesDisplay { none, walkin, contract }
 class QuotationViewModel extends BaseViewModel {
   final _productService = locator<ProductService>();
   final _customerService = locator<CustomerService>();
+  final _navigationService = locator<NavigationService>();
 
   List<Product> _productList = <Product>[];
   List<Product> get productList {
@@ -81,9 +86,12 @@ class QuotationViewModel extends BaseViewModel {
     };
     await _productService.createNewQuotation(data);
     setBusy(false);
+    _navigationService.navigateTo(Routes.homeView, id: 2);
   }
 
-  navigateToConfirmQuotationView() async {}
+  navigateToConfirmQuotationView() async {
+    await _navigationService.navigateToView(ConfirmQuotationView());
+  }
 
   init() async {
     _items = await fetchItems();
@@ -136,4 +144,17 @@ class QuotationViewModel extends BaseViewModel {
   List<Product> _orderedItems = <Product>[];
   List<Product> get orderedItems =>
       _orderedItems.where((element) => element.quantity > 0).toList();
+
+  List _quotations = [];
+  List get quotations => _quotations;
+
+  fetchQuotationList() async {
+    setBusy(true);
+    _quotations = await _productService.fetchQuotationList();
+    setBusy(false);
+    notifyListeners();
+  }
+
+  convertToOrder() async {}
+  share() async {}
 }
