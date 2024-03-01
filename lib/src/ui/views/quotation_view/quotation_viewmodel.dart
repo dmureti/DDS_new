@@ -90,7 +90,10 @@ class QuotationViewModel extends BaseViewModel {
   }
 
   navigateToConfirmQuotationView() async {
-    await _navigationService.navigateToView(ConfirmQuotationView());
+    await _navigationService.navigateToView(ConfirmQuotationView(
+      orderedItems: itemsInCart,
+      customerCode: contractCustomer.customerCode ?? "",
+    ));
   }
 
   init() async {

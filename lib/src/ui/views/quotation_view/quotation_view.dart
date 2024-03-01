@@ -142,10 +142,13 @@ class QuotationView extends StatelessWidget {
                               },
                             ),
                           ),
-                          ActionButton(
-                            onPressed: model.navigateToConfirmQuotationView,
-                            label: 'Preview Quotation',
-                          )
+                          model.isBusy
+                              ? BusyWidget()
+                              : ActionButton(
+                                  onPressed:
+                                      model.navigateToConfirmQuotationView,
+                                  label: 'Preview Quotation',
+                                )
                         ],
                       )
                     : Center(

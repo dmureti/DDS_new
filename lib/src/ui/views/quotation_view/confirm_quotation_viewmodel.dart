@@ -1,0 +1,58 @@
+import 'package:distributor/app/locator.dart';
+import 'package:distributor/app/router.gr.dart';
+import 'package:distributor/core/models/product_service.dart';
+import 'package:distributor/services/customer_service.dart';
+import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+
+class ConfirmQuotationViewModel extends BaseViewModel {
+  final _productService = locator<ProductService>();
+  final _customerService = locator<CustomerService>();
+  final _navigationService = locator<NavigationService>();
+
+  final List orderedItems;
+  final String customerCode;
+
+  ConfirmQuotationViewModel(this.orderedItems, this.customerCode);
+
+  double get total => calculateTotal();
+
+  calculateTotal() {
+    var total = 0.0;
+    orderedItems.forEach((element) {
+      total += element.quantity * element.itemPrice;
+    });
+    return total;
+  }
+
+  generateQuotation() async {
+    setBusy(true);
+    Map<String, dynamic> data = {
+      "bill": "$total",
+      "customer": customerCode ?? "",
+      "dueDate": DateTime.now().toUtc().toIso8601String(),
+      "items": orderedItems
+          .map((e) => {
+                "amount": "${e.itemPrice * e.quantity}",
+                "item": {
+                  "id": "${e.id}",
+                  "itemCode": "${e.itemCode}",
+                  "itemName": "${e.itemName}",
+                  "itemPrice": "${e.itemPrice}",
+                  "itemType": "product",
+                  "priceList": "4SumPriceList"
+                },
+                "quantity": e.quantity,
+                "rate": e.itemPrice,
+                "tax": "16%",
+              })
+          .toList(),
+      "orderType": "Sales Quotation",
+      "warehouse": "Baba dogo"
+    };
+    var result = await _productService.createNewQuotation(data);
+    setBusy(false);
+    _navigationService.clearStackAndShow(Routes.homeView,
+        arguments: HomeViewArguments(index: 2));
+  }
+}
