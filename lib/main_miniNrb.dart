@@ -35,6 +35,7 @@ void main() async {
       flavor: Flavor.miniNrb,
       name: 'Mini-Nrb',
       flavorValues: FlavorValues(
+          // baseUrl: 'https://testdds.ddsolutions.tech/dds-backend/api/v1',
           baseUrl: 'https://mbnl.ddsolutions.tech/dds-backend/api/v1',
           applicationParameter: appParam),
     ),

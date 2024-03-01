@@ -1,9 +1,9 @@
 import 'package:camera/camera.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
+// import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:stacked/stacked.dart';
 
 class ScannerViewModel extends BaseViewModel {
-  final BarcodeScanner barcodeScanner = BarcodeScanner();
+  // final BarcodeScanner barcodeScanner = BarcodeScanner();
   CameraController _controller;
   CameraController get cameraController => _controller;
   Future<void> initializeControllerFuture;

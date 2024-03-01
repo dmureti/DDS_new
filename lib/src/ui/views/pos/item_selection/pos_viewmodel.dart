@@ -20,7 +20,7 @@ class POSViewmodel extends BasePOSViewModel {
 
   init() async {
     setBusy(true);
-    await fetchItems();
+    _items = await fetchStockBalance();
     _itemsInCart = items;
     setBusy(false);
     notifyListeners();
@@ -28,7 +28,7 @@ class POSViewmodel extends BasePOSViewModel {
 
   _getItems() async {
     setBusy(true);
-    _items = await fetchItems();
+    _items = await fetchStockBalance();
     setBusy(false);
     notifyListeners();
   }

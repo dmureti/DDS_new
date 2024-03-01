@@ -28,4 +28,9 @@ class ProductService {
     var result = await _api.fetchAllProducts(_user.token);
     return result;
   }
+
+  void createNewQuotation(Map<String, dynamic> data) async {
+    var result = await _api.generateQuotation(_user.token, data);
+    return result;
+  }
 }

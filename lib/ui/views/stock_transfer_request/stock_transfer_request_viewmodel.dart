@@ -44,13 +44,13 @@ class StockTransferRequestViewModel extends BaseViewModel {
 
   init() async {
     // await fetchItems()
-    await fetchOutlets();
+    await fetchVirtualWarehouses();
   }
 
   //Fetch all the outlets
-  fetchOutlets() async {
+  fetchVirtualWarehouses() async {
     setBusy(true);
-    var result = await _customerService.listWarehouses();
+    var result = await _customerService.listVirtualWarehouses();
     _outletList = result;
     setBusy(false);
   }

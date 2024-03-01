@@ -100,6 +100,7 @@ class StockControllerService {
     }
     var result =
         await _api.getStockBalance(token: _user.token, branchId: branchId);
+
     return result;
   }
 

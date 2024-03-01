@@ -1,19 +1,76 @@
+import 'package:distributor/services/customer_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 import '../../../../app/locator.dart';
 import '../../../../core/models/product_service.dart';
 
+enum CustomerTypesDisplay { none, walkin, contract }
+
 class QuotationViewModel extends BaseViewModel {
   final _productService = locator<ProductService>();
+  final _customerService = locator<CustomerService>();
 
   List<Product> _productList = <Product>[];
   List<Product> get productList {
     return _productList.where((product) => product.itemPrice > 0).toList();
   }
 
+  List<Customer> _customerList = <Customer>[];
+  List<Customer> get customersList => _customerList;
+
+  fetchCustomers() async {
+    setBusy(true);
+    _customerList = await _customerService.fetchCustomers();
+    setBusy(false);
+  }
+
+  CustomerTypesDisplay get customerTypesDisplay => _customerTypesDisplay;
+
+  Customer _contractCustomer;
+  Customer get contractCustomer => _contractCustomer;
+  updateContractCustomer(Customer c) {
+    _contractCustomer = c;
+    notifyListeners();
+  }
+
+  String get customerType => _customerType;
+
+  String _customerType;
+  CustomerTypesDisplay _customerTypesDisplay = CustomerTypesDisplay.none;
+
+  setCustomerType(String val) {
+    _customerType = val;
+    switch (val.toLowerCase()) {
+      case 'contract':
+        _customerTypesDisplay = CustomerTypesDisplay.contract;
+        break;
+      case 'walkin':
+        _customerTypesDisplay = CustomerTypesDisplay.walkin;
+        break;
+      default:
+        _customerTypesDisplay = CustomerTypesDisplay.none;
+    }
+    notifyListeners();
+  }
+
+  generateQuotation() async {
+    setBusy(true);
+    Map<String, dynamic> data = {
+      "bill": "",
+      "customer": contractCustomer.customerCode,
+      "dueDate": DateTime.now().toUtc().toIso8601String(),
+      "items": [],
+      "orderType": "Sales Quotation",
+      "warehouse": ""
+    };
+    await _productService.createNewQuotation(data);
+    setBusy(false);
+  }
+
   init() async {
     _items = await fetchItems();
+    await fetchCustomers();
     _itemsInCart = items;
     await fetchItems();
   }
@@ -54,15 +111,12 @@ class QuotationViewModel extends BaseViewModel {
     _productList = await _productService.listAllItems();
     //Initialize the stock transfer items with the value of product list
     _orderedItems = _productList;
+    _items = _productList;
+    _itemsInCart = _items;
     setBusy(false);
   }
 
   List<Product> _orderedItems = <Product>[];
   List<Product> get orderedItems =>
       _orderedItems.where((element) => element.quantity > 0).toList();
-
-  placeQuotation() async {
-    setBusy(true);
-    setBusy(false);
-  }
 }

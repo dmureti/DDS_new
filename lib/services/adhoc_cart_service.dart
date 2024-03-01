@@ -267,7 +267,7 @@ class AdhocCartService with ReactiveServiceMixin {
         if (_items.value[i].item == p) {
           // Increase the value of the sales order item
           _items.value[i].quantity += quantity;
-          calculateSecurity(p, quantity);
+          // calculateSecurity(p, quantity);
           notifyListeners();
         }
       }
@@ -275,7 +275,7 @@ class AdhocCartService with ReactiveServiceMixin {
       _itemsInCart.value.add(p);
       SalesOrderItem s = SalesOrderItem(item: p, quantity: quantity);
       _items.value.add(s);
-      calculateSecurity(p, quantity);
+      // calculateSecurity(p, quantity);
       notifyListeners();
     }
   }
@@ -302,7 +302,7 @@ class AdhocCartService with ReactiveServiceMixin {
         }
       }
     }
-    calculateSecurity(p, -quantity);
+    // calculateSecurity(p, -quantity);
     notifyListeners();
   }
 

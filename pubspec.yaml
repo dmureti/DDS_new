@@ -1,6 +1,6 @@
 name: distributor
 description: Digital Distribution System
-version: 47.3.9+47
+version: 47.4.5+47
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
@@ -72,7 +72,7 @@ dependencies:
   printing: ^4.1.0
   flutter_device_identifier: ^0.0.1
   flutter_launcher_icons:
-  google_ml_kit: ^0.16.3
+#  google_ml_kit: ^0.16.3
   camera: ^0.5.8+17
 
 
