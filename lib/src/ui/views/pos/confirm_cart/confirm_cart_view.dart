@@ -1,6 +1,7 @@
 import 'package:distributor/src/ui/views/pos/confirm_cart/confirm_cart_viewmodel.dart';
 import 'package:distributor/src/ui/views/pos/shared/custom_extended_button.dart';
 import 'package:distributor/src/ui/views/pos/styles/text.dart';
+import 'package:distributor/ui/widgets/action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -61,9 +62,9 @@ class ConfirmCartView extends StatelessWidget {
                   },
                   itemCount: orderedItems.length,
                 )),
-                CustomExtendedButton(
+                ActionButton(
                   label: 'Proceed to Checkout',
-                  onPressed: model.navigateToCheckOut,
+                  onPressed: () => model.navigateToCheckOut(orderedItems),
                 ),
               ],
             ),

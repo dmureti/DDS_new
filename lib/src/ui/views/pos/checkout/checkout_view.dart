@@ -6,7 +6,8 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 
 class CheckoutView extends StatelessWidget {
-  const CheckoutView({Key key}) : super(key: key);
+  final cartItems;
+  const CheckoutView({Key key, this.cartItems}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ class CheckoutView extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          'Kshs ',
+                          'Kshs ${model.total}',
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
@@ -149,7 +150,7 @@ class CheckoutView extends StatelessWidget {
             ),
           );
         },
-        viewModelBuilder: () => CheckOutViewModel());
+        viewModelBuilder: () => CheckOutViewModel(cartItems));
   }
 
   _buildCustomerDisplay(CustomerTypesDisplay customerTypesDisplay) {

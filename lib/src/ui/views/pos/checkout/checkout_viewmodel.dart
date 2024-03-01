@@ -9,12 +9,15 @@ enum PaymentModeDisplay { none, mobile, cash, mixed, cheque }
 
 class CheckOutViewModel extends BasePOSViewModel {
   final _customerService = locator<CustomerService>();
+  final List orderedItems;
 
   final List<String> paymentMethods = ["Cash", "Mpesa", "Mixed", "Cheque"];
 
   String _customerType;
   PaymentModeDisplay _paymentModeDisplay = PaymentModeDisplay.none;
   CustomerTypesDisplay _customerTypesDisplay = CustomerTypesDisplay.none;
+
+  CheckOutViewModel(this.orderedItems);
 
   PaymentModeDisplay get paymentModeDisplay => _paymentModeDisplay;
   CustomerTypesDisplay get customerTypesDisplay => _customerTypesDisplay;
@@ -30,7 +33,15 @@ class CheckOutViewModel extends BasePOSViewModel {
       _paymentMode?.toLowerCase() != 'cash' ||
       paymentMode?.toLowerCase() != 'mobile';
 
-  double get total => 0;
+  get total => calculateTotal();
+
+  calculateTotal() {
+    var total = 0;
+    orderedItems.forEach((element) {
+      total += element.quantity * element.itemPrice;
+    });
+    return total;
+  }
 
   setCustomerType(String val) {
     _customerType = val;

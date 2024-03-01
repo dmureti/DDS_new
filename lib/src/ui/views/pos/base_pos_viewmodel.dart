@@ -27,7 +27,9 @@ class BasePOSViewModel extends BaseViewModel {
     ));
   }
 
-  void navigateToCheckOut() async {
-    await _navigationService.navigateToView(CheckoutView());
+  void navigateToCheckOut(List orderedItems) async {
+    await _navigationService.navigateToView(CheckoutView(
+      cartItems: orderedItems,
+    ));
   }
 }
