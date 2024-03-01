@@ -3,6 +3,7 @@ import 'package:distributor/core/enums.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
 import 'package:distributor/src/ui/views/adhoc_listing/adhoc_listing_view.dart';
+import 'package:distributor/src/ui/views/quotation_view/quotation_listing_view.dart';
 import 'package:distributor/ui/access_controllers/global/bottom_navbar/bottom_nav_bar.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
 import 'package:distributor/ui/views/customers/customer_view.dart';
@@ -62,11 +63,11 @@ class HomeView extends StatelessWidget {
                             child: Text('Stock Transfer Request'),
                             value: 'stock_transfer_request',
                           ),
-                          PopupMenuDivider(),
-                          PopupMenuItem(
-                            child: Text('Inter Outlet Transfer Request'),
-                            value: 'inter_outlet_transfer_request',
-                          )
+                          // PopupMenuDivider(),
+                          // PopupMenuItem(
+                          //   child: Text('Inter Outlet Transfer Request'),
+                          //   value: 'inter_outlet_transfer_request',
+                          // )
                         ],
                         onSelected: (val) {
                           model.takeAction(val);
@@ -75,8 +76,13 @@ class HomeView extends StatelessWidget {
                     ],
                   )
                 : model.currentIndex == 2
-                    ? TransactionPopupView(
-                        onSelected: model.onStockBalancePopupSelected)
+                    ? IconButton(
+                        onPressed: () {
+                          model.navigateToCreateQuotation();
+                        },
+                        icon: Icon(Icons.add_circle_outline),
+                        tooltip: 'Create Quotation',
+                      )
                     : model.currentIndex == 1
                         ? Container()
                         : Container(),
@@ -150,12 +156,19 @@ class HomeView extends StatelessWidget {
       case 2:
         return Column(
           children: [
+            Expanded(child: QuotationListingView()),
+          ],
+        );
+        break;
+      case 3:
+        return Column(
+          children: [
             Expanded(child: StockView()),
             model.enableOffline ? NetworkSensitiveWidget() : Container(),
           ],
         );
         break;
-      case 3:
+      case 4:
         return Column(
           children: [
             // LocationWidget(),
@@ -198,11 +211,17 @@ class HomeView extends StatelessWidget {
         break;
       case 2:
         return Text(
-          'Stock Balance',
+          'Quotations',
           style: kAppBarTextStyle,
         );
         break;
       case 3:
+        return Text(
+          'Stock Balance',
+          style: kAppBarTextStyle,
+        );
+        break;
+      case 4:
         return Text(
           'Customers',
           style: kAppBarTextStyle,

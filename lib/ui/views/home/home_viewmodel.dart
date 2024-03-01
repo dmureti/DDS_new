@@ -15,6 +15,7 @@ import 'package:distributor/services/permission_service.dart';
 import 'package:distributor/services/timeout_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:distributor/src/ui/views/pos/item_selection/pos_view.dart';
+import 'package:distributor/src/ui/views/quotation_view/quotation_view.dart';
 import 'package:distributor/traits/contextual_viewmodel.dart';
 import 'package:distributor/ui/views/adhoc_sales/adhoc_sales_view.dart';
 import 'package:distributor/ui/views/customers/customer_view.dart';
@@ -439,5 +440,9 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
         navigateToAddPOSSale();
         break;
     }
+  }
+
+  void navigateToCreateQuotation() async {
+    await _navigationService.navigateToView(QuotationView());
   }
 }

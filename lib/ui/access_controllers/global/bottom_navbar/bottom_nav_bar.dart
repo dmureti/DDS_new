@@ -84,12 +84,24 @@ class BottomNavBar extends StatelessWidget {
             BottomNavigationBarItem(
               backgroundColor: Color(0xFF182848),
               icon: IconButton(
+                  splashColor: kColorDDSPrimaryDark,
+                  icon: Icon(Icons.question_answer_outlined),
+                  onPressed: () {
+                    model.updateIndex(2);
+                    onTap(model.index);
+                    // onTap(Pages.routes, "Routes");
+                  }),
+              label: 'Quotations'.toUpperCase(),
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: Color(0xFF182848),
+              icon: IconButton(
                 splashColor: kColorDDSPrimaryDark,
                 icon: Icon(Icons.apps),
-                onPressed: model.isEnabled(2)
+                onPressed: model.isEnabled(3)
                     ? model.onStockBalanceTap()
                         ? () {
-                            model.updateIndex(2);
+                            model.updateIndex(3);
                             // onTap(Pages.products, "Stock Balance");
                             onTap(model.index);
                           }
@@ -102,10 +114,10 @@ class BottomNavBar extends StatelessWidget {
               backgroundColor: Color(0xFF182848),
               icon: IconButton(
                 splashColor: kColorDDSPrimaryDark,
-                onPressed: model.isEnabled(3)
+                onPressed: model.isEnabled(4)
                     ? model.onCustomerTabTap()
                         ? () {
-                            model.updateIndex(3);
+                            model.updateIndex(4);
                             onTap(model.index);
                             // onTap(Pages.customers, "Customers");
                           }

@@ -88,12 +88,25 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
                   trailing:
                       Icon(Icons.add_shopping_cart, color: kColDDSPrimaryDark),
                 ),
+                ListTile(
+                  leading: Text(
+                    'Quotations'.toUpperCase(),
+                    style: TextStyle(
+                        fontFamily: 'NerisBlack', color: kColDDSPrimaryDark),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    model.navigateToHome(2);
+                  },
+                  trailing:
+                      Icon(Icons.question_answer, color: kColDDSPrimaryDark),
+                ),
                 DrawerListTile(
                   isEnabled: model.enableProductTab,
                   label: 'Stock Controller',
                   onTap: () {
                     Navigator.pop(context);
-                    model.navigateToHome(2);
+                    model.navigateToHome(3);
                   },
                   iconData: Icons.apps,
                 ),
@@ -103,7 +116,7 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
                   label: 'Customers',
                   onTap: () {
                     Navigator.pop(context);
-                    model.navigateToHome(3);
+                    model.navigateToHome(4);
                   },
                   iconData: Icons.people,
                 ),

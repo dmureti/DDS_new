@@ -60,13 +60,30 @@ class QuotationViewModel extends BaseViewModel {
       "bill": "",
       "customer": contractCustomer.customerCode,
       "dueDate": DateTime.now().toUtc().toIso8601String(),
-      "items": [],
+      "items": itemsInCart
+          .map((e) => {
+                "amount": "${e.itemPrice * e.quantity}",
+                "item": {
+                  "id": "${e.id}",
+                  "itemCode": "${e.itemCode}",
+                  "itemName": "${e.itemName}",
+                  "itemPrice": "${e.itemPrice}",
+                  "itemType": "product",
+                  "priceList": "4SumPriceList"
+                },
+                "quantity": e.quantity,
+                "rate": e.itemPrice,
+                "tax": "16%",
+              })
+          .toList(),
       "orderType": "Sales Quotation",
-      "warehouse": ""
+      "warehouse": "Baba dogo"
     };
     await _productService.createNewQuotation(data);
     setBusy(false);
   }
+
+  navigateToConfirmQuotationView() async {}
 
   init() async {
     _items = await fetchItems();
