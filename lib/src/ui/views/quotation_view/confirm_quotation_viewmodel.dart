@@ -9,6 +9,7 @@ class ConfirmQuotationViewModel extends BaseViewModel {
   final _productService = locator<ProductService>();
   final _customerService = locator<CustomerService>();
   final _navigationService = locator<NavigationService>();
+  final _dialogService = locator<DialogService>();
 
   final List orderedItems;
   final String customerCode;
@@ -52,6 +53,9 @@ class ConfirmQuotationViewModel extends BaseViewModel {
     };
     var result = await _productService.createNewQuotation(data);
     setBusy(false);
+    await _dialogService.showDialog(
+        title: 'Quote generated successfully',
+        description: 'The quotation was generated successfully');
     _navigationService.clearStackAndShow(Routes.homeView,
         arguments: HomeViewArguments(index: 2));
   }

@@ -1,6 +1,10 @@
 import 'package:distributor/app/locator.dart';
+import 'package:distributor/app/router.gr.dart';
+import 'package:distributor/core/models/product_service.dart';
+import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/customer_service.dart';
 import 'package:distributor/src/ui/views/pos/base_pos_viewmodel.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 enum CustomerTypesDisplay { none, walkin, contract }
@@ -9,6 +13,13 @@ enum PaymentModeDisplay { none, mobile, cash, mixed, cheque }
 
 class CheckOutViewModel extends BasePOSViewModel {
   final _customerService = locator<CustomerService>();
+  final _productService = locator<ProductService>();
+  final _dialogService = locator<DialogService>();
+  final _navigationService = locator<NavigationService>();
+
+  final _api = locator<ApiService>();
+  get api => _api.api;
+
   final List orderedItems;
 
   final List<String> paymentMethods = ["Cash", "Mpesa", "Mixed", "Cheque"];
@@ -149,5 +160,52 @@ class CheckOutViewModel extends BasePOSViewModel {
 
   init() async {
     await fetchCustomers();
+  }
+
+  postSale() async {
+    // await getCurrentLocation();
+    setBusy(true);
+    Map<String, dynamic> data = {
+      "customerId": contractCustomer != null
+          ? contractCustomer.customerCode
+          : phoneNumber,
+      "customerName":
+          contractCustomer != null ? contractCustomer.name : customerName,
+      "items": orderedItems
+          .map((e) => {
+                "itemCode": e.itemCode,
+                "itemName": e.itemName,
+                "itemRate": e.itemPrice,
+                "quantity": e.quantity
+              })
+          .toList(),
+      "payment": {
+        "amount": total,
+        "externalAccountId": "string",
+        "externalTxnID": "string",
+        "externalTxnNarrative": "string",
+        "payerAccount": "string",
+        "payerName": "string",
+        "paymentMode": paymentMode,
+        "userTxnNarrative": "string"
+      },
+      "deliveryLocation": "",
+      "remarks": "",
+      "sellingPriceList": "4SumPriceList",
+      "warehouseId": "",
+    };
+
+    var result =
+        await _productService.postSale(data, modeOfPayment: paymentMode);
+    setBusy(false);
+    if (result is CustomException) {
+      await _dialogService.showDialog(
+          title: 'Place Order Failed', description: result.description ?? "");
+    } else {
+      await _dialogService.showDialog(
+          title: 'Place Order Succeeded',
+          description: "The order was placed successfully");
+      await _navigationService.navigateTo(Routes.homeView, id: 1);
+    }
   }
 }

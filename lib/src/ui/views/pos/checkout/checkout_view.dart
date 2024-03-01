@@ -1,9 +1,12 @@
 import 'package:distributor/src/ui/views/pos/checkout/checkout_viewmodel.dart';
 import 'package:distributor/src/ui/views/pos/shared/custom_extended_button.dart';
+import 'package:distributor/ui/widgets/action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
+
+import '../../../../../ui/widgets/dumb_widgets/busy_widget.dart';
 
 class CheckoutView extends StatelessWidget {
   final cartItems;
@@ -141,10 +144,12 @@ class CheckoutView extends StatelessWidget {
                       ],
                     ),
                   ),
-                  CustomExtendedButton(
-                    label: 'Complete',
-                    onPressed: model.isValidated ? model.printReceipt : null,
-                  ),
+                  model.isBusy
+                      ? Center(child: BusyWidget())
+                      : ActionButton(
+                          label: 'Complete',
+                          onPressed: () => model.postSale(),
+                        ),
                 ],
               ),
             ),

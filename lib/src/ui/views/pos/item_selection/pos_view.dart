@@ -29,17 +29,18 @@ class POSView extends StatelessWidget {
                 ),
               ),
               IconButton(
-                  onPressed: model.itemsInCart.isEmpty
-                      ? null
-                      : () => model.navigateToCart(model.itemsInCart),
-                  icon: Badge(
-                    child: Icon(Icons.shopping_cart),
-                    label: Text(model.itemsInCart.length.toString()),
-                    isLabelVisible: !model.itemsInCart.isEmpty,
-                    backgroundColor: model.itemsInCart.isEmpty
-                        ? Colors.transparent
-                        : Colors.red,
-                  ))
+                onPressed: model.itemsInCart.isEmpty
+                    ? null
+                    : () => model.navigateToCart(model.itemsInCart),
+                icon: Badge(
+                  child: Icon(Icons.shopping_cart),
+                  label: Text(model.itemsInCart.length.toString()),
+                  isLabelVisible: !model.itemsInCart.isEmpty,
+                  backgroundColor: model.itemsInCart.isEmpty
+                      ? Colors.transparent
+                      : Colors.red,
+                ),
+              )
             ],
           ),
           body: Column(
@@ -105,8 +106,11 @@ class POSView extends StatelessWidget {
                                         DismissDirection.startToEnd) {
                                       //Add to the quantity
                                       var newVal = item.quantity + 1;
-                                      model.updateQuantity(
-                                          product: item, newVal: newVal);
+                                      if (newVal <=
+                                          item.initialQuantity.toInt()) {
+                                        model.updateQuantity(
+                                            product: item, newVal: newVal);
+                                      }
                                     }
                                     if (direction ==
                                         DismissDirection.endToStart) {
@@ -190,7 +194,8 @@ class POSView extends StatelessWidget {
                                           return QuantityInput(
                                             title: 'Enter Quantity',
                                             minQuantity: 0,
-                                            maxQuantity: 200000,
+                                            maxQuantity:
+                                                item.initialQuantity.toInt(),
                                             description:
                                                 'How many pcs for ${item.itemName} would you like to order ?',
                                             initialQuantity:

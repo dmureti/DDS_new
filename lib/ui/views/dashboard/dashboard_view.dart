@@ -82,12 +82,12 @@ class DashboardView extends StatelessWidget {
                                           onTap: () => model
                                               .navigateToCreateQuotationView(),
                                         ),
-                                        DashboardCTAButton(
-                                          label: 'Sales Returns',
-                                          color: Colors.yellow,
-                                          onTap: () =>
-                                              model.navigateToSalesReturns(),
-                                        ),
+                                        // DashboardCTAButton(
+                                        //   label: 'Sales Returns',
+                                        //   color: Colors.yellow,
+                                        //   onTap: () =>
+                                        //       model.navigateToSalesReturns(),
+                                        // ),
                                         DashboardCTAButton(
                                           label: 'Stock Transfer Request',
                                           color: Colors.green,

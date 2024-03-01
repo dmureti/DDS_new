@@ -50,7 +50,8 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
 
   navigateToQuotationDetailView(var quotation) async {
     await _navigationService.navigateToView(QuotationDetailView(
-      quotation: quotation,
+      quotationId: quotation['id'],
+      customerName: quotation['customer']['customer_name'],
     ));
   }
 
@@ -275,6 +276,10 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
 
   List _quotations = [];
   List get quotations => _quotations;
+
+  get sortedQuotationsByPostingDate =>
+      _quotations.sort((a, b) => a['postingDate'].compareTo(b['postingDate']));
+
   fetchQuotations() async {
     setBusy(true);
     _quotations = await _productService.fetchQuotationList();

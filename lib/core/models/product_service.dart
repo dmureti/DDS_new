@@ -19,6 +19,12 @@ class ProductService {
     return result;
   }
 
+  postSale(Map<String, dynamic> data, {String modeOfPayment}) async {
+    data['warehouseId'] = _user.branch;
+    return await _api.createPOSPayment(
+        modeOfPayment: modeOfPayment, data: data, token: _user.token);
+  }
+
   fetchQuotationList() async {
     return await _api.fetchQuotations(_user.token);
   }
@@ -36,5 +42,13 @@ class ProductService {
   void createNewQuotation(Map<String, dynamic> data) async {
     var result = await _api.generateQuotation(_user.token, data);
     return result;
+  }
+
+  getQuotationDetail(String quotationId) async {
+    return await _api.getQuotationById(_user.token, quotationId);
+  }
+
+  generateInvoiceFromQuotation(Map<String, dynamic> data) async {
+    return await _api.createNewDeliveryNoteFromQuotation(_user.token, data);
   }
 }
