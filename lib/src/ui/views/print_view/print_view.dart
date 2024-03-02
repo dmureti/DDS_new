@@ -213,9 +213,9 @@ class PrintView extends StatelessWidget {
     );
     _buildWidgetTree() {
       List<pw.Widget> tree = [
-        _buildPrintRef(model, style),
+        // _buildPrintRef(model, style),
         _buildHeader(image, model, style),
-        _buildSectionHeader("Sellers Detail", style),
+        // _buildSectionHeader("Sellers Detail", style),
         _buildSellersDetail(user, style, model),
         _buildSectionHeader("Buyers Details", style),
         _buildBuyerDetails(model, style),
