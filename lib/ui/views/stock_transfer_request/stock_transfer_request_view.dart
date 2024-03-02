@@ -181,7 +181,7 @@ class StockTransferRequestView extends StatelessWidget {
                             )
                           : Center(
                               child: EmptyContentContainer(
-                                  label: 'No SKUs found for the minishop.')),
+                                  label: 'No SKUs found for the outlet.')),
                       ActionButton(
                         label: 'Continue',
                         onPressed: model.stockTransferItems.isNotEmpty

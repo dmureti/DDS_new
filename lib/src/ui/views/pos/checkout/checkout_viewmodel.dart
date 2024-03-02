@@ -3,6 +3,7 @@ import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/models/product_service.dart';
 import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/customer_service.dart';
+import 'package:distributor/services/user_service.dart';
 import 'package:distributor/src/ui/views/pos/base_pos_viewmodel.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
@@ -16,6 +17,9 @@ class CheckOutViewModel extends BasePOSViewModel {
   final _productService = locator<ProductService>();
   final _dialogService = locator<DialogService>();
   final _navigationService = locator<NavigationService>();
+  final _userService = locator<UserService>();
+
+  String get branch => _userService.user.branch;
 
   final _api = locator<ApiService>();
   get api => _api.api;
@@ -79,10 +83,10 @@ class CheckOutViewModel extends BasePOSViewModel {
       case 'cash':
         _paymentModeDisplay = PaymentModeDisplay.cash;
         break;
-      case 'mobile':
+      case 'mpesa':
         _paymentModeDisplay = PaymentModeDisplay.mobile;
         break;
-      case 'mixed':
+      case 'multipay':
         _paymentModeDisplay = PaymentModeDisplay.mixed;
         break;
       case 'cheque':
@@ -175,12 +179,27 @@ class CheckOutViewModel extends BasePOSViewModel {
           .map((e) => {
                 "itemCode": e.itemCode,
                 "itemName": e.itemName,
+                "id": e.itemCode,
+                "quantity": e.quantity,
+                "branch": branch,
+                "initialQuantity": "",
+                "itemPrice": e.itemPrice,
+                "customer": contractCustomer != null
+                    ? contractCustomer.name
+                    : customerName,
+                "customerType": customerType,
+                "itemTotalPrice": e.quantity * e.itemPrice,
                 "itemRate": e.itemPrice,
-                "quantity": e.quantity
               })
           .toList(),
+      "dueDate": DateTime.now().toIso8601String(),
+      "total": total,
+      "type": customerType,
       "payment": {
-        "amount": total,
+        "phone": "${phoneNumber}",
+        "drawerName": drawerName,
+        "chequeNumber": chequeNumber,
+        "amount": total - cashAmount,
         "externalAccountId": "string",
         "externalTxnID": "string",
         "externalTxnNarrative": "string",
@@ -193,6 +212,7 @@ class CheckOutViewModel extends BasePOSViewModel {
       "remarks": "",
       "sellingPriceList": "4SumPriceList",
       "warehouseId": "",
+      "towarehouse": ""
     };
 
     var result =
@@ -205,7 +225,32 @@ class CheckOutViewModel extends BasePOSViewModel {
       await _dialogService.showDialog(
           title: 'Place Order Succeeded',
           description: "The order was placed successfully");
-      await _navigationService.navigateTo(Routes.homeView, id: 1);
+      await _navigationService.navigateTo(Routes.homeView,
+          arguments: HomeViewArguments(index: 1));
     }
+  }
+
+  int _cashAmount = 0;
+  int get cashAmount => _cashAmount ?? 0;
+
+  setCashAmount(String value) {
+    _cashAmount = int.parse(value);
+    notifyListeners();
+  }
+
+  String _drawerName = "";
+  String _chequeNumber = "";
+
+  String get drawerName => _drawerName;
+  String get chequeNumber => _chequeNumber;
+
+  void setDrawerName(String value) {
+    _drawerName = value;
+    notifyListeners();
+  }
+
+  void setChequeNumber(String value) {
+    _chequeNumber = value;
+    notifyListeners();
   }
 }

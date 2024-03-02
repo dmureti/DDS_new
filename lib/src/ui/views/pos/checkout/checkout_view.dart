@@ -89,58 +89,61 @@ class CheckoutView extends StatelessWidget {
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('Payment Info'),
+                        ),
                         Card(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            child: Row(
+                              // crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Payment Info'),
-                                Wrap(
+                                Column(
                                   children: [
-                                    Expanded(
-                                      child: RadioListTile(
-                                        dense: true,
-                                        title: Text('Cash'),
-                                        value: 'cash',
-                                        onChanged: model.setPaymentMode,
-                                        groupValue: model.paymentMode,
-                                      ),
+                                    Radio(
+                                      value: 'cash',
+                                      onChanged: model.setPaymentMode,
+                                      groupValue: model.paymentMode,
                                     ),
-                                    Expanded(
-                                      child: RadioListTile(
-                                        dense: true,
-                                        title: Text('MPesa'),
-                                        value: 'mobile',
-                                        onChanged: model.setPaymentMode,
-                                        groupValue: model.paymentMode,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: RadioListTile(
-                                        dense: true,
-                                        title: Text('Mixed'),
-                                        value: 'mixed',
-                                        onChanged: model.setPaymentMode,
-                                        groupValue: model.paymentMode,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: RadioListTile(
-                                        dense: true,
-                                        title: Text('Cheque'),
-                                        value: 'cheque',
-                                        onChanged: model.setPaymentMode,
-                                        groupValue: model.paymentMode,
-                                      ),
-                                    ),
+                                    Text('Cash'),
                                   ],
                                 ),
-                                _buildPaymentDisplay(model.paymentModeDisplay),
+                                Column(
+                                  children: [
+                                    Radio(
+                                      value: 'mpesa',
+                                      onChanged: model.setPaymentMode,
+                                      groupValue: model.paymentMode,
+                                    ),
+                                    Text('mPesa'),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Radio(
+                                      value: 'multipay',
+                                      onChanged: model.setPaymentMode,
+                                      groupValue: model.paymentMode,
+                                    ),
+                                    Text('Multipay'),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Radio(
+                                      value: 'cheque',
+                                      onChanged: model.setPaymentMode,
+                                      groupValue: model.paymentMode,
+                                    ),
+                                    Text('Cheque'),
+                                  ],
+                                ),
                               ],
                             ),
                           ),
                         ),
+                        _buildPaymentDisplay(model.paymentModeDisplay),
                       ],
                     ),
                   ),
@@ -231,16 +234,19 @@ class _CustomerWidget extends HookViewModelWidget<CheckOutViewModel> {
 
 class _MpesaConfirmationWidget extends HookViewModelWidget<CheckOutViewModel> {
   @override
-  Widget buildViewModelWidget(
-      BuildContext context, CheckOutViewModel viewModel) {
+  Widget buildViewModelWidget(BuildContext context, CheckOutViewModel model) {
+    var telephone = useTextEditingController();
     return Column(
       children: [
         TextFormField(
+          keyboardType: TextInputType.phone,
+          onChanged: model.setPhoneNumber,
           decoration: InputDecoration(
-              label: Text(
-                'Enter confirmation message',
-              ),
-              suffixIcon: Icon(Icons.arrow_right_alt_sharp)),
+            label: Text(
+              'Telephone number',
+            ),
+            suffixIcon: Icon(Icons.arrow_right_alt_sharp),
+          ),
         ),
       ],
     );
@@ -249,23 +255,29 @@ class _MpesaConfirmationWidget extends HookViewModelWidget<CheckOutViewModel> {
 
 class _ChequeConfirmationWidget extends HookViewModelWidget<CheckOutViewModel> {
   @override
-  Widget buildViewModelWidget(
-      BuildContext context, CheckOutViewModel viewModel) {
+  Widget buildViewModelWidget(BuildContext context, CheckOutViewModel model) {
+    var drawerName = useTextEditingController();
+    var chequeNumber = useTextEditingController();
     return Column(
       children: [
         TextFormField(
+          controller: drawerName,
+          keyboardType: TextInputType.name,
+          onChanged: model.setDrawerName,
           decoration: InputDecoration(
-              label: Text(
-                'Enter Cheque Number',
-              ),
-              suffixIcon: Icon(Icons.camera_alt)),
+            label: Text(
+              'Enter Drawer Name',
+            ),
+          ),
         ),
         TextFormField(
+          controller: chequeNumber,
+          keyboardType: TextInputType.text,
           decoration: InputDecoration(
-              label: Text(
-                'Enter Maturity Date',
-              ),
-              suffixIcon: Icon(Icons.calendar_month)),
+            label: Text(
+              'Enter Cheque Number',
+            ),
+          ),
         ),
       ],
     );
@@ -275,20 +287,23 @@ class _ChequeConfirmationWidget extends HookViewModelWidget<CheckOutViewModel> {
 class _CashConfirmationWidget extends HookViewModelWidget<CheckOutViewModel> {
   @override
   Widget buildViewModelWidget(BuildContext context, CheckOutViewModel model) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-            'Receive Ksh ${model.total.toStringAsFixed(2)} cash from customer.'),
-        TextFormField(
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-              label: Text(
-                'Enter amount received',
-              ),
-              suffixIcon: Icon(Icons.arrow_right_alt_sharp)),
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+              'Receive Ksh ${model.total.toStringAsFixed(2)} cash from customer.'),
+          // TextFormField(
+          //   keyboardType: TextInputType.number,
+          //   decoration: InputDecoration(
+          //       label: Text(
+          //         'Enter amount received',
+          //       ),
+          //       suffixIcon: Icon(Icons.arrow_right_alt_sharp)),
+          // ),
+        ],
+      ),
     );
   }
 }
@@ -300,6 +315,7 @@ class _MixedPaymentWidget extends HookViewModelWidget<CheckOutViewModel> {
       children: [
         TextFormField(
           keyboardType: TextInputType.number,
+          onChanged: model.setCashAmount,
           decoration: InputDecoration(
             label: Text(
               'Enter Cash Amount',
@@ -307,15 +323,13 @@ class _MixedPaymentWidget extends HookViewModelWidget<CheckOutViewModel> {
           ),
         ),
         TextFormField(
-          keyboardType: TextInputType.text,
+          keyboardType: TextInputType.phone,
+          onChanged: model.setPhoneNumber,
           decoration: InputDecoration(
-              label: Text(
-                'Enter confirmation message',
-              ),
-              suffixIcon: TextButton.icon(
-                  onPressed: model.validateTransaction,
-                  icon: Icon(Icons.arrow_right_alt_sharp),
-                  label: Text('Validate'))),
+            label: Text(
+              'Enter customer number',
+            ),
+          ),
         ),
       ],
     );

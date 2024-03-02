@@ -20,8 +20,9 @@ class ProductService {
   }
 
   postSale(Map<String, dynamic> data, {String modeOfPayment}) async {
-    data['warehouseId'] = _user.branch;
-    return await _api.createPOSPayment(
+    data['warehouseId'] = _user.salesChannel;
+
+    return await _api.makePayment(
         modeOfPayment: modeOfPayment, data: data, token: _user.token);
   }
 
@@ -49,6 +50,7 @@ class ProductService {
   }
 
   generateInvoiceFromQuotation(Map<String, dynamic> data) async {
+    data['warehouse'] = _user.branch;
     return await _api.createNewDeliveryNoteFromQuotation(_user.token, data);
   }
 }

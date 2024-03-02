@@ -69,7 +69,7 @@ class QuotationDetailView extends StatelessWidget {
                       model.isBusy
                           ? BusyWidget()
                           : ActionButton(
-                              label: 'Generate Invoice From Quotation',
+                              label: 'Generate Order From Quotation',
                               onPressed: () => model.generateInvoice(),
                             )
                     ],

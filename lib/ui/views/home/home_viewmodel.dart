@@ -278,12 +278,13 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   List get quotations => _quotations;
 
   get sortedQuotationsByPostingDate =>
-      _quotations.sort((a, b) => a['postingDate'].compareTo(b['postingDate']));
+      _quotations.sort((a, b) => b['postingDate'].compareTo(a['postingDate']));
 
   fetchQuotations() async {
     setBusy(true);
     _quotations = await _productService.fetchQuotationList();
     setBusy(false);
+    notifyListeners();
   }
 
   int _currentIndex;
@@ -333,6 +334,11 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
       await fetchAdhocSales();
       setBusy(false);
     }
+  }
+
+  void navigateToCreateQuotation() async {
+    await _navigationService.navigateToView(QuotationView());
+    await fetchQuotations();
   }
 
   void navigateToAddPOSSale() async {
@@ -463,9 +469,5 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
         navigateToAddPOSSale();
         break;
     }
-  }
-
-  void navigateToCreateQuotation() async {
-    await _navigationService.navigateToView(QuotationView());
   }
 }

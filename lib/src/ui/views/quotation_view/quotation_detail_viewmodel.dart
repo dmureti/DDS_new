@@ -37,25 +37,25 @@ class QuotationDetailViewModel extends BaseViewModel {
   generateInvoice() async {
     setBusy(true);
     Map<String, dynamic> data = {
-      "quotationId": quotationId,
       "customer": customer['customerCode'],
-      "dueDate": DateTime.parse(quotation['dueDate']).toUtc().toIso8601String(),
+      "sellingPriceList": "4SumPriceList",
+      "company": "4SUM",
       "items": items
           .map((e) => {
-                "amount": "${e['itemPrice'] * e['itemPrice']}",
                 "item": {
                   "id": "${e['id']}",
                   "itemCode": "${e['itemCode']}",
                   "itemName": "${e['itemName']}",
-                  "itemPrice": "${e['itemPrice']}",
-                  "itemType": "product",
-                  "priceList": "4SumPriceList"
+                  "itemPrice": e['itemPrice'],
+                  "quantity": e['quantity'],
                 },
                 "quantity": e['quantity'],
-                "rate": e['itemPrice'],
-                "tax": "16%",
               })
-          .toList()
+          .toList(),
+      "quotationId": quotationId,
+      "dueDate": DateTime.parse(quotation['dueDate']).toUtc().toIso8601String(),
+      "warehouse": "",
+      "remarks": "Order Created from Quotation",
     };
     var result = await _productService.generateInvoiceFromQuotation(data);
     setBusy(false);
