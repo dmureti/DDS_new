@@ -200,7 +200,7 @@ class PrintView extends StatelessWidget {
     List<pw.Widget> widgets = [];
     final font = await rootBundle.load(fontRoot);
     final ttf = pw.Font.ttf(font);
-    const imageProvider = const AssetImage('assets/images/mini_logo.png');
+    const imageProvider = const AssetImage('assets/images/fourSum-logo.png');
     final image = await flutterImageProvider(imageProvider);
     final width = PdfPageFormat.roll57.width * PdfPageFormat.mm;
     final marginBottom = 10.0 * PdfPageFormat.mm;
