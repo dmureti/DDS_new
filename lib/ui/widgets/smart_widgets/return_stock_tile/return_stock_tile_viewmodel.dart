@@ -11,7 +11,7 @@ class ReturnStockTileViewmodel extends BaseViewModel {
 
   ReturnStockTileViewmodel(Product product, Function onChange)
       : product = product,
-        maxQuantity = product.quantity.toInt(),
+        maxQuantity = product.initialQuantity.toInt(),
         onChange = onChange,
         item = Item(
             id: product.itemCode,

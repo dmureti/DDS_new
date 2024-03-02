@@ -233,6 +233,8 @@ class CheckOutViewModel extends BasePOSViewModel {
   int _cashAmount = 0;
   int get cashAmount => _cashAmount ?? 0;
 
+  int get difference => total - cashAmount > 0 ? total - cashAmount : 0;
+
   setCashAmount(String value) {
     _cashAmount = int.parse(value);
     notifyListeners();

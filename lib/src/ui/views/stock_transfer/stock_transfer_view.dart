@@ -20,7 +20,7 @@ class StockTransferView extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text(
-                'Return Stock To Branch',
+                'Return Stock To Outlet',
                 style: kAppBarTextStyle,
               ),
               actions: [
@@ -59,7 +59,7 @@ class StockTransferView extends StatelessWidget {
                                 child: model.isBusy
                                     ? Center(child: BusyWidget())
                                     : ActionButton(
-                                        label: 'Return To Branch',
+                                        label: 'Return To Outlet',
                                         onPressed: model.transferStock,
                                       ))
                           ],

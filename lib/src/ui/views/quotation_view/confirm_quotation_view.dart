@@ -2,12 +2,14 @@ import 'package:distributor/src/ui/views/quotation_view/confirm_quotation_viewmo
 import 'package:distributor/src/ui/views/quotation_view/quotation_viewmodel.dart';
 import 'package:distributor/ui/widgets/action_button.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
+import 'package:tripletriocore/tripletriocore.dart';
 
 class ConfirmQuotationView extends StatelessWidget {
   final orderedItems;
-  final String customerCode;
-  const ConfirmQuotationView({Key key, this.orderedItems, this.customerCode})
+  final Customer customer;
+  const ConfirmQuotationView({Key key, this.orderedItems, this.customer})
       : super(key: key);
 
   @override
@@ -24,8 +26,51 @@ class ConfirmQuotationView extends StatelessWidget {
                 child: Card(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [Text('Customer : $customerCode')],
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'Customer : '.toUpperCase(),
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 13),
+                            ),
+                            Text(' ${model.customer.name}')
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'Cart Total : '.toUpperCase(),
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 13),
+                            ),
+                            Text(' KSH ${model.total.toStringAsFixed(2)}'),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'Items  : '.toUpperCase(),
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 13),
+                            ),
+                            Text(' ${model.orderedItems.length.toString()}'),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -58,8 +103,7 @@ class ConfirmQuotationView extends StatelessWidget {
           ),
         );
       },
-      viewModelBuilder: () =>
-          ConfirmQuotationViewModel(orderedItems, customerCode),
+      viewModelBuilder: () => ConfirmQuotationViewModel(orderedItems, customer),
     );
   }
 }

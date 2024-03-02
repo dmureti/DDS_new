@@ -72,6 +72,20 @@ class QuotationView extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 var item = model.items[index];
                                 return Dismissible(
+                                  background: Container(
+                                    color: Colors.green,
+                                    child: Icon(
+                                      Icons.add_circle,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  secondaryBackground: Container(
+                                    color: Colors.red,
+                                    child: Icon(
+                                      Icons.remove_circle,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                   confirmDismiss: (direction) async {
                                     if (direction ==
                                         DismissDirection.startToEnd) {

@@ -4,6 +4,7 @@ import 'package:distributor/core/models/product_service.dart';
 import 'package:distributor/services/customer_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:tripletriocore/tripletriocore.dart';
 
 class ConfirmQuotationViewModel extends BaseViewModel {
   final _productService = locator<ProductService>();
@@ -12,9 +13,11 @@ class ConfirmQuotationViewModel extends BaseViewModel {
   final _dialogService = locator<DialogService>();
 
   final List orderedItems;
+  final Customer customer;
   final String customerCode;
 
-  ConfirmQuotationViewModel(this.orderedItems, this.customerCode);
+  ConfirmQuotationViewModel(this.orderedItems, this.customer)
+      : customerCode = customer.customerCode;
 
   double get total => calculateTotal();
 
