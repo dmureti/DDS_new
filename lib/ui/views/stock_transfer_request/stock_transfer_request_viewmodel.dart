@@ -1,6 +1,7 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/product_service.dart';
 import 'package:distributor/services/customer_service.dart';
+import 'package:distributor/services/user_service.dart';
 import 'package:distributor/ui/views/confirm_stock_transfer/confirm_stock_transfer_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -11,6 +12,9 @@ class StockTransferRequestViewModel extends BaseViewModel {
   final _customerService = locator<CustomerService>();
   final _dialogService = locator<DialogService>();
   final _productService = locator<ProductService>();
+  final _userService = locator<UserService>();
+
+  String get mainOutlet => _userService.user.branch;
 
   List<Product> _productList = <Product>[];
   List<Product> get productList {
@@ -24,6 +28,7 @@ class StockTransferRequestViewModel extends BaseViewModel {
   Warehouse get selectedOutlet => _selectedOutlet;
   updateSelectedOutlet(var data) {
     _selectedOutlet = data;
+    _sourceOutlet = data.name;
     notifyListeners();
   }
 
@@ -33,6 +38,7 @@ class StockTransferRequestViewModel extends BaseViewModel {
   updateStockTransferType(String val) async {
     _stockTransferType = val;
     if (val == "main") {
+      _sourceOutlet = mainOutlet;
       await fetchItems();
       notifyListeners();
     }
@@ -116,10 +122,14 @@ class StockTransferRequestViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  String _sourceOutlet = "";
+  String get sourceOutlet => _sourceOutlet;
+
   commit() async {
     var result =
         await _navigationService.navigateToView(ConfirmStockTransferView(
       stockTransferItems: stockTransferItems,
+      sourceOutlet: sourceOutlet,
     ));
   }
 }

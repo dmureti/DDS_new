@@ -172,7 +172,7 @@ class CheckOutViewModel extends BasePOSViewModel {
     Map<String, dynamic> data = {
       "customerId": contractCustomer != null
           ? contractCustomer.customerCode
-          : phoneNumber,
+          : customerName,
       "customerName":
           contractCustomer != null ? contractCustomer.name : customerName,
       "items": orderedItems

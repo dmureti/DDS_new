@@ -10,7 +10,9 @@ import 'package:tripletriocore/tripletriocore.dart';
 
 class ConfirmStockTransferView extends StatelessWidget {
   final List<Product> stockTransferItems;
-  const ConfirmStockTransferView({Key key, this.stockTransferItems})
+  final String sourceOutlet;
+  const ConfirmStockTransferView(
+      {Key key, this.stockTransferItems, this.sourceOutlet})
       : super(key: key);
 
   @override
@@ -60,6 +62,6 @@ class ConfirmStockTransferView extends StatelessWidget {
           );
         },
         viewModelBuilder: () =>
-            ConfirmStockTransferViewModel(stockTransferItems));
+            ConfirmStockTransferViewModel(stockTransferItems, sourceOutlet));
   }
 }

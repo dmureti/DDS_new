@@ -201,13 +201,9 @@ class _WalkinWidget extends HookViewModelWidget<CheckOutViewModel> {
       children: [
         TextFormField(
           controller: nameController,
+          onChanged: model.setCustomerName,
           keyboardType: TextInputType.text,
           decoration: InputDecoration(label: Text('Customer Name')),
-        ),
-        TextFormField(
-          controller: phoneController,
-          keyboardType: TextInputType.phone,
-          decoration: InputDecoration(label: Text('Phone Number')),
         ),
       ],
     );

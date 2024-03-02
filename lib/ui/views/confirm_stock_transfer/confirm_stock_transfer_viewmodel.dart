@@ -22,7 +22,7 @@ class ConfirmStockTransferViewModel extends BaseViewModel {
   List<Product> _modifiedItems;
   List<Product> get modifiedItems => _modifiedItems;
 
-  ConfirmStockTransferViewModel(this.stockTransferItems)
+  ConfirmStockTransferViewModel(this.stockTransferItems, this.sourceOutlet)
       : _modifiedItems = stockTransferItems;
 
   deleteItem(Product p) {
@@ -47,7 +47,7 @@ class ConfirmStockTransferViewModel extends BaseViewModel {
       items.add(e);
     });
     var payload = {
-      "fromWarehouse": branch, // Source Branch
+      "fromWarehouse": sourceOutlet, // Source Branch
       "toWarehouse": salesChannel, // Destination shop
       "items": items.toList(),
     };
@@ -72,8 +72,10 @@ class ConfirmStockTransferViewModel extends BaseViewModel {
                 'Your stock transfer request was not successful.\n${response.toString()}');
       }
       _navigationService.pushNamedAndRemoveUntil(Routes.homeView,
-          arguments: HomeViewArguments(index: 2));
+          arguments: HomeViewArguments(index: 1));
     }
     setBusy(false);
   }
+
+  final String sourceOutlet;
 }

@@ -64,6 +64,17 @@ class DashboardView extends StatelessWidget {
                                       width: 50.0,
                                     ),
                                   ),
+                                  Container(
+                                    height: 40,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Outlet : ${model.user.salesChannel}",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
 
                                   Container(
                                     height: 245,
