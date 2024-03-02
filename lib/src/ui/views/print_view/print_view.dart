@@ -99,11 +99,12 @@ class PrintView extends StatelessWidget {
   }
 
   _print(PrintViewModel model, String fontRoot, double fontSize) async {
-    var result = await model.confirmSale();
+    // var result = await model.confirmSale();
+    var result = true;
     final font = await rootBundle.load(fontRoot);
     final ttf = pw.Font.ttf(font);
     if (result) {
-      const imageProvider = const AssetImage('assets/images/mini_logo.png');
+      const imageProvider = const AssetImage('assets/images/fourSum-logo.png');
       final image = await flutterImageProvider(imageProvider);
       final width = PdfPageFormat.roll57.availableWidth * PdfPageFormat.mm;
       final marginBottom = 15.0 * PdfPageFormat.mm;
@@ -117,12 +118,12 @@ class PrintView extends StatelessWidget {
       List<pw.Widget> widgets = [];
       _buildWidgetTree() {
         List<pw.Widget> tree = [
-          _buildPrintRef(model, style),
+          // _buildPrintRef(model, style),
           _buildHeader(image, model, style),
           _buildSectionHeader("Sellers Detail", style),
           _buildSellersDetail(user, style, model),
-          _buildSectionHeader("URA Information", style),
-          _buildURAInformation(style, model),
+          // _buildSectionHeader("URA Information", style),
+          // _buildURAInformation(style, model),
           _buildSectionHeader("Buyers Details", style),
           _buildBuyerDetails(model, style),
           _buildSectionHeader("Goods and Services Details", style),
@@ -157,7 +158,7 @@ class PrintView extends StatelessWidget {
           _buildSectionHeader("Summary", style),
           _buildSummary(model, style),
           pw.SizedBox(height: 20),
-          _drawQRCode(model),
+          // _drawQRCode(model),
           pw.SizedBox(height: 20),
           _buildFooter(model, style),
           _buildSpacer(),
@@ -368,18 +369,12 @@ class PrintView extends StatelessWidget {
         : orderId;
     return pw.Column(children: [
       // _buildSpacer(),
-      pw.Row(
-        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-        children: [
-          pw.Text("TIN", style: textStyle),
-          pw.Text("1000219401", style: textStyle),
-        ],
-      ),
       pw.SizedBox(height: 5),
-      pw.Text('MINI BAKERIES(UGANDA) LIMITED'.toUpperCase(), style: textStyle),
-      pw.Text('4/5 Spring Road Nakawa'.toUpperCase(), style: textStyle),
-      pw.Text('Kampala Nakawa Division'.toUpperCase(), style: textStyle),
-      pw.Text('Nakawa Division Bugolobi'.toUpperCase(), style: textStyle),
+      pw.Text('FOURSUM LIMITED'.toUpperCase(), style: textStyle),
+      pw.Text('P.O BOX 64443-00620 Nairobi'.toUpperCase(), style: textStyle),
+      pw.Text('Email Address: info@foursumlimited.co.ke', style: textStyle),
+      pw.Text('Tel:0719555999,0737644430,0732', style: textStyle),
+      pw.Text("PIN : P051969170B", style: textStyle),
       pw.Text(user.branch.toUpperCase(), style: textStyle),
       _buildSpacer(),
       pw.Row(

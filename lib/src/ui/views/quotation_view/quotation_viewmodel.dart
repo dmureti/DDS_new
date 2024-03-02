@@ -42,7 +42,7 @@ class QuotationViewModel extends BaseViewModel {
   String get customerType => _customerType;
 
   String _customerType;
-  CustomerTypesDisplay _customerTypesDisplay = CustomerTypesDisplay.none;
+  CustomerTypesDisplay _customerTypesDisplay = CustomerTypesDisplay.contract;
 
   setCustomerType(String val) {
     _customerType = val;
@@ -63,7 +63,9 @@ class QuotationViewModel extends BaseViewModel {
     setBusy(true);
     Map<String, dynamic> data = {
       "bill": "",
-      "customer": contractCustomer.customerCode,
+      "customer": contractCustomer != null
+          ? contractCustomer.customerCode
+          : customerName,
       "dueDate": DateTime.now().toUtc().toIso8601String(),
       "items": itemsInCart
           .map((e) => {
@@ -82,7 +84,7 @@ class QuotationViewModel extends BaseViewModel {
               })
           .toList(),
       "orderType": "Sales Quotation",
-      "warehouse": "Baba dogo"
+      "warehouse": ""
     };
     await _productService.createNewQuotation(data);
     setBusy(false);
@@ -92,7 +94,9 @@ class QuotationViewModel extends BaseViewModel {
   navigateToConfirmQuotationView() async {
     await _navigationService.navigateToView(ConfirmQuotationView(
       orderedItems: itemsInCart,
-      customerCode: contractCustomer.customerCode ?? "",
+      customerCode: contractCustomer != null
+          ? contractCustomer.customerCode
+          : customerName,
     ));
   }
 
@@ -160,4 +164,11 @@ class QuotationViewModel extends BaseViewModel {
 
   convertToOrder() async {}
   share() async {}
+
+  String _customerName = "";
+  String get customerName => _customerName;
+  void updateCustomerName(String value) {
+    _customerName = value;
+    notifyListeners();
+  }
 }

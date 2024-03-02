@@ -274,7 +274,7 @@ class AdhocDetailViewModel extends BaseViewModel {
     _navigationService.navigateToView(PrintView(
       invoice: _invoice,
       deliveryNote: adhocDetail,
-      title: 'e-Invoice',
+      title: 'Invoice',
       user: _userService.user,
       orderId: referenceNo,
       customerTIN: adhocDetail.customerTIN,

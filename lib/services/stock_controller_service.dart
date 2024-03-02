@@ -40,6 +40,18 @@ class StockControllerService {
     return await _api.getSalesReturns(_user.token);
   }
 
+  makeOutletSalesReturns(Map<String, dynamic> data) async {
+    data['deliveryWarehouse'] = _user.branch;
+    return await _api.makeOutletReturn(_user.token, data);
+  }
+
+  ///
+  /// pending, finalized , failed
+  ///
+  getInvoices(String type) async {
+    return await _api.getInvoices(_user.token, type);
+  }
+
 //	Stock balance tab on L1 app is enabled if the user has
 //	"virtual_stock_balance.view".
 //	When the balances are displayed, the specific column "value of stock"

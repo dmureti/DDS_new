@@ -4,6 +4,7 @@ import 'package:distributor/core/enums.dart';
 import 'package:distributor/services/access_controller_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/user_service.dart';
+import 'package:distributor/src/ui/views/pos/invoicing/invoicing_view.dart';
 import 'package:distributor/src/ui/views/pos/item_selection/pos_view.dart';
 import 'package:distributor/src/ui/views/pos/sales_returns/sales_returns_view.dart';
 import 'package:distributor/src/ui/views/quotation_view/quotation_view.dart';
@@ -125,6 +126,12 @@ class DashboardViewModel extends FutureViewModel<List<DeliveryJourney>>
   navigateToCreateQuotationView() async {
     _navigationService.navigateToView(
       QuotationView(),
+    );
+  }
+
+  navigateToInvoicingView() async {
+    _navigationService.navigateToView(
+      InvoicingView(),
     );
   }
 }

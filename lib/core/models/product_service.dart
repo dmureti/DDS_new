@@ -41,6 +41,7 @@ class ProductService {
   }
 
   void createNewQuotation(Map<String, dynamic> data) async {
+    data['warehouse'] = _user.salesChannel;
     var result = await _api.generateQuotation(_user.token, data);
     return result;
   }

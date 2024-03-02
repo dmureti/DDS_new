@@ -13,7 +13,8 @@ class PrintButton extends StatelessWidget {
         //List of pdf widgets
         List<pw.Widget> widgets = [];
         //Profile image
-        const imageProvider = const AssetImage('assets/images/mini_logo.png');
+        const imageProvider =
+            const AssetImage('assets/images/fourSum-logo.png');
         final image = pw.ClipOval(
           child: pw.Image(
             await flutterImageProvider(imageProvider),

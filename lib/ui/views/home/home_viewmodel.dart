@@ -53,6 +53,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
       quotationId: quotation['id'],
       customerName: quotation['customer']['customer_name'],
     ));
+    await fetchQuotations();
   }
 
   String get currency =>
@@ -277,12 +278,14 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   List _quotations = [];
   List get quotations => _quotations;
 
-  get sortedQuotationsByPostingDate =>
-      _quotations.sort((a, b) => b['postingDate'].compareTo(a['postingDate']));
+  get sortedQuotationsByPostingDate => quotations.isNotEmpty
+      ? quotations.sort((a, b) => b['postingDate'].compareTo(a['postingDate']))
+      : quotations;
 
   fetchQuotations() async {
     setBusy(true);
     _quotations = await _productService.fetchQuotationList();
+
     setBusy(false);
     notifyListeners();
   }

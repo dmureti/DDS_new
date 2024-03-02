@@ -1,9 +1,12 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/product_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class QuotationDetailViewModel extends BaseViewModel {
   final _productService = locator<ProductService>();
+  final _dialogService = locator<DialogService>();
+  final _navigationService = locator<NavigationService>();
   final String quotationId;
 
   var _quotation;
@@ -59,5 +62,9 @@ class QuotationDetailViewModel extends BaseViewModel {
     };
     var result = await _productService.generateInvoiceFromQuotation(data);
     setBusy(false);
+    await _dialogService.showDialog(
+        title: 'Order generation status',
+        description: 'The order was generated successfully');
+    _navigationService.back(result: true);
   }
 }

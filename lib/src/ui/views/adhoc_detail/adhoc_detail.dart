@@ -8,6 +8,7 @@ import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/flat_button_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/generic_container.dart';
+import 'package:distributor/ui/widgets/smart_widgets/print_button/print_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:stacked/stacked.dart';
@@ -38,9 +39,9 @@ class AdhocDetailView extends StatelessWidget {
             ),
             actions: [
               // PrintButton(),
-              // IconButton(
-              //     onPressed: () => model.navigateToPrint(),
-              //     icon: Icon(Icons.print)),
+              IconButton(
+                  onPressed: () => model.navigateToPrint(),
+                  icon: Icon(Icons.print)),
               PopupMenuButton(
                   onSelected: (x) {
                     // model.navigateToPage(x);
@@ -136,14 +137,14 @@ class AdhocDetailView extends StatelessWidget {
                                 child:
                                     Text('Items In Transaction'.toUpperCase()),
                               ),
-                              IconButton(
-                                onPressed: () {
-                                  model.toggleEditState();
-                                },
-                                icon: model.inEditState
-                                    ? Icon(Icons.cancel)
-                                    : Icon(Icons.edit),
-                              ),
+                              // IconButton(
+                              //   onPressed: () {
+                              //     model.toggleEditState();
+                              //   },
+                              //   icon: model.inEditState
+                              //       ? Icon(Icons.cancel)
+                              //       : Icon(Icons.edit),
+                              // ),
                             ],
                           ),
                           model.memento != null

@@ -40,28 +40,28 @@ class QuotationView extends StatelessWidget {
                                       fontSize: 13,
                                     ),
                                   ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: RadioListTile(
-                                          title: Text('Walk In'),
-                                          value: 'walkin',
-                                          onChanged: model.setCustomerType,
-                                          groupValue: model.customerType,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: RadioListTile(
-                                          title: Text('Contract'),
-                                          value: 'contract',
-                                          onChanged: model.setCustomerType,
-                                          groupValue: model.customerType,
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                  // Row(
+                                  //   children: [
+                                  //     // Expanded(
+                                  //     //   child: RadioListTile(
+                                  //     //     title: Text('Walk In'),
+                                  //     //     value: 'walkin',
+                                  //     //     onChanged: model.setCustomerType,
+                                  //     //     groupValue: model.customerType,
+                                  //     //   ),
+                                  //     // ),
+                                  //     Expanded(
+                                  //       child: RadioListTile(
+                                  //         title: Text('Contract'),
+                                  //         value: 'contract',
+                                  //         onChanged: model.setCustomerType,
+                                  //         groupValue: model.customerType,
+                                  //       ),
+                                  //     )
+                                  //   ],
+                                  // ),
                                   _buildCustomerDisplay(
-                                      model.customerTypesDisplay),
+                                      CustomerTypesDisplay.contract),
                                 ],
                               ),
                             ),
@@ -183,15 +183,16 @@ class _WalkinWidget extends HookViewModelWidget<QuotationViewModel> {
     return Column(
       children: [
         TextFormField(
+          onChanged: model.updateCustomerName,
           controller: nameController,
           keyboardType: TextInputType.text,
           decoration: InputDecoration(label: Text('Customer Name')),
         ),
-        TextFormField(
-          controller: phoneController,
-          keyboardType: TextInputType.phone,
-          decoration: InputDecoration(label: Text('Phone Number')),
-        ),
+        // TextFormField(
+        //   controller: phoneController,
+        //   keyboardType: TextInputType.phone,
+        //   decoration: InputDecoration(label: Text('Phone Number')),
+        // ),
       ],
     );
   }

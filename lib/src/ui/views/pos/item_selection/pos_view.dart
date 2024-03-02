@@ -101,6 +101,14 @@ class POSView extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 var item = model.items[index];
                                 return Dismissible(
+                                  background: Container(
+                                    color: Colors.green,
+                                    child: Icon(Icons.add),
+                                  ),
+                                  secondaryBackground: Container(
+                                    color: Colors.red,
+                                    child: Icon(Icons.remove_circle),
+                                  ),
                                   confirmDismiss: (direction) async {
                                     if (direction ==
                                         DismissDirection.startToEnd) {
@@ -134,7 +142,8 @@ class POSView extends StatelessWidget {
                                           return QuantityInput(
                                             title: 'Enter Quantity',
                                             minQuantity: 0,
-                                            maxQuantity: 200000,
+                                            maxQuantity:
+                                                item.initialQuantity.toInt(),
                                             description:
                                                 'How many pcs for ${item.itemName} would you like to order ?',
                                             initialQuantity:
@@ -142,7 +151,6 @@ class POSView extends StatelessWidget {
                                           );
                                         },
                                       );
-                                      print(result);
                                       if (result != null) {
                                         model.updateQuantity(
                                             product: item, newVal: result);
@@ -203,7 +211,6 @@ class POSView extends StatelessWidget {
                                           );
                                         },
                                       );
-                                      print(result);
                                       if (result != null) {
                                         model.updateQuantity(
                                             product: item, newVal: result);
