@@ -128,13 +128,13 @@ class _InvoiceTile extends HookViewModelWidget<InvoicingViewModel> {
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           children: [
-                            ListTile(
-                              title: Text('Print Invoice'),
-                              onTap: () {
-                                model.navigateToPrint(invoice);
-                                Navigator.pop(context);
-                              },
-                            ),
+                            // ListTile(
+                            //   title: Text('Print Invoice'),
+                            //   onTap: () {
+                            //     model.navigateToPrint(invoice);
+                            //     Navigator.pop(context);
+                            //   },
+                            // ),
                             ListTile(
                               title: Text('Submit Returns'),
                               onTap: () {
