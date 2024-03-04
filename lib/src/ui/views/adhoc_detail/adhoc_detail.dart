@@ -42,31 +42,31 @@ class AdhocDetailView extends StatelessWidget {
               IconButton(
                   onPressed: () => model.navigateToPrint(),
                   icon: Icon(Icons.print)),
-              PopupMenuButton(
-                  onSelected: (x) {
-                    // model.navigateToPage(x);
-                    model.confirmAction(x);
-                  },
-                  itemBuilder: (context) => <PopupMenuEntry<Object>>[
-                        PopupMenuItem(
-                          child: Text(
-                            'Edit Sale',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          value: 'edit_adhoc_sale',
-                        ),
-                        PopupMenuDivider(),
-                        if (model.adhocDetail != null && !model.isCancelled)
-                          PopupMenuItem(
-                            child: Text(
-                              'Cancel Sale',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            ),
-                            value: 'cancel_adhoc_sale',
-                          ),
-                      ]),
+              // PopupMenuButton(
+              //     onSelected: (x) {
+              //       // model.navigateToPage(x);
+              //       model.confirmAction(x);
+              //     },
+              //     itemBuilder: (context) => <PopupMenuEntry<Object>>[
+              //           PopupMenuItem(
+              //             child: Text(
+              //               'Edit Sale',
+              //               style: TextStyle(color: Colors.black),
+              //             ),
+              //             value: 'edit_adhoc_sale',
+              //           ),
+              //           PopupMenuDivider(),
+              //           if (model.adhocDetail != null && !model.isCancelled)
+              //             PopupMenuItem(
+              //               child: Text(
+              //                 'Cancel Sale',
+              //                 style: TextStyle(
+              //                   color: Colors.black,
+              //                 ),
+              //               ),
+              //               value: 'cancel_adhoc_sale',
+              //             ),
+              //         ]),
             ],
           ),
           body: GenericContainer(

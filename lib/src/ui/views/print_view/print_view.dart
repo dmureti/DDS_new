@@ -169,20 +169,22 @@ class PrintView extends StatelessWidget {
       _buildWidgetTree();
       pdf.addPage(
         pw.Page(
-            theme: pw.ThemeData(
-                paragraphStyle: pw.TextStyle(fontSize: fontSize, font: ttf),
-                defaultTextStyle: pw.TextStyle(fontSize: fontSize, font: ttf)),
-            pageFormat: PdfPageFormat.roll57.copyWith(
-                width: width * 2.65,
-                // width: PdfPageFormat.roll80.width * PdfPageFormat.mm,
-                marginBottom: marginBottom,
-                marginLeft: marginLeft,
-                marginRight: marginRight),
-            build: (pw.Context context) => pw.Center(
-                child: pw.Column(
-                    mainAxisSize: pw.MainAxisSize.max,
-                    children: widgets,
-                    crossAxisAlignment: pw.CrossAxisAlignment.stretch))),
+          theme: pw.ThemeData(
+              paragraphStyle: pw.TextStyle(fontSize: fontSize, font: ttf),
+              defaultTextStyle: pw.TextStyle(fontSize: fontSize, font: ttf)),
+          pageFormat: PdfPageFormat.roll57.copyWith(
+              width: width * 2.65,
+              // width: PdfPageFormat.roll80.width * PdfPageFormat.mm,
+              marginBottom: marginBottom,
+              marginLeft: marginLeft,
+              marginRight: marginRight),
+          build: (pw.Context context) => pw.Center(
+            child: pw.Column(
+                mainAxisSize: pw.MainAxisSize.max,
+                children: widgets,
+                crossAxisAlignment: pw.CrossAxisAlignment.stretch),
+          ),
+        ),
       );
       var result = await Printing.layoutPdf(
         onLayout: (PdfPageFormat format) async => pdf.save(),
