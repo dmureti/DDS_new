@@ -251,7 +251,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
     if (user.hasSalesChannel || enableAdhocSales) {
       await fetchAdhocSales();
     } else {
-      // await _logisticsService.fetchJourneys();
+      await _logisticsService.fetchJourneys();
       await _permissionService.init();
     }
     return;
@@ -286,7 +286,6 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   fetchQuotations() async {
     setBusy(true);
     _quotations = await _productService.fetchQuotationList();
-
     setBusy(false);
     notifyListeners();
   }
@@ -304,28 +303,28 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
         notifyListeners();
         break;
       case 1: //Journey
-        if (_accessControlService.enableJourneyTab) {
-          _currentIndex = val;
-          notifyListeners();
-        }
+        _currentIndex = val;
+        notifyListeners();
         break;
       case 2: //Adhoc
-        if (_accessControlService.enableAdhocView) {
-          _currentIndex = val;
-          notifyListeners();
-        }
+        _currentIndex = val;
+        notifyListeners();
         break;
-      case 3: // Stock Balance
-        if (_accessControlService.enableStockTab) {
-          _currentIndex = val;
-          notifyListeners();
-        }
+      case 3: // Quotations
+        _currentIndex = val;
+        notifyListeners();
         break;
-      case 4: // Customers
-        if (_accessControlService.enableCustomerTab) {
-          _currentIndex = val;
-          notifyListeners();
-        }
+      case 4: // Stock Controller
+        _currentIndex = val;
+        notifyListeners();
+        break;
+      case 5: // Invoices
+        _currentIndex = val;
+        notifyListeners();
+        break;
+      case 6: // Customers
+        _currentIndex = val;
+        notifyListeners();
         break;
     }
   }

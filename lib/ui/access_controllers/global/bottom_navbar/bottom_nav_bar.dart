@@ -47,32 +47,32 @@ class BottomNavBar extends StatelessWidget {
               ),
               label: 'Home'.toUpperCase(),
             ),
-            // BottomNavigationBarItem(
-            //   backgroundColor: Color(0xFF182848),
-            //   icon: IconButton(
-            //     splashColor: kColorDDSPrimaryDark,
-            //     icon: Icon(Icons.swap_calls),
-            //     onPressed: model.isEnabled(1)
-            //         ? model.onJourneyTabTap()
-            //             ? () {
-            //                 model.updateIndex(1);
-            //                 onTap(model.index);
-            //                 // onTap(Pages.routes, "Routes");
-            //               }
-            //             : null
-            //         : null,
-            //   ),
-            //   label: 'Journey'.toUpperCase(),
-            // ),
+            BottomNavigationBarItem(
+              backgroundColor: Color(0xFF182848),
+              icon: IconButton(
+                splashColor: kColorDDSPrimaryDark,
+                icon: Icon(Icons.swap_calls),
+                onPressed: model.isEnabled(1)
+                    ? model.onJourneyTabTap()
+                        ? () {
+                            model.updateIndex(1);
+                            onTap(model.index);
+                            // onTap(Pages.routes, "Routes");
+                          }
+                        : null
+                    : null,
+              ),
+              label: 'Journey'.toUpperCase(),
+            ),
             BottomNavigationBarItem(
               backgroundColor: Color(0xFF182848),
               icon: IconButton(
                 splashColor: kColorDDSPrimaryDark,
                 icon: Icon(Icons.add_shopping_cart),
-                onPressed: model.isEnabled(1)
+                onPressed: model.isEnabled(2)
                     ? model.onStockBalanceTap()
                         ? () {
-                            model.updateIndex(1);
+                            model.updateIndex(2);
                             onTap(model.index);
                             // onTap(Pages.adhoc, "Adhoc Sales");
                           }
@@ -87,7 +87,7 @@ class BottomNavBar extends StatelessWidget {
                   splashColor: kColorDDSPrimaryDark,
                   icon: Icon(Icons.question_answer_outlined),
                   onPressed: () {
-                    model.updateIndex(2);
+                    model.updateIndex(3);
                     onTap(model.index);
                     // onTap(Pages.routes, "Routes");
                   }),
@@ -98,10 +98,10 @@ class BottomNavBar extends StatelessWidget {
               icon: IconButton(
                 splashColor: kColorDDSPrimaryDark,
                 icon: Icon(Icons.apps),
-                onPressed: model.isEnabled(3)
+                onPressed: model.isEnabled(4)
                     ? model.onStockBalanceTap()
                         ? () {
-                            model.updateIndex(3);
+                            model.updateIndex(4);
                             // onTap(Pages.products, "Stock Balance");
                             onTap(model.index);
                           }
@@ -114,15 +114,26 @@ class BottomNavBar extends StatelessWidget {
               backgroundColor: Color(0xFF182848),
               icon: IconButton(
                 splashColor: kColorDDSPrimaryDark,
-                onPressed: model.isEnabled(4)
-                    ? model.onCustomerTabTap()
-                        ? () {
-                            model.updateIndex(4);
-                            onTap(model.index);
-                            // onTap(Pages.customers, "Customers");
-                          }
-                        : null
-                    : null,
+                onPressed: () {
+                  {
+                    print("pressed");
+                    model.updateIndex(5);
+                    onTap(model.index);
+                  }
+                },
+                icon: Icon(Icons.add_chart_rounded),
+              ),
+              label: 'Invoices'.toUpperCase(),
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: Color(0xFF182848),
+              icon: IconButton(
+                splashColor: kColorDDSPrimaryDark,
+                onPressed: () {
+                  model.updateIndex(6);
+                  onTap(model.index);
+                  // onTap(Pages.customers, "Customers");
+                },
                 icon: Icon(Icons.people),
               ),
               label: 'Customers'.toUpperCase(),

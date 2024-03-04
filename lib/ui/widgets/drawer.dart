@@ -75,7 +75,7 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
                   label: 'Journey',
                   onTap: () {
                     Navigator.pop(context);
-                    // model.navigateToHome(0);
+                    model.navigateToHome(1);
                   },
                   iconData: Icons.swap_calls,
                 ),
@@ -87,7 +87,7 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
                   ),
                   onTap: () {
                     Navigator.pop(context);
-                    model.navigateToHome(1);
+                    model.navigateToHome(2);
                   },
                   trailing:
                       Icon(Icons.add_shopping_cart, color: kColDDSPrimaryDark),
@@ -100,7 +100,7 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
                   ),
                   onTap: () {
                     Navigator.pop(context);
-                    model.navigateToHome(2);
+                    model.navigateToHome(3);
                   },
                   trailing:
                       Icon(Icons.question_answer, color: kColDDSPrimaryDark),
@@ -110,34 +110,30 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
                   label: 'Stock Controller',
                   onTap: () {
                     Navigator.pop(context);
-                    model.navigateToHome(3);
+                    model.navigateToHome(4);
                   },
                   iconData: Icons.apps,
                 ),
-
+                DrawerListTile(
+                  isEnabled: true,
+                  // isEnabled: model.enableProductTab,
+                  label: 'Invoicing',
+                  onTap: () {
+                    Navigator.pop(context);
+                    model.navigateToHome(5);
+                  },
+                  iconData: Icons.add_chart_rounded,
+                ),
                 DrawerListTile(
                   isEnabled: model.enableCustomerTab,
                   label: 'Customers',
                   onTap: () {
                     Navigator.pop(context);
-                    model.navigateToHome(4);
+                    model.navigateToHome(6);
                   },
                   iconData: Icons.people,
                 ),
                 Divider(),
-
-                // ListTile(
-                //   title: Text(
-                //     'SYNC DATA',
-                //     style: TextStyle(
-                //         fontFamily: 'NerisBlack', color: kColDDSPrimaryDark),
-                //   ),
-                //   onTap: () async {
-                //     Navigator.pop(context);
-                //     model.syncData();
-                //   },
-                // ),
-
                 ListTile(
                   title: Text(
                     'CHANGE PASSWORD',

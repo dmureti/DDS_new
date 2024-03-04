@@ -3,6 +3,7 @@ import 'package:distributor/core/enums.dart';
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/common/network_sensitive_widget.dart';
 import 'package:distributor/src/ui/views/adhoc_listing/adhoc_listing_view.dart';
+import 'package:distributor/src/ui/views/pos/invoicing/invoicing_view.dart';
 import 'package:distributor/src/ui/views/quotation_view/quotation_listing_view.dart';
 import 'package:distributor/ui/access_controllers/global/bottom_navbar/bottom_nav_bar.dart';
 import 'package:distributor/ui/shared/brand_colors.dart';
@@ -17,6 +18,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
+
+import '../routes/route_listing_view.dart';
 
 class HomeView extends StatelessWidget {
   final int index;
@@ -42,7 +45,7 @@ class HomeView extends StatelessWidget {
             //   onPressed: () => model.refresh(),
             //   icon: Icon(FontAwesome.refresh),
             // ),
-            model.currentIndex == 1
+            model.currentIndex == 2
                 ? Row(
                     children: [
                       IconButton(
@@ -75,7 +78,7 @@ class HomeView extends StatelessWidget {
                       )
                     ],
                   )
-                : model.currentIndex == 2
+                : model.currentIndex == 3
                     ? IconButton(
                         onPressed: () {
                           model.navigateToCreateQuotation();
@@ -148,7 +151,8 @@ class HomeView extends StatelessWidget {
       case 1:
         return Column(
           children: [
-            Expanded(child: AdhocListingView()),
+            // LocationWidget(),
+            Expanded(child: RoutesListingView()),
             model.enableOffline ? NetworkSensitiveWidget() : Container(),
           ],
         );
@@ -156,7 +160,7 @@ class HomeView extends StatelessWidget {
       case 2:
         return Column(
           children: [
-            Expanded(child: QuotationListingView()),
+            Expanded(child: AdhocListingView()),
             model.enableOffline ? NetworkSensitiveWidget() : Container(),
           ],
         );
@@ -164,12 +168,31 @@ class HomeView extends StatelessWidget {
       case 3:
         return Column(
           children: [
-            Expanded(child: StockView()),
+            Expanded(child: QuotationListingView()),
             model.enableOffline ? NetworkSensitiveWidget() : Container(),
           ],
         );
         break;
       case 4:
+        return Column(
+          children: [
+            Expanded(child: StockView()),
+            model.enableOffline ? NetworkSensitiveWidget() : Container(),
+          ],
+        );
+        break;
+      case 5:
+        return Column(
+          children: [
+            Expanded(
+              child: InvoicingView(),
+            ),
+            // Expanded(child: CustomerView()),
+            // model.enableOffline ? NetworkSensitiveWidget() : Container(),
+          ],
+        );
+        break;
+      case 6:
         return Column(
           children: [
             // LocationWidget(),
@@ -198,31 +221,37 @@ class HomeView extends StatelessWidget {
           style: kAppBarTextStyle,
         );
         break;
-      // case 1:
-      //   return Text(
-      //     'Journey',
-      //     style: kAppBarTextStyle,
-      //   );
-      //   break;
       case 1:
         return Text(
-          'Selling',
+          'Journey',
           style: kAppBarTextStyle,
         );
         break;
       case 2:
         return Text(
-          'Quotations',
+          'Selling',
           style: kAppBarTextStyle,
         );
         break;
       case 3:
         return Text(
-          'Stock Balance',
+          'Quotations',
           style: kAppBarTextStyle,
         );
         break;
       case 4:
+        return Text(
+          'Stock Balance',
+          style: kAppBarTextStyle,
+        );
+        break;
+      case 5:
+        return Text(
+          'Invoicing',
+          style: kAppBarTextStyle,
+        );
+        break;
+      case 6:
         return Text(
           'Customers',
           style: kAppBarTextStyle,

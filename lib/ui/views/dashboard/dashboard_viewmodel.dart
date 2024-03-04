@@ -130,8 +130,9 @@ class DashboardViewModel extends FutureViewModel<List<DeliveryJourney>>
   }
 
   navigateToInvoicingView() async {
-    _navigationService.navigateToView(
-      InvoicingView(),
+    _navigationService.navigateTo(
+      Routes.homeView,
+      arguments: HomeViewArguments(index: 5),
     );
   }
 }

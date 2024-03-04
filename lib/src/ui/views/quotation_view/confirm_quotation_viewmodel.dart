@@ -59,7 +59,9 @@ class ConfirmQuotationViewModel extends BaseViewModel {
     await _dialogService.showDialog(
         title: 'Quote generated successfully',
         description: 'The quotation was generated successfully');
-    _navigationService.clearStackAndShow(Routes.homeView,
-        arguments: HomeViewArguments(index: 2));
+    _navigationService.clearStackAndShow(
+      Routes.homeView,
+      arguments: HomeViewArguments(index: 3),
+    );
   }
 }

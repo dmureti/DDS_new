@@ -18,7 +18,7 @@ class InvoicingView extends StatelessWidget {
         return DefaultTabController(
             length: 3,
             child: Scaffold(
-              appBar: AppBar(title: Text('Invoicing')),
+              // appBar: AppBar(title: Text('Invoicing')),
               body: Container(
                 child: Column(
                   children: [
