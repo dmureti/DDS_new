@@ -227,7 +227,7 @@ class CheckOutViewModel extends BasePOSViewModel {
           title: 'Place Order Succeeded',
           description: "The order was placed successfully");
       await _navigationService.navigateTo(Routes.homeView,
-          arguments: HomeViewArguments(index: 1));
+          arguments: HomeViewArguments(index: 2));
     }
   }
 
