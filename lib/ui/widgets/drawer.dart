@@ -13,11 +13,6 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
     return Container(
       decoration: BoxDecoration(
         color: kColorNeutral,
-        // image: DecorationImage(
-        //   image: AssetImage('assets/images/dds_logo.png'),
-        //   opacity: 0.2,
-        //   alignment: Alignment.bottomCenter,
-        // ),
       ),
       child: Row(
         children: [
@@ -74,6 +69,15 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
                     model.navigateToHome(0);
                   },
                   iconData: Icons.home,
+                ),
+                DrawerListTile(
+                  isEnabled: model.enableHomeTab,
+                  label: 'Journey',
+                  onTap: () {
+                    Navigator.pop(context);
+                    // model.navigateToHome(0);
+                  },
+                  iconData: Icons.swap_calls,
                 ),
                 ListTile(
                   leading: Text(

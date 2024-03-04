@@ -1,13 +1,33 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/product_service.dart';
+import 'package:distributor/services/user_service.dart';
+import 'package:distributor/src/ui/views/print_view/print_view.dart';
+import 'package:distributor/src/ui/views/print_view/quotation_printview.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class QuotationDetailViewModel extends BaseViewModel {
   final _productService = locator<ProductService>();
+  final _userService = locator<UserService>();
   final _dialogService = locator<DialogService>();
   final _navigationService = locator<NavigationService>();
   final String quotationId;
+
+  void navigateToPrint() {
+    // CustomerDetail customerDetail = CustomerDetail.fromCustomer(
+    //   Customer(
+    //     id: customerId,
+    //     name: adhocDetail.customerName,
+    //     taxId: "",
+    //   ),
+    // );
+    // Invoice _invoice = Invoice.fromAdhocDetail(adhocDetail, currency,
+    //     customerDetail: customerDetail);
+    _navigationService.navigateToView(QuotationPrintView(
+      quotation: quotation,
+      quotationId: quotationId,
+    ));
+  }
 
   var _quotation;
   get quotation => _quotation;

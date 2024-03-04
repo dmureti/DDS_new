@@ -52,6 +52,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
     await _navigationService.navigateToView(QuotationDetailView(
       quotationId: quotation['id'],
       customerName: quotation['customer']['customer_name'],
+      status: quotation['status'],
     ));
     await fetchQuotations();
   }

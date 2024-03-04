@@ -11,7 +11,9 @@ import '../../../../ui/widgets/dumb_widgets/busy_widget.dart';
 class QuotationDetailView extends StatelessWidget {
   final String quotationId;
   final String customerName;
-  const QuotationDetailView({Key key, this.quotationId, this.customerName})
+  final String status;
+  const QuotationDetailView(
+      {Key key, this.quotationId, this.customerName, this.status})
       : super(key: key);
 
   @override
@@ -27,11 +29,9 @@ class QuotationDetailView extends StatelessWidget {
               actions: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Icon(Icons.share),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(Icons.print),
+                  child: IconButton(
+                      onPressed: () => model.navigateToPrint(),
+                      icon: Icon(Icons.print)),
                 )
               ],
             ),
@@ -66,12 +66,14 @@ class QuotationDetailView extends StatelessWidget {
                           itemCount: model.items.length,
                         ),
                       ),
-                      model.isBusy
-                          ? BusyWidget()
-                          : ActionButton(
-                              label: 'Generate Order From Quotation',
-                              onPressed: () => model.generateInvoice(),
-                            )
+                      status.toLowerCase() == 'closed'
+                          ? Container()
+                          : model.isBusy
+                              ? BusyWidget()
+                              : ActionButton(
+                                  label: 'Generate Order From Quotation',
+                                  onPressed: () => model.generateInvoice(),
+                                )
                     ],
                   ));
       },

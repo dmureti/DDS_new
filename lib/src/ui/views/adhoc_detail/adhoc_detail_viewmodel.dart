@@ -5,6 +5,7 @@ import 'package:distributor/services/adhoc_cart_service.dart';
 import 'package:distributor/services/init_service.dart';
 import 'package:distributor/services/stock_controller_service.dart';
 import 'package:distributor/services/user_service.dart';
+import 'package:distributor/src/ui/views/print_view/print_invoice_view.dart';
 import 'package:distributor/src/ui/views/print_view/print_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -271,13 +272,18 @@ class AdhocDetailViewModel extends BaseViewModel {
     );
     Invoice _invoice = Invoice.fromAdhocDetail(adhocDetail, currency,
         customerDetail: customerDetail);
-    _navigationService.navigateToView(PrintView(
+    _navigationService.navigateToView(PrintInvoiceView(
       invoice: _invoice,
-      deliveryNote: adhocDetail,
-      title: 'Invoice',
-      user: _userService.user,
-      orderId: referenceNo,
-      customerTIN: adhocDetail.customerTIN,
+      invoiceId: _invoice.id,
     ));
+    //
+    // _navigationService.navigateToView(PrintView(
+    //   invoice: _invoice,
+    //   deliveryNote: adhocDetail,
+    //   title: 'Invoice',
+    //   user: _userService.user,
+    //   orderId: referenceNo,
+    //   customerTIN: adhocDetail.customerTIN,
+    // ));
   }
 }
