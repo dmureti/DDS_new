@@ -258,8 +258,8 @@ class CrateMovementViewModel extends BaseViewModel {
         });
       } else {
         crateList.forEach((product) {
-          SalesOrderItem s =
-              SalesOrderItem(item: product, quantity: product.quantity.toInt());
+          SalesOrderItem s = SalesOrderItem(
+              item: product, quantity: product.initialQuantity.toInt());
           actualReturned.add(s);
         });
       }

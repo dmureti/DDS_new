@@ -60,7 +60,8 @@ class StockListWidgetViewModel extends BaseViewModel {
       } else {
         _productList = result
             .where((element) =>
-                element.itemName.toLowerCase().contains('crates') != true)
+                element.itemName.toLowerCase().contains('crates') != true &&
+                element.initialQuantity < 0)
             .toList();
       }
       notifyListeners();
