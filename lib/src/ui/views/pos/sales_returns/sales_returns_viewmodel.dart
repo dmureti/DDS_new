@@ -65,7 +65,7 @@ class SalesReturnsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  List _reasons = ["Broken Seal", "Broken Bottle", "Expired"];
+  List _reasons = ["Broken Seal", "Broken Bottle"];
   List get reasons => _reasons;
   makeSalesReturns() async {
     setBusy(true);

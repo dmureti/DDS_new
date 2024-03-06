@@ -110,6 +110,7 @@ class StockControllerService {
     } else {
       branchId = currentJourney.route;
     }
+
     var result =
         await _api.getStockBalance(token: _user.token, branchId: branchId);
 

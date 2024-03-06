@@ -72,7 +72,7 @@ class ConfirmStockTransferViewModel extends BaseViewModel {
                 'Your stock transfer request was not successful.\n${response.toString()}');
       }
       _navigationService.pushNamedAndRemoveUntil(Routes.homeView,
-          arguments: HomeViewArguments(index: 1));
+          arguments: HomeViewArguments(index: 2));
     }
     setBusy(false);
   }

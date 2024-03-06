@@ -97,33 +97,27 @@ class BottomNavBar extends StatelessWidget {
               backgroundColor: Color(0xFF182848),
               icon: IconButton(
                 splashColor: kColorDDSPrimaryDark,
-                icon: Icon(Icons.apps),
-                onPressed: model.isEnabled(4)
-                    ? model.onStockBalanceTap()
-                        ? () {
-                            model.updateIndex(4);
-                            // onTap(Pages.products, "Stock Balance");
-                            onTap(model.index);
-                          }
-                        : null
-                    : null,
-              ),
-              label: 'Stock Balance'.toUpperCase(),
-            ),
-            BottomNavigationBarItem(
-              backgroundColor: Color(0xFF182848),
-              icon: IconButton(
-                splashColor: kColorDDSPrimaryDark,
                 onPressed: () {
                   {
-                    print("pressed");
-                    model.updateIndex(5);
+                    model.updateIndex(4);
                     onTap(model.index);
                   }
                 },
                 icon: Icon(Icons.add_chart_rounded),
               ),
               label: 'Invoices'.toUpperCase(),
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: Color(0xFF182848),
+              icon: IconButton(
+                  splashColor: kColorDDSPrimaryDark,
+                  icon: Icon(Icons.apps),
+                  onPressed: () {
+                    model.updateIndex(5);
+                    // onTap(Pages.products, "Stock Balance");
+                    onTap(model.index);
+                  }),
+              label: 'Stock Balance'.toUpperCase(),
             ),
             BottomNavigationBarItem(
               backgroundColor: Color(0xFF182848),

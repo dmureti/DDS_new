@@ -159,8 +159,9 @@ class QuotationView extends StatelessWidget {
                           model.isBusy
                               ? BusyWidget()
                               : ActionButton(
-                                  onPressed:
-                                      model.navigateToConfirmQuotationView,
+                                  onPressed: model.isValid
+                                      ? model.navigateToConfirmQuotationView
+                                      : null,
                                   label: 'Preview Quotation',
                                 )
                         ],

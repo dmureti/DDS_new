@@ -74,7 +74,7 @@ class StockView extends StatelessWidget {
                           ),
                         )
                       : DefaultTabController(
-                          length: 2,
+                          length: 4,
                           child: Expanded(
                             child: Column(
                               children: [
@@ -94,19 +94,19 @@ class StockView extends StatelessWidget {
                                           style: kTabTextStyleActive,
                                         ),
                                       ),
-                                      // Tab(
-                                      //   child: Text(
-                                      //     'Crates',
-                                      //     style: kTabTextStyleActive,
-                                      //   ),
-                                      // ),
-                                      // Tab(
-                                      //   child: Text(
-                                      //     'Crates Movement',
-                                      //     textAlign: TextAlign.center,
-                                      //     style: kTabTextStyleActive,
-                                      //   ),
-                                      // ),
+                                      Tab(
+                                        child: Text(
+                                          'Crates',
+                                          style: kTabTextStyleActive,
+                                        ),
+                                      ),
+                                      Tab(
+                                        child: Text(
+                                          'Crates Movement',
+                                          textAlign: TextAlign.center,
+                                          style: kTabTextStyleActive,
+                                        ),
+                                      ),
                                       Tab(
                                         child: Text(
                                           'Order Summary',
@@ -124,8 +124,8 @@ class StockView extends StatelessWidget {
                                         rebuildWidgetTree: model.rebuildTree,
                                       ),
                                       // Container(),
-                                      // CrateView(),
-                                      // CrateTransactionListingView(),
+                                      CrateView(),
+                                      CrateTransactionListingView(),
                                       CrewHistoryView()
                                     ],
                                   ),

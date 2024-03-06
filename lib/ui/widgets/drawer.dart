@@ -106,24 +106,25 @@ class CustomDrawer extends HookViewModelWidget<HomeViewModel> {
                       Icon(Icons.question_answer, color: kColDDSPrimaryDark),
                 ),
                 DrawerListTile(
-                  isEnabled: model.enableProductTab,
-                  label: 'Stock Controller',
-                  onTap: () {
-                    Navigator.pop(context);
-                    model.navigateToHome(4);
-                  },
-                  iconData: Icons.apps,
-                ),
-                DrawerListTile(
                   isEnabled: true,
                   // isEnabled: model.enableProductTab,
                   label: 'Invoicing',
                   onTap: () {
                     Navigator.pop(context);
-                    model.navigateToHome(5);
+                    model.navigateToHome(4);
                   },
                   iconData: Icons.add_chart_rounded,
                 ),
+                DrawerListTile(
+                  isEnabled: model.enableProductTab,
+                  label: 'Stock Controller',
+                  onTap: () {
+                    Navigator.pop(context);
+                    model.navigateToHome(5);
+                  },
+                  iconData: Icons.apps,
+                ),
+
                 DrawerListTile(
                   isEnabled: model.enableCustomerTab,
                   label: 'Customers',

@@ -1,5 +1,6 @@
 import 'package:distributor/core/models/invoice.dart';
 import 'package:distributor/src/ui/views/print_view/print_invoice_viewmodel.dart';
+import 'package:flutter/services.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,21 +12,37 @@ import 'package:printing/printing.dart';
 class PrintInvoiceView extends StatelessWidget {
   final Invoice invoice;
   final invoiceId;
-  const PrintInvoiceView({Key key, this.invoice, this.invoiceId})
+  final String customerName;
+  final num total;
+  const PrintInvoiceView(
+      {Key key, this.invoice, this.invoiceId, this.customerName, this.total})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final String fontRoot = "assets/fonts/proxima_nova/normal/proxima.ttf";
+    final double fontSize = 52.5;
     return ViewModelBuilder<PrintInvoiceViewModel>.reactive(
       onModelReady: (model) => model.init(),
       builder: (context, model, Widget) {
         return Scaffold(
           appBar: AppBar(
             title: Text('Invoice'),
-            actions: [],
+            actions: [
+              IconButton(
+                  onPressed: () => _print(model, fontRoot, fontSize),
+                  icon: Icon(Icons.print))
+            ],
           ),
           body: LayoutBuilder(
             builder: (context, constraints) {
+              double height = constraints.maxHeight * PdfPageFormat.mm;
+              double width = constraints.maxWidth;
+              // const width = 2.28346457 * PdfPageFormat.inch;
+              double margin = 5 * PdfPageFormat.mm;
+              double marginTop = 5 * PdfPageFormat.mm;
+              double marginBottom = 5 * PdfPageFormat.mm;
+              double printHeight = 300.0 * PdfPageFormat.mm;
               return PdfPreview(
                   useActions: false,
                   allowSharing: false,
@@ -36,6 +53,37 @@ class PrintInvoiceView extends StatelessWidget {
         );
       },
       viewModelBuilder: () => PrintInvoiceViewModel(invoice, invoiceId),
+    );
+  }
+
+  _print(PrintInvoiceViewModel model, String fontRoot, double fontSize) async {
+    final font = await rootBundle.load(fontRoot);
+    final ttf = pw.Font.ttf(font);
+    const imageProvider = const AssetImage('assets/images/fourSum-logo.png');
+    final image = await flutterImageProvider(imageProvider);
+    final pdf = pw.Document(compress: true);
+    List<pw.Widget> widgets = [];
+    _buildWidgetTree() {
+      List<pw.Widget> tree = [
+        _buildTitle(),
+        _buildHeader(image),
+        _buildCustomerInfo(model),
+        pw.SizedBox(height: 10),
+        _buildItemsSection(model.items, model),
+        pw.SizedBox(height: 10),
+        _buildTaxInfo(),
+        pw.SizedBox(height: 10),
+        _buildValidationSection(),
+        pw.SizedBox(height: 10),
+        _buildPaymentFooterInfo()
+      ];
+      widgets.addAll(tree);
+    }
+
+    _buildWidgetTree();
+    pdf.addPage(pw.Page());
+    var result = await Printing.layoutPdf(
+      onLayout: (PdfPageFormat format) async => pdf.save(),
     );
   }
 }
@@ -54,6 +102,8 @@ Future<Uint8List> _generatePdf(PrintInvoiceViewModel model) async {
       _buildItemsSection(model.items, model),
       pw.SizedBox(height: 10),
       _buildTaxInfo(),
+      pw.SizedBox(height: 10),
+      _buildValidationSection(),
       pw.SizedBox(height: 10),
       _buildPaymentFooterInfo()
     ];
@@ -117,7 +167,7 @@ _buildCustomerInfo(PrintInvoiceViewModel model) {
         pw.Text(''),
         pw.Text('KRA PIN Number')
       ], crossAxisAlignment: pw.CrossAxisAlignment.start),
-      pw.Column(children: []),
+      pw.Column(children: [_drawQRCode(model)]),
       pw.Column(children: [
         pw.Row(
             children: [pw.Text("Invoice Number: "), pw.Text(model.invoice.id)]),
@@ -146,28 +196,54 @@ _buildTaxInfo() {
       ),
       pw.Row(
         children: [
-          pw.Text('Discount Amount:'),
+          pw.Text('Discount Amount : '),
           pw.Text(''),
         ],
       ),
       pw.Row(
         children: [
-          pw.Text('VAT Amount'),
+          pw.Text('VAT Amount : '),
           pw.Text(''),
         ],
       ),
       pw.Row(
         children: [
-          pw.Text('Withholding VAT'),
+          pw.Text('Withholding VAT : '),
           pw.Text('KES 0.00'),
         ],
       ),
       pw.Row(
         children: [
-          pw.Text('Total Amount'),
+          pw.Text('Total Amount : '),
           pw.Text(''),
         ],
       )
+    ], crossAxisAlignment: pw.CrossAxisAlignment.start),
+  ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween);
+}
+
+_buildValidationSection() {
+  return pw.Row(children: [
+    pw.Column(children: [
+      pw.Text('Prepared By'),
+      pw.Text('Approved By Finance'),
+      pw.Text('Dispatched By'),
+      pw.Text('Delivered By'),
+      pw.Text('Received By'),
+    ], crossAxisAlignment: pw.CrossAxisAlignment.start),
+    pw.Column(children: [
+      pw.Text('Signature'),
+      pw.Text('Signature'),
+      pw.Text('Signature'),
+      pw.Text('Vehicle Reg No'),
+      pw.Text('Signature'),
+    ], crossAxisAlignment: pw.CrossAxisAlignment.start),
+    pw.Column(children: [
+      pw.Text('Date'),
+      pw.Text('Date'),
+      pw.Text('Date'),
+      pw.Text('Signature'),
+      pw.Text('Date'),
     ], crossAxisAlignment: pw.CrossAxisAlignment.start),
   ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween);
 }
@@ -218,8 +294,22 @@ _buildItemsSection(List items, PrintInvoiceViewModel model) {
       pw.Text('Total(VAT Inc)')
     ],
   );
-  List<pw.TableRow> _itemDataRows = _buildItemData(items, model);
+  List<pw.TableRow> _itemDataRows = _buildItemData(model.items, model);
   List<pw.TableRow> itemsSectionData = [header];
   itemsSectionData.addAll(_itemDataRows);
   return pw.Table(children: itemsSectionData);
+}
+
+_drawQRCode(PrintInvoiceViewModel model) {
+  return pw.Center(
+    child: pw.BarcodeWidget(
+      // drawText: true,
+      color: PdfColor.fromHex("#000000"),
+      barcode: pw.Barcode.qrCode(),
+      data: model.invoice.items.toString(),
+      // data: "This is a test",
+      width: 50,
+      height: 50,
+    ),
+  );
 }

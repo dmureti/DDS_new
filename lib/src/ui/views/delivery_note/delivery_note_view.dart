@@ -47,9 +47,10 @@ class DeliveryNoteView extends StatelessWidget {
                 ),
                 actions: [
                   // if (model.enablePrint)
-                  // IconButton(
-                  //     onPressed: () => model.navigateToPreview(),
-                  //     icon: Icon(Icons.print)),
+                  IconButton(
+                    onPressed: () => model.navigateToPreview(),
+                    icon: Icon(Icons.print),
+                  ),
                   PopupMenuButton(
                     itemBuilder: (context) {
                       return <PopupMenuEntry<Object>>[

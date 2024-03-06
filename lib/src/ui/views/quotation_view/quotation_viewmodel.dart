@@ -16,6 +16,8 @@ class QuotationViewModel extends BaseViewModel {
   final _customerService = locator<CustomerService>();
   final _navigationService = locator<NavigationService>();
 
+  bool get isValid => contractCustomer != null && itemsInCart.isNotEmpty;
+
   List<Product> _productList = <Product>[];
   List<Product> get productList {
     return _productList.where((product) => product.itemPrice > 0).toList();

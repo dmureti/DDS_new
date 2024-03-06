@@ -36,7 +36,7 @@ class PrintView extends StatelessWidget {
     // "assets/fonts/jetbrains_mono/JetBrainsMono-Regular.ttf";
     // assets/fonts/ubuntu_mono/UbuntuMono-R.ttf
     final String fontRoot = "assets/fonts/proxima_nova/normal/proxima.ttf";
-    final double fontSize = 39.5;
+    final double fontSize = 60.5;
     return ViewModelBuilder<PrintViewModel>.reactive(
       onModelReady: (model) => model.init(),
       builder: (context, model, child) {

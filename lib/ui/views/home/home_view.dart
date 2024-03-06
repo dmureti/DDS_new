@@ -86,8 +86,9 @@ class HomeView extends StatelessWidget {
                         icon: Icon(Icons.add_circle_outline),
                         tooltip: 'Create Quotation',
                       )
-                    : model.currentIndex == 1
-                        ? Container()
+                    : model.currentIndex == 5
+                        ? TransactionPopupView(
+                            onSelected: model.onStockBalancePopupSelected)
                         : Container(),
 
             // MapIconButton(),
@@ -176,7 +177,9 @@ class HomeView extends StatelessWidget {
       case 4:
         return Column(
           children: [
-            Expanded(child: StockView()),
+            Expanded(
+              child: InvoicingView(),
+            ),
             model.enableOffline ? NetworkSensitiveWidget() : Container(),
           ],
         );
@@ -184,11 +187,7 @@ class HomeView extends StatelessWidget {
       case 5:
         return Column(
           children: [
-            Expanded(
-              child: InvoicingView(),
-            ),
-            // Expanded(child: CustomerView()),
-            // model.enableOffline ? NetworkSensitiveWidget() : Container(),
+            Expanded(child: StockView()),
           ],
         );
         break;
@@ -241,13 +240,13 @@ class HomeView extends StatelessWidget {
         break;
       case 4:
         return Text(
-          'Stock Balance',
+          'Invoicing',
           style: kAppBarTextStyle,
         );
         break;
       case 5:
         return Text(
-          'Invoicing',
+          'Stock Balance',
           style: kAppBarTextStyle,
         );
         break;

@@ -178,7 +178,8 @@ class CrateMovementViewModel extends BaseViewModel {
   _getCrates() async {
     setBusy(true);
     List<Product> result = await _crateManagementService.fetchCrates();
-    _crateList = result.where((element) => element.quantity > 0).toList();
+    _crateList =
+        result.where((element) => element.initialQuantity > 0).toList();
     setBusy(false);
     notifyListeners();
   }

@@ -164,7 +164,8 @@ class CheckoutView extends StatelessWidget {
                       ? Center(child: BusyWidget())
                       : ActionButton(
                           label: 'Complete',
-                          onPressed: () => model.postSale(),
+                          onPressed:
+                              model.isValid ? () => model.postSale() : null,
                         ),
                 ],
               ),

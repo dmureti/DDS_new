@@ -22,18 +22,20 @@ class InvoicingView extends StatelessWidget {
               body: Container(
                 child: Column(
                   children: [
-                    TabBar(
-                      tabs: [
-                        Tab(
-                          child: Text('Pending'),
-                        ),
-                        Tab(
-                          child: Text('Finalized'),
-                        ),
-                        Tab(
-                          child: Text('Failed'),
-                        )
-                      ],
+                    Container(
+                      child: TabBar(
+                        tabs: [
+                          Tab(
+                            child: Text('Pending'),
+                          ),
+                          Tab(
+                            child: Text('Finalized'),
+                          ),
+                          Tab(
+                            child: Text('Failed'),
+                          )
+                        ],
+                      ),
                     ),
                     Expanded(
                         child: model.isBusy

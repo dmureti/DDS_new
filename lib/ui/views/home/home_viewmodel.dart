@@ -14,6 +14,7 @@ import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/logistics_service.dart';
 import 'package:distributor/services/permission_service.dart';
 import 'package:distributor/services/timeout_service.dart';
+import 'package:distributor/services/transaction_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:distributor/src/ui/views/pos/item_selection/pos_view.dart';
 import 'package:distributor/src/ui/views/quotation_view/quotation_detail_view.dart';
@@ -42,6 +43,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   final _timeoutService = locator<TimeoutService>();
   final _snackbarService = locator<SnackbarService>();
   final _productService = locator<ProductService>();
+  final _transactionService = locator<TransactionService>();
   Timer get timer => _timeoutService.timer;
   // final geoFenceService = locator<GeoFenceService>();
 
@@ -245,6 +247,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
 
   init() async {
     await fetchQuotations();
+    await _transactionService.init();
     // await fetchAllCustomers();
     // geoFenceService.listenToGeofenceStatusStream();
     //Check if the user has permissions before enabling this

@@ -233,9 +233,9 @@ class CrateMovementView extends StatelessWidget {
                                                 textAlign: TextAlign.center,
                                                 initialValue:
                                                     model.disableTextFormField
-                                                        ? crate.quantity
+                                                        ? crate.initialQuantity
                                                             .toStringAsFixed(0)
-                                                        : crate.quantity
+                                                        : crate.initialQuantity
                                                             .toStringAsFixed(0),
                                                 enabled:
                                                     model.disableTextFormField,

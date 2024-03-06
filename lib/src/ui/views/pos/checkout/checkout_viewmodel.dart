@@ -19,6 +19,8 @@ class CheckOutViewModel extends BasePOSViewModel {
   final _navigationService = locator<NavigationService>();
   final _userService = locator<UserService>();
 
+  bool get isValid => paymentMode != null && customerType != null;
+
   String get branch => _userService.user.branch;
 
   final _api = locator<ApiService>();

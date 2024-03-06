@@ -24,6 +24,7 @@ class TransactionService with ReactiveServiceMixin {
 
   init() async {
     var result = await stockControlService.getTransactionsPendingAuth();
+    print("fetching pending transactions");
     _pendingTransactions.value = result;
   }
 }

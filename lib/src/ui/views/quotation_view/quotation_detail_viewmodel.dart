@@ -23,10 +23,12 @@ class QuotationDetailViewModel extends BaseViewModel {
     // );
     // Invoice _invoice = Invoice.fromAdhocDetail(adhocDetail, currency,
     //     customerDetail: customerDetail);
-    _navigationService.navigateToView(QuotationPrintView(
-      quotation: quotation,
-      quotationId: quotationId,
-    ));
+    _navigationService.navigateToView(
+      QuotationPrintView(
+        quotation: quotation,
+        quotationId: quotationId,
+      ),
+    );
   }
 
   var _quotation;
