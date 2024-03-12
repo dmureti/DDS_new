@@ -21,9 +21,13 @@ class ProductService {
 
   postSale(Map<String, dynamic> data, {String modeOfPayment}) async {
     data['warehouseId'] = _user.salesChannel;
-
     return await _api.makePayment(
         modeOfPayment: modeOfPayment, data: data, token: _user.token);
+  }
+
+  fulfillDeliveryNotePayment(Map<String, dynamic> data) async {
+    // data['warehouseId'] = _user.salesChannel;
+    return await _api.makeDeliveryNotePayment(data: data, token: _user.token);
   }
 
   fetchQuotationList() async {

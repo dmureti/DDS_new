@@ -6,6 +6,7 @@ import 'package:distributor/services/api_service.dart';
 import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/location_repository.dart';
 import 'package:distributor/services/user_service.dart';
+import 'package:distributor/src/ui/views/pos/payment_view/payment_view.dart';
 import 'package:distributor/src/ui/views/print_view/print_view.dart';
 import 'package:distributor/ui/views/custom_delivery/custom_delivery_view.dart';
 import 'package:flutter/foundation.dart';
@@ -154,7 +155,20 @@ class DeliveryNoteViewModel extends BaseViewModel {
               customer: customer,
             ),
           );
-          await getDeliveryNote();
+          if (result) {
+            var paymentSuccess = await _navigationService.navigateToView(
+              PaymentView(
+                items: deliveryNote.deliveryItems,
+                total: deliveryNote.total,
+                ref: deliveryNote.deliveryNoteId,
+              ),
+            );
+            if (paymentSuccess is bool) if (result == true) {
+              //Navigate to the preview
+              await navigateToPreview();
+              await getDeliveryNote();
+            }
+          }
         }
         break;
       case 'full_delivery':
@@ -173,11 +187,19 @@ class DeliveryNoteViewModel extends BaseViewModel {
               deliveryLocation,
               deliveryNote: deliveryNote,
             );
+
             setBusy(false);
             if (result is CustomException) {
               await _dialogService.showDialog(
                   title: result.title, description: result.description);
             } else {
+              //If the delivery was succesfull
+              // Navigate to the payment
+              await _navigationService.navigateToView(PaymentView(
+                items: deliveryNote.deliveryItems,
+                total: deliveryNote.total,
+                ref: deliveryNote.deliveryNoteId,
+              ));
               await getDeliveryNote();
               _snackbarService.showSnackbar(
                   message: 'The delivery was closed successfully',
@@ -251,6 +273,9 @@ class DeliveryNoteViewModel extends BaseViewModel {
               customer: customer,
               deliveryStop: deliveryStop),
         );
+        break;
+      case 'print':
+        await navigateToPreview();
         break;
     }
   }

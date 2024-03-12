@@ -217,7 +217,6 @@ class CheckOutViewModel extends BasePOSViewModel {
       "warehouseId": "",
       "towarehouse": ""
     };
-
     var result =
         await _productService.postSale(data, modeOfPayment: paymentMode);
     setBusy(false);

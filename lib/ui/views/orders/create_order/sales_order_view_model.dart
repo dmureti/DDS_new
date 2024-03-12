@@ -4,6 +4,7 @@ import 'package:distributor/core/models/product_service.dart';
 import 'package:distributor/services/adhoc_cart_service.dart';
 import 'package:distributor/services/order_service.dart';
 import 'package:distributor/services/stock_controller_service.dart';
+import 'package:distributor/src/ui/views/pos/payment_view/payment_view.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
@@ -41,7 +42,9 @@ class SalesOrderViewModel extends ReactiveViewModel {
 
   ProductOrdering _productOrdering = ProductOrdering.alphaAsc;
 
-  String skuSearchString = "";
+  String _skuSearchString = "";
+  String get skuSearchString => _skuSearchString;
+
   List<Product> filteredProductList = <Product>[];
 
   get customerName => _adhocCartService.customerName ?? "Walk In Customer";
@@ -59,7 +62,7 @@ class SalesOrderViewModel extends ReactiveViewModel {
   }
 
   updateSearchString(String val) {
-    skuSearchString = val.trim();
+    _skuSearchString = val.trim();
     search();
     notifyListeners();
   }
@@ -88,7 +91,7 @@ class SalesOrderViewModel extends ReactiveViewModel {
   }
 
   _resetSKUList() {
-    skuSearchString = "";
+    _skuSearchString = "";
     filteredProductList = productList;
     notifyListeners();
   }
@@ -136,13 +139,22 @@ class SalesOrderViewModel extends ReactiveViewModel {
           _productList.sort((b, a) => a.itemCode.compareTo(b.itemCode));
           break;
       }
+      if (skuSearchString.isNotEmpty) {
+        return _productList
+            .where((product) =>
+                product.itemPrice > 0 &&
+                product.itemName
+                    .toLowerCase()
+                    .contains(skuSearchString.toLowerCase()))
+            .toList();
+      }
       return _productList.where((product) => product.itemPrice > 0).toList();
     }
     return _productList;
   }
 
   resetSearch() {
-    skuSearchString = "";
+    _skuSearchString = "";
     _displaySummary = true;
     _resetSKUList();
     notifyListeners();
@@ -333,8 +345,8 @@ class SalesOrderViewModel extends ReactiveViewModel {
       return element.itemCode.toString().toLowerCase() ==
           product.itemCode.toString().toLowerCase();
     }, orElse: () => null);
-    print(result.runtimeType);
-    return result?.quantity ?? 0;
+    print(result.initialQuantity);
+    return result?.initialQuantity ?? 0;
   }
 
   Future fetchStockBalance() async {
@@ -369,17 +381,27 @@ class SalesOrderViewModel extends ReactiveViewModel {
 
   navigateToAdhocPaymentView() async {
     //Compare security
-    if (!compareValues()) {
-      num security =
-          isVariable ? (securityBalance - securityAmount) : securityAmount;
+    // if (!compareValues()) {
+    //   num security =
+    //       isVariable ? (securityBalance - securityAmount) : securityAmount;
+    //
+    //   num exceededLimit = -1 * (creditLimit - (total + security));
+    //   await _dialogService.showDialog(
+    //       title: 'Credit Limit Exceeded',
+    //       description:
+    //           'Available Limit :$creditLimit\nTotal : $total\nSecurity : $security\n\nYou have exceeded the credit limit allocated by $exceededLimit');
+    // } else {
+    //   await _navigationService.navigateTo(Routes.adhocPaymentView);
+    // }
+    await _navigationService.navigateTo(Routes.adhocPaymentView);
+  }
 
-      num exceededLimit = -1 * (creditLimit - (total + security));
-      await _dialogService.showDialog(
-          title: 'Credit Limit Exceeded',
-          description:
-              'Available Limit :$creditLimit\nTotal : $total\nSecurity : $security\n\nYou have exceeded the credit limit allocated by $exceededLimit');
-    } else {
-      await _navigationService.navigateTo(Routes.adhocPaymentView);
-    }
+  navigateToPaymentView() async {
+    await _navigationService.navigateToView(
+      PaymentView(
+        items: _adhocCartService.itemsInCart,
+        total: _adhocCartService.total,
+      ),
+    );
   }
 }

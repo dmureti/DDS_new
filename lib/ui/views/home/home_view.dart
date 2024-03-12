@@ -50,7 +50,8 @@ class HomeView extends StatelessWidget {
                     children: [
                       IconButton(
                         onPressed: () {
-                          model.navigateToAddPOSSale();
+                          model.navigateToAddAdhocSale();
+                          ;
                         },
                         icon: Icon(Icons.add_circle_outline),
                         tooltip: 'Add Adhoc Sale',

@@ -86,11 +86,12 @@ class DashboardView extends StatelessWidget {
                                             crossAxisCount: 3,
                                             children: [
                                               DashboardCTAButton(
-                                                color: Colors.red,
-                                                label: 'Post Sale',
-                                                onTap: () =>
-                                                    model.navigateToPostSale(),
-                                              ),
+                                                  color: Colors.red,
+                                                  label: 'Post Sale',
+                                                  onTap: () =>
+                                                      // model.navigateToPostSale(),
+                                                      model
+                                                          .navigateToAddAdhocSale()),
                                               DashboardCTAButton(
                                                 label: 'Create Quotation',
                                                 color: Colors.orange,

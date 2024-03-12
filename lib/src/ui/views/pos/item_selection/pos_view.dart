@@ -1,3 +1,4 @@
+import 'package:distributor/conf/style/lib/text_styles.dart';
 import 'package:distributor/src/ui/views/pos/item_selection/pos_viewmodel.dart';
 import 'package:distributor/src/ui/views/pos/pos_card_widget.dart';
 import 'package:distributor/src/ui/views/pos/styles/text.dart';
@@ -156,29 +157,36 @@ class POSView extends StatelessWidget {
                                             product: item, newVal: result);
                                       }
                                     },
-                                    leading: Container(
-                                      width: 30,
-                                      height: 30,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(width: 0.2)),
-                                    ),
-                                    title: Text(
-                                      item.itemName,
-                                      style: productNameTextStyle,
+                                    title: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            item.itemName,
+                                            style: productNameTextStyle,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     subtitle: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
+                                          '${item.itemCode}',
+                                          style: kTileSubtitleTextStyle,
+                                        ),
+                                        Text(
                                             '${item.itemPrice.toStringAsFixed(2)}'),
                                         Text(model
                                             .getTotal(item)
-                                            .toStringAsFixed(2))
+                                            .toStringAsFixed(2)),
                                       ],
                                     ),
-                                    trailing: Text(
-                                        model.getQuantity(item).toString()),
+                                    trailing: Container(
+                                      width: 30,
+                                      child: Text(
+                                          model.getQuantity(item).toString()),
+                                    ),
                                   ),
                                 );
                               },

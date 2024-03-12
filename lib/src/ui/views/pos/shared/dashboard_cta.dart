@@ -13,7 +13,7 @@ class DashboardCTAButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Card(
-        color: color,
+        color: Colors.grey,
         elevation: 3,
         child: Center(
           child: Column(

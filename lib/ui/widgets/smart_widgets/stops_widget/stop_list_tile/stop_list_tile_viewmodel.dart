@@ -89,7 +89,6 @@ class StopListTileViewModel extends BaseViewModel {
     await _navigationService.navigateTo(Routes.deliveryNoteView,
         arguments: DeliveryNoteViewArguments(
             deliveryJourney: deliveryJourney, deliveryStop: deliveryStop));
-
     await getDeliveryNote();
     notifyListeners();
     return;

@@ -34,6 +34,9 @@ class CreateSalesOrderView extends StatelessWidget {
           //     Navigator.pop(context, false);
           //   },
           // ),
+          actions: [
+            IconButton(onPressed: null, icon: Icon(Icons.list)),
+          ],
           title: AppBarColumnTitle(
             mainTitle: 'Place Order',
             subTitle: customer.name,
@@ -49,6 +52,26 @@ class CreateSalesOrderView extends StatelessWidget {
                   )
                 : Column(
                     children: [
+                      // Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: TextFormField(
+                      //     decoration: InputDecoration(
+                      //       isDense: true,
+                      //       border: OutlineInputBorder(
+                      //         borderRadius: BorderRadius.circular(1.0),
+                      //       ),
+                      //       filled: true,
+                      //       fillColor: Colors.grey[200],
+                      //       hintText: 'Search',
+                      //       prefixIcon: Icon(Icons.search),
+                      //       suffixIcon: Icon(Icons.clear),
+                      //     ),
+                      //   ),
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SearchBar(),
+                      ),
                       Expanded(
                         child: ListView(
                           padding: EdgeInsets.zero,
@@ -398,8 +421,15 @@ class SearchBar extends HookViewModelWidget<SalesOrderViewModel> {
         //Close the keyboard
       },
       decoration: InputDecoration(
+          isDense: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(1.0),
+          ),
+          filled: true,
+          fillColor: Colors.grey[200],
+          hintText: 'Search',
           prefixIcon: Icon(Icons.search),
-          hintText: 'Search for an SKU',
+          // hintText: 'Search for an SKU',
           suffixIcon: IconButton(
               onPressed: () => viewModel.resetSearch(),
               icon: Icon(Icons.cancel_outlined))),

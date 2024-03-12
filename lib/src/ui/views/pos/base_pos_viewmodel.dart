@@ -3,6 +3,7 @@ import 'package:distributor/services/stock_controller_service.dart';
 import 'package:distributor/src/ui/views/pos/checkout/checkout_view.dart';
 import 'package:distributor/src/ui/views/pos/confirm_cart/confirm_cart_view.dart';
 import 'package:distributor/src/ui/views/pos/item_view/pos_item_view.dart';
+import 'package:distributor/src/ui/views/pos/payment_view/payment_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -28,8 +29,8 @@ class BasePOSViewModel extends BaseViewModel {
   }
 
   void navigateToCheckOut(List orderedItems) async {
-    await _navigationService.navigateToView(CheckoutView(
-      cartItems: orderedItems,
+    await _navigationService.navigateToView(PaymentView(
+      items: orderedItems,
     ));
   }
 }

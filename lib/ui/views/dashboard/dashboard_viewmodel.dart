@@ -135,4 +135,14 @@ class DashboardViewModel extends FutureViewModel<List<DeliveryJourney>>
       arguments: HomeViewArguments(index: 5),
     );
   }
+
+  navigateToAddAdhocSale() async {
+    var result = await _navigationService.navigateTo(Routes.adhocSalesView);
+    if (result is bool) {
+      setBusy(true);
+      // _startDate = DateTime.now();
+      // await fetchAdhocSales();
+      setBusy(false);
+    }
+  }
 }

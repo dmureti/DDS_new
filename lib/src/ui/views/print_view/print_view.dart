@@ -31,10 +31,6 @@ class PrintView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // assets/fonts/proxima_nova/normal/proxima.ttf
-    // assets/fonts/jetbrains_mono/JetBrainsMono-Medium.ttf
-    // "assets/fonts/jetbrains_mono/JetBrainsMono-Regular.ttf";
-    // assets/fonts/ubuntu_mono/UbuntuMono-R.ttf
     final String fontRoot = "assets/fonts/proxima_nova/normal/proxima.ttf";
     final double fontSize = 60.5;
     return ViewModelBuilder<PrintViewModel>.reactive(
@@ -59,15 +55,9 @@ class PrintView extends StatelessWidget {
               double marginBottom = 5 * PdfPageFormat.mm;
               double printHeight = 300.0 * PdfPageFormat.mm;
               return PdfPreview(
-                useActions: false, allowSharing: false,
+                useActions: false,
+                allowSharing: false,
                 canChangePageFormat: false,
-                // actions: [
-                //   PdfPreviewAction(
-                //       icon: Icon(Icons.print), onPressed: (format)=>_print();)
-                // ],
-                // onPrinted: (_) => model.finalizeOrder(),
-                // maxPageWidth: MediaQuery.of(context).size.width,
-                // initialPageFormat: PdfPageFormat.a4,
                 build: (format) => _generatePdf(
                     format.copyWith(
                       // height: height * 0.74,
@@ -118,9 +108,7 @@ class PrintView extends StatelessWidget {
       List<pw.Widget> widgets = [];
       _buildWidgetTree() {
         List<pw.Widget> tree = [
-          // _buildPrintRef(model, style),
           _buildHeader(image, model, style),
-          _buildSectionHeader("Sellers Detail", style),
           _buildSellersDetail(user, style, model),
           // _buildSectionHeader("URA Information", style),
           // _buildURAInformation(style, model),
@@ -269,20 +257,8 @@ class PrintView extends StatelessWidget {
             child: pw.Image(image, height: 70), width: 100, height: 70),
         padding: pw.EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       ),
+
       // pw.Placeholder(fallbackHeight: 50, fallbackWidth: 50),
-      pw.SizedBox(width: 20),
-      pw.Column(children: [
-        pw.Text(title,
-            style:
-                style.copyWith(fontSize: 18, fontWeight: pw.FontWeight.bold)),
-        pw.Row(
-          children: [
-            pw.Text("Date: ", style: style),
-            pw.Text("${Helper.formatToTime(model.dateTime)} ", style: style),
-            pw.Text("${Helper.formatDate(model.dateTime)} ", style: style),
-          ],
-        )
-      ], crossAxisAlignment: pw.CrossAxisAlignment.start)
     ]);
   }
 
@@ -316,25 +292,34 @@ class PrintView extends StatelessWidget {
                 pw.Row(children: [
                   pw.Expanded(
                     flex: 3,
-                    child: pw.Text(deliveryItem['itemName'], style: style),
+                    child: pw.Text(
+                        deliveryItem['itemName'].toString().toUpperCase(),
+                        style: style),
                   ),
                 ]),
                 pw.Row(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                   children: [
+                    pw.SizedBox(width: 5),
+                    pw.Container(
+                      width: 30,
+                      child: pw.Text(deliveryItem['itemCode'],
+                          style: style, textAlign: pw.TextAlign.right),
+                    ),
+                    pw.SizedBox(width: 5),
+                    // pw.Expanded(
+                    //   flex: 3,
+                    //   child: pw.Text(deliveryItem['itemCode'],
+                    //       style: style.copyWith(
+                    //           fontWeight: pw.FontWeight.bold, fontSize: 16)),
+                    // ),
                     pw.Container(
                       width: 20,
                       child: pw.Text(deliveredQty.toString(),
                           style: style, textAlign: pw.TextAlign.right),
                     ),
                     pw.SizedBox(width: 5),
-                    // pw.Expanded(
-                    //   flex: 3,
-                    //   child: pw.Text(deliveryItem['itemName'],
-                    //       style: style.copyWith(
-                    //           fontWeight: pw.FontWeight.bold, fontSize: 16)),
-                    // ),
                     pw.Container(
                       child: pw.Text('${deliveryItem['itemRate']}'.toString(),
                           style: style, textAlign: pw.TextAlign.right),
@@ -370,14 +355,24 @@ class PrintView extends StatelessWidget {
         ? deliveryNote.referenceNo
         : orderId;
     return pw.Column(children: [
-      // _buildSpacer(),
       pw.SizedBox(height: 5),
       pw.Text('FOURSUM LIMITED'.toUpperCase(), style: textStyle),
       pw.Text('P.O BOX 64443-00620 Nairobi'.toUpperCase(), style: textStyle),
-      pw.Text('Email Address: info@foursumlimited.co.ke', style: textStyle),
+      pw.Text('info@foursumlimited.co.ke', style: textStyle),
       pw.Text('Tel:0719555999,0737644430,0732', style: textStyle),
       pw.Text("PIN : P051969170B", style: textStyle),
       pw.Text(user.branch.toUpperCase(), style: textStyle),
+      pw.SizedBox(height: 5),
+      pw.Text(title.toUpperCase(),
+          style:
+              textStyle.copyWith(fontSize: 30, fontWeight: pw.FontWeight.bold)),
+      pw.SizedBox(height: 5),
+      pw.Row(children: [
+        pw.Text("Date: "),
+        pw.Text("${Helper.formatToTime(model.dateTime)}"),
+        pw.SizedBox(width: 5),
+        pw.Text("${Helper.formatDate(model.dateTime)} "),
+      ], mainAxisAlignment: pw.MainAxisAlignment.center),
       _buildSpacer(),
       pw.Row(
         children: [
@@ -431,11 +426,9 @@ class PrintView extends StatelessWidget {
   _buildFooter(PrintViewModel model, pw.TextStyle style) {
     return pw.Column(children: [
       _buildSpacer(),
-      // pw.Center(
-      //   child: pw.Text(model.deviceId, style: style),
-      // ),
       pw.SizedBox(height: 2),
-      pw.Text("Powered by DDS ver:${model.versionCode}", style: style)
+      pw.Text("Powered by DDS ver:${model.versionCode}", style: style),
+      pw.SizedBox(height: 10),
     ], crossAxisAlignment: pw.CrossAxisAlignment.center);
   }
 
@@ -459,18 +452,10 @@ class PrintView extends StatelessWidget {
         pw.Text('Currency', style: style),
         pw.Text(model.currency)
       ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
-      // pw.Row(children: [
-      //   pw.Text('Number Of Items', style: style),
-      //   pw.Text('${model.invoice.items.length}', style: style),
-      // ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
-      // pw.Row(children: [
-      //   pw.Text('Mode', style: style),
-      //   pw.Text(model.invoice.mode, style: style),
-      // ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
-      // pw.Row(children: [
-      //   pw.Text('Remarks', style: style),
-      //   pw.Text(model.invoice.remarks, style: style),
-      // ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
+      pw.Row(children: [
+        pw.Text('Number Of Items', style: style),
+        pw.Text('${model.invoice.items.length}', style: style),
+      ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
     ]);
   }
 
