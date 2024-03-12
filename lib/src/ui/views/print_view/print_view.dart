@@ -140,16 +140,52 @@ class PrintView extends StatelessWidget {
           //         deliveryNote.deliveryItems ??
           //         model.finalizedInvoice.items,
           //     style),
+          // ..._buildGoodsAndServices(
+          //     items ??
+          //         deliveryNote.deliveryItems ??
+          //         model.finalizedInvoice.items,
+          //     style),
+          // ..._buildGoodsAndServices(
+          //     items ??
+          //         deliveryNote.deliveryItems ??
+          //         model.finalizedInvoice.items,
+          //     style),
+          // ..._buildGoodsAndServices(
+          //     items ??
+          //         deliveryNote.deliveryItems ??
+          //         model.finalizedInvoice.items,
+          //     style),
+          // ..._buildGoodsAndServices(
+          //     items ??
+          //         deliveryNote.deliveryItems ??
+          //         model.finalizedInvoice.items,
+          //     style),
+          // ..._buildGoodsAndServices(
+          //     items ??
+          //         deliveryNote.deliveryItems ??
+          //         model.finalizedInvoice.items,
+          //     style),
+          // ..._buildGoodsAndServices(
+          //     items ??
+          //         deliveryNote.deliveryItems ??
+          //         model.finalizedInvoice.items,
+          //     style),
+          // ..._buildGoodsAndServices(
+          //     items ??
+          //         deliveryNote.deliveryItems ??
+          //         model.finalizedInvoice.items,
+          //     style),
           _buildSpacer(),
           _buildSectionHeader("Tax Details", style),
           _buildTaxDetails(model, style),
           _buildSectionHeader("Summary", style),
           _buildSummary(model, style),
           pw.SizedBox(height: 20),
-          // _drawQRCode(model),
+          _drawQRCode(model),
           pw.SizedBox(height: 20),
           _buildFooter(model, style),
-          _buildSpacer(),
+          pw.SizedBox(height: 20),
+          // _buildSpacer(),
         ];
         widgets.addAll(tree);
       }
@@ -217,15 +253,15 @@ class PrintView extends StatelessWidget {
         _buildSectionHeader(
             "Summary", style.copyWith(fontWeight: pw.FontWeight.bold)),
         _buildSummary(model, style),
-        _buildSpacer(),
-        _buildFooter(model, style),
+        pw.SizedBox(height: 20),
+        // _buildFooter(model, style),
+        pw.SizedBox(height: 20),
         // _buildSpacer(),
       ];
       widgets.addAll(tree);
     }
 
     _buildWidgetTree();
-
     pdf.addPage(
       pw.Page(
           theme: pw.ThemeData(
@@ -254,12 +290,14 @@ class PrintView extends StatelessWidget {
     return pw.Row(children: [
       pw.Padding(
         child: pw.Container(
-            child: pw.Image(image, height: 70), width: 100, height: 70),
+            child: pw.Image(image, height: 150), width: 300, height: 320),
         padding: pw.EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       ),
+      pw.Text(title.toUpperCase(),
+          style: style.copyWith(fontSize: 55, fontWeight: pw.FontWeight.bold)),
 
       // pw.Placeholder(fallbackHeight: 50, fallbackWidth: 50),
-    ]);
+    ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween);
   }
 
   _buildBuyerDetails(PrintViewModel model, pw.TextStyle style) {
@@ -301,11 +339,11 @@ class PrintView extends StatelessWidget {
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                   children: [
-                    pw.SizedBox(width: 5),
+                    // pw.SizedBox(width: 1),
                     pw.Container(
                       width: 30,
                       child: pw.Text(deliveryItem['itemCode'],
-                          style: style, textAlign: pw.TextAlign.right),
+                          style: style, textAlign: pw.TextAlign.left),
                     ),
                     pw.SizedBox(width: 5),
                     // pw.Expanded(
@@ -362,10 +400,6 @@ class PrintView extends StatelessWidget {
       pw.Text('Tel:0719555999,0737644430,0732', style: textStyle),
       pw.Text("PIN : P051969170B", style: textStyle),
       pw.Text(user.branch.toUpperCase(), style: textStyle),
-      pw.SizedBox(height: 5),
-      pw.Text(title.toUpperCase(),
-          style:
-              textStyle.copyWith(fontSize: 30, fontWeight: pw.FontWeight.bold)),
       pw.SizedBox(height: 5),
       pw.Row(children: [
         pw.Text("Date: "),
@@ -425,7 +459,7 @@ class PrintView extends StatelessWidget {
 
   _buildFooter(PrintViewModel model, pw.TextStyle style) {
     return pw.Column(children: [
-      _buildSpacer(),
+      // _buildSpacer(),
       pw.SizedBox(height: 2),
       pw.Text("Powered by DDS ver:${model.versionCode}", style: style),
       pw.SizedBox(height: 10),
