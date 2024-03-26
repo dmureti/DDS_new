@@ -20,7 +20,7 @@ class QuotationPrintView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String fontRoot = "assets/fonts/proxima_nova/normal/proxima.ttf";
-    final double fontSize = 39.5;
+    final double fontSize = 60.5;
     return ViewModelBuilder<QuotationPrintViewModel>.reactive(
       onModelReady: (model) => model.init(),
       builder: (context, model, child) {
@@ -29,21 +29,46 @@ class QuotationPrintView extends StatelessWidget {
             title: Text('Quotation'),
             actions: [
               IconButton(
-                onPressed: () => _print(model, fontRoot, fontSize),
+                onPressed: () => _print(model, fontRoot, fontSize,
+                    quotationItems, quotationId, quotation),
                 icon: Icon(Icons.print),
               )
             ],
           ),
           body: LayoutBuilder(
             builder: (context, constraints) {
+              double height = constraints.maxHeight * PdfPageFormat.mm;
+              double width = constraints.maxWidth;
+              // const width = 2.28346457 * PdfPageFormat.inch;
+              double margin = 5 * PdfPageFormat.mm;
+              double marginTop = 5 * PdfPageFormat.mm;
+              double marginBottom = 5 * PdfPageFormat.mm;
+              double printHeight = 300.0 * PdfPageFormat.mm;
               return PdfPreview(
-                useActions: false,
-                allowSharing: false,
-                canChangePageFormat: false,
-                build: (format) => _generatePdf(
-                  model,
-                ),
-              );
+                  useActions: false,
+                  allowSharing: false,
+                  canChangePageFormat: false,
+                  build: (format) => _generatePdf(
+                      format.copyWith(
+                        // height: height * 0.74,
+                        // width: width,
+                        marginLeft: margin,
+                        marginRight: margin,
+                        marginTop: marginTop,
+                        marginBottom: marginBottom,
+                      ),
+                      model,
+                      quotationItems,
+                      quotationId,
+                      quotation,
+                      height,
+                      fontRoot,
+                      fontSize),
+                  pageFormats: <String, PdfPageFormat>{
+                    'roll57': PdfPageFormat.roll57,
+                    'A4': PdfPageFormat.a4,
+                    'Letter': PdfPageFormat.letter,
+                  });
             },
           ),
         );
@@ -53,24 +78,33 @@ class QuotationPrintView extends StatelessWidget {
   }
 }
 
-_print(QuotationPrintViewModel model, String fontRoot, double fontSize) async {
+_print(QuotationPrintViewModel model, String fontRoot, double fontSize,
+    List quotationItems, String quotationNumber, var quotation) async {
   final font = await rootBundle.load(fontRoot);
   final ttf = pw.Font.ttf(font);
   const imageProvider = const AssetImage('assets/images/fourSum-logo.png');
   final image = await flutterImageProvider(imageProvider);
+  final width = PdfPageFormat.roll57.availableWidth * PdfPageFormat.mm;
+  final marginBottom = 15.0 * PdfPageFormat.mm;
+  final marginLeft = 0.0 * PdfPageFormat.mm;
+  final marginRight = 0.0 * PdfPageFormat.mm;
   final pdf = pw.Document(compress: true);
+  final pw.TextStyle style = pw.TextStyle(
+    font: ttf,
+    fontSize: fontSize,
+  );
   List<pw.Widget> widgets = [];
   _buildWidgetTree() {
     List<pw.Widget> tree = [
       _buildTitle(),
-      _buildHeader(image),
-      _buildCustomerInfo(model),
+      _buildHeader(image, style),
+      _buildCustomerInfo(model, quotationNumber, quotation),
       pw.SizedBox(height: 10),
-      _buildItemsSection([], model),
+      ..._buildItemsSection(quotationItems, model, style),
       pw.SizedBox(height: 10),
-      _buildTaxInfo(),
+      _buildTaxInfo(model),
       pw.SizedBox(height: 10),
-      _buildValidationSection(),
+      // _buildValidationSection(),
       pw.SizedBox(height: 10),
       _buildPaymentFooterInfo()
     ];
@@ -78,28 +112,64 @@ _print(QuotationPrintViewModel model, String fontRoot, double fontSize) async {
   }
 
   _buildWidgetTree();
-  pdf.addPage(pw.Page());
+  pdf.addPage(
+    pw.Page(
+      theme: pw.ThemeData(
+          paragraphStyle: pw.TextStyle(fontSize: fontSize, font: ttf),
+          defaultTextStyle: pw.TextStyle(fontSize: fontSize, font: ttf)),
+      pageFormat: PdfPageFormat.roll57.copyWith(
+          width: width * 2.65,
+          // width: PdfPageFormat.roll80.width * PdfPageFormat.mm,
+          marginBottom: marginBottom,
+          marginLeft: marginLeft,
+          marginRight: marginRight),
+      build: (pw.Context context) => pw.Center(
+        child: pw.Column(
+            mainAxisSize: pw.MainAxisSize.max,
+            children: widgets,
+            crossAxisAlignment: pw.CrossAxisAlignment.stretch),
+      ),
+    ),
+  );
   var result = await Printing.layoutPdf(
     onLayout: (PdfPageFormat format) async => pdf.save(),
   );
 }
 
-Future<Uint8List> _generatePdf(QuotationPrintViewModel model) async {
+Future<Uint8List> _generatePdf(
+    PdfPageFormat format,
+    QuotationPrintViewModel model,
+    List quotationItems,
+    quotationNumber,
+    var quotation,
+    double widgetHeight,
+    String fontRoot,
+    double fontSize) async {
+  final font = await rootBundle.load(fontRoot);
+  final ttf = pw.Font.ttf(font);
   const imageProvider = const AssetImage('assets/images/fourSum-logo.png');
   final image = await flutterImageProvider(imageProvider);
+  final width = PdfPageFormat.roll57.width * PdfPageFormat.mm;
+  final marginBottom = 10.0 * PdfPageFormat.mm;
+  final marginLeft = 5.0 * PdfPageFormat.mm;
+  final marginRight = 5.0 * PdfPageFormat.mm;
   final pdf = pw.Document(compress: true);
+  final pw.TextStyle style = pw.TextStyle(
+    font: ttf,
+    fontSize: fontSize,
+  );
   List<pw.Widget> widgets = [];
   _buildWidgetTree() {
     List<pw.Widget> tree = [
       _buildTitle(),
-      _buildHeader(image),
-      _buildCustomerInfo(model),
+      _buildHeader(image, style),
+      _buildCustomerInfo(model, quotationNumber, quotation),
       pw.SizedBox(height: 10),
-      _buildItemsSection([], model),
+      ..._buildItemsSection(quotationItems, model, style),
       pw.SizedBox(height: 10),
-      _buildTaxInfo(),
+      _buildTaxInfo(model),
       pw.SizedBox(height: 10),
-      _buildValidationSection(),
+      // _buildValidationSection(),
       pw.SizedBox(height: 10),
       _buildPaymentFooterInfo()
     ];
@@ -107,17 +177,24 @@ Future<Uint8List> _generatePdf(QuotationPrintViewModel model) async {
   }
 
   _buildWidgetTree();
-  pdf.addPage(pw.Page(
-    build: (pw.Context context) => pw.Center(
-      child: pw.Column(
-          mainAxisSize: pw.MainAxisSize.max,
-          children: widgets,
-          crossAxisAlignment: pw.CrossAxisAlignment.stretch),
-    ),
-  ));
-  var result = await Printing.layoutPdf(
-    onLayout: (PdfPageFormat format) async => pdf.save(),
+  pdf.addPage(
+    pw.Page(
+        theme: pw.ThemeData(
+            header0: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+            paragraphStyle: pw.TextStyle(fontSize: fontSize),
+            defaultTextStyle: pw.TextStyle(fontSize: fontSize)),
+        pageFormat: PdfPageFormat.roll57.copyWith(
+            width: width,
+            marginBottom: marginBottom,
+            marginLeft: marginLeft,
+            marginRight: marginRight),
+        build: (pw.Context context) => pw.Center(
+            child: pw.Column(
+                mainAxisSize: pw.MainAxisSize.max,
+                children: widgets,
+                crossAxisAlignment: pw.CrossAxisAlignment.stretch))),
   );
+  return pdf.save();
 }
 
 ///
@@ -126,14 +203,14 @@ Future<Uint8List> _generatePdf(QuotationPrintViewModel model) async {
 _buildTitle() {
   return pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
     pw.Text('Quotation',
-        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18))
+        style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 40))
   ]);
 }
 
 ///
 /// Branding anc 4Sum contact info
 ///
-_buildHeader(pw.ImageProvider image) {
+_buildHeader(pw.ImageProvider image, pw.TextStyle style) {
   return pw.Row(children: [
     pw.Column(children: [
       pw.Padding(
@@ -143,11 +220,11 @@ _buildHeader(pw.ImageProvider image) {
       ),
     ]),
     pw.Column(children: [
-      pw.Text('FOURSUM LIMITED'),
-      pw.Text('P.O BOX 64443-00620 Nairobi'),
-      pw.Text('Email Address: info@foursumlimited.co.ke'),
-      pw.Text('Tel:0719555999,0737644430'),
-      pw.Text('PIN:P051969170B'),
+      pw.Text('FOURSUM LIMITED', style: style),
+      pw.Text('P.O BOX 64443-00620 Nairobi', style: style),
+      pw.Text('Email Address: info@foursumlimited.co.ke', style: style),
+      pw.Text('Tel:0719555999,0737644430', style: style),
+      pw.Text('PIN:P051969170B', style: style),
     ], crossAxisAlignment: pw.CrossAxisAlignment.start),
   ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween);
 }
@@ -155,69 +232,89 @@ _buildHeader(pw.ImageProvider image) {
 ///
 /// Customer information
 ///
-_buildCustomerInfo(QuotationPrintViewModel model) {
-  return pw.Row(
+_buildCustomerInfo(
+    QuotationPrintViewModel model, String quotationNo, var quotation) {
+  return pw.Column(
       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
       children: [
-        pw.Column(children: [
-          pw.Text('Customer'),
-          pw.Text(''),
-          pw.Text('KRA PIN Number')
+        pw.Row(children: [
+          pw.Text('Customer : '),
+          pw.Text(model.quotation['customer']['name']),
+          // pw.Text('KRA PIN Number')
         ], crossAxisAlignment: pw.CrossAxisAlignment.start),
-        pw.Column(children: [_drawQRCode(model)]),
+        pw.Row(children: [
+          pw.Text("Quotation No: ${quotationNo}"),
+
+          // pw.Text("Validity date: ${Helper.formatDateFromString(DateTime.now().toIso8601String())}"),
+          // pw.Text(''),
+          // pw.Text(''),
+          // pw.Text('KRA PIN Number'),
+          // pw.Text("Your Reference: "),
+          // pw.Text("Delivery Mode: "),
+          // pw.Text("Contact Person Mode: ")
+        ], crossAxisAlignment: pw.CrossAxisAlignment.start),
+        // pw.Column(children: [_drawQRCode(model)]),
+        pw.Row(children: [
+          pw.Text(
+              "Document Date: ${Helper.formatDateFromString(DateTime.now().toIso8601String())}"),
+        ]),
         pw.Column(
           children: [
             pw.Row(children: [
-              pw.Text("Invoice Number: "),
-              pw.Text(""),
-              pw.Row(children: [pw.Text("Control Code: "), pw.Text('')]),
-              pw.Row(children: [pw.Text("CU Serial Number: "), pw.Text('')]),
-              pw.Row(children: [pw.Text("Due date: "), pw.Text('')]),
-              pw.Row(children: [pw.Text("Your Reference: "), pw.Text('')]),
-              pw.Row(children: [pw.Text("Delivery Mode: "), pw.Text('')]),
-              pw.Row(children: [pw.Text("Contact Person Mode: "), pw.Text('')]),
+              // pw.Text("Invoice Number: "),
+              // pw.Text(""),
+              // pw.Row(children: [pw.Text("Control Code: "), pw.Text('')]),
+              // pw.Row(children: [pw.Text("CU Serial Number: "), pw.Text('')]),
+              // pw.Row(children: [pw.Text("Due date: "), pw.Text('')]),
+              // pw.Row(children: [pw.Text("Your Reference: "), pw.Text('')]),
+              // pw.Row(children: [pw.Text("Delivery Mode: "), pw.Text('')]),
+              // pw.Row(children: [pw.Text("Contact Person Mode: "), pw.Text('')]),
+              pw.SizedBox(height: 5),
             ], crossAxisAlignment: pw.CrossAxisAlignment.start)
           ],
-        )
+        ),
       ]);
 }
 
-_buildTaxInfo() {
-  return pw.Row(children: [
-    pw.Column(children: [
+_buildTaxInfo(QuotationPrintViewModel model) {
+  return pw.Column(children: [
+    pw.SizedBox(height: 10),
+    pw.Row(children: [
       pw.Text("Payment Term : Cash"),
     ]),
     pw.Column(children: [
       pw.Row(
         children: [
-          pw.Text('Total Before VAT:'),
-          pw.Text('KES '),
+          pw.Text('Amount before tax:'),
+          pw.Text('${model.quotation['net']}'),
         ],
       ),
       pw.Row(
         children: [
           pw.Text('Discount Amount : '),
-          pw.Text(''),
+          pw.Text('${model.quotation['discount'].toStringAsFixed(2)}'),
         ],
       ),
       pw.Row(
         children: [
           pw.Text('VAT Amount : '),
-          pw.Text(''),
+          pw.Text('${model.tax}'),
         ],
       ),
       pw.Row(
         children: [
           pw.Text('Withholding VAT : '),
-          pw.Text('KES 0.00'),
+          pw.Text(
+              '${model.quotation['withHoldingTax']?.toStringAsFixed(2) ?? ""}'),
         ],
       ),
       pw.Row(
         children: [
           pw.Text('Total Amount : '),
-          pw.Text(''),
+          pw.Text('${model.total}'),
         ],
-      )
+      ),
+      pw.SizedBox(height: 10),
     ], crossAxisAlignment: pw.CrossAxisAlignment.start),
   ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween);
 }
@@ -263,41 +360,78 @@ _buildPaymentFooterInfo() {
   ]);
 }
 
-_buildItemData(List items, QuotationPrintViewModel model) {
+_buildItemData(List items, QuotationPrintViewModel model, pw.TextStyle style) {
   List<TableRow> _rows = <TableRow>[];
   return items
-      .map((item) => pw.TableRow(children: [
-            pw.Text(item['itemCode']),
-            pw.Text(item['itemName']),
-            pw.Text(item['quantity'].toString()),
-            pw.Text(item['itemRate'].toString()),
-            pw.Text(""),
-            pw.Text('0.00'),
-            pw.Text('16.00'),
-            pw.Text(""),
-            pw.Text(""),
-          ]))
+      .map((item) => pw.Padding(
+          padding: pw.EdgeInsets.symmetric(vertical: 2),
+          child: pw.Column(children: [
+            pw.Row(children: [
+              pw.Expanded(
+                flex: 3,
+                child: pw.Text(item['itemName'].toString().toUpperCase(),
+                    style: style),
+              ),
+            ]),
+            pw.Row(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              children: [
+                // pw.SizedBox(width: 1),
+                pw.Container(
+                  width: 30,
+                  child: pw.Text(item['itemCode'],
+                      style: style, textAlign: pw.TextAlign.left),
+                ),
+                pw.SizedBox(width: 5),
+                // pw.Expanded(
+                //   flex: 3,
+                //   child: pw.Text(deliveryItem['itemCode'],
+                //       style: style.copyWith(
+                //           fontWeight: pw.FontWeight.bold, fontSize: 16)),
+                // ),
+                pw.Container(
+                  width: 20,
+                  child: pw.Text(item['quantity'].toString(),
+                      style: style, textAlign: pw.TextAlign.right),
+                ),
+                pw.SizedBox(width: 5),
+                pw.Container(
+                  child: pw.Text(item['itemPrice'].toString(),
+                      style: style, textAlign: pw.TextAlign.right),
+                ),
+                pw.SizedBox(width: 5),
+                pw.Container(
+                    child: pw.Text(
+                        (item['itemPrice'] * item['quantity']).toString(),
+                        style: style,
+                        textAlign: pw.TextAlign.left))
+              ],
+            ),
+          ])))
       .toList();
 }
 
-_buildItemsSection(List items, QuotationPrintViewModel model) {
+_buildItemsSection(
+    List items, QuotationPrintViewModel model, pw.TextStyle style) {
   pw.TableRow header = pw.TableRow(
     children: [
       pw.Text('Item'),
       pw.Text('Description'),
       pw.Text('Qty'),
-      pw.Text('Price(VATInc)'),
-      pw.Text('Price(VATExc)'),
-      pw.Text('Disc'),
-      pw.Text('Tax%'),
-      pw.Text('VAT Total'),
-      pw.Text('Total(VAT Inc)')
+      pw.Text('Price'),
+      // pw.Text('Price(VATExc)'),
+      // pw.Text('Disc'),
+      // pw.Text('Tax%'),
+      // pw.Text('VAT Total'),
+      pw.Text('Total')
     ],
   );
-  List<pw.TableRow> _itemDataRows = _buildItemData(items, model);
-  List<pw.TableRow> itemsSectionData = [header];
-  itemsSectionData.addAll(_itemDataRows);
-  return pw.Table(children: itemsSectionData);
+  // List<pw.TableRow> _itemDataRows = _buildItemData(items, model, style);
+  // List<pw.TableRow> itemsSectionData = [header];
+  // itemsSectionData.addAll(_itemDataRows);
+  // return pw.Table(children: _buildItemData(items, model, style));
+  return _buildItemData(items, model, style);
 }
 
 _drawQRCode(QuotationPrintViewModel model) {

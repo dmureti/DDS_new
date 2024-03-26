@@ -163,6 +163,7 @@ class AdhocCartService with ReactiveServiceMixin {
   Api get api => _apiService.api;
   String get token => _userService.user.token;
 
+  RxValue _phoneNumber = RxValue(initial: "");
   RxValue _customer = RxValue();
   RxValue _total = RxValue(initial: 0);
   RxValue _paymentMode = RxValue(initial: "");
@@ -228,6 +229,7 @@ class AdhocCartService with ReactiveServiceMixin {
 
   AdhocCartService() {
     listenToReactiveValues([
+      _phoneNumber,
       _total,
       _paymentMode,
       _customerId,
@@ -348,6 +350,18 @@ class AdhocCartService with ReactiveServiceMixin {
     }
   }
 
+  String get phoneNumber => _phoneNumber.value ?? "";
+  setPhoneNumber(String val) {
+    _phoneNumber.value = val;
+  }
+
+  double _cashValue;
+  double get cashValue => _cashValue ?? 0;
+
+  setCashValue(String val) {
+    _phoneNumber.value = val;
+  }
+
   get customerName => _customerName.value;
 
   createPayment() async {
@@ -360,6 +374,7 @@ class AdhocCartService with ReactiveServiceMixin {
                 "itemCode": e.item.itemCode,
                 "itemName": e.item.itemName,
                 "itemRate": e.item.itemPrice,
+                "itemPrice": e.item.itemPrice,
                 "quantity": e.quantity
               })
           .toList(),
@@ -368,21 +383,23 @@ class AdhocCartService with ReactiveServiceMixin {
         "externalAccountId": "string",
         "externalTxnID": "string",
         "externalTxnNarrative": "string",
+        "phone": phoneNumber ?? "",
+        "mpesa_amount": total - cashValue,
         "payerAccount": "string",
         "payerName": "string",
         "paymentMode": paymentMode == 'INVOICE' ? 'ACCOUNT' : paymentMode,
         "userTxnNarrative": "string"
       },
-      "deliveryLocation":
-          "${userLocation?.latitude},${userLocation?.longitude}",
+      "deliveryLocation": ",",
       "remarks": remarks,
       "sellingPriceList": sellingPriceList,
       "warehouseId":
           _userService.user.salesChannel ?? _journeyService.currentJourney.route
     };
 
-    var result = await api.createPOSPayment(
-        modeOfPayment: paymentMode == 'INVOICE' ? 'ACCOUNT' : paymentMode,
+    var result = await api.makePayment(
+        modeOfPayment:
+            paymentMode == 'INVOICE' ? 'ACCOUNT' : paymentMode.toLowerCase(),
         data: data,
         token: token);
 

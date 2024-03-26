@@ -108,8 +108,8 @@ class DeliveryNoteView extends StatelessWidget {
                         //     value: 'crates_return'),
                         PopupMenuDivider(),
                         PopupMenuItem(
-                          child: Text('Print'),
-                          value: 'print',
+                          child: Text('Add Payment'),
+                          value: 'add_payment',
                         ),
                         // PopupMenuDivider(),
                         // PopupMenuItem(

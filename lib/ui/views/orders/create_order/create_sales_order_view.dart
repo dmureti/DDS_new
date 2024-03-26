@@ -431,7 +431,10 @@ class SearchBar extends HookViewModelWidget<SalesOrderViewModel> {
           prefixIcon: Icon(Icons.search),
           // hintText: 'Search for an SKU',
           suffixIcon: IconButton(
-              onPressed: () => viewModel.resetSearch(),
+              onPressed: () {
+                searchString.text = '';
+                viewModel.resetSearch();
+              },
               icon: Icon(Icons.cancel_outlined))),
     );
   }

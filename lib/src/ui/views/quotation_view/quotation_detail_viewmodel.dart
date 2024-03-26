@@ -27,6 +27,7 @@ class QuotationDetailViewModel extends BaseViewModel {
       QuotationPrintView(
         quotation: quotation,
         quotationId: quotationId,
+        quotationItems: items,
       ),
     );
   }

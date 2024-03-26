@@ -45,7 +45,7 @@ class SalesReturnsViewModel extends BaseViewModel {
   }
 
   init() async {
-    // await fetchReasons();
+    await fetchReasons();
   }
 
   fetchReasons() async {
@@ -65,7 +65,7 @@ class SalesReturnsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  List _reasons = ["Broken Seal", "Broken Bottle"];
+  List _reasons = [];
   List get reasons => _reasons;
   makeSalesReturns() async {
     setBusy(true);

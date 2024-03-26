@@ -14,11 +14,30 @@ class StockTransferRequestViewModel extends BaseViewModel {
   final _productService = locator<ProductService>();
   final _userService = locator<UserService>();
 
+  String _skuSearchString = "";
+  String get skuSearchString => _skuSearchString;
+  void updateSearchString(String value) {
+    _skuSearchString = value;
+    notifyListeners();
+  }
+
+  resetSearch() {
+    _skuSearchString = "";
+    notifyListeners();
+  }
+
   String get mainOutlet => _userService.user.branch;
 
   List<Product> _productList = <Product>[];
   List<Product> get productList {
-    return _productList.where((product) => product.itemPrice > 0).toList();
+    if (skuSearchString.isNotEmpty) {
+      return _productList
+          .where((element) =>
+              element.itemName.toLowerCase().contains(skuSearchString))
+          .toList();
+    } else {
+      return _productList.where((product) => product.itemPrice > 0).toList();
+    }
   }
 
   List<Warehouse> _outletList = <Warehouse>[];

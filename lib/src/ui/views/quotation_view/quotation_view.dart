@@ -66,6 +66,7 @@ class QuotationView extends StatelessWidget {
                               ),
                             ),
                           ),
+                          SearchBar(),
                           Expanded(
                             child: ListView.builder(
                               itemCount: model.items.length,
@@ -122,18 +123,18 @@ class QuotationView extends StatelessWidget {
                                           );
                                         },
                                       );
-                                      print(result);
+
                                       if (result != null) {
                                         model.updateQuantity(
                                             product: item, newVal: result);
                                       }
                                     },
-                                    leading: Container(
-                                      width: 30,
-                                      height: 30,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(width: 0.2)),
-                                    ),
+                                    // leading: Container(
+                                    //   width: 30,
+                                    //   height: 30,
+                                    //   decoration: BoxDecoration(
+                                    //       border: Border.all(width: 0.2)),
+                                    // ),
                                     title: Text(
                                       item.itemName,
                                       style: productNameTextStyle,
@@ -227,6 +228,44 @@ class _CustomerWidget extends HookViewModelWidget<QuotationViewModel> {
                 value: e,
               ))
           .toList(),
+    );
+  }
+}
+
+class SearchBar extends HookViewModelWidget<QuotationViewModel> {
+  @override
+  Widget buildViewModelWidget(
+      BuildContext context, QuotationViewModel viewModel) {
+    var searchString =
+        useTextEditingController(text: viewModel.skuSearchString);
+    return TextFormField(
+      controller: searchString,
+      keyboardType: TextInputType.text,
+      // textInputAction: TextInputAction.en,
+      onChanged: viewModel.updateSearchString,
+      // onTap: () => viewModel.toggleShowSummary(false),
+      // onFieldSubmitted: (val) => viewModel.onFieldSubmitted(val),
+      onEditingComplete: () {
+        //Happens when the user presses the action
+        // viewModel.onEditComplete();
+        //Close the keyboard
+      },
+      decoration: InputDecoration(
+          isDense: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(1.0),
+          ),
+          filled: true,
+          fillColor: Colors.grey[200],
+          hintText: 'Search',
+          prefixIcon: Icon(Icons.search),
+          // hintText: 'Search for an SKU',
+          suffixIcon: IconButton(
+              onPressed: () {
+                searchString.text = '';
+                viewModel.resetSearch();
+              },
+              icon: Icon(Icons.cancel_outlined))),
     );
   }
 }

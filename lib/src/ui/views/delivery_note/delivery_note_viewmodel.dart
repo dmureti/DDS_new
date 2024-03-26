@@ -237,12 +237,18 @@ class DeliveryNoteViewModel extends BaseViewModel {
         }
         break;
       case 'add_payment':
-        var result = await _navigationService.navigateTo(Routes.addPaymentView,
-            arguments: AddPaymentViewArguments(customer: customer));
-        if (result) {
-          _snackbarService.showSnackbar(
-              message: 'The payment was added successfully.', title: 'Success');
-        }
+        var paymentSuccess = await _navigationService.navigateToView(
+          PaymentView(
+            items: deliveryNote.deliveryItems,
+            total: deliveryNote.total,
+            ref: deliveryNote.deliveryNoteId,
+          ),
+        );
+        // if (paymentSuccess is bool) if (result == true) {
+        //   //Navigate to the preview
+        await navigateToPreview();
+        await getDeliveryNote();
+        // }
         break;
       case 'not_possible':
         await _dialogService.showDialog(

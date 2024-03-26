@@ -29,8 +29,13 @@ class BasePOSViewModel extends BaseViewModel {
   }
 
   void navigateToCheckOut(List orderedItems) async {
+    num total = 0;
+    orderedItems.forEach((element) {
+      total += element['itemPrice'] * element['quantity'];
+    });
     await _navigationService.navigateToView(PaymentView(
       items: orderedItems,
+      total: total,
     ));
   }
 }

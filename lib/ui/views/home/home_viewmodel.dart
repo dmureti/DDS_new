@@ -117,6 +117,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
 
   get enableJourneyTab => _accessControlService.enableJourneyTab;
   get enableHomeTab => _accessControlService.enableHomeTab;
+  get isMiniShop => _accessControlService.isOutlet;
 
   get enableAdhocTab => _accessControlService.enableAdhocView;
 

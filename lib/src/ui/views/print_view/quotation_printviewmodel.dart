@@ -5,6 +5,32 @@ import 'package:distributor/services/version_service.dart';
 import 'package:stacked/stacked.dart';
 
 class QuotationPrintViewModel extends BaseViewModel {
+  num _gross = 0;
+  num _tax = 0;
+  num _net = 0;
+  num _total = 0;
+
+  get gross => _gross;
+  get net => total - tax;
+  get tax => _tax;
+
+  get total => _total;
+
+  calculateGross() {
+    List items = quotation['items'];
+    items.forEach((element) {
+      _total += element['quantity'] * element['itemPrice'];
+    });
+  }
+
+  calculateTax() {
+    _tax = _total * 0.16;
+  }
+
+  calculateNet() {
+    _net = total - tax;
+  }
+
   final _userService = locator<UserService>();
   final _versionService = locator<VersionService>();
 
@@ -43,9 +69,6 @@ class QuotationPrintViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  num net;
-  num tax;
-  num gross;
   num taxRate = 16;
 
   String currency = "KES";
@@ -56,6 +79,9 @@ class QuotationPrintViewModel extends BaseViewModel {
     await _getVersion();
     // calculateGrossAmount();
     getCurrentDateTime();
+    calculateGross();
+    calculateNet();
+    calculateTax();
     setBusy(false);
   }
 }

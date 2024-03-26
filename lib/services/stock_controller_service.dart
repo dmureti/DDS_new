@@ -41,7 +41,8 @@ class StockControllerService {
   }
 
   makeOutletSalesReturns(Map<String, dynamic> data) async {
-    data['deliveryWarehouse'] = _user.branch;
+    data['deliveryWarehouse'] =
+        _user.branch ?? _journeyService.currentJourney.route;
     return await _api.makeOutletReturn(_user.token, data);
   }
 

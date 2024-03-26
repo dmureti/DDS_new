@@ -26,6 +26,9 @@ class QuotationViewModel extends BaseViewModel {
   List<Customer> _customerList = <Customer>[];
   List<Customer> get customersList => _customerList;
 
+  String _skuSearchString = "";
+  String get skuSearchString => _skuSearchString;
+
   fetchCustomers() async {
     setBusy(true);
     _customerList = await _customerService.fetchCustomers();
@@ -107,8 +110,18 @@ class QuotationViewModel extends BaseViewModel {
     await fetchItems();
   }
 
-  List _items = [];
-  List get items => _items;
+  List<Product> _items = [];
+  List<Product> get items {
+    if (skuSearchString.isNotEmpty) {
+      return _items
+          .where((element) =>
+              element.itemName.toLowerCase().contains(skuSearchString))
+          .toList();
+    } else {
+      return _items;
+    }
+  }
+
   List _itemsInCart = [];
   List get itemsInCart =>
       _itemsInCart.where((element) => element.quantity > 0).toList();
@@ -169,6 +182,16 @@ class QuotationViewModel extends BaseViewModel {
   String get customerName => _customerName;
   void updateCustomerName(String value) {
     _customerName = value;
+    notifyListeners();
+  }
+
+  void updateSearchString(String value) {
+    _skuSearchString = value;
+    notifyListeners();
+  }
+
+  resetSearch() {
+    _skuSearchString = "";
     notifyListeners();
   }
 }

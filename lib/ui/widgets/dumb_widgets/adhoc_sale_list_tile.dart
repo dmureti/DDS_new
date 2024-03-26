@@ -53,8 +53,9 @@ class AdhocSaleListTile extends StatelessWidget {
           ),
           Container(
             child: Text(
-              '${adhocSale.transactionStatus.toUpperCase()}',
+              '${adhocSale.transactionStatus?.toUpperCase() ?? ""}',
               textAlign: TextAlign.right,
+              style: kTileLeadingTextStyle.copyWith(fontSize: 11),
             ),
             width: 100,
           ),

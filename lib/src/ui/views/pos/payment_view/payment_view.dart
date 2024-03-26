@@ -39,7 +39,7 @@ class PaymentView extends StatelessWidget {
                           Row(
                             children: [
                               Text('Total : '),
-                              Text('Kshs ${model.total.toStringAsFixed(2)}'),
+                              Text('Kshs ${total}'),
                             ],
                           ),
                           Row(
@@ -130,9 +130,7 @@ class _CashPaymentModeWidget extends HookViewModelWidget<PaymentViewModel> {
   @override
   Widget buildViewModelWidget(BuildContext context, PaymentViewModel model) {
     return ListView(
-      children: [
-        Text('Receive Kshs ${model.total.toStringAsFixed(2)} from customer.')
-      ],
+      children: [Text('')],
     );
   }
 }
@@ -163,8 +161,7 @@ class _MpesaPaymentModeWidget extends HookViewModelWidget<PaymentViewModel> {
 class _CreditPaymentModeWidget extends HookViewModelWidget<PaymentViewModel> {
   @override
   Widget buildViewModelWidget(BuildContext context, PaymentViewModel model) {
-    return Text(
-        "The amount Kshs ${model.total.toStringAsFixed(2)} shall be credited to the contract customer account.");
+    return Text("");
   }
 }
 
@@ -191,9 +188,7 @@ class _MultiPayPaymentModeWidget extends HookViewModelWidget<PaymentViewModel> {
         SizedBox(
           height: 5,
         ),
-        model.cashValue == 0
-            ? Container()
-            : Text("Amount to be deducted from mPesa is ${model.difference}"),
+        model.cashValue == 0 ? Container() : Text(""),
         SizedBox(
           height: 5,
         ),

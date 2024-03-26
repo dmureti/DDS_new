@@ -49,13 +49,15 @@ class DashboardViewModel extends FutureViewModel<List<DeliveryJourney>>
   //Check if user can list journeys
   bool get canListJourneys => _accessControlService.enableJourneyTab;
 
-  bool get isMiniShop {
-    if (user.hasSalesChannel) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // bool get isMiniShop {
+  //   if (user.hasSalesChannel) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  bool get isMiniShop => _accessControlService.isOutlet;
 
   Future fetchUserJourneys() async {
     //Check if this is a minishop

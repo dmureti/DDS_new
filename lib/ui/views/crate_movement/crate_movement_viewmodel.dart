@@ -78,7 +78,6 @@ class CrateMovementViewModel extends BaseViewModel {
   String get branch => _branch ?? _userService.user.branch;
   setBranch(var s) {
     _branch = s;
-    print(s);
     notifyListeners();
   }
 

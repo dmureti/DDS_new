@@ -4,7 +4,9 @@ import 'package:distributor/ui/widgets/action_button.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
 import 'package:distributor/ui/widgets/quantity_input/quantity_input_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_hooks/stacked_hooks.dart';
 
 import '../../widgets/dumb_widgets/busy_widget.dart';
 
@@ -84,6 +86,10 @@ class StockTransferRequestView extends StatelessWidget {
                               : Container()
                           : Container(),
                       Divider(),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SearchBar(),
+                      ),
                       model.productList.isNotEmpty
                           ? Expanded(
                               child: ListView.separated(
@@ -191,6 +197,44 @@ class StockTransferRequestView extends StatelessWidget {
                     ],
                   ));
       },
+    );
+  }
+}
+
+class SearchBar extends HookViewModelWidget<StockTransferRequestViewModel> {
+  @override
+  Widget buildViewModelWidget(
+      BuildContext context, StockTransferRequestViewModel viewModel) {
+    var searchString =
+        useTextEditingController(text: viewModel.skuSearchString);
+    return TextFormField(
+      controller: searchString,
+      keyboardType: TextInputType.text,
+      // textInputAction: TextInputAction.en,
+      onChanged: viewModel.updateSearchString,
+      // onTap: () => viewModel.toggleShowSummary(false),
+      // onFieldSubmitted: (val) => viewModel.onFieldSubmitted(val),
+      onEditingComplete: () {
+        //Happens when the user presses the action
+        // viewModel.onEditComplete();
+        //Close the keyboard
+      },
+      decoration: InputDecoration(
+          isDense: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(1.0),
+          ),
+          filled: true,
+          fillColor: Colors.grey[200],
+          hintText: 'Search',
+          prefixIcon: Icon(Icons.search),
+          // hintText: 'Search for an SKU',
+          suffixIcon: IconButton(
+              onPressed: () {
+                searchString.text = '';
+                viewModel.resetSearch();
+              },
+              icon: Icon(Icons.cancel_outlined))),
     );
   }
 }

@@ -11,6 +11,37 @@ class PaymentViewModel extends BaseViewModel {
   final _productService = locator<ProductService>();
   final _dialogService = locator<DialogService>();
   AdhocCartService _adhocCartService = locator<AdhocCartService>();
+  num _total = 0;
+
+  calculateTotal() {
+    // num total = 0;
+    // items.forEach((element) {
+    //   total += element['itemRate'] ?? 0 * element['quantity'];
+    // });
+    // return total;
+    num total = 0;
+    for (int x = 0; x < items.length; x++) {
+      var sku = items[x];
+      if (sku is Map) {
+        total += sku['itemRate'] ?? sku['itemPrice'] * sku['quantity'];
+      } else {
+        total += sku.itemRate ?? sku.itemPrice * sku.quantity;
+      }
+    }
+    return total;
+  }
+
+  get total {
+    items.forEach((element) {
+      if (element is Map) {
+        _total +=
+            element['itemRate'] ?? element['itemPrice'] * element['quantity'];
+      } else {
+        _total += element.itemRate ?? 0 * element.quantity;
+      }
+    });
+    return _total;
+  }
 
   final List items;
   final String ref;
@@ -20,7 +51,7 @@ class PaymentViewModel extends BaseViewModel {
   String _paymentMode;
   String _phoneNumber;
   double _cashValue;
-  double _total;
+
   String _drawerName;
   String _chequeNumber;
 
@@ -31,11 +62,11 @@ class PaymentViewModel extends BaseViewModel {
   String get paymentMode => _paymentMode;
   String get phoneNumber => _phoneNumber ?? "";
   double get cashValue => _cashValue ?? 0;
-  double get total => _total ?? 0;
+
   String get drawerName => _drawerName ?? "";
   String get chequeNumber => _chequeNumber ?? "";
 
-  double get difference => _total - cashValue;
+  double get difference => calculateTotal() - cashValue;
 
   setPaymentMode(var val) {
     _paymentMode = val;
@@ -45,6 +76,7 @@ class PaymentViewModel extends BaseViewModel {
 
   setPhoneNumber(String val) {
     _phoneNumber = val;
+    _adhocCartService.setPhoneNumber(val);
     notifyListeners();
   }
 
@@ -83,7 +115,7 @@ class PaymentViewModel extends BaseViewModel {
       "userTxnNarrative": "string"
     };
     Map<String, dynamic> data = {
-      "amount": total,
+      "amount": calculateTotal(),
       "payment": payment,
       "phoneNumber": phoneNumber
     };
@@ -92,10 +124,13 @@ class PaymentViewModel extends BaseViewModel {
       data.addAll({"dnId": ref});
       //Use the dn processing api
       var result = await _productService.fulfillDeliveryNotePayment(data);
+      // var result = await _productService.postSale(data,
+      //     modeOfPayment: _adhocCartService.paymentMode);
       if (result is CustomException) {
         await _dialogService.showDialog(
             title: 'Place Order Failed', description: result.description ?? "");
       } else {
+        //Refresh the DN details
         _navigationService.back(result: true);
       }
     } else {

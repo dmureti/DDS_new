@@ -66,7 +66,7 @@ class DashboardView extends StatelessWidget {
                                     ),
                                   ),
 
-                                  model.user.hasSalesChannel
+                                  model.isMiniShop
                                       ? Container(
                                           height: 40,
                                           child: Padding(
@@ -79,7 +79,7 @@ class DashboardView extends StatelessWidget {
                                           ),
                                         )
                                       : DashboardViewControllerView(),
-                                  model.user.hasSalesChannel
+                                  model.isMiniShop
                                       ? Container(
                                           height: 330,
                                           child: GridView.count(

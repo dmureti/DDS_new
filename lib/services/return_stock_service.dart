@@ -1,5 +1,6 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/services/api_service.dart';
+import 'package:distributor/services/journey_service.dart';
 import 'package:distributor/services/stock_controller_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:injectable/injectable.dart';
@@ -10,9 +11,13 @@ import 'package:tripletriocore/tripletriocore.dart';
 class ReturnStockService {
   UserService _userService = locator<UserService>();
   ApiService _apiService = locator<ApiService>();
+  final _journeyService = locator<JourneyService>();
   final _dialogService = locator<DialogService>();
   final _stockControllerService = locator<StockControllerService>();
   Api get api => _apiService.api;
+
+  String _branch;
+  String get branch => _branch ?? _userService.user.branch;
 
   User get user => _userService.user;
   String get userChannel => user.salesChannel;
@@ -53,7 +58,9 @@ class ReturnStockService {
     var data = {
       "fromWarehouse": userChannel.isEmpty ? user.branch : userChannel,
       "items": [],
-      "toWarehouse": user.branch
+      "toWarehouse": user.hasSalesChannel
+          ? user.branch
+          : _journeyService.currentJourney.branch
     };
     var result = await api.shopReturn(user.token, stockTransferData: data);
     return result;
@@ -77,10 +84,18 @@ class ReturnStockService {
         });
       }
       // Data for shop return
+      // var data = {
+      //   "fromWarehouse": userChannel,
+      //   "items": _payload.toList(),
+      //   "toWarehouse": user.branch
+      // };
       var data = {
-        "fromWarehouse": userChannel,
+        "fromWarehouse": _journeyService.currentJourney.route ??
+            _userService.user.salesChannel,
         "items": _payload.toList(),
-        "toWarehouse": user.branch
+        "toWarehouse": user.hasSalesChannel
+            ? user.branch
+            : _journeyService.currentJourney.branch,
       };
       var result = await api.shopReturn(user.token, stockTransferData: data);
       if (result is String) {
@@ -89,8 +104,7 @@ class ReturnStockService {
       } else {
         await _dialogService.showDialog(
             title: 'Success',
-            description:
-                'The stock was returned successfully.Use the Pending Stock Transactions Button to commit this transaction.');
+            description: 'The stock was returned successfully.');
         return true;
       }
     }
