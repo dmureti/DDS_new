@@ -23,8 +23,9 @@ class AdhocCartService with ReactiveServiceMixin {
 
   ApplicationParameter get appParams => _apiService.appParams;
 
-  bool get enforceCreditLimit => appParams.enforceCreditLimit;
-  bool get enforceCustomerSecurity => appParams.enforceCustomerSecurity;
+  bool get enforceCreditLimit => appParams?.enforceCreditLimit ?? false;
+  bool get enforceCustomerSecurity =>
+      appParams?.enforceCustomerSecurity ?? false;
 
   UserLocation _userLocation;
   UserLocation get userLocation => _userLocation;
@@ -413,7 +414,8 @@ class AdhocCartService with ReactiveServiceMixin {
   final _initService = locator<InitService>();
 
   get enableAdhocSale =>
-      _initService.appEnv.flavorValues.applicationParameter.enableAdhocSales;
+      _initService.appEnv.flavorValues.applicationParameter?.enableAdhocSales ??
+      true;
 
   fetchAdhocSalesList({DateTime postingDate}) async {
     String route = "";

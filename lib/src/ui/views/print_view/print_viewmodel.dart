@@ -71,8 +71,8 @@ class PrintViewModel extends BaseViewModel {
   AppEnv get appEnv => _initService.appEnv;
   FlavorValues get flavourValues => appEnv.flavorValues;
 
-  double get taxRate => flavourValues.applicationParameter.taxRate;
-  String get currency => flavourValues.applicationParameter.currency;
+  double get taxRate => flavourValues.applicationParameter?.taxRate ?? 0.16;
+  String get currency => flavourValues.applicationParameter?.currency ?? "Kshs";
 
   DateTime _dateTime;
   String _date = "";

@@ -17,8 +17,10 @@ class StockListWidgetViewModel extends BaseViewModel {
   Api get _api => _apiService.api;
 
   List<Product> _productList;
-  bool get enableOffline => _initService
-      .appEnv.flavorValues.applicationParameter.enableOfflineService;
+  bool get enableOffline =>
+      _initService
+          .appEnv.flavorValues.applicationParameter?.enableOfflineService ??
+      false;
 
   StockListWidgetViewModel(bool rebuildTree) : _rebuildTree = rebuildTree {
     if (rebuildTree) {

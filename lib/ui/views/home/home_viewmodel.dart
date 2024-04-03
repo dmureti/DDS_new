@@ -60,7 +60,7 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   }
 
   String get currency =>
-      _initService.appEnv.flavorValues.applicationParameter.currency;
+      _initService.appEnv.flavorValues.applicationParameter?.currency ?? "Kshs";
 
   updateConnectivityStatus(ConnectivityStatus connectivityStatus) {
     _connectivityStatus = connectivityStatus;
@@ -74,8 +74,10 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
   InitService _initService = locator<InitService>();
   AccessControlService _accessControlService = locator<AccessControlService>();
 
-  bool get enableOffline => _initService
-      .appEnv.flavorValues.applicationParameter.enableOfflineService;
+  bool get enableOffline =>
+      _initService
+          .appEnv.flavorValues.applicationParameter?.enableOfflineService ??
+      false;
 
   final _dialogService = locator<DialogService>();
 

@@ -25,7 +25,7 @@ class SalesOrderItemModel extends BaseViewModel {
   bool get isEnabled => product.itemPrice > 0;
 
   String get currency =>
-      _initService.appEnv.flavorValues.applicationParameter.currency;
+      _initService.appEnv.flavorValues.applicationParameter?.currency ?? "Kshs";
 
   /// If the item has a price enable the add item quantity
   addItemQuantity({int val}) {

@@ -98,15 +98,20 @@ _print(QuotationPrintViewModel model, String fontRoot, double fontSize,
     List<pw.Widget> tree = [
       _buildTitle(),
       _buildHeader(image, style),
+      pw.Divider(thickness: 1.5),
       _buildCustomerInfo(model, quotationNumber, quotation),
       pw.SizedBox(height: 10),
+      pw.Divider(thickness: 1.5),
       ..._buildItemsSection(quotationItems, model, style),
+      pw.Divider(thickness: 1.5),
       pw.SizedBox(height: 10),
       _buildTaxInfo(model),
+      pw.Divider(thickness: 1.5),
       pw.SizedBox(height: 10),
       // _buildValidationSection(),
-      pw.SizedBox(height: 10),
-      _buildPaymentFooterInfo()
+      pw.SizedBox(height: 10), pw.Divider(thickness: 1.5),
+      _buildPaymentFooterInfo(),
+      pw.SizedBox(height: 20),
     ];
     widgets.addAll(tree);
   }
@@ -222,7 +227,7 @@ _buildHeader(pw.ImageProvider image, pw.TextStyle style) {
     pw.Column(children: [
       pw.Text('FOURSUM LIMITED', style: style),
       pw.Text('P.O BOX 64443-00620 Nairobi', style: style),
-      pw.Text('Email Address: info@foursumlimited.co.ke', style: style),
+      pw.Text('info@foursumlimited.co.ke', style: style),
       pw.Text('Tel:0719555999,0737644430', style: style),
       pw.Text('PIN:P051969170B', style: style),
     ], crossAxisAlignment: pw.CrossAxisAlignment.start),

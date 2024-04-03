@@ -407,7 +407,7 @@ class PrintView extends StatelessWidget {
       // _buildSpacer(),
       pw.SizedBox(height: 2),
       pw.Text("Powered by DDS ver:${model.versionCode}", style: style),
-      pw.SizedBox(height: 10),
+      pw.SizedBox(height: 1),
     ], crossAxisAlignment: pw.CrossAxisAlignment.center);
   }
 

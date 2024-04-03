@@ -391,7 +391,7 @@ class SummaryDraggableSheetViewModel extends BaseViewModel {
   final _initService = locator<InitService>();
 
   String get currency =>
-      _initService.appEnv.flavorValues.applicationParameter.currency;
+      _initService.appEnv.flavorValues.applicationParameter?.currency ?? "Kshs";
 
   Future placeOrder(
       {Customer customer, SalesOrderRequest salesOrderRequest}) async {
@@ -413,7 +413,7 @@ class SearchBar extends HookViewModelWidget<SalesOrderViewModel> {
       keyboardType: TextInputType.text,
       // textInputAction: TextInputAction.en,
       onChanged: viewModel.updateSearchString,
-      onTap: () => viewModel.toggleShowSummary(false),
+      // onTap: () => viewModel.toggleShowSummary(false),
       onFieldSubmitted: (val) => viewModel.onFieldSubmitted(val),
       onEditingComplete: () {
         //Happens when the user presses the action

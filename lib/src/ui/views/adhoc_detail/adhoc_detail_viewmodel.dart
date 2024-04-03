@@ -23,7 +23,7 @@ class AdhocDetailViewModel extends BaseViewModel {
       locator<StockControllerService>();
 
   String get currency =>
-      _initService.appEnv.flavorValues.applicationParameter.currency;
+      _initService.appEnv.flavorValues.applicationParameter?.currency ?? "Kshs";
 
   List<Product> _productList;
   List<Product> get productList => _productList;
