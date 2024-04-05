@@ -13,14 +13,16 @@ class SalesOrderItemModel extends BaseViewModel {
   double _total = 0.00;
   double get total => _total;
 
-  num _quantity = 0;
+  num _quantity;
   num get quantity => _quantity;
 
   num _maxQuantity;
   num get maxQuantity => _maxQuantity;
-  SalesOrderItemModel({@required this.product, num maxQuantity})
+  SalesOrderItemModel(
+      {@required this.product, num maxQuantity, num initialQuantity})
       : assert(product != null),
-        _maxQuantity = maxQuantity;
+        _maxQuantity = maxQuantity,
+        _quantity = initialQuantity ?? 0;
 
   bool get isEnabled => product.itemPrice > 0;
 

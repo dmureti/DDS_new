@@ -263,6 +263,13 @@ class AdhocCartService with ReactiveServiceMixin {
     _paymentMode.value = val;
   }
 
+  initializeSalesOrderItems(List<Product> productList) {
+    for (int i = 0; i < productList.length; i++) {
+      SalesOrderItem s = SalesOrderItem(item: productList[i], quantity: 0);
+      _items.value.add(s);
+    }
+  }
+
   increaseSalesOrderItems(Product p, quantity) {
     if (_itemsInCart.value.contains(p)) {
       // Get the element that contains the product in the sales item

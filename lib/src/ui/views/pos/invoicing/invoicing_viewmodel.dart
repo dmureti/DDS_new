@@ -1,7 +1,12 @@
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
+import 'package:distributor/core/models/app_models.dart';
+import 'package:distributor/core/models/invoice.dart';
+import 'package:distributor/services/adhoc_cart_service.dart';
 import 'package:distributor/services/stock_controller_service.dart';
+import 'package:distributor/services/user_service.dart';
 import 'package:distributor/src/ui/views/pos/sales_returns/sales_returns_view.dart';
+import 'package:distributor/src/ui/views/print_view/print_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -10,13 +15,31 @@ enum InvoiceType { pending, failed, finalized }
 class InvoicingViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _stockControllerService = locator<StockControllerService>();
+  final _userService = locator<UserService>();
+  final _adhocService = locator<AdhocCartService>();
 
   pushToSAP(invoice) async {
     print("pushed to SAP");
   }
 
-  navigateToPrint(invoice) async {
-    print("pushed to SAP");
+  getAdhocDetail(String referenceNo, String baseType) async {
+    setBusy(true);
+    return await _adhocService.fetchAdhocDetail(
+        referenceNo, _userService.user.token, baseType);
+    setBusy(false);
+  }
+
+  navigateToPrint(invoice, String referenceNo, String baseType) async {
+    AdhocDetail adhocDetail = await getAdhocDetail(referenceNo, baseType);
+    _navigationService.navigateToView(PrintView(
+      invoice: Invoice.fromMap(invoice),
+      deliveryNote: adhocDetail,
+      title: "E-Invoice",
+      customerTIN: "",
+      items: invoice['items'],
+      orderId: referenceNo,
+      user: _userService.user,
+    ));
   }
 
   init() async {

@@ -1,6 +1,6 @@
 name: distributor
 description: Digital Distribution System
-version: 49.3.0+49
+version: 49.3.5+49
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
@@ -74,7 +74,7 @@ dependencies:
   flutter_launcher_icons:
 #  google_ml_kit: ^0.16.3
   camera: ^0.5.8+17
-  geofence_service: ^1.0.3
+#  geofence_service: ^1.0.3
 
 
 

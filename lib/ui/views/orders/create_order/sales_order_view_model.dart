@@ -35,18 +35,12 @@ class SalesOrderViewModel extends ReactiveViewModel {
   ProductService _productService = locator<ProductService>();
   OrderService _orderService = locator<OrderService>();
   NavigationService _navigationService = locator<NavigationService>();
-//  ApiService _apiService = locator<ApiService>();
-//  UserService _userService = locator<UserService>();
-//  Api get _api => _apiService.api;
-//  User get _user => _userService.user;
-
   ProductOrdering _productOrdering = ProductOrdering.alphaAsc;
 
   String _skuSearchString = "";
   String get skuSearchString => _skuSearchString;
 
   List<Product> filteredProductList = <Product>[];
-
   get customerName => _adhocCartService.customerName ?? "Walk In Customer";
 
   // Check if the cart has items
@@ -275,6 +269,11 @@ class SalesOrderViewModel extends ReactiveViewModel {
 
   DialogService _dialogService = locator<DialogService>();
 
+  init() async {
+    await fetchProducts();
+    // _adhocCartService.initializeSalesOrderItems(productList);
+  }
+
   Future fetchProducts() async {
     setBusy(true);
     var result = await _productService.fetchProductsByPriceList(customer);
@@ -338,15 +337,21 @@ class SalesOrderViewModel extends ReactiveViewModel {
     }
   }
 
-  getQuantity(Product product) {
-    print(product.itemCode);
+  getAdhocQuantity(Product product) {
     var result = stockBalanceList.firstWhere((element) {
       print(element.itemCode);
       return element.itemCode.toString().toLowerCase() ==
           product.itemCode.toString().toLowerCase();
     }, orElse: () => null);
-    print(result.initialQuantity);
     return result?.initialQuantity ?? 0;
+  }
+
+  getQuantity(Product product) {
+    var result = salesOrderItems.firstWhere((element) {
+      return element.item.itemCode.toString().toLowerCase() ==
+          product.itemCode.toString().toLowerCase();
+    }, orElse: () => null);
+    return result?.quantity ?? 0;
   }
 
   Future fetchStockBalance() async {

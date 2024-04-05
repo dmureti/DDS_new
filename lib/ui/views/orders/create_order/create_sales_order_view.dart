@@ -36,6 +36,7 @@ class CreateSalesOrderView extends StatelessWidget {
           // ),
           actions: [
             IconButton(onPressed: null, icon: Icon(Icons.list)),
+            // IconButton(onPressed: null, icon: Icon(Icons.list)),
           ],
           title: AppBarColumnTitle(
             mainTitle: 'Place Order',
@@ -88,7 +89,7 @@ class CreateSalesOrderView extends StatelessWidget {
                   ),
       ),
       viewModelBuilder: () => SalesOrderViewModel(customer: customer),
-      onModelReady: (model) => model.fetchProducts(),
+      onModelReady: (model) => model.init(),
     );
   }
 }
@@ -411,13 +412,12 @@ class SearchBar extends HookViewModelWidget<SalesOrderViewModel> {
     return TextFormField(
       controller: searchString,
       keyboardType: TextInputType.text,
-      // textInputAction: TextInputAction.en,
       onChanged: viewModel.updateSearchString,
       // onTap: () => viewModel.toggleShowSummary(false),
-      onFieldSubmitted: (val) => viewModel.onFieldSubmitted(val),
+      // onFieldSubmitted: (val) => viewModel.onFieldSubmitted(val),
       onEditingComplete: () {
         //Happens when the user presses the action
-        viewModel.onEditComplete();
+        // viewModel.onEditComplete();
         //Close the keyboard
       },
       decoration: InputDecoration(
@@ -454,8 +454,9 @@ class _ResultsView extends HookViewModelWidget<SalesOrderViewModel> {
         shrinkWrap: true,
         itemCount: model.productList.length,
         itemBuilder: (context, index) {
+          Product product = model.productList[index];
           return SalesOrderItemWidget(
-            item: model.productList[index],
+            item: product,
             salesOrderViewModel: model,
           );
         });

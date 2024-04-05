@@ -124,7 +124,7 @@ class _ResultsView extends HookViewModelWidget<SalesOrderViewModel> {
             return SalesOrderItemWidget(
               item: product,
               salesOrderViewModel: model,
-              quantity: model.getQuantity(product),
+              quantity: model.getAdhocQuantity(product),
             );
           } else {
             return Container(height: 0);

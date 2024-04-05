@@ -304,8 +304,10 @@ class PrintView extends StatelessWidget {
                     ),
                     pw.SizedBox(width: 5),
                     pw.Container(
-                      child: pw.Text('${deliveryItem['itemRate']}'.toString(),
-                          style: style, textAlign: pw.TextAlign.right),
+                      child: pw.Text(
+                          Helper.formatCurrency(deliveryItem['itemRate']),
+                          style: style,
+                          textAlign: pw.TextAlign.right),
                     ),
                     pw.SizedBox(width: 5),
                     pw.Container(
@@ -543,7 +545,7 @@ class PrintView extends StatelessWidget {
         // drawText: true,
         color: PdfColor.fromHex("#000000"),
         barcode: pw.Barcode.qrCode(),
-        data: model.finalizedInvoice.qrCode.toString(),
+        data: model.finalizedInvoice.verificationCode.toString(),
         // data: "This is a test",
         width: 300,
         height: 300,
