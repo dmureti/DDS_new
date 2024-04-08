@@ -153,7 +153,7 @@ class LoginViewModel extends BaseViewModel {
               'You are currently using ${appVersion.versionCode}. The latest version is ${remoteVersion.versionCode}',
           confirmationTitle: 'Update');
       if (dialogResponse.confirmed) {
-        snackBarService.showSnackbar(message: 'Download started');
+        // snackBarService.showSnackbar(message: 'Download started', title: 'Download started');
         await _versionService.downloadAndUpdate(
             remoteVersion.remoteUrl, remoteVersion.versionCode);
         // snackBarService.showSnackbar(
