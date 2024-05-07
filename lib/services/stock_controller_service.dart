@@ -50,7 +50,9 @@ class StockControllerService {
   /// pending, finalized , failed
   ///
   getInvoices(String type, {DateTime startDate, DateTime endDate}) async {
-    return await _api.getInvoices(_user.token, type);
+    return await _api.getInvoices(_user.token, type,
+        startDate: startDate ?? DateTime.now(),
+        endDate: endDate ?? DateTime.now());
   }
 
 //	Stock balance tab on L1 app is enabled if the user has
