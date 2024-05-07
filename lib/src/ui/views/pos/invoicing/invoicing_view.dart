@@ -57,8 +57,10 @@ class InvoicingView extends StatelessWidget {
                                               height: 50,
                                               child: Row(
                                                 children: [
-                                                  Text("Start: ${Helper()}"),
-                                                  Text("End"),
+                                                  Text(
+                                                      "Start : ${Helper.formatDate(model.startDate)}"),
+                                                  Text(
+                                                      "End : ${Helper.formatDate(model.endDate)}"),
                                                   IconButton(
                                                     icon: Icon(
                                                         Icons.calendar_month),
@@ -82,6 +84,11 @@ class InvoicingView extends StatelessWidget {
                                                       }
                                                     },
                                                   ),
+                                                  IconButton(
+                                                    icon: Icon(Icons.refresh),
+                                                    onPressed: () =>
+                                                        model.refresh(),
+                                                  )
                                                 ],
                                               ),
                                             ),

@@ -101,11 +101,23 @@ class InvoicingViewModel extends BaseViewModel {
     );
   }
 
-  void updateFinalizedOrderRange(DateTimeRange result) {
+  void updateFinalizedOrderRange(DateTimeRange result) async {
     _startDate = result.start;
     _endDate = result.end;
     setBusy(true);
     Future.delayed(Duration(seconds: 2), () => setBusy(false));
+    _finalizedInvoices = await _stockControllerService.getInvoices("finalized",
+        startDate: startDate, endDate: endDate);
+    notifyListeners();
+  }
+
+  void refresh() async {
+    DateTime _startDate = DateTime.now();
+    DateTime _endDate = DateTime.now();
+    setBusy(true);
+    _finalizedInvoices = await _stockControllerService.getInvoices("finalized",
+        startDate: startDate, endDate: endDate);
+        setBusy(false);
     notifyListeners();
   }
 }
