@@ -137,14 +137,14 @@ class _InvoiceTile extends HookViewModelWidget<InvoicingViewModel> {
                                 model.submitReturns(invoice);
                               },
                             ),
-                            ListTile(
-                              title: Text('Print Invoice'),
-                              onTap: () {
-                                model.navigateToPrint(
-                                    invoice, invoice['deliveryNoteId'], "");
-                                Navigator.pop(context);
-                              },
-                            ),
+                            // ListTile(
+                            //   title: Text('Print Invoice'),
+                            //   onTap: () {
+                            //     model.navigateToPrint(
+                            //         invoice, invoice['deliveryNoteId'], "");
+                            //     Navigator.pop(context);
+                            //   },
+                            // ),
                           ],
                         ),
                       ),

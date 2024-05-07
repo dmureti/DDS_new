@@ -121,8 +121,8 @@ class PrintView extends StatelessWidget {
                   model.finalizedInvoice.items,
               style),
           _buildSpacer(),
-          _buildSectionHeader("Tax Details", style),
-          _buildTaxDetails(model, style),
+          // _buildSectionHeader("Tax Details", style),
+          // _buildTaxDetails(model, style),
           _buildSectionHeader("Summary", style),
           _buildSummary(model, style),
           pw.SizedBox(height: 20),
@@ -130,7 +130,7 @@ class PrintView extends StatelessWidget {
           pw.SizedBox(height: 20),
           _buildFooter(model, style),
           pw.SizedBox(height: 20),
-          // _buildSpacer(),
+          _buildSpacer(),
         ];
         widgets.addAll(tree);
       }
@@ -193,8 +193,8 @@ class PrintView extends StatelessWidget {
         _buildSectionHeader("Goods and Services Details", style),
         ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
         _buildSpacer(),
-        _buildSectionHeader("Tax Details", style),
-        _buildTaxDetails(model, style),
+        // _buildSectionHeader("Tax Details", style),
+        // _buildTaxDetails(model, style),
         _buildSectionHeader(
             "Summary", style.copyWith(fontWeight: pw.FontWeight.bold)),
         _buildSummary(model, style),
@@ -285,12 +285,12 @@ class PrintView extends StatelessWidget {
                   mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                   children: [
                     // pw.SizedBox(width: 1),
-                    pw.Container(
-                      width: 30,
-                      child: pw.Text(deliveryItem['itemCode'],
-                          style: style, textAlign: pw.TextAlign.left),
-                    ),
-                    pw.SizedBox(width: 5),
+                    // pw.Container(
+                    //   width: 30,
+                    //   child: pw.Text(deliveryItem['itemCode'],
+                    //       style: style, textAlign: pw.TextAlign.left),
+                    // ),
+                    // pw.SizedBox(width: 5),
                     // pw.Expanded(
                     //   flex: 3,
                     //   child: pw.Text(deliveryItem['itemCode'],
@@ -414,19 +414,37 @@ class PrintView extends StatelessWidget {
   }
 
   _buildSummary(PrintViewModel model, pw.TextStyle style) {
+    double totalTendered =
+        model.finalizedInvoice.gross - model.finalizedInvoice.discount;
+
+    double tax = model.finalizedInvoice?.gross * 0.16 / 1.16;
+    double totalBeforeTax = model.finalizedInvoice.gross - tax;
+
     return pw.Column(children: [
       pw.SizedBox(height: 5),
       pw.Row(children: [
-        pw.Text('Net Amount', style: style),
-        _buildCurrencyWidget(model.finalizedInvoice?.net, style),
+        pw.Text('Subtotal', style: style),
+        _buildCurrencyWidget(totalBeforeTax, style),
       ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
       pw.Row(children: [
         pw.Text('Tax Amount', style: style),
-        _buildCurrencyWidget(model.finalizedInvoice?.tax, style),
+        _buildCurrencyWidget(tax, style),
       ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
       pw.Row(children: [
-        pw.Text('Gross Amount', style: style),
+        pw.Text('Discount', style: style),
+        _buildCurrencyWidget(model.finalizedInvoice?.discount, style),
+      ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
+      pw.Row(children: [
+        pw.Text('Withholding Tax', style: style),
+        _buildCurrencyWidget(model.finalizedInvoice?.withholdingTax, style),
+      ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
+      pw.Row(children: [
+        pw.Text('Total', style: style),
         _buildCurrencyWidget(model.finalizedInvoice?.gross, style),
+      ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
+      pw.Row(children: [
+        pw.Text('Total tendered', style: style),
+        _buildCurrencyWidget(totalTendered, style),
       ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
       pw.SizedBox(height: 5),
       pw.Row(children: [
@@ -456,7 +474,7 @@ class PrintView extends StatelessWidget {
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
           pw.Text('Net Amt', style: style),
-          pw.Text('Tax Amt', style: style),
+          // pw.Text('Tax Amt', style: style),
           pw.Text('Gross Amt', style: style),
         ],
       ),
@@ -464,7 +482,7 @@ class PrintView extends StatelessWidget {
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
           _buildCurrencyWidget(model.finalizedInvoice?.net, style),
-          _buildCurrencyWidget(model.finalizedInvoice?.tax, style),
+          // _buildCurrencyWidget(tax, style),
           _buildCurrencyWidget(model.finalizedInvoice?.gross, style),
         ],
       ),

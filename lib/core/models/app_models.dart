@@ -157,6 +157,8 @@ class AdhocDetail {
   double gross, net, tax = 0.00;
   String deviceNo = "";
   String qrCode = "-";
+  double discount;
+  double withholdingTax;
   String fdn;
   String verificationCode;
   String remarks;
@@ -176,6 +178,8 @@ class AdhocDetail {
       this.customerName,
       this.gross,
       this.net,
+      this.discount,
+      this.withholdingTax,
       this.deviceNo,
       this.tax,
       this.baseType,
@@ -199,9 +203,11 @@ class AdhocDetail {
         baseType: data['baseType'],
         referenceNo: data['referenceNo'],
         warehouseId: data['warehouseId'],
+        withholdingTax: data['withholdingTax'] ?? 0.00,
         deliveryType: data['deliveryType'],
         customerName: data['customerName'] ?? data['customerId'],
         transactionDate: data['transactionDate'],
+        discount: data['discount'] ?? 0.00,
         customerTIN: data['customerTIN'] ?? "",
         customerId: data['customerId'] ?? data['customerName'],
         total: data['total'],

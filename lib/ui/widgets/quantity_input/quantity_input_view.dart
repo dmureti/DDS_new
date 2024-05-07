@@ -41,12 +41,12 @@ class QuantityInput extends StatelessWidget {
                 Text(
                   title,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15),
                 ),
                 Divider(),
-                Text(description),
+                Text(description,
+                    style:
+                        TextStyle(fontWeight: FontWeight.w400, fontSize: 14)),
               ],
             ),
           ),

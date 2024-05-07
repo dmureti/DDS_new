@@ -66,7 +66,7 @@ class ReturnStockService {
     return result;
   }
 
-  returnItems() async {
+  returnItems(List itemsToReturn, {String destinationOutlet}) async {
     DialogResponse dialogResponse = await _dialogService.showConfirmationDialog(
         title: 'Stock Return Confirmation',
         description: 'Are you sure you want to process stock to the branch ?',

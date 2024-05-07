@@ -40,9 +40,10 @@ void main() async {
       flavor: Flavor.fourSum,
       name: '4Sum',
       flavorValues: FlavorValues(
-          // baseUrl: 'https://dds.ddsolutions.tech/dds-backend/api/v1',
+          // https://4sum.ddsolutions.tech/spvdev-backend/api/v1/
+          baseUrl: 'https://4sum.ddsolutions.tech/spvdev-backend/api/v1',
           // baseUrl: 'https://testdds.ddsolutions.tech/dds-backend/api/v1',
-          baseUrl: 'https://4sum.ddsolutions.tech/dds-backend/api/v1',
+          // baseUrl: 'https://4sum.ddsolutions.tech/dds-backend/api/v1',
           applicationParameter: appParam),
     )
   ]);

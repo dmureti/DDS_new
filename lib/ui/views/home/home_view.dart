@@ -91,6 +91,17 @@ class HomeView extends StatelessWidget {
                         ? TransactionPopupView(
                             onSelected: model.onStockBalancePopupSelected)
                         : Container(),
+            model.currentIndex == 4
+                ? IconButton(
+                    icon: Icon(Icons.calendar_month),
+                    onPressed: () async {
+                      var result = await showDateRangePicker(
+                          context: context,
+                          firstDate: DateTime.now().subtract(Duration(days:30)),
+                          lastDate: DateTime.now());
+                    },
+                  )
+                : Container()
 
             // MapIconButton(),
           ],

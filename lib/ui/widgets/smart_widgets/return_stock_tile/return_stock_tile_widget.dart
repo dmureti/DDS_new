@@ -25,27 +25,25 @@ class ReturnStockTileWidget extends StatelessWidget {
                   style: kListStyleItemCount,
                   secondaryStyle: kListStyleItemCount,
                 ),
-                SizedBox(
-                  width: 1,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        product.itemName,
+                        style: kTileLeadingTextStyle,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      SizedBox(
+                        height: 2,
+                      ),
+                      Text(
+                        product.itemCode,
+                        style: kTileSubtitleTextStyle,
+                      ),
+                    ],
+                  ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      product.itemName,
-                      style: kTileLeadingTextStyle,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(
-                      height: 2,
-                    ),
-                    Text(
-                      product.itemCode,
-                      style: kTileSubtitleTextStyle,
-                    ),
-                  ],
-                ),
-                Spacer(),
                 Container(
                   // width: 180,
                   decoration: BoxDecoration(

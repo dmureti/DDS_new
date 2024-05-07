@@ -32,15 +32,7 @@ class PaymentViewModel extends BaseViewModel {
   }
 
   get total {
-    items.forEach((element) {
-      if (element is Map) {
-        _total +=
-            element['itemRate'] ?? element['itemPrice'] * element['quantity'];
-      } else {
-        _total += element.itemRate ?? 0 * element.quantity;
-      }
-    });
-    return _total;
+    return _adhocCartService.calculateTotal();
   }
 
   final List items;

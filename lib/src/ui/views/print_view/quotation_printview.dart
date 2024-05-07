@@ -96,8 +96,9 @@ _print(QuotationPrintViewModel model, String fontRoot, double fontSize,
   List<pw.Widget> widgets = [];
   _buildWidgetTree() {
     List<pw.Widget> tree = [
-      _buildTitle(),
+      // _buildTitle(),
       _buildHeader(image, style),
+      _buildSellersDetail(style),
       pw.Divider(thickness: 1.5),
       _buildCustomerInfo(model, quotationNumber, quotation),
       pw.SizedBox(height: 10),
@@ -109,9 +110,12 @@ _print(QuotationPrintViewModel model, String fontRoot, double fontSize,
       pw.Divider(thickness: 1.5),
       pw.SizedBox(height: 10),
       // _buildValidationSection(),
-      pw.SizedBox(height: 10), pw.Divider(thickness: 1.5),
+      pw.SizedBox(height: 10),
       _buildPaymentFooterInfo(),
       pw.SizedBox(height: 20),
+      pw.Divider(
+        thickness: 2.0,
+      )
     ];
     widgets.addAll(tree);
   }
@@ -139,6 +143,20 @@ _print(QuotationPrintViewModel model, String fontRoot, double fontSize,
   var result = await Printing.layoutPdf(
     onLayout: (PdfPageFormat format) async => pdf.save(),
   );
+}
+
+_buildSellersDetail(
+  pw.TextStyle textStyle,
+) {
+  return pw.Column(children: [
+    pw.SizedBox(height: 5),
+    pw.Text('FOURSUM LIMITED'.toUpperCase(), style: textStyle),
+    pw.Text('P.O BOX 64443-00620 Nairobi'.toUpperCase(), style: textStyle),
+    pw.Text('info@foursumlimited.co.ke', style: textStyle),
+    pw.Text('Tel:0719555999,0737644430,0732', style: textStyle),
+    pw.Text("PIN : P051969170B", style: textStyle),
+    pw.SizedBox(height: 5),
+  ]);
 }
 
 Future<Uint8List> _generatePdf(
@@ -215,22 +233,36 @@ _buildTitle() {
 ///
 /// Branding anc 4Sum contact info
 ///
+// _buildHeader(pw.ImageProvider image, pw.TextStyle style) {
+//   return pw.Row(children: [
+//     pw.Column(children: [
+//       pw.Padding(
+//         child: pw.Container(
+//             child: pw.Image(image, height: 150), width: 200, height: 200),
+//         padding: pw.EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+//       ),
+//     ]),
+//     pw.Column(children: [
+//       pw.Text('FOURSUM LIMITED', style: style),
+//       pw.Text('P.O BOX 64443-00620 Nairobi', style: style),
+//       pw.Text('info@foursumlimited.co.ke', style: style),
+//       pw.Text('Tel:0719555999,0737644430', style: style),
+//       pw.Text('PIN:P051969170B', style: style),
+//     ], crossAxisAlignment: pw.CrossAxisAlignment.start),
+//   ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween);
+// }
+
 _buildHeader(pw.ImageProvider image, pw.TextStyle style) {
   return pw.Row(children: [
-    pw.Column(children: [
-      pw.Padding(
-        child: pw.Container(
-            child: pw.Image(image, height: 150), width: 200, height: 200),
-        padding: pw.EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-      ),
-    ]),
-    pw.Column(children: [
-      pw.Text('FOURSUM LIMITED', style: style),
-      pw.Text('P.O BOX 64443-00620 Nairobi', style: style),
-      pw.Text('info@foursumlimited.co.ke', style: style),
-      pw.Text('Tel:0719555999,0737644430', style: style),
-      pw.Text('PIN:P051969170B', style: style),
-    ], crossAxisAlignment: pw.CrossAxisAlignment.start),
+    pw.Padding(
+      child: pw.Container(
+          child: pw.Image(image, height: 150), width: 300, height: 320),
+      padding: pw.EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+    ),
+    pw.Text('QUOTATION',
+        style: style.copyWith(fontSize: 55, fontWeight: pw.FontWeight.bold)),
+
+    // pw.Placeholder(fallbackHeight: 50, fallbackWidth: 50),
   ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween);
 }
 
@@ -284,29 +316,42 @@ _buildCustomerInfo(
 _buildTaxInfo(QuotationPrintViewModel model) {
   return pw.Column(children: [
     pw.SizedBox(height: 10),
-    pw.Row(children: [
-      pw.Text("Payment Term : Cash"),
-    ]),
+    pw.Row(
+      children: [
+        pw.Text("Payment Term"),
+        pw.Text("Cash"),
+      ],
+      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+    ),
     pw.Column(children: [
+      // pw.Row(
+      //   children: [
+      //     pw.Text('Net:'),
+      //     pw.Text('${model.quotation['net'].toStringAsFixed(2)}'),
+      //   ],
+      // ),
       pw.Row(
-        children: [
-          pw.Text('Amount before tax:'),
-          pw.Text('${model.quotation['net']}'),
-        ],
-      ),
-      pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
           pw.Text('Discount Amount : '),
           pw.Text('${model.quotation['discount'].toStringAsFixed(2)}'),
         ],
       ),
+      // pw.Row(
+      //   children: [
+      //     pw.Text('Withholding : '),
+      //     pw.Text('${model.quotation['withholding'].toStringAsFixed(2)}'),
+      //   ],
+      // ),
       pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
           pw.Text('VAT Amount : '),
-          pw.Text('${model.tax}'),
+          pw.Text('${model.tax.toStringAsFixed(2)}'),
         ],
       ),
       pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
           pw.Text('Withholding VAT : '),
           pw.Text(
@@ -314,9 +359,10 @@ _buildTaxInfo(QuotationPrintViewModel model) {
         ],
       ),
       pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
           pw.Text('Total Amount : '),
-          pw.Text('${model.total}'),
+          pw.Text('${model.total.toStringAsFixed(2)}'),
         ],
       ),
       pw.SizedBox(height: 10),
@@ -360,8 +406,10 @@ _buildPaymentFooterInfo() {
     pw.Text('Eastleigh Account number: 1340280343168'),
     pw.Text('Swift No. EQBLKENA'),
     pw.Text('Pay to Mpesa: Till Number : 8375158'),
+    pw.SizedBox(height: 10),
     pw.Text(
-        'Terms: Goods once sold cannot be returned. All goods belong to Foursum Limited until fully paid for. Signed Terms of Trade Apply.'),
+        'Terms: Goods once sold cannot be returned. All goods belong to Foursum Limited until fully paid for. Signed Terms of Trade Apply.',
+        textAlign: pw.TextAlign.center),
   ]);
 }
 
@@ -388,7 +436,7 @@ _buildItemData(List items, QuotationPrintViewModel model, pw.TextStyle style) {
                   child: pw.Text(item['itemCode'],
                       style: style, textAlign: pw.TextAlign.left),
                 ),
-                pw.SizedBox(width: 5),
+                pw.SizedBox(width: 10),
                 // pw.Expanded(
                 //   flex: 3,
                 //   child: pw.Text(deliveryItem['itemCode'],
@@ -402,13 +450,14 @@ _buildItemData(List items, QuotationPrintViewModel model, pw.TextStyle style) {
                 ),
                 pw.SizedBox(width: 5),
                 pw.Container(
-                  child: pw.Text(item['itemPrice'].toString(),
+                  child: pw.Text(Helper.formatCurrency(item['itemPrice']),
                       style: style, textAlign: pw.TextAlign.right),
                 ),
                 pw.SizedBox(width: 5),
                 pw.Container(
                     child: pw.Text(
-                        (item['itemPrice'] * item['quantity']).toString(),
+                        Helper.formatCurrency(
+                            (item['itemPrice'] * item['quantity'])),
                         style: style,
                         textAlign: pw.TextAlign.left))
               ],

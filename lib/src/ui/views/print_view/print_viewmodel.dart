@@ -52,6 +52,8 @@ class PrintViewModel extends BaseViewModel {
           customerId: result['customerCode'] ?? "",
           net: result['net'],
           tax: result['tax'],
+          discount: result['discount'] ?? 0.00,
+          withholdingTax: result['withholding'] ?? 0.00,
           sellingPriceList: result['sellingPriceList'] ?? "",
           gross: result['gross'],
           fdn: result['fdn'] ?? "");

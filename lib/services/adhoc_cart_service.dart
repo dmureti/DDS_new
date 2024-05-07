@@ -73,7 +73,8 @@ class AdhocCartService with ReactiveServiceMixin {
   String get customerType => _customerType.value;
 
   RxValue<List<Product>> _itemsInCart = RxValue(initial: <Product>[]);
-  List<Product> get itemsInCart => _itemsInCart.value;
+  List<Product> get itemsInCart =>
+      _itemsInCart.value.where((item) => item.quantity > 0).toList();
 
   RxValue<List> _paymentModeDetails = RxValue(initial: []);
   List get paymentModeDetails => _paymentModeDetails.value;
@@ -463,4 +464,26 @@ class AdhocCartService with ReactiveServiceMixin {
   }
 
   void resetCart() {}
+
+  calculateTotal() {
+    num total = 0;
+    for (int i = 0; i < _itemsInCart.value.length; i++) {
+      total += _itemsInCart.value[i].quantity * _itemsInCart.value[i].itemPrice;
+    }
+    return total;
+  }
+
+  void deleteItem(item) {
+    if (_itemsInCart.value.contains(item)) {
+      for (int i = 0; i < _items.value.length; i++) {
+        if (_items.value[i].item == item) {
+          _itemsInCart.value.remove(item);
+          _items.value.removeAt(i);
+          //Update the total
+          _total.value -= item.itemPrice * item.quantity;
+        }
+      }
+    }
+    notifyListeners();
+  }
 }
