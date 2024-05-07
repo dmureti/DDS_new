@@ -49,7 +49,7 @@ class StockControllerService {
   ///
   /// pending, finalized , failed
   ///
-  getInvoices(String type) async {
+  getInvoices(String type, {String startDate, String endDate}) async {
     return await _api.getInvoices(_user.token, type);
   }
 

@@ -7,6 +7,7 @@ import 'package:distributor/services/stock_controller_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:distributor/src/ui/views/pos/sales_returns/sales_returns_view.dart';
 import 'package:distributor/src/ui/views/print_view/print_view.dart';
+import 'package:flutter/src/material/date.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -17,6 +18,12 @@ class InvoicingViewModel extends BaseViewModel {
   final _stockControllerService = locator<StockControllerService>();
   final _userService = locator<UserService>();
   final _adhocService = locator<AdhocCartService>();
+
+  DateTime _startDate = DateTime.now();
+  DateTime _endDate = DateTime.now();
+
+  DateTime get startDate => _startDate;
+  DateTime get endDate => _endDate;
 
   pushToSAP(invoice) async {
     print("pushed to SAP");
@@ -92,5 +99,13 @@ class InvoicingViewModel extends BaseViewModel {
           customerId: invoice['customerCode'],
           baseType: "contract"),
     );
+  }
+
+  void updateFinalizedOrderRange(DateTimeRange result) {
+    _startDate = result.start;
+    _endDate = result.end;
+    setBusy(true);
+    Future.delayed(Duration(seconds: 2), () => setBusy(false));
+    notifyListeners();
   }
 }

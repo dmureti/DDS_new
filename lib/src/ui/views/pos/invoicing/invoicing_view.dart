@@ -1,9 +1,9 @@
 import 'package:distributor/conf/style/lib/text_styles.dart';
+import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/views/pos/invoicing/invoicing_viewmodel.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/empty_content_container.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 
@@ -50,9 +50,48 @@ class InvoicingView extends StatelessWidget {
                                               label:
                                                   'There are no pending invoices.'),
                                         ),
-                                  model.finalizedInvoices.isNotEmpty
-                                      ? _InvoiceTile(model.finalizedInvoices,
-                                          InvoiceType.finalized)
+                                  !model.finalizedInvoices.isNotEmpty
+                                      ? Column(
+                                          children: [
+                                            Container(
+                                              height: 50,
+                                              child: Row(
+                                                children: [
+                                                  Text("Start: ${Helper()}"),
+                                                  Text("End"),
+                                                  IconButton(
+                                                    icon: Icon(
+                                                        Icons.calendar_month),
+                                                    onPressed: () async {
+                                                      var result =
+                                                          await showDateRangePicker(
+                                                              context: context,
+                                                              firstDate: DateTime
+                                                                      .now()
+                                                                  .subtract(
+                                                                      Duration(
+                                                                          days:
+                                                                              30)),
+                                                              lastDate: DateTime
+                                                                  .now());
+                                                      if (result
+                                                          is DateTimeRange) {
+                                                        model
+                                                            .updateFinalizedOrderRange(
+                                                                result);
+                                                      }
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: _InvoiceTile(
+                                                  model.finalizedInvoices,
+                                                  InvoiceType.finalized),
+                                            )
+                                          ],
+                                        )
                                       : Center(
                                           child: EmptyContentContainer(
                                               label:

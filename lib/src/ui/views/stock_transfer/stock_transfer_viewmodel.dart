@@ -3,6 +3,7 @@ import 'package:distributor/services/customer_service.dart';
 import 'package:distributor/services/init_service.dart';
 import 'package:distributor/services/return_stock_service.dart';
 import 'package:distributor/services/stock_controller_service.dart';
+import 'package:distributor/services/user_service.dart';
 import 'package:distributor/traits/contextual_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -16,6 +17,7 @@ class StockTransferViewmodel extends BaseViewModel with ContextualViewmodel {
   final _returnStockService = locator<ReturnStockService>();
   final _navigationService = locator<NavigationService>();
   final _initService = locator<InitService>();
+  final _userService = locator<UserService>();
 
   List<Warehouse> _outletList = <Warehouse>[];
   List<Warehouse> get outletList => _outletList;
@@ -29,6 +31,7 @@ class StockTransferViewmodel extends BaseViewModel with ContextualViewmodel {
   updateSelectedOutlet(var data) {
     _selectedOutlet = data;
     _sourceOutlet = data.name;
+    toWarehouse = data.name;
     notifyListeners();
   }
 
@@ -133,10 +136,31 @@ class StockTransferViewmodel extends BaseViewModel with ContextualViewmodel {
   transferStock() async {
     setBusy(true);
     var result = await _returnStockService.returnItems(returnableItems,
-        destinationOutlet: selectedOutlet.name ?? "");
+        destinationOutlet: toWarehouse);
     setBusy(false);
     _navigationService.back(result: result);
   }
+
+  String get mainOutlet => _userService.user.branch;
+
+  updateStockTransferType(String val) async {
+    _stockTransferType = val;
+    if (val == "main") {
+      _sourceOutlet = mainOutlet;
+      toWarehouse = mainOutlet;
+      // await fetchItems();
+      notifyListeners();
+    }
+    if (val == "interoutlet") {
+      // await fetchItems();
+      notifyListeners();
+    }
+  }
+
+  String toWarehouse;
+
+  String _stockTransferType;
+  String get stockTransferType => _stockTransferType;
 
   void reset() async {
     _returnStockService.reset();

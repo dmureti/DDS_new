@@ -93,10 +93,12 @@ class ReturnStockService {
         "fromWarehouse": _journeyService.currentJourney.route ??
             _userService.user.salesChannel,
         "items": _payload.toList(),
-        "toWarehouse": user.hasSalesChannel
-            ? user.branch
-            : _journeyService.currentJourney.branch,
+        // "toWarehouse": user.hasSalesChannel
+        //     ? user.branch
+        //     : _journeyService.currentJourney.branch,
+        "toWarehouse": destinationOutlet,
       };
+      print(data);
       var result = await api.shopReturn(user.token, stockTransferData: data);
       if (result is String) {
         await _dialogService.showDialog(title: 'Error', description: result);

@@ -480,4 +480,8 @@ class HomeViewModel extends ReactiveViewModel with ContextualViewmodel {
         break;
     }
   }
+
+  void updateFinalizedOrderRange(DateTimeRange result) {
+    print("updating");
+  }
 }
