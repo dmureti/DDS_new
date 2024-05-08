@@ -13,7 +13,8 @@ class PaymentView extends StatelessWidget {
   final List items;
   final double total;
   final String ref;
-  const PaymentView({Key key, this.items, this.total, this.ref})
+  String docType;
+  PaymentView({Key key, this.items, this.total, this.ref, this.docType})
       : super(key: key);
 
   @override
@@ -99,7 +100,7 @@ class PaymentView extends StatelessWidget {
           ),
         );
       },
-      viewModelBuilder: () => PaymentViewModel(items, ref: ref, total: total),
+      viewModelBuilder: () => PaymentViewModel(items, ref: ref, total: total, docType: docType),
     );
   }
 

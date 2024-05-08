@@ -12,6 +12,7 @@ class PaymentViewModel extends BaseViewModel {
   final _dialogService = locator<DialogService>();
   AdhocCartService _adhocCartService = locator<AdhocCartService>();
   num _total = 0;
+  final String docType;
 
   calculateTotal() {
     // num total = 0;
@@ -32,7 +33,11 @@ class PaymentViewModel extends BaseViewModel {
   }
 
   get total {
-    return _adhocCartService.calculateTotal();
+    if (docType == "DN") {
+      return _total;
+    } else {
+      return _adhocCartService.calculateTotal();
+    }
   }
 
   final List items;
@@ -47,7 +52,7 @@ class PaymentViewModel extends BaseViewModel {
   String _drawerName;
   String _chequeNumber;
 
-  PaymentViewModel(this.items, {String ref, double total})
+  PaymentViewModel(this.items, {String ref, double total, this.docType})
       : ref = ref ?? "",
         _total = total ?? 0;
 

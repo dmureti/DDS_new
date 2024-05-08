@@ -237,11 +237,13 @@ class DeliveryNoteViewModel extends BaseViewModel {
         }
         break;
       case 'add_payment':
+        print(deliveryNote.total);
         var paymentSuccess = await _navigationService.navigateToView(
           PaymentView(
             items: deliveryNote.deliveryItems,
             total: deliveryNote.total,
             ref: deliveryNote.deliveryNoteId,
+            docType: "DN",
           ),
         );
         // if (paymentSuccess is bool) if (result == true) {
