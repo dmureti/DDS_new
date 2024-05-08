@@ -7,7 +7,6 @@ import 'package:distributor/services/stock_controller_service.dart';
 import 'package:distributor/services/user_service.dart';
 import 'package:distributor/src/ui/views/pos/sales_returns/sales_returns_view.dart';
 import 'package:distributor/src/ui/views/print_view/print_view.dart';
-import 'package:flutter/src/material/date.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -50,8 +49,8 @@ class InvoicingViewModel extends BaseViewModel {
   }
 
   init() async {
-    await fetchPendingInvoices();
-    await fetchFailedInvoices();
+    // await fetchPendingInvoices();
+    // await fetchFailedInvoices();
     await fetchFinalizedInvoices();
   }
 
@@ -101,23 +100,22 @@ class InvoicingViewModel extends BaseViewModel {
     );
   }
 
-  void updateFinalizedOrderRange(DateTimeRange result) async {
-    _startDate = result.start;
-    _endDate = result.end;
+  void updateFinalizedOrderRange(DateTime result) async {
+    _startDate = result;
     setBusy(true);
-    Future.delayed(Duration(seconds: 2), () => setBusy(false));
     _finalizedInvoices = await _stockControllerService.getInvoices("finalized",
-        startDate: startDate, endDate: endDate);
+        deliveryDate: result, endDate: endDate);
+    setBusy(false);
     notifyListeners();
   }
 
   void refresh() async {
-    DateTime _startDate = DateTime.now();
-    DateTime _endDate = DateTime.now();
+    _startDate = DateTime.now();
+    _endDate = DateTime.now();
     setBusy(true);
     _finalizedInvoices = await _stockControllerService.getInvoices("finalized",
-        startDate: startDate, endDate: endDate);
-        setBusy(false);
+        deliveryDate: startDate, endDate: endDate);
+    setBusy(false);
     notifyListeners();
   }
 }

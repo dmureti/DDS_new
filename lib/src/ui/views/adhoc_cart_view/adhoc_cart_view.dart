@@ -114,7 +114,7 @@ class AdhocCartView extends StatelessWidget {
                                         return QuantityInput(
                                           title: 'Enter Quantity',
                                           minQuantity: 0,
-                                          maxQuantity: item.quantity.toInt(),
+                                          maxQuantity: item.initialQuantity.toInt(),
                                           description:
                                               'How many pcs for ${item.itemName} would you like to order ?',
                                           initialQuantity:

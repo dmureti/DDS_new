@@ -50,48 +50,86 @@ class InvoicingView extends StatelessWidget {
                                               label:
                                                   'There are no pending invoices.'),
                                         ),
-                                  !model.finalizedInvoices.isNotEmpty
+                                  model.finalizedInvoices.isNotEmpty
                                       ? Column(
                                           children: [
+                                            Divider(),
                                             Container(
-                                              height: 50,
-                                              child: Row(
-                                                children: [
-                                                  Text(
-                                                      "Start : ${Helper.formatDate(model.startDate)}"),
-                                                  Text(
-                                                      "End : ${Helper.formatDate(model.endDate)}"),
-                                                  IconButton(
-                                                    icon: Icon(
-                                                        Icons.calendar_month),
-                                                    onPressed: () async {
-                                                      var result =
-                                                          await showDateRangePicker(
-                                                              context: context,
-                                                              firstDate: DateTime
-                                                                      .now()
-                                                                  .subtract(
-                                                                      Duration(
-                                                                          days:
-                                                                              30)),
-                                                              lastDate: DateTime
-                                                                  .now());
-                                                      if (result
-                                                          is DateTimeRange) {
-                                                        model
-                                                            .updateFinalizedOrderRange(
-                                                                result);
-                                                      }
-                                                    },
-                                                  ),
-                                                  IconButton(
-                                                    icon: Icon(Icons.refresh),
-                                                    onPressed: () =>
-                                                        model.refresh(),
-                                                  )
-                                                ],
+                                              height: 40,
+                                              color:
+                                                  Colors.grey.withOpacity(0.3),
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 15.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.grey
+                                                            .withOpacity(0.4),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Row(
+                                                          children: [
+                                                            Text(
+                                                                "${Helper.formatDate(model.startDate)}"),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        IconButton(
+                                                          icon: Icon(
+                                                            Icons
+                                                                .calendar_month,
+                                                            size: 15,
+                                                          ),
+                                                          onPressed: () async {
+                                                            var result = await showDatePicker(
+                                                                context:
+                                                                    context,
+                                                                firstDate: DateTime
+                                                                        .now()
+                                                                    .subtract(Duration(
+                                                                        days:
+                                                                            30)),
+                                                                initialDate:
+                                                                    DateTime
+                                                                        .now(),
+                                                                lastDate:
+                                                                    DateTime
+                                                                        .now());
+
+                                                            if (result
+                                                                is DateTime) {
+                                                              model
+                                                                  .updateFinalizedOrderRange(
+                                                                      result);
+                                                            }
+                                                          },
+                                                        ),
+                                                        IconButton(
+                                                          icon: Icon(
+                                                            Icons.refresh,
+                                                            size: 15,
+                                                          ),
+                                                          onPressed: () =>
+                                                              model.refresh(),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
                                               ),
                                             ),
+                                            Divider(),
                                             Expanded(
                                               child: _InvoiceTile(
                                                   model.finalizedInvoices,
@@ -99,10 +137,93 @@ class InvoicingView extends StatelessWidget {
                                             )
                                           ],
                                         )
-                                      : Center(
-                                          child: EmptyContentContainer(
-                                              label:
-                                                  'There are no finalized invoices.'),
+                                      : Column(
+                                          children: [
+                                            Divider(),
+                                            Container(
+                                              height: 40,
+                                              color:
+                                                  Colors.grey.withOpacity(0.3),
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 15.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.grey
+                                                            .withOpacity(0.4),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Row(
+                                                          children: [
+                                                            Text(
+                                                                "${Helper.formatDate(model.startDate)}"),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        IconButton(
+                                                          icon: Icon(
+                                                            Icons
+                                                                .calendar_month,
+                                                            size: 15,
+                                                          ),
+                                                          onPressed: () async {
+                                                            var result = await showDatePicker(
+                                                                context:
+                                                                    context,
+                                                                firstDate: DateTime
+                                                                        .now()
+                                                                    .subtract(Duration(
+                                                                        days:
+                                                                            30)),
+                                                                initialDate:
+                                                                    DateTime
+                                                                        .now(),
+                                                                lastDate:
+                                                                    DateTime
+                                                                        .now());
+
+                                                            if (result
+                                                                is DateTime) {
+                                                              model
+                                                                  .updateFinalizedOrderRange(
+                                                                      result);
+                                                            }
+                                                          },
+                                                        ),
+                                                        IconButton(
+                                                          icon: Icon(
+                                                            Icons.refresh,
+                                                            size: 15,
+                                                          ),
+                                                          onPressed: () =>
+                                                              model.refresh(),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            Divider(),
+                                            Expanded(
+                                              child: Center(
+                                                child: EmptyContentContainer(
+                                                    label:
+                                                        'There are no finalized invoices.'),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                   model.failedInvoices.isNotEmpty
                                       ? _InvoiceTile(model.failedInvoices,

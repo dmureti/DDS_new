@@ -49,9 +49,9 @@ class StockControllerService {
   ///
   /// pending, finalized , failed
   ///
-  getInvoices(String type, {DateTime startDate, DateTime endDate}) async {
+  getInvoices(String type, {DateTime deliveryDate, DateTime endDate}) async {
     return await _api.getInvoices(_user.token, type,
-        startDate: startDate ?? DateTime.now(),
+        deliveryDate: deliveryDate ?? DateTime.now(),
         endDate: endDate ?? DateTime.now());
   }
 
