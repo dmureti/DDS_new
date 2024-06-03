@@ -102,6 +102,22 @@ class SalesOrderViewModel extends ReactiveViewModel {
     await fetchItems();
   }
 
+  initAdhocCart() async {
+    _items = await fetchAvailableStock()();
+    // _itemsInCart = items;
+    await fetchAvailableStock();
+  }
+
+  fetchAvailableStock() async {
+    setBusy(true);
+    _productList = await _stockControllerService.getStockBalance();
+    //Initialize the stock transfer items with the value of product list
+    _orderedItems = _productList;
+    _items = _productList;
+    // _itemsInCart = _items;
+    setBusy(false);
+  }
+
   fetchItems() async {
     setBusy(true);
     _productList = await _productService.listAllItems();
