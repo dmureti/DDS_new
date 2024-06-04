@@ -103,15 +103,15 @@ class _LoginViewState extends State<LoginView> {
                           //   // width: 150,
                           //   height: 100,
                           // ),
-                          Container(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset(
-                                  'assets/images/dds_logo_horizontal.png'),
-                            ),
-                            // width: 150,
-                            height: 80,
-                          ),
+                          // Container(
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.all(8.0),
+                          //     child: Image.asset(
+                          //         'assets/images/dds_logo_horizontal.png'),
+                          //   ),
+                          //   // width: 150,
+                          //   height: 80,
+                          // ),
                           // Image.asset('asset/images/login.png'),
 
                           // LoginTextField(

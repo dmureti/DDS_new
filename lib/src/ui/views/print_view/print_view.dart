@@ -108,7 +108,7 @@ class PrintView extends StatelessWidget {
       List<pw.Widget> widgets = [];
       _buildWidgetTree() {
         List<pw.Widget> tree = [
-          _buildHeader(image, model, style),
+          // _buildHeader(image, model, style),
           _buildSellersDetail(user, style, model),
           // _buildSectionHeader("URA Information", style),
           // _buildURAInformation(style, model),
@@ -185,7 +185,7 @@ class PrintView extends StatelessWidget {
     _buildWidgetTree() {
       List<pw.Widget> tree = [
         // _buildPrintRef(model, style),
-        _buildHeader(image, model, style),
+        // _buildHeader(image, model, style),
         // _buildSectionHeader("Sellers Detail", style),
         _buildSellersDetail(user, style, model),
         _buildSectionHeader("Buyers Details", style),
@@ -341,11 +341,11 @@ class PrintView extends StatelessWidget {
         : orderId;
     return pw.Column(children: [
       pw.SizedBox(height: 5),
-      pw.Text('FOURSUM LIMITED'.toUpperCase(), style: textStyle),
-      pw.Text('P.O BOX 64443-00620 Nairobi'.toUpperCase(), style: textStyle),
-      pw.Text('info@foursumlimited.co.ke', style: textStyle),
+      pw.Text('DEMO COMPANY LIMITED'.toUpperCase(), style: textStyle),
+      pw.Text('P.O BOX 00000-00020 Nairobi'.toUpperCase(), style: textStyle),
+      pw.Text('info@democompanylimited.co.ke', style: textStyle),
       pw.Text('Tel:0719555999,0737644430,0732', style: textStyle),
-      pw.Text("PIN : P051969170B", style: textStyle),
+      pw.Text("PIN : XXXXXXXXX", style: textStyle),
       pw.Text(user.branch.toUpperCase(), style: textStyle),
       pw.SizedBox(height: 5),
       pw.Row(children: [

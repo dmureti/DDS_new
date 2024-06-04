@@ -99,7 +99,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/logo.png
-    - assets/images/dds_logo_horizontal.png
+#    - assets/images/dds_logo_horizontal.png
     - assets/images/dds_logo.png
     - assets/images/no_journey.png
     - assets/images/mini_logo.png
