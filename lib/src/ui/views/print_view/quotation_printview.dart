@@ -3,12 +3,10 @@ import 'package:distributor/src/ui/views/print_view/quotation_printviewmodel.dar
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:printing/printing.dart';
-import 'package:stacked/stacked.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-import 'package:tripletriocore/tripletriocore.dart';
+import 'package:stacked/stacked.dart';
 
 class QuotationPrintView extends StatelessWidget {
   final quotation;
@@ -97,7 +95,7 @@ _print(QuotationPrintViewModel model, String fontRoot, double fontSize,
   _buildWidgetTree() {
     List<pw.Widget> tree = [
       // _buildTitle(),
-      _buildHeader(image, style),
+      // _buildHeader(image, style),
       _buildSellersDetail(style),
       pw.Divider(thickness: 1.5),
       _buildCustomerInfo(model, quotationNumber, quotation),
@@ -150,11 +148,11 @@ _buildSellersDetail(
 ) {
   return pw.Column(children: [
     pw.SizedBox(height: 5),
-    pw.Text('FOURSUM LIMITED'.toUpperCase(), style: textStyle),
-    pw.Text('P.O BOX 64443-00620 Nairobi'.toUpperCase(), style: textStyle),
-    pw.Text('info@foursumlimited.co.ke', style: textStyle),
+    pw.Text('DEMO COMPANY LIMITED'.toUpperCase(), style: textStyle),
+    pw.Text('P.O BOX 00000-00020 Nairobi'.toUpperCase(), style: textStyle),
+    pw.Text('info@democompanylimited.co.ke', style: textStyle),
     pw.Text('Tel:0719555999,0737644430,0732', style: textStyle),
-    pw.Text("PIN : P051969170B", style: textStyle),
+    pw.Text("PIN : XXXXXXXXX", style: textStyle),
     pw.SizedBox(height: 5),
   ]);
 }
@@ -185,7 +183,7 @@ Future<Uint8List> _generatePdf(
   _buildWidgetTree() {
     List<pw.Widget> tree = [
       _buildTitle(),
-      _buildHeader(image, style),
+      // _buildHeader(image, style),
       _buildCustomerInfo(model, quotationNumber, quotation),
       pw.SizedBox(height: 10),
       ..._buildItemsSection(quotationItems, model, style),
