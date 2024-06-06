@@ -42,6 +42,7 @@ void main() async {
       flavorValues: FlavorValues(
           // baseUrl: 'https://4sum.ddsolutions.tech/spvdev-backend/api/v1',
           baseUrl: 'https://testdds.ddsolutions.tech/spvdev-backend/api/v1',
+          // baseUrl: 'http://63.34.178.251:8888/dds-backend/api/v1',
           //baseUrl: 'https://testdds.ddsolutions.tech/dds-backend/api/v1',
           //baseUrl: 'https://4sum.ddsolutions.tech/dds-backend/api/v1',
           applicationParameter: appParam),
