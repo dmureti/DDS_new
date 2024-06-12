@@ -21,7 +21,7 @@ void main() async {
 
   // Set the application parameters
   ApplicationParameter appParam = ApplicationParameter(
-      enableOfflineService: false,
+      enableOfflineService: true,
       enableFullDelivery: false,
       enforceCreditLimit: false,
       enableCustomDelivery: true,
@@ -40,9 +40,9 @@ void main() async {
       flavor: Flavor.fourSum,
       name: '4Sum',
       flavorValues: FlavorValues(
-          // baseUrl: 'https://4sum.ddsolutions.tech/spvdev-backend/api/v1',
+          baseUrl: 'https://4sum.ddsolutions.tech/spvdev-backend/api/v1',
           // baseUrl: 'https://testdds.ddsolutions.tech/dds-backend/api/v1',
-          baseUrl: 'https://4sum.ddsolutions.tech/dds-backend/api/v1',
+          // baseUrl: 'https://4sum.ddsolutions.tech/dds-backend/api/v1',
           applicationParameter: appParam),
     )
   ]);
