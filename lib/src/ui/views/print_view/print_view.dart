@@ -417,8 +417,14 @@ class PrintView extends StatelessWidget {
     double totalTendered =
         model.finalizedInvoice.gross - model.finalizedInvoice.discount;
 
+    // subtotal - discount * 0.16
+
     double tax = model.finalizedInvoice?.gross * 0.16 / 1.16;
     double totalBeforeTax = model.finalizedInvoice.gross - tax;
+
+    // computed tax
+    double computedTax =
+        (totalBeforeTax - model.finalizedInvoice.discount) * 0.16;
 
     return pw.Column(children: [
       pw.SizedBox(height: 5),
@@ -428,7 +434,7 @@ class PrintView extends StatelessWidget {
       ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
       pw.Row(children: [
         pw.Text('Tax Amount', style: style),
-        _buildCurrencyWidget(tax, style),
+        _buildCurrencyWidget(computedTax, style),
       ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
       pw.Row(children: [
         pw.Text('Discount', style: style),

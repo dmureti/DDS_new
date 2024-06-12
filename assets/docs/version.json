@@ -1,10 +1,10 @@
 {
   "version": {
-    "buildNumber": 5034,
+    "buildNumber": 5036,
     "tenantId": "default",
     "appName": "DDS",
     "packageName": "",
-    "versionCode": "50.3.4",
+    "versionCode": "50.3.6",
     "versionName": "",
     "remoteUrl": "",
     "changeLog": [],
