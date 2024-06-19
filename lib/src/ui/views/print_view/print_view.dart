@@ -100,7 +100,7 @@ class PrintView extends StatelessWidget {
       final marginBottom = 15.0 * PdfPageFormat.mm;
       final marginLeft = 0.0 * PdfPageFormat.mm;
       final marginRight = 0.0 * PdfPageFormat.mm;
-      final pdf = pw.Document(compress: true);
+      final pdf = pw.Document(compress: false);
       final pw.TextStyle style = pw.TextStyle(
         font: ttf,
         fontSize: fontSize,
@@ -177,7 +177,7 @@ class PrintView extends StatelessWidget {
     final marginBottom = 10.0 * PdfPageFormat.mm;
     final marginLeft = 5.0 * PdfPageFormat.mm;
     final marginRight = 5.0 * PdfPageFormat.mm;
-    final pdf = pw.Document(compress: true);
+    final pdf = pw.Document(compress: false);
     final pw.TextStyle style = pw.TextStyle(
       font: ttf,
       fontSize: fontSize,
@@ -426,6 +426,8 @@ class PrintView extends StatelessWidget {
     double computedTax =
         (totalBeforeTax - model.finalizedInvoice.discount) * 0.16;
 
+    double change = model.finalizedInvoice.gross - totalTendered;
+
     return pw.Column(children: [
       pw.SizedBox(height: 5),
       pw.Row(children: [
@@ -451,6 +453,10 @@ class PrintView extends StatelessWidget {
       pw.Row(children: [
         pw.Text('Total tendered', style: style),
         _buildCurrencyWidget(totalTendered, style),
+      ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
+      pw.Row(children: [
+        pw.Text('Change', style: style),
+        _buildCurrencyWidget(change, style),
       ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
       pw.SizedBox(height: 5),
       pw.Row(children: [

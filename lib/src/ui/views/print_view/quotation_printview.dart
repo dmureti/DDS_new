@@ -88,7 +88,7 @@ _print(QuotationPrintViewModel model, String fontRoot, double fontSize,
   final marginBottom = 15.0 * PdfPageFormat.mm;
   final marginLeft = 0.0 * PdfPageFormat.mm;
   final marginRight = 0.0 * PdfPageFormat.mm;
-  final pdf = pw.Document(compress: true);
+  final pdf = pw.Document(compress: false);
   final pw.TextStyle style = pw.TextStyle(
     font: ttf,
     fontSize: fontSize,
@@ -176,7 +176,7 @@ Future<Uint8List> _generatePdf(
   final marginBottom = 10.0 * PdfPageFormat.mm;
   final marginLeft = 5.0 * PdfPageFormat.mm;
   final marginRight = 5.0 * PdfPageFormat.mm;
-  final pdf = pw.Document(compress: true);
+  final pdf = pw.Document(compress: false);
   final pw.TextStyle style = pw.TextStyle(
     font: ttf,
     fontSize: fontSize,

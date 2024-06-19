@@ -21,7 +21,7 @@ void main() async {
 
   // Set the application parameters
   ApplicationParameter appParam = ApplicationParameter(
-      enableOfflineService: true,
+      enableOfflineService: false,
       enableFullDelivery: false,
       enforceCreditLimit: false,
       enableCustomDelivery: true,
