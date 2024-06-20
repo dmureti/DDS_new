@@ -48,20 +48,15 @@ class PrintView extends StatelessWidget {
           body: LayoutBuilder(
             builder: (context, constraints) {
               double height = constraints.maxHeight * PdfPageFormat.mm;
-              double width = constraints.maxWidth;
-              // const width = 2.28346457 * PdfPageFormat.inch;
               double margin = 5 * PdfPageFormat.mm;
               double marginTop = 5 * PdfPageFormat.mm;
               double marginBottom = 5 * PdfPageFormat.mm;
-              double printHeight = 300.0 * PdfPageFormat.mm;
               return PdfPreview(
                 useActions: false,
                 allowSharing: false,
                 canChangePageFormat: false,
                 build: (format) => _generatePdf(
                     format.copyWith(
-                      // height: height * 0.74,
-                      // width: width,
                       marginLeft: margin,
                       marginRight: margin,
                       marginTop: marginTop,
@@ -90,12 +85,9 @@ class PrintView extends StatelessWidget {
 
   _print(PrintViewModel model, String fontRoot, double fontSize) async {
     var result = await model.confirmSale();
-    // var result = true;
     final font = await rootBundle.load(fontRoot);
     final ttf = pw.Font.ttf(font);
     if (result) {
-      const imageProvider = const AssetImage('assets/images/fourSum-logo.png');
-      final image = await flutterImageProvider(imageProvider);
       final width = PdfPageFormat.roll57.availableWidth * PdfPageFormat.mm;
       final marginBottom = 15.0 * PdfPageFormat.mm;
       final marginLeft = 0.0 * PdfPageFormat.mm;
@@ -108,10 +100,7 @@ class PrintView extends StatelessWidget {
       List<pw.Widget> widgets = [];
       _buildWidgetTree() {
         List<pw.Widget> tree = [
-          // _buildHeader(image, model, style),
           _buildSellersDetail(user, style, model),
-          // _buildSectionHeader("URA Information", style),
-          // _buildURAInformation(style, model),
           _buildSectionHeader("Buyers Details", style),
           _buildBuyerDetails(model, style),
           _buildSectionHeader("Goods and Services Details", style),
@@ -121,8 +110,6 @@ class PrintView extends StatelessWidget {
                   model.finalizedInvoice.items,
               style),
           _buildSpacer(),
-          // _buildSectionHeader("Tax Details", style),
-          // _buildTaxDetails(model, style),
           _buildSectionHeader("Summary", style),
           _buildSummary(model, style),
           pw.SizedBox(height: 20),
@@ -143,7 +130,6 @@ class PrintView extends StatelessWidget {
               defaultTextStyle: pw.TextStyle(fontSize: fontSize, font: ttf)),
           pageFormat: PdfPageFormat.roll57.copyWith(
               width: width * 2.65,
-              // width: PdfPageFormat.roll80.width * PdfPageFormat.mm,
               marginBottom: marginBottom,
               marginLeft: marginLeft,
               marginRight: marginRight),
@@ -171,8 +157,6 @@ class PrintView extends StatelessWidget {
     List<pw.Widget> widgets = [];
     final font = await rootBundle.load(fontRoot);
     final ttf = pw.Font.ttf(font);
-    const imageProvider = const AssetImage('assets/images/fourSum-logo.png');
-    final image = await flutterImageProvider(imageProvider);
     final width = PdfPageFormat.roll57.width * PdfPageFormat.mm;
     final marginBottom = 10.0 * PdfPageFormat.mm;
     final marginLeft = 5.0 * PdfPageFormat.mm;
@@ -184,24 +168,17 @@ class PrintView extends StatelessWidget {
     );
     _buildWidgetTree() {
       List<pw.Widget> tree = [
-        // _buildPrintRef(model, style),
-        // _buildHeader(image, model, style),
-        // _buildSectionHeader("Sellers Detail", style),
         _buildSellersDetail(user, style, model),
         _buildSectionHeader("Buyers Details", style),
         _buildBuyerDetails(model, style),
         _buildSectionHeader("Goods and Services Details", style),
         ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
         _buildSpacer(),
-        // _buildSectionHeader("Tax Details", style),
-        // _buildTaxDetails(model, style),
         _buildSectionHeader(
             "Summary", style.copyWith(fontWeight: pw.FontWeight.bold)),
         _buildSummary(model, style),
         pw.SizedBox(height: 20),
-        // _buildFooter(model, style),
         pw.SizedBox(height: 20),
-        // _buildSpacer(),
       ];
       widgets.addAll(tree);
     }
@@ -225,24 +202,6 @@ class PrintView extends StatelessWidget {
                   crossAxisAlignment: pw.CrossAxisAlignment.stretch))),
     );
     return pdf.save();
-  }
-
-  ///
-  /// Build the header of the invoice
-  ///
-  _buildHeader(
-      pw.ImageProvider image, PrintViewModel model, pw.TextStyle style) {
-    return pw.Row(children: [
-      pw.Padding(
-        child: pw.Container(
-            child: pw.Image(image, height: 150), width: 300, height: 320),
-        padding: pw.EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-      ),
-      pw.Text(title.toUpperCase(),
-          style: style.copyWith(fontSize: 55, fontWeight: pw.FontWeight.bold)),
-
-      // pw.Placeholder(fallbackHeight: 50, fallbackWidth: 50),
-    ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween);
   }
 
   _buildBuyerDetails(PrintViewModel model, pw.TextStyle style) {
@@ -284,19 +243,6 @@ class PrintView extends StatelessWidget {
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                   children: [
-                    // pw.SizedBox(width: 1),
-                    // pw.Container(
-                    //   width: 30,
-                    //   child: pw.Text(deliveryItem['itemCode'],
-                    //       style: style, textAlign: pw.TextAlign.left),
-                    // ),
-                    // pw.SizedBox(width: 5),
-                    // pw.Expanded(
-                    //   flex: 3,
-                    //   child: pw.Text(deliveryItem['itemCode'],
-                    //       style: style.copyWith(
-                    //           fontWeight: pw.FontWeight.bold, fontSize: 16)),
-                    // ),
                     pw.Container(
                       width: 20,
                       child: pw.Text(deliveredQty.toString(),
@@ -369,14 +315,6 @@ class PrintView extends StatelessWidget {
               style: textStyle),
         ],
       ),
-      // pw.Row(
-      //   children: [
-      //     pw.Text('Transaction Time : ', style: textStyle),
-      //     pw.Text(
-      //         '${Helper.formatTimeFromString(model.invoice.transactionDate)}',
-      //         style: textStyle),
-      //   ],
-      // ),
       pw.Row(
         children: [
           pw.Text('Type : ', style: textStyle),
@@ -406,7 +344,6 @@ class PrintView extends StatelessWidget {
 
   _buildFooter(PrintViewModel model, pw.TextStyle style) {
     return pw.Column(children: [
-      // _buildSpacer(),
       pw.SizedBox(height: 2),
       pw.Text("Powered by DDS ver:${model.versionCode}", style: style),
       pw.SizedBox(height: 1),
@@ -474,7 +411,6 @@ class PrintView extends StatelessWidget {
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
           pw.Text('Net Amt', style: style),
-          // pw.Text('Tax Amt', style: style),
           pw.Text('Gross Amt', style: style),
         ],
       ),
@@ -482,7 +418,6 @@ class PrintView extends StatelessWidget {
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
           _buildCurrencyWidget(model.finalizedInvoice?.net, style),
-          // _buildCurrencyWidget(tax, style),
           _buildCurrencyWidget(model.finalizedInvoice?.gross, style),
         ],
       ),
@@ -522,15 +457,6 @@ class PrintView extends StatelessWidget {
           pw.Text('${model.invoice.transactionDate}', style: style)
         ],
       ),
-      // pw.Row(
-      //   mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-      //   children: [
-      //     pw.Text('Time', style: style),
-      //     pw.Text(
-      //         '${Helper.formatTimeFromString(model.invoice.transactionDate)}',
-      //         style: style),
-      //   ],
-      // ),
       pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [

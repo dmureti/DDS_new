@@ -36,20 +36,16 @@ class QuotationPrintView extends StatelessWidget {
           body: LayoutBuilder(
             builder: (context, constraints) {
               double height = constraints.maxHeight * PdfPageFormat.mm;
-              double width = constraints.maxWidth;
-              // const width = 2.28346457 * PdfPageFormat.inch;
               double margin = 5 * PdfPageFormat.mm;
               double marginTop = 5 * PdfPageFormat.mm;
               double marginBottom = 5 * PdfPageFormat.mm;
-              double printHeight = 300.0 * PdfPageFormat.mm;
+
               return PdfPreview(
                   useActions: false,
                   allowSharing: false,
                   canChangePageFormat: false,
                   build: (format) => _generatePdf(
                       format.copyWith(
-                        // height: height * 0.74,
-                        // width: width,
                         marginLeft: margin,
                         marginRight: margin,
                         marginTop: marginTop,
@@ -80,8 +76,6 @@ _print(QuotationPrintViewModel model, String fontRoot, double fontSize,
     List quotationItems, String quotationNumber, var quotation) async {
   final font = await rootBundle.load(fontRoot);
   final ttf = pw.Font.ttf(font);
-  const imageProvider = const AssetImage('assets/images/fourSum-logo.png');
-  final image = await flutterImageProvider(imageProvider);
   final width = PdfPageFormat.roll57.availableWidth * PdfPageFormat.mm;
   final marginBottom = 15.0 * PdfPageFormat.mm;
   final marginLeft = 0.0 * PdfPageFormat.mm;
@@ -94,8 +88,6 @@ _print(QuotationPrintViewModel model, String fontRoot, double fontSize,
   List<pw.Widget> widgets = [];
   _buildWidgetTree() {
     List<pw.Widget> tree = [
-      // _buildTitle(),
-      // _buildHeader(image, style),
       _buildSellersDetail(style),
       pw.Divider(thickness: 1.5),
       _buildCustomerInfo(model, quotationNumber, quotation),
@@ -107,7 +99,6 @@ _print(QuotationPrintViewModel model, String fontRoot, double fontSize,
       _buildTaxInfo(model),
       pw.Divider(thickness: 1.5),
       pw.SizedBox(height: 10),
-      // _buildValidationSection(),
       pw.SizedBox(height: 10),
       _buildPaymentFooterInfo(),
       pw.SizedBox(height: 20),
@@ -126,7 +117,6 @@ _print(QuotationPrintViewModel model, String fontRoot, double fontSize,
           defaultTextStyle: pw.TextStyle(fontSize: fontSize, font: ttf)),
       pageFormat: PdfPageFormat.roll57.copyWith(
           width: width * 2.65,
-          // width: PdfPageFormat.roll80.width * PdfPageFormat.mm,
           marginBottom: marginBottom,
           marginLeft: marginLeft,
           marginRight: marginRight),
@@ -138,7 +128,7 @@ _print(QuotationPrintViewModel model, String fontRoot, double fontSize,
       ),
     ),
   );
-  var result = await Printing.layoutPdf(
+  await Printing.layoutPdf(
     onLayout: (PdfPageFormat format) async => pdf.save(),
   );
 }
@@ -168,8 +158,6 @@ Future<Uint8List> _generatePdf(
     double fontSize) async {
   final font = await rootBundle.load(fontRoot);
   final ttf = pw.Font.ttf(font);
-  const imageProvider = const AssetImage('assets/images/fourSum-logo.png');
-  final image = await flutterImageProvider(imageProvider);
   final width = PdfPageFormat.roll57.width * PdfPageFormat.mm;
   final marginBottom = 10.0 * PdfPageFormat.mm;
   final marginLeft = 5.0 * PdfPageFormat.mm;
@@ -183,14 +171,12 @@ Future<Uint8List> _generatePdf(
   _buildWidgetTree() {
     List<pw.Widget> tree = [
       _buildTitle(),
-      // _buildHeader(image, style),
       _buildCustomerInfo(model, quotationNumber, quotation),
       pw.SizedBox(height: 10),
       ..._buildItemsSection(quotationItems, model, style),
       pw.SizedBox(height: 10),
       _buildTaxInfo(model),
       pw.SizedBox(height: 10),
-      // _buildValidationSection(),
       pw.SizedBox(height: 10),
       _buildPaymentFooterInfo()
     ];
@@ -229,42 +215,6 @@ _buildTitle() {
 }
 
 ///
-/// Branding anc 4Sum contact info
-///
-// _buildHeader(pw.ImageProvider image, pw.TextStyle style) {
-//   return pw.Row(children: [
-//     pw.Column(children: [
-//       pw.Padding(
-//         child: pw.Container(
-//             child: pw.Image(image, height: 150), width: 200, height: 200),
-//         padding: pw.EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-//       ),
-//     ]),
-//     pw.Column(children: [
-//       pw.Text('FOURSUM LIMITED', style: style),
-//       pw.Text('P.O BOX 64443-00620 Nairobi', style: style),
-//       pw.Text('info@foursumlimited.co.ke', style: style),
-//       pw.Text('Tel:0719555999,0737644430', style: style),
-//       pw.Text('PIN:P051969170B', style: style),
-//     ], crossAxisAlignment: pw.CrossAxisAlignment.start),
-//   ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween);
-// }
-
-_buildHeader(pw.ImageProvider image, pw.TextStyle style) {
-  return pw.Row(children: [
-    pw.Padding(
-      child: pw.Container(
-          child: pw.Image(image, height: 150), width: 300, height: 320),
-      padding: pw.EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-    ),
-    pw.Text('QUOTATION',
-        style: style.copyWith(fontSize: 55, fontWeight: pw.FontWeight.bold)),
-
-    // pw.Placeholder(fallbackHeight: 50, fallbackWidth: 50),
-  ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween);
-}
-
-///
 /// Customer information
 ///
 _buildCustomerInfo(
@@ -279,16 +229,7 @@ _buildCustomerInfo(
         ], crossAxisAlignment: pw.CrossAxisAlignment.start),
         pw.Row(children: [
           pw.Text("Quotation No: ${quotationNo}"),
-
-          // pw.Text("Validity date: ${Helper.formatDateFromString(DateTime.now().toIso8601String())}"),
-          // pw.Text(''),
-          // pw.Text(''),
-          // pw.Text('KRA PIN Number'),
-          // pw.Text("Your Reference: "),
-          // pw.Text("Delivery Mode: "),
-          // pw.Text("Contact Person Mode: ")
         ], crossAxisAlignment: pw.CrossAxisAlignment.start),
-        // pw.Column(children: [_drawQRCode(model)]),
         pw.Row(children: [
           pw.Text(
               "Document Date: ${Helper.formatDateFromString(DateTime.now().toIso8601String())}"),
@@ -296,14 +237,6 @@ _buildCustomerInfo(
         pw.Column(
           children: [
             pw.Row(children: [
-              // pw.Text("Invoice Number: "),
-              // pw.Text(""),
-              // pw.Row(children: [pw.Text("Control Code: "), pw.Text('')]),
-              // pw.Row(children: [pw.Text("CU Serial Number: "), pw.Text('')]),
-              // pw.Row(children: [pw.Text("Due date: "), pw.Text('')]),
-              // pw.Row(children: [pw.Text("Your Reference: "), pw.Text('')]),
-              // pw.Row(children: [pw.Text("Delivery Mode: "), pw.Text('')]),
-              // pw.Row(children: [pw.Text("Contact Person Mode: "), pw.Text('')]),
               pw.SizedBox(height: 5),
             ], crossAxisAlignment: pw.CrossAxisAlignment.start)
           ],
@@ -322,12 +255,6 @@ _buildTaxInfo(QuotationPrintViewModel model) {
       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
     ),
     pw.Column(children: [
-      // pw.Row(
-      //   children: [
-      //     pw.Text('Net:'),
-      //     pw.Text('${model.quotation['net'].toStringAsFixed(2)}'),
-      //   ],
-      // ),
       pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
@@ -335,12 +262,6 @@ _buildTaxInfo(QuotationPrintViewModel model) {
           pw.Text('${model.quotation['discount'].toStringAsFixed(2)}'),
         ],
       ),
-      // pw.Row(
-      //   children: [
-      //     pw.Text('Withholding : '),
-      //     pw.Text('${model.quotation['withholding'].toStringAsFixed(2)}'),
-      //   ],
-      // ),
       pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
@@ -368,45 +289,19 @@ _buildTaxInfo(QuotationPrintViewModel model) {
   ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween);
 }
 
-_buildValidationSection() {
-  return pw.Row(children: [
-    pw.Column(children: [
-      pw.Text('Prepared By'),
-      pw.Text('Approved By Finance'),
-      pw.Text('Dispatched By'),
-      pw.Text('Delivered By'),
-      pw.Text('Received By'),
-    ], crossAxisAlignment: pw.CrossAxisAlignment.start),
-    pw.Column(children: [
-      pw.Text('Signature'),
-      pw.Text('Signature'),
-      pw.Text('Signature'),
-      pw.Text('Vehicle Reg No'),
-      pw.Text('Signature'),
-    ], crossAxisAlignment: pw.CrossAxisAlignment.start),
-    pw.Column(children: [
-      pw.Text('Date'),
-      pw.Text('Date'),
-      pw.Text('Date'),
-      pw.Text('Signature'),
-      pw.Text('Date'),
-    ], crossAxisAlignment: pw.CrossAxisAlignment.start),
-  ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween);
-}
-
 ///
 /// Render the payment information
 ///
 _buildPaymentFooterInfo() {
   return pw.Column(children: [
     pw.Text(
-        'Pay To Bank: Foursum Limited Bank: Equity Bank (Kenya) Limited Branch:'),
-    pw.Text('Eastleigh Account number: 1340280343168'),
-    pw.Text('Swift No. EQBLKENA'),
-    pw.Text('Pay to Mpesa: Till Number : 8375158'),
+        'Pay To Bank: Demo Company Limited Bank: Local Bank (Kenya) Limited Branch:'),
+    pw.Text('Cemo Account number: 1340280343168'),
+    pw.Text('Swift No. DemoSwiftNo'),
+    pw.Text('Pay to Mpesa: Till Number : Demo Till'),
     pw.SizedBox(height: 10),
     pw.Text(
-        'Terms: Goods once sold cannot be returned. All goods belong to Foursum Limited until fully paid for. Signed Terms of Trade Apply.',
+        'Terms: Goods once sold cannot be returned. All goods belong to Demo Limited until fully paid for. Signed Terms of Trade Apply.',
         textAlign: pw.TextAlign.center),
   ]);
 }
@@ -428,19 +323,12 @@ _buildItemData(List items, QuotationPrintViewModel model, pw.TextStyle style) {
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
-                // pw.SizedBox(width: 1),
                 pw.Container(
                   width: 30,
                   child: pw.Text(item['itemCode'],
                       style: style, textAlign: pw.TextAlign.left),
                 ),
                 pw.SizedBox(width: 10),
-                // pw.Expanded(
-                //   flex: 3,
-                //   child: pw.Text(deliveryItem['itemCode'],
-                //       style: style.copyWith(
-                //           fontWeight: pw.FontWeight.bold, fontSize: 16)),
-                // ),
                 pw.Container(
                   width: 20,
                   child: pw.Text(item['quantity'].toString(),
@@ -466,34 +354,15 @@ _buildItemData(List items, QuotationPrintViewModel model, pw.TextStyle style) {
 
 _buildItemsSection(
     List items, QuotationPrintViewModel model, pw.TextStyle style) {
-  pw.TableRow header = pw.TableRow(
-    children: [
-      pw.Text('Item'),
-      pw.Text('Description'),
-      pw.Text('Qty'),
-      pw.Text('Price'),
-      // pw.Text('Price(VATExc)'),
-      // pw.Text('Disc'),
-      // pw.Text('Tax%'),
-      // pw.Text('VAT Total'),
-      pw.Text('Total')
-    ],
-  );
-  // List<pw.TableRow> _itemDataRows = _buildItemData(items, model, style);
-  // List<pw.TableRow> itemsSectionData = [header];
-  // itemsSectionData.addAll(_itemDataRows);
-  // return pw.Table(children: _buildItemData(items, model, style));
   return _buildItemData(items, model, style);
 }
 
 _drawQRCode(QuotationPrintViewModel model) {
   return pw.Center(
     child: pw.BarcodeWidget(
-      // drawText: true,
       color: PdfColor.fromHex("#000000"),
       barcode: pw.Barcode.qrCode(),
       data: "",
-      // data: "This is a test",
       width: 50,
       height: 50,
     ),
