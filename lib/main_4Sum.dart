@@ -50,5 +50,20 @@ void main() async {
       await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
   SecurityContext.defaultContext
       .setTrustedCertificatesBytes(data.buffer.asUint8List());
+
+  // await SentryFlutter.init(
+  //   (options) {
+  //     options.dsn =
+  //         'https://dc6a134ce7c3892d74db6e51ee4b6274@o4507458625011712.ingest.us.sentry.io/4507458633269248';
+  //     // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+  //     // We recommend adjusting this value in production.
+  //     // options.tracesSampleRate = 1.0;
+  //     // The sampling rate for profiling is relative to tracesSampleRate
+  //     // Setting to 1.0 will profile 100% of sampled transactions:
+  //     // options.profilesSampleRate = 1.0;
+  //     options.useNativeBreadcrumbTracking();
+  //   },
+  //   appRunner: () => runApp(MainApp()),
+  // );
   runApp(MainApp());
 }

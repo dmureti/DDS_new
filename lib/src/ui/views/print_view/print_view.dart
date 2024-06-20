@@ -41,7 +41,16 @@ class PrintView extends StatelessWidget {
             title: Text(title),
             actions: [
               IconButton(
-                  onPressed: () => _print(model, fontRoot, fontSize),
+                  onPressed: () async {
+                    // _print(model, fontRoot, fontSize);
+                    try {
+                      await _print(model, fontRoot, fontSize);
+                    } catch (exception, stackTrace) {
+                      print(exception);
+                      // await sent.Sentry.captureException(exception,
+                      //     stackTrace: stackTrace);
+                    }
+                  },
                   icon: Icon(Icons.print))
             ],
           ),
@@ -58,20 +67,22 @@ class PrintView extends StatelessWidget {
                 useActions: false,
                 allowSharing: false,
                 canChangePageFormat: false,
-                build: (format) => _generatePdf(
-                    format.copyWith(
-                      // height: height * 0.74,
-                      // width: width,
-                      marginLeft: margin,
-                      marginRight: margin,
-                      marginTop: marginTop,
-                      marginBottom: marginBottom,
-                    ),
-                    title,
-                    model,
-                    height,
-                    fontRoot,
-                    fontSize),
+                build: (format) async {
+                  return await _generatePdf(
+                      format.copyWith(
+                        // height: height * 0.74,
+                        // width: width,
+                        marginLeft: margin,
+                        marginRight: margin,
+                        marginTop: marginTop,
+                        marginBottom: marginBottom,
+                      ),
+                      title,
+                      model,
+                      height,
+                      fontRoot,
+                      fontSize);
+                },
                 pageFormats: <String, PdfPageFormat>{
                   'roll57': PdfPageFormat.roll57,
                   'A4': PdfPageFormat.a4,
@@ -95,12 +106,14 @@ class PrintView extends StatelessWidget {
     final ttf = pw.Font.ttf(font);
     if (result) {
       const imageProvider = const AssetImage('assets/images/fourSum-logo.png');
+
       final image = await flutterImageProvider(imageProvider);
       final width = PdfPageFormat.roll57.availableWidth * PdfPageFormat.mm;
       final marginBottom = 15.0 * PdfPageFormat.mm;
       final marginLeft = 0.0 * PdfPageFormat.mm;
       final marginRight = 0.0 * PdfPageFormat.mm;
-      final pdf = pw.Document(compress: false);
+      final pdf = pw.Document(compress: true);
+      // final PdfImage image = PdfImage.jpeg(pdf.document, image: bytes);
       final pw.TextStyle style = pw.TextStyle(
         font: ttf,
         fontSize: fontSize,
@@ -156,8 +169,9 @@ class PrintView extends StatelessWidget {
         ),
       );
       var result = await Printing.layoutPdf(
-        onLayout: (PdfPageFormat format) async => pdf.save(),
+        onLayout: (PdfPageFormat format) async => await pdf.save(),
       );
+      print("layout result is $result");
     }
   }
 
@@ -177,7 +191,7 @@ class PrintView extends StatelessWidget {
     final marginBottom = 10.0 * PdfPageFormat.mm;
     final marginLeft = 5.0 * PdfPageFormat.mm;
     final marginRight = 5.0 * PdfPageFormat.mm;
-    final pdf = pw.Document(compress: false);
+    final pdf = pw.Document(compress: true);
     final pw.TextStyle style = pw.TextStyle(
       font: ttf,
       fontSize: fontSize,
@@ -224,7 +238,7 @@ class PrintView extends StatelessWidget {
                   children: widgets,
                   crossAxisAlignment: pw.CrossAxisAlignment.stretch))),
     );
-    return pdf.save();
+    return await pdf.save();
   }
 
   ///

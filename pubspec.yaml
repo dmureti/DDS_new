@@ -1,6 +1,6 @@
 name: distributor
 description: Digital Distribution System
-version: 50.3.7+50
+version: 50.4.1+50
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
@@ -42,6 +42,7 @@ dependencies:
   #  i18n_extension:
   google_maps_flutter: ^0.5.26+4
   flutter_polyline_points: ^0.2.2
+#  sentry_flutter: 4.0.5
   geolocator:
   geocoding:
   #  flutter_localizations:

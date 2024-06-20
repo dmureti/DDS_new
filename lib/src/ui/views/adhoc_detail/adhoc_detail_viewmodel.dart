@@ -262,7 +262,7 @@ class AdhocDetailViewModel extends BaseViewModel {
         adhocDetail.saleItems.map((e) => SaleItem.fromMap(e)).toList();
   }
 
-  void navigateToPrint() {
+  void navigateToPrint() async{
     CustomerDetail customerDetail = CustomerDetail.fromCustomer(
       Customer(
         id: customerId,
@@ -272,7 +272,7 @@ class AdhocDetailViewModel extends BaseViewModel {
     );
     Invoice _invoice = Invoice.fromAdhocDetail(adhocDetail, currency,
         customerDetail: customerDetail);
-    _navigationService.navigateToView(PrintView(
+    await _navigationService.navigateToView(PrintView(
       invoice: _invoice,
       deliveryNote: adhocDetail,
       title: "E-Invoice",

@@ -161,6 +161,7 @@ class DeliveryNoteViewModel extends BaseViewModel {
                 items: deliveryNote.deliveryItems,
                 total: deliveryNote.total,
                 ref: deliveryNote.deliveryNoteId,
+                docType: "DN",
               ),
             );
             if (paymentSuccess is bool) if (result == true) {
@@ -199,6 +200,7 @@ class DeliveryNoteViewModel extends BaseViewModel {
                 items: deliveryNote.deliveryItems,
                 total: deliveryNote.total,
                 ref: deliveryNote.deliveryNoteId,
+                docType: "DN",
               ));
               await getDeliveryNote();
               _snackbarService.showSnackbar(

@@ -7,7 +7,6 @@ import 'package:printing/printing.dart';
 import 'package:stacked/stacked.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 class QuotationPrintView extends StatelessWidget {
@@ -29,8 +28,16 @@ class QuotationPrintView extends StatelessWidget {
             title: Text('Quotation'),
             actions: [
               IconButton(
-                onPressed: () => _print(model, fontRoot, fontSize,
-                    quotationItems, quotationId, quotation),
+                onPressed: () async{
+                  try {
+                    await _print(model, fontRoot, fontSize,
+                        quotationItems, quotationId, quotation);
+                  } catch (exception, stackTrace) {
+                    print(exception);
+                    // await sent.Sentry.captureException(exception,
+                    //     stackTrace: stackTrace);
+                  }
+                },
                 icon: Icon(Icons.print),
               )
             ],
@@ -88,7 +95,7 @@ _print(QuotationPrintViewModel model, String fontRoot, double fontSize,
   final marginBottom = 15.0 * PdfPageFormat.mm;
   final marginLeft = 0.0 * PdfPageFormat.mm;
   final marginRight = 0.0 * PdfPageFormat.mm;
-  final pdf = pw.Document(compress: false);
+  final pdf = pw.Document(compress: true);
   final pw.TextStyle style = pw.TextStyle(
     font: ttf,
     fontSize: fontSize,
@@ -176,7 +183,7 @@ Future<Uint8List> _generatePdf(
   final marginBottom = 10.0 * PdfPageFormat.mm;
   final marginLeft = 5.0 * PdfPageFormat.mm;
   final marginRight = 5.0 * PdfPageFormat.mm;
-  final pdf = pw.Document(compress: false);
+  final pdf = pw.Document(compress: true);
   final pw.TextStyle style = pw.TextStyle(
     font: ttf,
     fontSize: fontSize,
