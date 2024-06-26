@@ -117,11 +117,11 @@ class PaymentViewModel extends BaseViewModel {
     };
     // Check if the ref is empty
     if (ref.isNotEmpty) {
+      // This is a delivery note
+      // Use the DN processing api
+      setBusy(true);
       data.addAll({"dnId": ref});
-      //Use the dn processing api
       var result = await _productService.fulfillDeliveryNotePayment(data);
-      // var result = await _productService.postSale(data,
-      //     modeOfPayment: _adhocCartService.paymentMode);
       setBusy(false);
       if (result is CustomException) {
         await _dialogService.showDialog(
@@ -131,17 +131,14 @@ class PaymentViewModel extends BaseViewModel {
         _navigationService.back(result: true);
       }
     } else {
-      ///
-      ///@todo Add keys for
-      /// customerId, customerName, dueDate,total,type,deliveryLocation,remarks, sellingPriceList
+      // This is an adhoc sale
+      setBusy(true);
       var result = await _adhocCartService.createPayment();
       setBusy(false);
       if (result is bool) {
         await _dialogService.showDialog(
             title: 'Success', description: 'The sale was posted successfully.');
-        if (result is bool) {
-          _adhocCartService.resetTotal();
-        }
+        _adhocCartService.resetTotal();
         _navigationService.pushNamedAndRemoveUntil(
           Routes.homeView,
           arguments: HomeViewArguments(index: 2),
