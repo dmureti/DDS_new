@@ -93,7 +93,6 @@ class PaymentViewModel extends BaseViewModel {
   }
 
   commit() async {
-    setBusy(true);
     final Map<String, dynamic> payment = {
       "phone": "${phoneNumber}",
       "drawerName": drawerName,
@@ -116,13 +115,14 @@ class PaymentViewModel extends BaseViewModel {
       "payment": payment,
       "phoneNumber": phoneNumber
     };
-    //Check if the ref is empty
+    // Check if the ref is empty
     if (ref.isNotEmpty) {
       data.addAll({"dnId": ref});
       //Use the dn processing api
       var result = await _productService.fulfillDeliveryNotePayment(data);
       // var result = await _productService.postSale(data,
       //     modeOfPayment: _adhocCartService.paymentMode);
+      setBusy(false);
       if (result is CustomException) {
         await _dialogService.showDialog(
             title: 'Place Order Failed', description: result.description ?? "");
@@ -135,6 +135,7 @@ class PaymentViewModel extends BaseViewModel {
       ///@todo Add keys for
       /// customerId, customerName, dueDate,total,type,deliveryLocation,remarks, sellingPriceList
       var result = await _adhocCartService.createPayment();
+      setBusy(false);
       if (result is bool) {
         await _dialogService.showDialog(
             title: 'Success', description: 'The sale was posted successfully.');
@@ -151,6 +152,5 @@ class PaymentViewModel extends BaseViewModel {
       }
       // await _productService.postSale(data, modeOfPayment: paymentMode);
     }
-    setBusy(false);
   }
 }
