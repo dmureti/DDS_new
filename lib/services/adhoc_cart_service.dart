@@ -406,7 +406,7 @@ class AdhocCartService with ReactiveServiceMixin {
           _userService.user.salesChannel ?? _journeyService.currentJourney.route
     };
 
-    var result = await api.makePayment(
+    dynamic result = await api.makePayment(
         modeOfPayment:
             paymentMode == 'INVOICE' ? 'ACCOUNT' : paymentMode.toLowerCase(),
         data: data,
