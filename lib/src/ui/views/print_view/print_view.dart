@@ -450,7 +450,7 @@ class PrintView extends StatelessWidget {
       ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
       pw.Row(children: [
         pw.Text('Tax Amount', style: style),
-        _buildCurrencyWidget(computedTax, style),
+        _buildCurrencyWidget(model.finalizedInvoice?.tax, style),
       ], mainAxisAlignment: pw.MainAxisAlignment.spaceBetween),
       pw.Row(children: [
         pw.Text('Discount', style: style),
