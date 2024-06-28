@@ -1,7 +1,7 @@
 name: distributor
 description: Digital Distribution System
-version: 50.4.3+50
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 50.4.4+50
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -29,7 +29,7 @@ dependencies:
   permission_handler: ^5.0.1+1
   flutter_vector_icons: ^0.2.1
   timeago: ^3.0.2
-  email_validator: '^1.0.5'
+  email_validator: "^1.0.5"
   #date management
   intl: ^0.17.0
   font_awesome_flutter: ^8.5.0
@@ -39,13 +39,12 @@ dependencies:
   #  i18n_extension:
   google_maps_flutter: ^0.5.26+4
   flutter_polyline_points: ^0.2.2
-#  sentry_flutter: 4.0.5
+  #  sentry_flutter: 4.0.5
   geolocator:
   geocoding:
   tripletriocore:
-    path: '../tripletrio_core'
+    path: "../tripletrio_core"
   firebase_core: "^0.7.0"
-
 
   flutter:
     sdk: flutter
@@ -57,16 +56,14 @@ dependencies:
   geoflutterfire: ^2.2.2
   easy_geofencing:
   path_provider:
-#  printing: ^4.1.0
+  #  printing: ^4.1.0
   device_info_plus: 0.5.0
   printing: ^4.1.0
   flutter_device_identifier: ^0.0.1
   flutter_launcher_icons:
-#  google_ml_kit: ^0.16.3
+  #  google_ml_kit: ^0.16.3
   camera: ^0.5.8+17
 #  geofence_service: ^1.0.3
-
-
 
 #  json_serializable: ^4.0.0-nullsafety.0
 
@@ -84,7 +81,6 @@ flutter_launcher_icons:
   image_path: "assets/icon/icon.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
 
-
 flutter:
   uses-material-design: true
   assets:
@@ -100,13 +96,13 @@ flutter:
   fonts:
     - family: BenderRegular
       fonts:
-          - asset: assets/fonts/bender/Bender_regular.ttf
+        - asset: assets/fonts/bender/Bender_regular.ttf
     - family: BenderBold
       fonts:
-          - asset: assets/fonts/bender/Bender_bold.ttf
+        - asset: assets/fonts/bender/Bender_bold.ttf
     - family: BenderLight
       fonts:
-          - asset: assets/fonts/bender/Bender_light.ttf
+        - asset: assets/fonts/bender/Bender_light.ttf
     - family: NerisLight
       fonts:
         - asset: assets/fonts/neris/neris-light.ttf
@@ -130,7 +126,7 @@ flutter:
         - asset: assets/fonts/proxima_nova/normal/ProximaNovaAltExtrabold.otf
     - family: Jetbrains
       fonts:
-          - asset: assets/fonts/jetbrains_mono/JetBrainsMono-Regular.ttf
+        - asset: assets/fonts/jetbrains_mono/JetBrainsMono-Regular.ttf
     - family: JetbrainsMedium
       fonts:
         - asset: assets/fonts/jetbrains_mono/JetBrainsMono-Medium.ttf
