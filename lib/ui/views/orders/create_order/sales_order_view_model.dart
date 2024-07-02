@@ -25,14 +25,20 @@ class SalesOrderViewModel extends ReactiveViewModel {
             element.itemName.toLowerCase() == product.itemName.toLowerCase(),
         orElse: () => product);
     item.updateQuantity(newVal);
-    _adhocCartService.notifyListeners();
+    // _adhocCartService.notifyListeners();
+    notifyListeners();
   }
 
   List _itemsInCart = [];
   List get itemsInCart =>
       _itemsInCart.where((element) => element.quantity > 0).toList();
 
+  bool get hasItems => _adhocCartService.itemsInCart.isNotEmpty;
+
   getTotal(Product product) {
+    if (!_adhocCartService.itemsInCart.contains(product)) {
+      return 0.00;
+    }
     var result = _itemsInCart.firstWhere(
         (element) =>
             element.itemName.toLowerCase() == product.itemName.toLowerCase(),
@@ -300,10 +306,15 @@ class SalesOrderViewModel extends ReactiveViewModel {
     if (_itemsInCart.contains(p)) {
       for (int i = 0; i < _salesOrderItems.length; i++) {
         if (_salesOrderItems[i].item == p) {
-          _salesOrderItems[i].quantity == quantity;
+          // _salesOrderItems[i].quantity == quantity;
           if (quantity == 0) {
             _itemsInCart.remove(p);
             _salesOrderItems.removeAt(i);
+          } else {
+            _itemsInCart.remove(p);
+            _salesOrderItems.removeAt(i);
+            _itemsInCart.add(p);
+            salesOrderItems.add(SalesOrderItem(item: p, quantity: quantity));
           }
         }
       }
@@ -424,6 +435,9 @@ class SalesOrderViewModel extends ReactiveViewModel {
   }
 
   getQuantity(Product product) {
+    if (!_adhocCartService.itemsInCart.contains(product)) {
+      return 0;
+    }
     var result = salesOrderItems.firstWhere((element) {
       return element.item.itemCode.toString().toLowerCase() ==
           product.itemCode.toString().toLowerCase();

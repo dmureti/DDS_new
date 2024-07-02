@@ -1,13 +1,12 @@
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/views/pos/payment_view/payment_viewmodel.dart';
 import 'package:distributor/ui/widgets/action_button.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:distributor/ui/widgets/dumb_widgets/generic_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
-
-import '../../../../../ui/widgets/dumb_widgets/misc_widgets.dart';
 
 class PaymentView extends StatelessWidget {
   final List items;
@@ -90,7 +89,7 @@ class PaymentView extends StatelessWidget {
                       ))
                     : Container(),
                 model.isBusy
-                    ? BusyWidget()
+                    ? Center(child: BusyWidget())
                     : ActionButton(
                         label: 'Finalize',
                         onPressed: () => model.commit(),
@@ -100,7 +99,8 @@ class PaymentView extends StatelessWidget {
           ),
         );
       },
-      viewModelBuilder: () => PaymentViewModel(items, ref: ref, total: total, docType: docType),
+      viewModelBuilder: () =>
+          PaymentViewModel(items, ref: ref, total: total, docType: docType),
     );
   }
 

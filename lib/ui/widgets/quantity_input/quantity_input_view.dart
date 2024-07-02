@@ -155,14 +155,14 @@ class _TextEditingHook extends HookViewModelWidget<QuantityInputViewModel> {
       onChanged: (value) {
         model.updateQuantity(value);
       },
-      // onEditingComplete: () {
-      //   //Close the keyboard
-      //   print('on edit complete');
-      // },
-      // onFieldSubmitted: (val) {
-      //   model.updateQuantity(val);
-      //   print('on edit field submitted');
-      // },
+      onEditingComplete: () {
+        //Close the keyboard
+        print('on edit complete');
+      },
+      onFieldSubmitted: (val) {
+        model.updateQuantity(val);
+        print('on edit field submitted');
+      },
     );
   }
 }

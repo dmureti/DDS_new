@@ -152,6 +152,8 @@ class POSView extends StatelessWidget {
                                           );
                                         },
                                       );
+                                      print(
+                                          "result from quantity input : $result");
                                       if (result != null) {
                                         model.updateQuantity(
                                             product: item, newVal: result);
@@ -219,6 +221,7 @@ class POSView extends StatelessWidget {
                                           );
                                         },
                                       );
+                                      print("the result from $result");
                                       if (result != null) {
                                         model.updateQuantity(
                                             product: item, newVal: result);

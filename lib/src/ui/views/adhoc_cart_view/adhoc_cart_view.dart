@@ -75,6 +75,7 @@ class AdhocCartView extends StatelessWidget {
                                       );
                                     },
                                   );
+
                                   if (result != null) {
                                     model.editQuantityManually(item, result);
                                     model.addToTotal(result * item.itemPrice,
@@ -153,7 +154,7 @@ class AdhocCartView extends StatelessWidget {
                         ),
                         ActionButton(
                           label: 'Continue to Confirmation',
-                          onPressed: model.itemsInCart.isNotEmpty
+                          onPressed: model.hasItems
                               // ? () => model.navigateToAdhocPaymentView()n
                               ? () =>
                                   model.navigateToPOSConfirmationPaymentView()

@@ -475,6 +475,7 @@ class AdhocCartService with ReactiveServiceMixin {
 
   void deleteItem(item) {
     if (_itemsInCart.value.contains(item)) {
+      _itemsInCart.value.remove(item);
       for (int i = 0; i < _items.value.length; i++) {
         if (_items.value[i].item == item) {
           _itemsInCart.value.remove(item);
