@@ -82,6 +82,7 @@ class AdhocCartView extends StatelessWidget {
                                         item: item);
                                     model.updateQuantity(
                                         product: item, newVal: result);
+                                    model.updateAdhocCartService(item, result);
                                   }
                                   // var difference = await showQuantityDialog(
                                   //     quantity: item.quantity, model: null);

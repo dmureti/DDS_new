@@ -25,6 +25,7 @@ class SalesOrderViewModel extends ReactiveViewModel {
             element.itemName.toLowerCase() == product.itemName.toLowerCase(),
         orElse: () => product);
     item.updateQuantity(newVal);
+    // updateAdhocCartService(product, newVal);
     // _adhocCartService.notifyListeners();
     notifyListeners();
   }
@@ -432,6 +433,19 @@ class SalesOrderViewModel extends ReactiveViewModel {
           product.itemCode.toString().toLowerCase();
     }, orElse: () => null);
     return result?.initialQuantity ?? 0;
+  }
+
+  updateAdhocCartService(Product p, quantity) {
+    // Loop through the items in the cart
+    if (_adhocCartService.itemsInCart.isNotEmpty) {
+      for (int i = 0; i < _adhocCartService.items.length; i++) {
+        if (_adhocCartService.items[i].item == p) {
+          // Increase the value of the sales order item
+          _adhocCartService.items[i].quantity = quantity;
+          notifyListeners();
+        }
+      }
+    }
   }
 
   getQuantity(Product product) {
