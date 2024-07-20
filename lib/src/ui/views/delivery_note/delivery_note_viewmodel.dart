@@ -156,6 +156,7 @@ class DeliveryNoteViewModel extends BaseViewModel {
             ),
           );
           if (result) {
+            await getDeliveryNote();
             var paymentSuccess = await _navigationService.navigateToView(
               PaymentView(
                 items: deliveryNote.deliveryItems,
@@ -166,8 +167,8 @@ class DeliveryNoteViewModel extends BaseViewModel {
             );
             if (paymentSuccess is bool) if (result == true) {
               //Navigate to the preview
-              await navigateToPreview();
               await getDeliveryNote();
+              await navigateToPreview();
             }
           }
         }
@@ -196,6 +197,7 @@ class DeliveryNoteViewModel extends BaseViewModel {
             } else {
               //If the delivery was succesfull
               // Navigate to the payment
+              await getDeliveryNote();
               await _navigationService.navigateToView(PaymentView(
                 items: deliveryNote.deliveryItems,
                 total: deliveryNote.total,
@@ -214,7 +216,6 @@ class DeliveryNoteViewModel extends BaseViewModel {
               description:
                   'You have not selected a journey.\nYou need to select a journey to fulfill a delivery');
         }
-
         break;
       case 'partial_delivery':
         var result = await _navigationService.navigateTo(
@@ -239,7 +240,6 @@ class DeliveryNoteViewModel extends BaseViewModel {
         }
         break;
       case 'add_payment':
-        print(deliveryNote.total);
         var paymentSuccess = await _navigationService.navigateToView(
           PaymentView(
             items: deliveryNote.deliveryItems,
@@ -250,8 +250,8 @@ class DeliveryNoteViewModel extends BaseViewModel {
         );
         // if (paymentSuccess is bool) if (result == true) {
         //   //Navigate to the preview
-        await navigateToPreview();
         await getDeliveryNote();
+        await navigateToPreview();
         // }
         break;
       case 'not_possible':

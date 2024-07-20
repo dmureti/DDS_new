@@ -378,7 +378,7 @@ class AdhocCartService with ReactiveServiceMixin {
     Map<String, dynamic> data = {
       "customerId": customerId,
       "customerName": customerName,
-      "items": items
+      "items": items.where((element) => element.quantity > 0)
           .map((e) => {
                 "itemCode": e.item.itemCode,
                 "itemName": e.item.itemName,

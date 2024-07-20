@@ -12,8 +12,9 @@ class PaymentView extends StatelessWidget {
   final List items;
   final double total;
   final String ref;
-  String docType;
-  PaymentView({Key key, this.items, this.total, this.ref, this.docType})
+  final String docType;
+  PaymentView(
+      {Key key, this.items, this.total = 0, this.ref, this.docType = ""})
       : super(key: key);
 
   @override

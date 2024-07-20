@@ -34,10 +34,24 @@ class PaymentViewModel extends BaseViewModel {
 
   get total {
     if (docType == "DN") {
-      return _total;
+      return calculateDNTotal();
     } else {
       return _adhocCartService.calculateTotal();
     }
+  }
+
+  calculateDNTotal() {
+    num orderTotal = 0;
+    // get the number of items
+    int numberOfItems = items.length;
+    for (int x = 0; x < numberOfItems; x++) {
+      var item = items[x];
+      num deliveredQty = item['deliveredQty'] ?? item['quantity'] ?? 0.0;
+      var itemTotal = item['itemRate'] * deliveredQty;
+      //Add this value to the total
+      orderTotal += itemTotal;
+    }
+    return orderTotal;
   }
 
   final List items;
@@ -54,7 +68,7 @@ class PaymentViewModel extends BaseViewModel {
 
   PaymentViewModel(this.items, {String ref, double total, this.docType})
       : ref = ref ?? "",
-        _total = total ?? 0;
+        _total = total;
 
   String get paymentMode => _paymentMode;
   String get phoneNumber => _phoneNumber ?? "";
