@@ -1,0 +1,122 @@
+name: distributor
+description: Digital Distribution System
+version: 29.0.6+29
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+environment:
+  sdk: ">=2.7.0 <3.24.0"
+
+dependencies:
+  qr_flutter: ^4.0.0
+  open_filex:
+  #badges
+  badges: ^2.0.3
+  url_launcher: ^6.0.10
+
+  #http
+  http: ^0.12.0+2
+  #preferences
+  shared_preferences: ^0.5.7+3
+  flutter_speed_dial: ^4.4.0
+  stacked:
+  stacked_services: ^0.8.22+1
+  auto_route:
+  injectable:
+  get_it:
+  stacked_hooks: ^0.1.3+2
+  flutter_hooks: ^0.15.0
+  observable_ish: ^2.1.5
+  permission_handler: ^8.1.6
+  flutter_vector_icons: ^2.0.0
+  timeago: ^3.0.2
+  email_validator: ^3.0.0
+
+  #date management
+  intl: ^0.17.0
+  font_awesome_flutter: ^10.4.0
+  enum_to_string: ^1.0.8
+  get:
+  #  support for translations
+  #  i18n_extension:
+  google_maps_flutter: ^2.0.9
+  flutter_polyline_points: ^0.2.2
+  geolocator:
+  geocoding:
+  #  flutter_localizations:
+  #    sdk: flutter
+  tripletriocore:
+    path: "../tripletrio_core"
+  #  feitan:
+  #    path: '../plugins/feitan'
+  #  feitan_phone:
+  #    path: '../feitan_phone'
+  #    git: 'https://github.com/AlbertKamau/tripletrio_core'
+  firebase_core: ^1.12.0
+  #  firebase_crashlytics: "^0.4.0+1"
+  #  firebase_performance: "^0.5.0+1"
+
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.5
+  responsive_framework: ^0.1.4
+  connectivity_plus: ^2.1.0
+  provider: ^4.3.3
+  cloud_firestore: ^3.1.9
+  geoflutterfire: ^3.0.3
+  easy_geofencing:
+  path_provider:
+  #  printing: ^4.1.0
+  device_info_plus: ^4.0.0
+  printing: ^5.3.0
+
+#  json_serializable: ^4.0.0-nullsafety.0
+
+dev_dependencies:
+  #  test: ^1.15.7
+  build_runner:
+  auto_route_generator: ^1.0.2
+  injectable_generator: ^1.0.7
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/logo.png
+    - assets/images/dds_logo_horizontal.png
+    - assets/images/dds_logo.png
+    - assets/images/no_journey.png
+    - assets/images/mini_logo.png
+    - assets/ca/
+    - assets/docs/version.json
+  fonts:
+    - family: BenderRegular
+      fonts:
+        - asset: assets/fonts/bender/Bender_regular.ttf
+    - family: BenderBold
+      fonts:
+        - asset: assets/fonts/bender/Bender_bold.ttf
+    - family: BenderLight
+      fonts:
+        - asset: assets/fonts/bender/Bender_light.ttf
+    - family: NerisLight
+      fonts:
+        - asset: assets/fonts/neris/neris-light.ttf
+    - family: NerisThin
+      fonts:
+        - asset: assets/fonts/neris/neris-thin.ttf
+    - family: NerisBlack
+      fonts:
+        - asset: assets/fonts/neris/neris-black.ttf
+    - family: ProximaNovaRegular
+      fonts:
+        - asset: assets/fonts/proxima_nova/normal/ProximaNovaAltRegular.otf
+    - family: ProximaTTF
+      fonts:
+        - asset: assets/fonts/proxima_nova/normal/proxima.ttf
+    - family: ProximaNova500
+      fonts:
+        - asset: assets/fonts/proxima_nova/normal/ProximaNovaAltSemibold.otf
+    - family: ProximaNova700
+      fonts:
+        - asset: assets/fonts/proxima_nova/normal/ProximaNovaAltExtrabold.otf

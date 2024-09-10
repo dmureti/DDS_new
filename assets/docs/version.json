@@ -1,0 +1,16 @@
+{
+  "version": {
+    "buildNumber": 2906,
+    "tenantId": "default",
+    "appName": "DDS",
+    "packageName": "",
+    "versionCode": "29.0.6",
+    "versionName": "",
+    "remoteUrl": "",
+    "changeLog": [],
+    "timeout": 2,
+    "autoupdate": false,
+    "enableOffline": false,
+    "enableGeofence": false
+  }
+}
