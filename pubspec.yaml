@@ -40,7 +40,7 @@ dependencies:
   #  i18n_extension:
   google_maps_flutter: ^2.0.9
   flutter_polyline_points: ^0.2.2
-  geolocator:
+  geolocator: 
   geocoding:
   #  flutter_localizations:
   #    sdk: flutter
