@@ -193,61 +193,39 @@ class _LoginViewState extends State<LoginView> {
                             ),
                           ),
 
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 18.0),
-                            child: Row(
-                              children: [
-                                Text('Select Language : '),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Expanded(
-                                  child: DropdownButton(
-                                      isExpanded: true,
-                                      value: model.language,
-                                      items: model.languages
-                                          .map(
-                                            (e) => DropdownMenuItem(
-                                              child: Text(e),
-                                              value: e,
-                                            ),
-                                          )
-                                          .toList(),
-                                      onChanged: model.setLanguage),
-                                ),
-                              ],
-                            ),
-                          ),
+                          // Padding(
+                          //   padding:
+                          //       const EdgeInsets.symmetric(horizontal: 18.0),
+                          //   child: Row(
+                          //     children: [
+                          //       Text('Select Language : '),
+                          //       SizedBox(
+                          //         width: 5,
+                          //       ),
+                          //       Expanded(
+                          //         child: DropdownButton(
+                          //             isExpanded: true,
+                          //             value: model.language,
+                          //             items: model.languages
+                          //                 .map(
+                          //                   (e) => DropdownMenuItem(
+                          //                     child: Text(e),
+                          //                     value: e,
+                          //                   ),
+                          //                 )
+                          //                 .toList(),
+                          //             onChanged: model.setLanguage),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
                           model.passwordValidationMessage == null
                               ? Container()
                               : FormErrorContainer(
                                   errorMsg: model.passwordValidationMessage,
                                 ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              // Padding(
-                              //   padding:
-                              //       const EdgeInsets.only(left: 8.0, top: 5),
-                              //   child: RememberMeCheckbox(),
-                              // ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 8.0, top: 10),
-                                child: TextButton(
-                                    onPressed: model.navigateToForgotPassword,
-                                    child: Text(
-                                      'Reset Password',
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          decoration: TextDecoration.underline),
-                                    )),
-                              )
-                            ],
-                          ),
-                          UIHelper.verticalSpace(10),
+
+                          UIHelper.verticalSpace(18),
                           model.isBusy
                               ? BusyWidget()
                               : ElevatedButton(
@@ -286,22 +264,41 @@ class _LoginViewState extends State<LoginView> {
                                           MaterialStateProperty.all(
                                               kColDDSPrimaryDark)),
                                 ),
+                          // UIHelper.verticalSpace(10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: TextButton(
+                                  onPressed: model.navigateToForgotPassword,
+                                  child: Text(
+                                    'Forgot Password',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        decoration: TextDecoration.underline),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ],
                       ),
                     ),
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: GestureDetector(
-                  onTap: () => model.checkForUpdates(),
-                  child: Text(
-                    'Version : ${model.versionCode}',
-                    style: TextStyle(fontSize: 14, color: Colors.white),
-                  ),
-                ),
-              ),
+              // Align(
+              //   alignment: Alignment.bottomCenter,
+              //   child: GestureDetector(
+              //     onTap: () => model.checkForUpdates(),
+              //     child: Text(
+              //       'Version : ${model.versionCode}',
+              //       style: TextStyle(fontSize: 14, color: Colors.white),
+              //     ),
+              //   ),
+              // ),
               Spacer(),
               model.hasUpdate && !model.isComplete
                   ? Align(
