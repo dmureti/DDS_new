@@ -3,11 +3,10 @@ import 'package:distributor/src/ui/views/print_view/quotation_printviewmodel.dar
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:printing/printing.dart';
-import 'package:stacked/stacked.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:tripletriocore/tripletriocore.dart';
+import 'package:printing/printing.dart';
+import 'package:stacked/stacked.dart';
 
 class QuotationPrintView extends StatelessWidget {
   final quotation;
@@ -28,12 +27,15 @@ class QuotationPrintView extends StatelessWidget {
             title: Text('Quotation'),
             actions: [
               IconButton(
-                onPressed: () async{
+                onPressed: () async {
                   try {
-                    await _print(model, fontRoot, fontSize,
-                        quotationItems, quotationId, quotation);
+                    return await compute(
+                        _print(model, fontRoot, fontSize, quotationItems,
+                            quotationId, quotation),
+                        null);
                   } catch (exception, stackTrace) {
                     print(exception);
+
                     // await sent.Sentry.captureException(exception,
                     //     stackTrace: stackTrace);
                   }
@@ -53,6 +55,9 @@ class QuotationPrintView extends StatelessWidget {
               double printHeight = 300.0 * PdfPageFormat.mm;
               return PdfPreview(
                   useActions: false,
+                  onError: (context) {
+                    return Text("Error");
+                  },
                   allowSharing: false,
                   canChangePageFormat: false,
                   build: (format) => _generatePdf(
@@ -103,7 +108,7 @@ _print(QuotationPrintViewModel model, String fontRoot, double fontSize,
   List<pw.Widget> widgets = [];
   _buildWidgetTree() {
     List<pw.Widget> tree = [
-      // _buildTitle(),
+      _buildTitle(),
       _buildHeader(image, style),
       _buildSellersDetail(style),
       pw.Divider(thickness: 1.5),
@@ -175,40 +180,42 @@ Future<Uint8List> _generatePdf(
     double widgetHeight,
     String fontRoot,
     double fontSize) async {
-  final font = await rootBundle.load(fontRoot);
-  final ttf = pw.Font.ttf(font);
-  const imageProvider = const AssetImage('assets/images/fourSum-logo.png');
-  final image = await flutterImageProvider(imageProvider);
-  final width = PdfPageFormat.roll57.width * PdfPageFormat.mm;
-  final marginBottom = 10.0 * PdfPageFormat.mm;
-  final marginLeft = 5.0 * PdfPageFormat.mm;
-  final marginRight = 5.0 * PdfPageFormat.mm;
-  final pdf = pw.Document(compress: true);
-  final pw.TextStyle style = pw.TextStyle(
-    font: ttf,
-    fontSize: fontSize,
-  );
-  List<pw.Widget> widgets = [];
-  _buildWidgetTree() {
-    List<pw.Widget> tree = [
-      _buildTitle(),
-      _buildHeader(image, style),
-      _buildCustomerInfo(model, quotationNumber, quotation),
-      pw.SizedBox(height: 10),
-      ..._buildItemsSection(quotationItems, model, style),
-      pw.SizedBox(height: 10),
-      _buildTaxInfo(model),
-      pw.SizedBox(height: 10),
-      // _buildValidationSection(),
-      pw.SizedBox(height: 10),
-      _buildPaymentFooterInfo()
-    ];
-    widgets.addAll(tree);
-  }
+  try {
+    final font = await rootBundle.load(fontRoot);
+    final ttf = pw.Font.ttf(font);
+    const imageProvider = const AssetImage('assets/images/fourSum-logo.png');
+    final image = await flutterImageProvider(imageProvider);
+    final width = PdfPageFormat.roll57.width * PdfPageFormat.mm;
+    final marginBottom = 10.0 * PdfPageFormat.mm;
+    final marginLeft = 5.0 * PdfPageFormat.mm;
+    final marginRight = 5.0 * PdfPageFormat.mm;
+    final pdf = pw.Document(compress: true);
+    final pw.TextStyle style = pw.TextStyle(
+      font: ttf,
+      fontSize: fontSize,
+    );
+    List<pw.Widget> widgets = [];
+    _buildWidgetTree() {
+      List<pw.Widget> tree = [
+        _buildTitle(),
+        _buildHeader(image, style),
+        _buildSellersDetail(style),
+        _buildCustomerInfo(model, quotationNumber, quotation),
+        pw.SizedBox(height: 10),
+        //..._buildItemsSection(quotationItems, model, style),
+        pw.SizedBox(height: 10),
+        _buildTaxInfo(model),
+        pw.SizedBox(height: 10),
+        // _buildValidationSection(),
+        pw.SizedBox(height: 10),
+        _buildPaymentFooterInfo()
+      ];
+      widgets.addAll(tree);
+    }
 
-  _buildWidgetTree();
-  pdf.addPage(
-    pw.Page(
+    _buildWidgetTree();
+    pdf.addPage(
+      pw.Page(
         theme: pw.ThemeData(
             header0: pw.TextStyle(fontWeight: pw.FontWeight.bold),
             paragraphStyle: pw.TextStyle(fontSize: fontSize),
@@ -222,9 +229,13 @@ Future<Uint8List> _generatePdf(
             child: pw.Column(
                 mainAxisSize: pw.MainAxisSize.max,
                 children: widgets,
-                crossAxisAlignment: pw.CrossAxisAlignment.stretch))),
-  );
-  return pdf.save();
+                crossAxisAlignment: pw.CrossAxisAlignment.stretch)),
+      ),
+    );
+    return await pdf.save();
+  } catch (e) {
+    print(e);
+  }
 }
 
 ///
@@ -232,7 +243,7 @@ Future<Uint8List> _generatePdf(
 ///
 _buildTitle() {
   return pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
-    pw.Text('Quotation',
+    pw.Text('',
         style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 40))
   ]);
 }

@@ -75,12 +75,16 @@ class QuotationPrintViewModel extends BaseViewModel {
 
   init() async {
     setBusy(true);
+
     // await fetchDeviceInfo();
     await _getVersion();
     // calculateGrossAmount();
     getCurrentDateTime();
     calculateGross();
+
     calculateNet();
+    //Run isolates
+
     calculateTax();
     setBusy(false);
   }

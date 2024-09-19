@@ -1,6 +1,7 @@
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/core/models/invoice.dart';
 import 'package:distributor/src/ui/views/print_view/print_viewmodel.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
@@ -44,7 +45,8 @@ class PrintView extends StatelessWidget {
                   onPressed: () async {
                     // _print(model, fontRoot, fontSize);
                     try {
-                      await _print(model, fontRoot, fontSize);
+                      return await compute(
+                          _print(model, fontRoot, fontSize), null);
                     } catch (exception, stackTrace) {
                       print(exception);
                       // await sent.Sentry.captureException(exception,
@@ -205,7 +207,7 @@ class PrintView extends StatelessWidget {
         _buildSectionHeader("Buyers Details", style),
         _buildBuyerDetails(model, style),
         _buildSectionHeader("Goods and Services Details", style),
-        ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
+        // ..._buildGoodsAndServices(items ?? deliveryNote.deliveryItems, style),
         _buildSpacer(),
         // _buildSectionHeader("Tax Details", style),
         // _buildTaxDetails(model, style),
