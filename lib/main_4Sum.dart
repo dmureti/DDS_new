@@ -6,7 +6,6 @@ import 'package:distributor/main.dart';
 import 'package:distributor/ui/setup_snackbar_ui.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
 import 'services/init_service.dart';
@@ -46,10 +45,10 @@ void main() async {
           applicationParameter: appParam),
     )
   ]);
-  ByteData data =
-      await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
-  SecurityContext.defaultContext
-      .setTrustedCertificatesBytes(data.buffer.asUint8List());
+  // ByteData data =
+  //     await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
+  // SecurityContext.defaultContext
+  //     .setTrustedCertificatesBytes(data.buffer.asUint8List());
 
   // await SentryFlutter.init(
   //   (options) {
@@ -65,5 +64,15 @@ void main() async {
   //   },
   //   appRunner: () => runApp(MainApp()),
   // );
+  HttpOverrides.global = new MyHttpOverrides();
   runApp(MainApp());
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
 }
