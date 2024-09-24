@@ -49,7 +49,7 @@ class InvoicingViewModel extends BaseViewModel {
   }
 
   init() async {
-    // await fetchPendingInvoices();
+    await fetchPendingInvoices();
     // await fetchFailedInvoices();
     await fetchFinalizedInvoices();
   }
@@ -78,7 +78,11 @@ class InvoicingViewModel extends BaseViewModel {
 
   fetchFailedInvoices() async {
     setBusy(true);
-    _failedInvoices = await _stockControllerService.getInvoices("failed");
+    // _failedInvoices = await _stockControllerService.getInvoices("failed");
+    var result = await _stockControllerService.getInvoices("failed");
+    if(result is List){
+      _failedInvoices = result;
+    }
     setBusy(false);
     notifyListeners();
   }
