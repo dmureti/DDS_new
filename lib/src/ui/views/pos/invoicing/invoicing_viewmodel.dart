@@ -50,7 +50,7 @@ class InvoicingViewModel extends BaseViewModel {
 
   init() async {
     await fetchPendingInvoices();
-    // await fetchFailedInvoices();
+    await fetchFailedInvoices();
     await fetchFinalizedInvoices();
   }
 
