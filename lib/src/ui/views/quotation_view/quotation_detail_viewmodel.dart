@@ -78,7 +78,8 @@ class QuotationDetailViewModel extends BaseViewModel {
               })
           .toList(),
       "quotationId": quotationId,
-      "dueDate": DateTime.parse(quotation['dueDate']).toUtc().toIso8601String(),
+      // "dueDate": DateTime.parse(quotation['dueDate']).toUtc().toIso8601String(),
+      "dueDate":"",
       "warehouse": "",
       "remarks": "Order Created from Quotation",
     };
