@@ -1,8 +1,7 @@
 import 'package:distributor/src/ui/views/quotation_view/confirm_quotation_viewmodel.dart';
-import 'package:distributor/src/ui/views/quotation_view/quotation_viewmodel.dart';
 import 'package:distributor/ui/widgets/action_button.dart';
+import 'package:distributor/ui/widgets/dumb_widgets/busy_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
@@ -95,10 +94,12 @@ class ConfirmQuotationView extends StatelessWidget {
                   itemCount: model.orderedItems.length,
                 ),
               ),
-              ActionButton(
-                label: 'Generate Quotation',
-                onPressed: () => model.generateQuotation(),
-              )
+              model.isBusy
+                  ? BusyWidget()
+                  : ActionButton(
+                      label: 'Generate Quotation',
+                      onPressed: () => model.generateQuotation(),
+                    )
             ],
           ),
         );
