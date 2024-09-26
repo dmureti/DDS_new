@@ -26,6 +26,7 @@ class Invoice {
   String verificationCode;
   String remarks;
   String mode;
+  num invoiceNumber;
 
   String get customerName => customerDetail.customerName;
   String get sellerName => sellerDetail.sellerName;
@@ -51,6 +52,7 @@ class Invoice {
       this.transactionType,
       this.discount,
       this.withholdingTax,
+      this.invoiceNumber,
       CustomerDetail customerDetail,
       SellerDetail sellerDetail,
       String transactionDate})
@@ -123,9 +125,15 @@ class Invoice {
     double withholding = data['withholding'] ?? 0.00;
     String deliveryStatus = data['deliveryStatus'];
     double tax = data['tax'] ?? 0.00;
-    
+    num invoiceNumber = data['invoiceNumber'] ?? 0;
+
     return Invoice(
-        items: items, id: id, discount: discount, withholdingTax: withholding, tax:tax);
+        items: items,
+        id: id,
+        discount: discount,
+        withholdingTax: withholding,
+        tax: tax,
+        invoiceNumber: invoiceNumber);
   }
 }
 
