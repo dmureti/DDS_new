@@ -351,6 +351,13 @@ _buildTaxInfo(QuotationPrintViewModel model) {
       pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
+          pw.Text('Subtotal : '),
+          pw.Text('${model.net.toStringAsFixed(2)}'),
+        ],
+      ),
+      pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+        children: [
           pw.Text('Discount Amount : '),
           pw.Text('${model.quotation['discount'].toStringAsFixed(2)}'),
         ],
@@ -376,6 +383,7 @@ _buildTaxInfo(QuotationPrintViewModel model) {
               '${model.quotation['withHoldingTax']?.toStringAsFixed(2) ?? ""}'),
         ],
       ),
+
       pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
@@ -449,12 +457,12 @@ _buildItemData(List items, QuotationPrintViewModel model, pw.TextStyle style) {
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
                 // pw.SizedBox(width: 1),
-                pw.Container(
-                  width: 30,
-                  child: pw.Text(item['itemCode'],
-                      style: style, textAlign: pw.TextAlign.left),
-                ),
-                pw.SizedBox(width: 10),
+                // pw.Container(
+                //   width: 30,
+                //   child: pw.Text(item['itemCode'],
+                //       style: style, textAlign: pw.TextAlign.left),
+                // ),
+                // pw.SizedBox(width: 10),
                 // pw.Expanded(
                 //   flex: 3,
                 //   child: pw.Text(deliveryItem['itemCode'],
