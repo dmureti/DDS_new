@@ -102,8 +102,13 @@ class PrintView extends StatelessWidget {
   }
 
   _print(PrintViewModel model, String fontRoot, double fontSize) async {
-    var result = await model.confirmSale();
-    // var result = true;
+    var result = false;
+    if (model.invoice.transactionStatus.toLowerCase() != "completed") {
+      result = await model.confirmSale();
+    } else {
+      result = true;
+    }
+
     final font = await rootBundle.load(fontRoot);
     final ttf = pw.Font.ttf(font);
     if (result) {
