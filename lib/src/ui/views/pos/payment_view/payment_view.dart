@@ -93,7 +93,17 @@ class PaymentView extends StatelessWidget {
                     ? Center(child: BusyWidget())
                     : ActionButton(
                         label: 'Finalize',
-                        onPressed: () => model.commit(),
+                        onPressed: model.paymentMode != null &&
+                                model.paymentMode.toLowerCase() == "cash"
+                            ? () {
+                                if (model.cashValue < model.total) {
+                                  print("less");
+                                  return null;
+                                } else {
+                                  model.commit();
+                                }
+                              }
+                            : () => model.commit(),
                       )
               ],
             ),
@@ -132,8 +142,41 @@ class PaymentView extends StatelessWidget {
 class _CashPaymentModeWidget extends HookViewModelWidget<PaymentViewModel> {
   @override
   Widget buildViewModelWidget(BuildContext context, PaymentViewModel model) {
-    return ListView(
-      children: [Text('')],
+    var controller = useTextEditingController();
+    return Column(
+      children: [
+        TextFormField(
+          controller: controller,
+          keyboardType: TextInputType.number,
+          onChanged: model.setCashAmount,
+          decoration: InputDecoration(
+              isDense: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(1.0),
+              ),
+              filled: true,
+              fillColor: Colors.grey[200],
+              label: Text(
+                'Amount',
+              ),
+              hintText: 'Amount'),
+        ),
+        SizedBox(height: 10),
+        model.change > 0
+            ? Row(
+                children: [
+                  Text('Change : Refund Kshs '),
+                  Text(model.change.toStringAsFixed(2)),
+                ],
+              )
+            : Row(
+                children: [
+                  Text('Request : Kshs '),
+                  Text(model.change.abs().toStringAsFixed(2)),
+                  Text(' to finalize the transaction.'),
+                ],
+              )
+      ],
     );
   }
 }
