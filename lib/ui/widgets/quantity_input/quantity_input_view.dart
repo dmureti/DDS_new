@@ -130,21 +130,21 @@ class _TextEditingHook extends HookViewModelWidget<QuantityInputViewModel> {
   Widget buildViewModelWidget(
       BuildContext context, QuantityInputViewModel model) {
     var controller =
-        useTextEditingController(text: model.initialQuantity.toString());
+        useTextEditingController();
     return TextFormField(
       autofocus: true,
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-          suffixIcon: IconButton(
-            icon: Icon(
-              Icons.refresh_outlined,
-              color: Colors.grey,
-            ),
-            onPressed: () {
-              model.resetQuantity();
-              controller.text = model.quantity.toString();
-            },
-          ),
+          // suffixIcon: IconButton(
+          //   icon: Icon(
+          //     Icons.refresh_outlined,
+          //     color: Colors.grey,
+          //   ),
+          //   onPressed: () {
+          //     model.resetQuantity();
+          //     controller.text = model.quantity.toString();
+          //   },
+          // ),
           focusedBorder: OutlineInputBorder(
               borderSide:
                   BorderSide(color: Colors.grey.withOpacity(0.5), width: 1)),
