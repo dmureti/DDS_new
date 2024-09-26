@@ -13,7 +13,6 @@ class QuotationDetailViewModel extends BaseViewModel {
   final String quotationId;
 
   void navigateToPrint() {
-
     // CustomerDetail customerDetail = CustomerDetail.fromCustomer(
     //   Customer(
     //     id: customerId,
@@ -24,7 +23,6 @@ class QuotationDetailViewModel extends BaseViewModel {
     // Invoice _invoice = Invoice.fromAdhocDetail(adhocDetail, currency,
     //     customerDetail: customerDetail);
     _navigationService.navigateToView(
-
       QuotationPrintView(
         quotation: quotation,
         quotationId: quotationId,
