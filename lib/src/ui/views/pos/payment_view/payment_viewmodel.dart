@@ -91,8 +91,30 @@ class PaymentViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  bool _displayDifferenceString = false;
+  bool get displayDifferenceString => _displayDifferenceString;
+
+  get change => cashValue - total;
+
+  handleCashTransactions() {
+    if (cashValue < total) {
+      _displayDifferenceString = false;
+      notifyListeners();
+      return null;
+    } else if (cashValue > total) {
+      var difference = total - cashValue;
+      // Display the difference
+      _displayDifferenceString = true;
+    } else {
+      commit();
+    }
+  }
+
   setCashAmount(String val) {
     _cashValue = double.parse(val);
+    if (cashValue < total) {
+      //disable the finalize
+    }
     notifyListeners();
   }
 
