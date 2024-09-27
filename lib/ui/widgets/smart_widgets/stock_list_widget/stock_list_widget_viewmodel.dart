@@ -16,7 +16,7 @@ class StockListWidgetViewModel extends BaseViewModel {
 
   Api get _api => _apiService.api;
 
-  List<Product> _productList;
+  List<Product> _productList = <Product>[];
   bool get enableOffline =>
       _initService
           .appEnv.flavorValues.applicationParameter?.enableOfflineService ??
@@ -39,7 +39,12 @@ class StockListWidgetViewModel extends BaseViewModel {
     }
   }
 
-  List<Product> get productList => _productList;
+  List<Product> get productList {
+    if(_productList.isNotEmpty){
+      _productList.sort((a,b)=>a.itemCode.compareTo(b.itemCode));
+    }
+    return  _productList;
+  }
 
   final bool _rebuildTree;
   get rebuildTree => _rebuildTree ?? false;
@@ -59,6 +64,7 @@ class StockListWidgetViewModel extends BaseViewModel {
     if (result is List<Product>) {
       if (user.hasSalesChannel) {
         _productList = result;
+
       } else {
         _productList = result
             .where((element) =>
