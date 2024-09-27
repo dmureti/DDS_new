@@ -179,9 +179,7 @@ class PaymentViewModel extends BaseViewModel {
           arguments: HomeViewArguments(index: 2),
         );
       } else if (result is CustomException) {
-        await _dialogService.showDialog(
-            } else {
-            title: 'Error', description: result.description);
+        await _dialogService.showDialog(title: 'Error', description: result.description);
       }
       // await _productService.postSale(data, modeOfPayment: paymentMode);
     }
