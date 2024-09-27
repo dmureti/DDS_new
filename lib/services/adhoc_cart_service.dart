@@ -373,7 +373,7 @@ class AdhocCartService with ReactiveServiceMixin {
 
   get customerName => _customerName.value;
 
-  createPayment() async {
+  createPayment({var cashValue}) async {
     // await getCurrentLocation();
     Map<String, dynamic> data = {
       "customerId": customerId,
