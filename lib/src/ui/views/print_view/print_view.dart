@@ -447,7 +447,7 @@ class PrintView extends StatelessWidget {
     double computedTax =
         (totalBeforeTax - model.finalizedInvoice.discount) * 0.16;
 
-    double change = model.finalizedInvoice.gross - totalTendered;
+    double change = (model.finalizedInvoice.gross + model.finalizedInvoice.discount) - totalTendered;
 
     return pw.Column(children: [
       pw.SizedBox(height: 5),
