@@ -169,13 +169,13 @@ class _CashPaymentModeWidget extends HookViewModelWidget<PaymentViewModel> {
                   Text(model.change.toStringAsFixed(2)),
                 ],
               )
-            : Row(
+            : model.change < 0 ? Row(
                 children: [
                   Text('Request : Kshs '),
                   Text(model.change.abs().toStringAsFixed(2)),
                   Text(' to finalize the transaction.'),
                 ],
-              )
+              ) : Container()
       ],
     );
   }
