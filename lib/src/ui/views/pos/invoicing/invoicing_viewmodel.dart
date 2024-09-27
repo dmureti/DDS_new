@@ -119,7 +119,7 @@ class InvoicingViewModel extends BaseViewModel {
     var result = await api.finalizeSale(token: token, invoiceId: invoice['id']);
     if (result is APIResponse) {
       await _dialogService.showDialog(
-          title: result.error ?? "An error occurred",
+          title: "An error occurred",
           description: result.errorMessage ?? "Unknown error");
     } else {
       AdhocDetail _adhocDetail = AdhocDetail(
