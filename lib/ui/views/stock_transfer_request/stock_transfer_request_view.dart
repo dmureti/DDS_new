@@ -185,8 +185,9 @@ class StockTransferRequestView extends StatelessWidget {
                                 },
                               ),
                             )
-                          : Center(
-                              child: EmptyContentContainer(
+                          : model.stockTransferType == null ?
+                              Center(child: EmptyContentContainer(label: 'Select an outlet type'),)
+                          : Center(child: EmptyContentContainer(
                                   label: 'No SKUs found for the outlet.')),
                       ActionButton(
                         label: 'Continue',
