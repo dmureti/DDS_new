@@ -105,7 +105,6 @@ class PaymentViewModel extends BaseViewModel {
       var difference = total - cashValue;
       // Display the difference
       _displayDifferenceString = true;
-    } else {
       commit();
     }
   }
@@ -169,7 +168,7 @@ class PaymentViewModel extends BaseViewModel {
     } else {
       // This is an adhoc sale
       setBusy(true);
-      var result = await _adhocCartService.createPayment();
+      var result = await _adhocCartService.createPayment(cashValue : cashValue);
       setBusy(false);
       if (result is bool) {
         await _dialogService.showDialog(
@@ -181,6 +180,7 @@ class PaymentViewModel extends BaseViewModel {
         );
       } else if (result is CustomException) {
         await _dialogService.showDialog(
+            } else {
             title: 'Error', description: result.description);
       }
       // await _productService.postSale(data, modeOfPayment: paymentMode);
