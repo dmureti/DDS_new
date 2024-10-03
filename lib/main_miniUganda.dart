@@ -41,6 +41,7 @@ void main() async {
       name: 'miniUg',
       flavorValues: FlavorValues(
           baseUrl: 'http://34.252.102.87:8888/dds-backend/api/v1',
+          // baseUrl: 'http://34.252.102.87:8888/dds-backend/api/v1',
           applicationParameter: appParam),
     )
   ]);

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/app/router.gr.dart';
 import 'package:distributor/core/enums.dart';

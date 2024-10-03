@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:distributor/core/models/invoice.dart';
 import 'package:distributor/src/ui/views/print_view/print_invoice_viewmodel.dart';
 import 'package:flutter/services.dart';
@@ -47,7 +49,8 @@ class PrintInvoiceView extends StatelessWidget {
                   useActions: false,
                   allowSharing: false,
                   canChangePageFormat: false,
-                  build: (format) => _generatePdf(model));
+                  // build: (format) => _generatePdf(model));
+                  build: (format) async => await _generatePdf(model));
             },
           ),
         );

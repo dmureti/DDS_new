@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/core/models/invoice.dart';
 import 'package:distributor/src/ui/views/print_view/print_viewmodel.dart';
@@ -55,7 +57,8 @@ class PrintView extends StatelessWidget {
                 useActions: false,
                 allowSharing: false,
                 canChangePageFormat: false,
-                build: (format) => _generatePdf(
+                // build: (format) => _generatePdf(
+                build: (format) async => await _generatePdf(
                     format.copyWith(
                       marginLeft: margin,
                       marginRight: margin,

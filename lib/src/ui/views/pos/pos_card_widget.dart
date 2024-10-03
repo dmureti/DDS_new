@@ -36,10 +36,17 @@ class POSCardWidget extends StatelessWidget {
                                 )
                               : Container(),
                           Placeholder(
+                              // color: Colors.transparent,
+                              // child: Container(
+                              //   color: Colors.grey.withOpacity(0.5),
+                              // )),
                               color: Colors.transparent,
-                              child: Container(
-                                color: Colors.grey.withOpacity(0.5),
-                              )),
+                            fallbackWidth: double.infinity,
+                            fallbackHeight: double.infinity,
+                          ),
+                          Container(
+                            color: Colors.grey.withOpacity(0.5),
+                          ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(

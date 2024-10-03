@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:distributor/app/locator.dart';
 import 'package:distributor/core/models/app_version.dart';
