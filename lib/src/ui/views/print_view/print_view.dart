@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/core/models/invoice.dart';
 import 'package:distributor/src/ui/views/print_view/print_viewmodel.dart';

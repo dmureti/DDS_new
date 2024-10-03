@@ -26,21 +26,22 @@ class POSView extends StatelessWidget {
                 onPressed: model.navigateToScannerView,
                 tooltip: 'Use Barcode',
                 icon: Icon(
-                  Icons.barcode_reader,
+                  // Icons.barcode_reader,
+                  Icons.qr_code_scanner,
                 ),
               ),
               IconButton(
                 onPressed: model.itemsInCart.isEmpty
                     ? null
                     : () => model.navigateToCart(model.itemsInCart),
-                icon: Badge(
-                  child: Icon(Icons.shopping_cart),
-                  label: Text(model.itemsInCart.length.toString()),
-                  isLabelVisible: !model.itemsInCart.isEmpty,
-                  backgroundColor: model.itemsInCart.isEmpty
-                      ? Colors.transparent
-                      : Colors.red,
-                ),
+                // icon: Badge(
+                //   child: Icon(Icons.shopping_cart),
+                //   label: Text(model.itemsInCart.length.toString()),
+                //   isLabelVisible: !model.itemsInCart.isEmpty,
+                //   backgroundColor: model.itemsInCart.isEmpty
+                //       ? Colors.transparent
+                //       : Colors.red,
+                // ),
               )
             ],
           ),

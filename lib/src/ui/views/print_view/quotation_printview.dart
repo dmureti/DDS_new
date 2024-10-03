@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:distributor/core/helper.dart';
 import 'package:distributor/src/ui/views/print_view/quotation_printviewmodel.dart';
 import 'package:flutter/foundation.dart';
