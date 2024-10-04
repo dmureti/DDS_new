@@ -17,7 +17,7 @@ class SalesOrderViewModel extends ReactiveViewModel {
   StockControllerService _stockControllerService =
       locator<StockControllerService>();
 
-  checkIfStockExists(Product product) {
+  checkIfStockExists(Product product)  {
     Product p = _stockBalanceList.firstWhere(
         (element) => element.itemCode == product.itemCode,
         orElse: () => null);
@@ -326,7 +326,7 @@ class SalesOrderViewModel extends ReactiveViewModel {
           product.itemCode.toString().toLowerCase();
     }, orElse: () => null);
     print(result.runtimeType);
-    return result?.quantity ?? 0;
+    return result?.initialQuantity ?? 0;
   }
 
   Future fetchStockBalance() async {

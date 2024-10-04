@@ -19,7 +19,7 @@ class JourneyConsole extends StatelessWidget {
                     Container(
                       width: double.infinity,
                       height: 70,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         gradient: LinearGradient(
                           stops: [0, 0.9],
                           begin: Alignment.bottomCenter,

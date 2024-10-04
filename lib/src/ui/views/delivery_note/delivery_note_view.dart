@@ -28,7 +28,7 @@ class DeliveryNoteView extends StatelessWidget {
                   mainTitle: model.deliveryStop.customerId,
                   subTitle: model.deliveryStop.deliveryNoteId,
                 ),
-                bottom: TabBar(
+                bottom: const TabBar(
                   tabs: [
                     Tab(
                       child: Text(
@@ -116,13 +116,13 @@ class DeliveryNoteView extends StatelessWidget {
               body: TabBarView(
                 children: [
                   model.deliveryNote == null
-                      ? Center(child: BusyWidget())
+                      ? const Center(child: BusyWidget())
                       : Container(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Container(
-                                margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                                margin: const EdgeInsets.fromLTRB(5, 10, 5, 10),
                                 child: Material(
                                   type: MaterialType.card,
                                   color: Colors.white,
@@ -138,7 +138,7 @@ class DeliveryNoteView extends StatelessWidget {
                                           children: <Widget>[
                                             Text(
                                               'Order No : ${model.deliveryStop.deliveryNoteId}',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w700),
                                             ),
@@ -155,17 +155,17 @@ class DeliveryNoteView extends StatelessWidget {
                                                       Text(
                                                         'fulfilled'
                                                             .toUpperCase(),
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             color:
                                                                 Colors.purple,
                                                             fontWeight:
                                                                 FontWeight
                                                                     .w700),
                                                       ),
-                                                      SizedBox(
+                                                      const SizedBox(
                                                         width: 5,
                                                       ),
-                                                      Icon(
+                                                      const Icon(
                                                         Icons
                                                             .access_time_rounded,
                                                         size: 15,

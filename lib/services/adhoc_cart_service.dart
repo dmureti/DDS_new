@@ -53,8 +53,11 @@ class AdhocCartService with ReactiveServiceMixin {
       // if (showAirtel) {
       //   _modes.add('EQUITEL');
       // }
+      // _modes.addAll(
+      //   ['CASH', 'INVOICE'],
+      // );
       _modes.addAll(
-        ['CASH', 'INVOICE'],
+        ['CASH'],
       );
       return _modes;
     } else {

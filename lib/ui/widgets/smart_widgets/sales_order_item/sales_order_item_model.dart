@@ -16,6 +16,9 @@ class SalesOrderItemModel extends BaseViewModel {
   num _quantity = 0;
   num get quantity => _quantity;
 
+  num _initialQuantity = 0;
+  num get initialQuantity => _initialQuantity;
+
   num _maxQuantity;
   num get maxQuantity => _maxQuantity;
   SalesOrderItemModel({@required this.product, num maxQuantity})

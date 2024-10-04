@@ -10,55 +10,81 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 import 'package:tripletriocore/tripletriocore.dart';
 
-class AdhocCartView extends StatelessWidget {
+class AdhocCartView extends StatefulWidget {
   final Customer customer;
   final bool isWalkin;
 
   const AdhocCartView({Key key, this.customer, this.isWalkin})
       : super(key: key);
+
+  @override
+  _AdhocCartViewState createState() => _AdhocCartViewState();
+}
+
+class _AdhocCartViewState extends State<AdhocCartView> {
+  bool isDelayCompleted = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Introduce a 2.5-second delay
+    Future.delayed(const Duration(milliseconds: 2800), () {
+      setState(() {
+        isDelayCompleted = true; // Update the state after the delay
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SalesOrderViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(FontAwesomeIcons.chevronLeft),
+            icon: const Icon(FontAwesomeIcons.chevronLeft),
             onPressed: () async {
               Navigator.pop(context, false);
             },
           ),
           title: AppBarColumnTitle(
             mainTitle: 'Cart',
-            subTitle: isWalkin ? model.customerName : customer.name,
+            subTitle:
+                widget.isWalkin ? model.customerName : widget.customer.name,
           ),
         ),
         body: model.isBusy
-            ? Center(
+            ? const Center(
                 child: BusyWidget(),
               )
-            : model.productList.isEmpty
-                ? Center(
-                    child: EmptyContentContainer(label: 'No SKUs found'),
+            : !isDelayCompleted
+                ? const Center(
+                    child:
+                        BusyWidget(), // Show BusyWidget until the delay is done
                   )
-                : Column(
-                    children: [
-                      Expanded(
-                        child: ListView(
-                          padding: EdgeInsets.zero,
-                          children: <Widget>[_ResultsView()],
-                        ),
-                      ),
-                      ActionButton(
-                        label: 'Continue to Payment',
-                        onPressed: model.cartHasItems
-                            ? () => model.navigateToAdhocPaymentView()
-                            : null,
+                : model.productList.isEmpty
+                    ? const Center(
+                        child: EmptyContentContainer(label: 'No SKUs found'),
                       )
-                    ],
-                  ),
+                    : Column(
+                        children: [
+                          Expanded(
+                            child: ListView(
+                              padding: EdgeInsets.zero,
+                              children: <Widget>[_ResultsView()],
+                            ),
+                          ),
+                          ActionButton(
+                            label: 'Continue to Payment',
+                            onPressed: model.cartHasItems
+                                ? () => model.navigateToAdhocPaymentView()
+                                : null,
+                          ),
+                        ],
+                      ),
       ),
-      viewModelBuilder: () =>
-          SalesOrderViewModel(customer: customer, isWalkIn: isWalkin),
+      viewModelBuilder: () => SalesOrderViewModel(
+          customer: widget.customer, isWalkIn: widget.isWalkin),
       onModelReady: (model) => model.initializeAdhoc(),
     );
   }
@@ -84,7 +110,7 @@ class _ResultsView extends HookViewModelWidget<SalesOrderViewModel> {
             return SalesOrderItemWidget(
               item: product,
               salesOrderViewModel: model,
-              quantity: model.getQuantity(product),
+              initialQuantity: model.getQuantity(product),
             );
           } else {
             return Container(height: 0);

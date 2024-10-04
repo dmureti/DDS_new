@@ -271,13 +271,15 @@ class AdhocDetailViewModel extends BaseViewModel {
     );
     Invoice _invoice = Invoice.fromAdhocDetail(adhocDetail, currency,
         customerDetail: customerDetail);
-    _navigationService.navigateToView(PrintView(
-      invoice: _invoice,
-      deliveryNote: adhocDetail,
-      title: 'e-Invoice',
-      user: _userService.user,
-      orderId: referenceNo,
-      customerTIN: adhocDetail.customerTIN,
-    ));
+    _navigationService.navigateToView(
+      PrintView(
+        invoice: _invoice,
+        deliveryNote: adhocDetail,
+        title: 'e-Invoice',
+        user: _userService.user,
+        orderId: referenceNo,
+        customerTIN: adhocDetail.customerTIN,
+      ),
+    );
   }
 }

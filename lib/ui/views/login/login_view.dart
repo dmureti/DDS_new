@@ -53,7 +53,7 @@ class _LoginViewState extends State<LoginView> {
                 : Container()),
         extendBodyBehindAppBar: true,
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               // image: DecorationImage(
               //     image: AssetImage('assets/images/login_bg.jpg'),
               //     fit: BoxFit.cover),
@@ -104,19 +104,23 @@ class _LoginViewState extends State<LoginView> {
                           // ),
                           Container(
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset(
-                                  'assets/images/dds_logo_horizontal.png'),
+                              padding: const EdgeInsets.all(5.0),
+                              // child: Image.asset(
+                              //     'assets/images/dds.png'),
+                              child: Image.network(
+                                'https://dds-apk-s3.s3.eu-west-1.amazonaws.com/DDS-Demo/DDS-LOGO-Inline.png',
+                                fit: BoxFit.contain,
+                              ),
                             ),
-                            // width: 150,
-                            height: 80,
+                            // width: double.infinity,
+                            // height: 100,
                           ),
                           // Image.asset('asset/images/login.png'),
 
                           // LoginTextField(
                           //   text: 'DDS Sign In',
                           // ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           TextFormFieldPadding(
@@ -137,7 +141,7 @@ class _LoginViewState extends State<LoginView> {
                                 }
                                 return null;
                               },
-                              keyboardType: TextInputType.phone,
+                              keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 filled: false,
                                 hintText: 'Email Address / Phone ',
@@ -170,19 +174,19 @@ class _LoginViewState extends State<LoginView> {
                                 filled: false,
                                 hintText: 'password',
                                 hintStyle: kFormHintTextStyle,
-                                prefixIcon: Icon(
+                                prefixIcon: const Icon(
                                   Icons.lock,
                                   size: 20,
                                 ),
                                 suffixIcon: IconButton(
                                   onPressed: model.toggleObscurePassword,
                                   icon: model.obscurePassword
-                                      ? Icon(
+                                      ? const Icon(
                                           FontAwesomeIcons.eye,
                                           size: 15,
                                           color: Colors.grey,
                                         )
-                                      : Icon(
+                                      : const Icon(
                                           FontAwesomeIcons.eyeSlash,
                                           size: 15,
                                           color: Colors.grey,
@@ -192,32 +196,32 @@ class _LoginViewState extends State<LoginView> {
                             ),
                           ),
 
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 18.0),
-                            child: Row(
-                              children: [
-                                Text('Select Language : '),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Expanded(
-                                  child: DropdownButton(
-                                      isExpanded: true,
-                                      value: model.language,
-                                      items: model.languages
-                                          .map(
-                                            (e) => DropdownMenuItem(
-                                              child: Text(e),
-                                              value: e,
-                                            ),
-                                          )
-                                          .toList(),
-                                      onChanged: model.setLanguage),
-                                ),
-                              ],
-                            ),
-                          ),
+                          // Padding(
+                          //   padding:
+                          //       const EdgeInsets.symmetric(horizontal: 18.0),
+                          //   child: Row(
+                          //     children: [
+                          //       Text('Select Language : '),
+                          //       SizedBox(
+                          //         width: 5,
+                          //       ),
+                          //       Expanded(
+                          //         child: DropdownButton(
+                          //             isExpanded: true,
+                          //             value: model.language,
+                          //             items: model.languages
+                          //                 .map(
+                          //                   (e) => DropdownMenuItem(
+                          //                     child: Text(e),
+                          //                     value: e,
+                          //                   ),
+                          //                 )
+                          //                 .toList(),
+                          //             onChanged: model.setLanguage),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
                           model.passwordValidationMessage == null
                               ? Container()
                               : FormErrorContainer(
@@ -236,7 +240,7 @@ class _LoginViewState extends State<LoginView> {
                                     const EdgeInsets.only(left: 8.0, top: 10),
                                 child: TextButton(
                                     onPressed: model.navigateToForgotPassword,
-                                    child: Text(
+                                    child: const Text(
                                       'Reset Password',
                                       style: TextStyle(
                                           fontSize: 14,
@@ -291,16 +295,16 @@ class _LoginViewState extends State<LoginView> {
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: GestureDetector(
-                  onTap: () => model.checkForUpdates(),
-                  child: Text(
-                    'Version : ${model.versionCode}',
-                    style: TextStyle(fontSize: 14, color: Colors.white),
-                  ),
-                ),
-              ),
+              // Align(
+              //   alignment: Alignment.bottomCenter,
+              //   child: GestureDetector(
+              //     onTap: () => model.checkForUpdates(),
+              //     child: Text(
+              //       'Version : ${model.versionCode}',
+              //       style: TextStyle(fontSize: 14, color: Colors.white),
+              //     ),
+              //   ),
+              // ),
               Spacer(),
               model.hasUpdate && !model.isComplete
                   ? Align(

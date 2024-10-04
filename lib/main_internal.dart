@@ -36,6 +36,7 @@ void main() async {
       flavorValues: FlavorValues(
           // baseUrl: 'https://testdds.ddsolutions.tech/spvdev-backend/api/v1',
            baseUrl: 'https://testdds.ddsolutions.tech/saas-backend/api/v1',
+          // baseUrl: 'https://demo.ddsolutions.tech/dds-backend/api/v1',
           applicationParameter: nairobiAppEnv),
     ),
     AppEnv(
@@ -96,7 +97,9 @@ void main() async {
       flavor: Flavor.internal,
       name: 'Demo',
       flavorValues:
-          FlavorValues(baseUrl: 'http://63.34.178.251:8888/dds-backend/api/v1'),
+          FlavorValues(
+            baseUrl: 'http://63.34.178.251:8888/dds-backend/api/v1'
+            ),
     ),
   ];
   _initService.setAvailableEnvList(_appEnv);

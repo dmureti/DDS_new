@@ -21,7 +21,7 @@ class CrateTransactionListingView extends StatelessWidget {
       builder: (context, model, child) {
         return model.hasSelectedJourney == true
             ? model.isBusy
-                ? Center(child: BusyWidget())
+                ? const Center(child: BusyWidget())
                 : model.crateTransactionListings.isNotEmpty
                     ? RefreshIndicator(
                         backgroundColor: kColorDDSPrimaryDark,
@@ -49,13 +49,11 @@ class CrateTransactionListingView extends StatelessWidget {
                                 children: [
                                   isSynced
                                       ? Container()
-                                      : Icon(
+                                      : const Icon(
                                           Icons.timer_sharp,
                                           size: 12,
                                         ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
+                                  const SizedBox(width: 5),
                                   Expanded(
                                     child: Text(
                                       crateTxn['itemName'],
@@ -73,13 +71,13 @@ class CrateTransactionListingView extends StatelessWidget {
                         ),
                         onRefresh: () => model.getCrateTransactions())
                     : Container(
-                        child: Center(
+                        child: const Center(
                           child: EmptyContentContainer(
                               label: kStringNoCrateTransactions),
                         ),
                       )
             : Container(
-                child: Center(
+                child: const Center(
                   child:
                       EmptyContentContainer(label: kStringNoCrateTransactions),
                 ),

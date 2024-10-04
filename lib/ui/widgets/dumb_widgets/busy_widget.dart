@@ -18,7 +18,7 @@ class BusyWidget extends StatelessWidget {
                 height: 15,
               ),
             ),
-            CircularProgressIndicator(
+            const CircularProgressIndicator(
               backgroundColor: Color(0xFFFFA000),
             ),
           ],

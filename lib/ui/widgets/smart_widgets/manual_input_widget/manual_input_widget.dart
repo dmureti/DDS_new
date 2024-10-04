@@ -7,6 +7,7 @@ import 'package:tripletriocore/tripletriocore.dart';
 
 class ManualInputWidget extends StatelessWidget {
   final int quantity;
+  final int initialQuantity;
   final maxQuantity;
   final bool isAdhocSale;
   final Product product;
@@ -15,6 +16,7 @@ class ManualInputWidget extends StatelessWidget {
   const ManualInputWidget(
       {Key key,
       this.quantity,
+      this.initialQuantity,
       this.maxQuantity,
       this.isAdhocSale = false,
       this.product,
@@ -47,7 +49,7 @@ class ManualInputWidget extends StatelessWidget {
                           children: [
                             Text(
                               'Edit Quantity'.toUpperCase(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 23,
                                   color: Colors.pink,
                                   fontWeight: FontWeight.w700),
@@ -75,9 +77,8 @@ class ManualInputWidget extends StatelessWidget {
                         child: Text(model.product.itemName),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: _QuantityTextField(onPressed, quantity),
-                      ),
+                          padding: const EdgeInsets.all(8.0),
+                          child: _QuantityTextField(onPressed, quantity)),
                     ],
                   ),
                 ),
@@ -117,7 +118,7 @@ class _QuantityTextField
       ],
       decoration: InputDecoration(
           suffixIcon: !model.isValidInput
-              ? Icon(
+              ? const Icon(
                   Icons.info_outline,
                   color: Colors.red,
                 )

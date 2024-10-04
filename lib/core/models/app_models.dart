@@ -321,6 +321,7 @@ class SaleItem {
   String unitOfMeasure;
   num index;
   num quantity;
+  num initialQuantity;
   num itemRate;
   num lineAmount;
   String warehouseId;
@@ -333,6 +334,7 @@ class SaleItem {
       this.unitOfMeasure,
       this.index,
       this.quantity,
+      this.initialQuantity,
       this.itemRate,
       this.lineAmount,
       this.warehouseId});
@@ -345,6 +347,7 @@ class SaleItem {
       itemName: data['itemName'],
       index: data['index'],
       quantity: data['quantity'],
+      initialQuantity: data['initialQuantity'],
       itemRate: data['itemRate'],
       lineAmount: data['lineAmount'],
       warehouseId: data['warehouseId'],

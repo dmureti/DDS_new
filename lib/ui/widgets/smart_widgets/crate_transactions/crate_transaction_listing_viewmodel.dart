@@ -50,7 +50,9 @@ class CrateTransactionListingViewModel extends BaseViewModel {
     setBusy(false);
     if (result is CustomException) {
       await _dialogService.showDialog(
-          title: 'Error', description: result.description);
+        title: 'Sorry! There are no Crate Listings Available.',
+        // description: result.description,
+      );
       return;
     } else {
       List temp = result;

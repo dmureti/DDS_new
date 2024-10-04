@@ -19,7 +19,7 @@ class StockReturnView extends StatelessWidget {
       builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('Return Stocks To Branch'),
+            title: Text('s To Branch'),
           ),
           body: GenericContainer(
             child: model.isBusy

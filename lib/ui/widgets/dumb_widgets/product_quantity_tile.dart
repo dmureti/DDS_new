@@ -36,7 +36,7 @@ class ProductQuantityTile extends StatelessWidget {
           ],
         ),
         trailing: ProductQuantityContainer(
-          quantity: product.quantity.toInt(),
+          quantity: product.initialQuantity.toInt(),
         ),
       ),
     );

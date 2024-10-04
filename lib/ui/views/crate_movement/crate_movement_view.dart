@@ -189,8 +189,7 @@ class CrateMovementView extends StatelessWidget {
                         model.crateList.isEmpty
                             ? Expanded(
                                 child: Center(
-                                  child: EmptyContentContainer(
-                                      label: 'There are no crates.'),
+                                  child: EmptyContentContainer(label: 's.'),
                                 ),
                               )
                             : Expanded(

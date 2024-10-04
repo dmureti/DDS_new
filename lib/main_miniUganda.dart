@@ -25,8 +25,8 @@ void main() async {
       enableFullDelivery: false,
       enforceCreditLimit: false,
       enableCustomDelivery: true,
-      currency: "UGX",
-      taxRate: 0.18,
+      currency: "Kshs",
+      // taxRate: 0.18,
       defaultPriceList: "walk in",
       enforceCustomerSecurity: false,
       enableAdhocSales: true,
@@ -39,7 +39,9 @@ void main() async {
       flavor: Flavor.miniUg,
       name: 'miniUg',
       flavorValues: FlavorValues(
-          baseUrl: 'http://34.252.102.87:8888/dds-backend/api/v1',
+          // baseUrl: 'http://34.252.102.87:8888/dds-backend/api/v1',
+          baseUrl: 'https://demo.ddsolutions.tech/saas-backend/api/v1',
+          //  baseUrl: 'https://demo.ddsolutions.tech/dds-backend/api/v1',
           applicationParameter: appParam),
     )
   ]);
