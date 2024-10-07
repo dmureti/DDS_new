@@ -152,7 +152,7 @@ class StockControllerService {
                   "itemPrice": e.item.itemPrice
                 },
                 "quantity": e.quantity,
-                "initialQuantity": e.initialQuantity
+                // "initialQuantity": e.initialQuantity
               })
           .toList()
     };
